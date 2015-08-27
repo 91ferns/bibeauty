@@ -3,11 +3,23 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        {% stylesheets
+            '@AppBundle/Resources/css/main.scss'
+            filter='sass' output='css/main.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+
         {% block body %}{% endblock %}
+        {% javascripts
+            '@vendor_assets'
+            '@AppBundle/Resources/js/*'
+            filter='uglifyjs2' %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% endjavascripts %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
