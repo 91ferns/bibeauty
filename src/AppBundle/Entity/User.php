@@ -4,14 +4,36 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  */
-class User implements UserInterface, \Serializable
-{
+class User implements AdvancedUserInterface, \Serializable {
+
+    // ...
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -74,6 +96,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
+            $this->isActive
             // see section on salt below
             // $this->salt,
         ));
@@ -86,6 +109,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->email,
             $this->password,
+            $this->isActive
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
