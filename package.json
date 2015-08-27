@@ -1,0 +1,26 @@
+{
+  "name": "bibeauty",
+  "version": "1.0.0",
+  "description": "bibeauty",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "0.12.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/91ferns/bibeauty.git"
+  },
+  "author": "Stephen Parente",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/91ferns/bibeauty/issues"
+  },
+  "homepage": "https://github.com/91ferns/bibeauty#readme",
+  "dependencies": {
+    "uglify-js": "^2.4.24",
+    "uglifycss": "0.0.17"
+  }
+}
