@@ -1,25 +1,42 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% stylesheets
-            '@AppBundle/Resources/css/main.scss'
-            filter='sass' output='css/main.css' %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-        {% block body %}{% endblock %}
-        {% javascripts
-            '@vendor_assets'
-            '@AppBundle/Resources/js/*'
-            filter='uglifyjs2' %}
-            <script src="{{ asset_url }}" type="text/javascript"></script>
-        {% endjavascripts %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% stylesheets
+        'assets/css/main.scss'
+        filter='sass' output='css/main.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <a class="navbar-brand" href="#">Title</a>
+    <ul class="nav navbar-nav">
+        <li class="active">
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="#">Link</a>
+        </li>
+    </ul>
+</nav>
+
+{% block body %}{% endblock %}
+
+<!-- footer -->
+
+{% javascripts
+    '@vendor_assets'
+    'assets/js/*'
+    filter='uglifyjs2' %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+{% endjavascripts %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>

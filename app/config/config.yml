@@ -44,9 +44,10 @@ assetic:
     assets:
         vendor_assets:
             inputs:
-                - '@AppBundle/Resources/components/jquery/dist/jquery.min.js'
-                - '@AppBundle/Resources/components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
-                - '@AppBundle/Resources/components/react/react.min.js'
+                - 'assets/components/jquery/dist/jquery.min.js'
+                - 'assets/components/jquery-ui/jquery-ui.min.js'
+                - 'assets/components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
+                - 'assets/components/react/react.min.js'
     #java: /usr/bin/java
     filters:
         sass: ~
