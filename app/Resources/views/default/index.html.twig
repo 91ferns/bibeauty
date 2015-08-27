@@ -2,34 +2,120 @@
 
 {% block body %}
  
-<div class="jumbotron">
-    <div class="container">
-        <h1>Discounted Beauty Treatments</h1>
-        <p>For Last Minute Bookins</p>
-        
-        <form class="form-inline">
-            <div class="form-group">
-                <label class="sr-only" for="JumboLocation">Name</label>
-                <input type="text" class="form-control" id="JumboLocation" placeholder="Location">
-            </div>
-            <div class="form-group">
-                <label class="sr-only" for="JumboTreatment">Email</label>
-                <input type="email" class="form-control" id="JumboTreatment" placeholder="Treatment">
-            </div>
-            <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail2">Email</label>
-                <div class="input-group">
-                    <span class="input-group-addon" id="JumboDate">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                    <input type="text" class="form-control" placeholder="Date" aria-describedby="JumboDate">
+<section id="top-slider">
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Discounted Beauty Treatments</h1>
+            <p>For Last Minute Bookins</p>
+            
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="sr-only" for="JumboLocation">Name</label>
+                    <input type="text" class="form-control" id="JumboLocation" placeholder="Location">
                 </div>
+                <div class="form-group">
+                    <label class="sr-only" for="JumboTreatment">Email</label>
+                    <input type="email" class="form-control" id="JumboTreatment" placeholder="Treatment">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputEmail2">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="JumboDate">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Date" aria-describedby="JumboDate">
+                    </div>
 
+                </div>
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<section id="popular-categories">
+
+    <div class="container">
+
+        <div class="section-header">
+            <h2>Popular Categories</h2>
+            <h4>SEARCH AND BOOK GREAT DEALS FOR THESE AND MORE</h4>
+        </div>
+
+        <div class="row">
+            {% for i in 0..5 %}
+            <div class="col-md-4">
+                <a href="#" class="thumbnail">
+                  <img src="{{ asset('assets/images/categories/hair.png') }}" class="img-responsive" alt="...">
+                </a>
             </div>
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
-        </form>
+            {% endfor %}
+
+        </div>
 
     </div>
-</div>
+
+</section>
+
+<section id="how-it-works">
+    <div class="container">
+
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <h4>SEARCH AND BOOK BEAUTY TREATMENTS FOR TODAY & TOMORROW AT HEAVILY DISCOUNTED RATES</h4>
+        </div>
+
+        <img src="{{ asset('assets/images/feature.jpg') }}" class="img-responsive" alt="">
+
+    </div>
+</section> <!-- /#how-it-works -->
+
+<section id="latest-deals">
+    <div class="container">
+
+        <div class="section-header">
+            <h2>Latest Deals</h2>
+        </div>
+
+        <div class="row">
+            {% for i in 0..2 %}
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="{{ asset('assets/images/deals/1.png') }}" class="img-responsive" alt="...">
+                    <div class="caption">
+                        <div class="deal-title">
+                            <div class="row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-6">Santa Monica</div>
+                                <div class="col-sm-3"><small>$100</small><big>$80</big></div>
+                            </div>
+                        </div>
+                        <h4>lorem ipsum dummy text</h4>
+                        <h5>Dummy heading:</h5>
+                        <p>lorem ipsum dummy<br>text for print & web</p>
+                        <p><a href="#" class="btn btn-primary" role="button">View Deal</a></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div> <!-- /.row -->
+
+    </div>
+
+</section> <!-- #/latest-deals -->
+
+<section id="get-started">
+
+    <div class="container">
+
+        <div class="well well-lg">
+
+            <h2>Add your business now to fill those<br>last minute appointments</h2>
+
+            <a class="btn btn-primary btn-lg">Get Started</a>
+
+</section>
 
 {% endblock %}

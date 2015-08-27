@@ -16,18 +16,87 @@
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <a class="navbar-brand" href="#">Title</a>
-    <ul class="nav navbar-nav">
-        <li class="active">
-            <a href="#">Home</a>
-        </li>
-        <li>
-            <a href="#">Link</a>
-        </li>
-    </ul>
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('assets/images/logo.png') }}">
+        </a>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="">
+                <a href="#">Notify Me</a>
+            </li>
+            <li class="">
+                <a href="#">Login</a>
+            </li>
+            <li class="">
+                <a href="#">Sign Up</a>
+            </li>
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+    </div>
 </nav>
 
 {% block body %}{% endblock %}
+
+<footer id="site-main-footer">
+
+    <div class="top-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Site Map</div>
+
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item">About Us</li>
+                            <li class="list-group-item">Contact Us</li>
+                        </ul>
+                    </div> <!-- /.panel -->
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Business Owners</div>
+
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item">How it Works?</li>
+                            <li class="list-group-item">User Benefits</li>
+                            <li class="list-group-item">Business Benefits</li>
+                            <li class="list-group-item">Add Business</li>
+                        </ul>
+                    </div> <!-- /.panel -->
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Support &amp; Information</div>
+
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item">FAQ</li>
+                            <li class="list-group-item">Privacy Policy</li>
+                            <li class="list-group-item">Terms and Conditions</li>
+                        </ul>
+                    </div> <!-- /.panel -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-footer">
+        <img src="#">
+    </div>
+
+</footer>
+
+
 
 <!-- footer -->
 
