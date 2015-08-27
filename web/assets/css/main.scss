@@ -2,15 +2,191 @@
 
 
 // FA Overrides
-$fa-font-path: '../assets/components/fontawesome/fonts';
+$fa-font-path: '../components/fontawesome/fonts';
 
 @import '../../../web/assets/components/fontawesome/scss/font-awesome';
 
 // Bootstrap Overrides
-$icon-font-path: '../assets/components/bootstrap-sass-official/assets/fonts/bootstrap/';
+$navbar-height: 96px;
+$gray-light: #bbbbbb;
+$gray: #3f4040;
+$icon-font-path: '../components/bootstrap-sass-official/assets/fonts/bootstrap/';
+$font-family-sans-serif: "Open Sans", Helvetica, Arial, sans-serif;
+
+// Swatches
 $brand-primary: #52c8e6;
-$font-family-sans-serif: "Open-Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$brand-turquoise: #3990a8;
+$brand-aqua: #1e7188;
+
+// Borders
+$border-radius-base: 0px;
+$border-radius-small: $border-radius-base;
+$border-radius-large: $border-radius-base;
 // Bootstrap
 @import '../../../web/assets/components/bootstrap-sass-official/assets/stylesheets/bootstrap';
 
-// Bootstrap
+// Our stuff
+
+.nav-pad {
+  margin-top: $navbar-height;
+}
+
+// navbar
+$logo-height: 78px;
+
+.navbar-default {
+  background: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid $gray-light;
+  box-shadow: 0px 2px 12px 2px rgba(0,0,0,0.18);
+}
+
+.navbar-brand {
+  padding-top: ($navbar-height - $logo-height) / 2;
+  padding-bottom: ($navbar-height - $logo-height) / 2;
+}
+
+// Footer
+
+#site-main-footer {
+
+  .panel, .panel-heading, .panel .list-group-item {
+    background: transparent;
+    border: 0px;
+    box-shadow: none;
+    color: white;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .panel {
+    font-size: 16px;
+    font-weight: 200;
+  }
+
+  .panel-heading {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 0px;
+  }
+
+  .top-footer {
+    background-color: $brand-turquoise;
+    padding: 40px 0px;
+  }
+
+  .bottom-footer {
+    padding: 10px 0;
+    text-align: center;
+    background-color: $brand-aqua;
+
+    img {
+      opacity: 0.6;
+    }
+  }
+}
+
+// Homepage stuff
+// 130 80
+#top-slider {
+  .jumbotron {
+    background-image: url('../images/feature_banner.jpg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    padding: 170px 0 195px;
+    padding-top: 30vh;
+    padding-bottom: 35vh;
+  }
+  h1, .lead {
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0px 1px rgba(0,0,0,0.6);
+  }
+  h1 {
+    font-size: 45px;
+  }
+  .lead {
+    font-size: 34px;
+  }
+  padding: 0px;
+}
+
+.form-transparent-wrapper {
+  padding: 25px 30px;
+  background-color: rgba(255, 255, 255, 0.6);
+
+  .row .btn {
+    width: 100%;
+  }
+}
+
+main section {
+  padding: 80px 0;
+  .section-header {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    color: $gray;
+    text-align: center;
+
+    h2 {
+      font-size: 50px;
+      margin-bottom: 14px;
+    }
+
+    h4 {
+      font-size: 18px;
+      text-transform: uppercase;
+
+    }
+  }
+}
+
+#how-it-works {
+  .img-responsive {
+    margin: 0 auto;
+  }
+}
+
+.thumbnail {
+  border: 0px;
+}
+
+#popular-categories, #latest-deals {
+  .thumbnail {
+    padding: 0px;
+  }
+}
+
+#get-started {
+  background-image: url('../images/appointments_bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  padding: 175px 0;
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+
+  .well {
+    border: 0px;
+    box-shadow: 0px 2px 12px 2px rgba(0,0,0,0.18);
+    background: rgba(0,0,0,0.45);
+    color: white;
+
+    text-align: center;
+    text-shadow: 0px 1px rgba(0,0,0,0.6);
+
+    padding: 60px 0;
+
+    h2 {
+      font-size: 42px;
+      line-height: 1.3;
+      margin-top: 0px;
+      margin-bottom: 35px;
+    }
+
+    a {
+      text-transform: uppercase;
+    }
+  }
+}
