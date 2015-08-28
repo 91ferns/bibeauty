@@ -20,19 +20,33 @@
         <a class="navbar-brand" href="/">
             <img src="{{ asset('assets/images/logo.png') }}">
         </a>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="">
-                <a href="#">Notify Me</a>
-            </li>
-            <li class="">
-                <a href="{{ path('login_route') }}">Login</a>
-            </li>
-            <li class="">
-                <a href="{{ path('signup_route') }}">Sign Up</a>
-            </li>
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-        </ul>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navagation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden-xs">
+                    <i class="glyphicon glyphicon-question-sign"></i>
+                </li>
+                <li class="">
+                    <a href="#">Need Help</a>
+                </li>
+                <li class="" id="notify-btn">
+                    <a href="#">Notify Me</a>
+                </li>
+                <li class="" id="login-btn">
+                    <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
+                </li>
+                <li class="" id ="notify-btn">
+                    <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
+                </li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 
@@ -53,8 +67,12 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item">About Us</li>
-                            <li class="list-group-item">Contact Us</li>
+                            <li class="list-group-item">
+                                <a href="#">About Us</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Contact Us</a>
+                            </li>
                         </ul>
                     </div> <!-- /.panel -->
                 </div>
@@ -66,10 +84,18 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item">How it Works?</li>
-                            <li class="list-group-item">User Benefits</li>
-                            <li class="list-group-item">Business Benefits</li>
-                            <li class="list-group-item">Add Business</li>
+                            <li class="list-group-item">
+                                <a href="#">How it Works?</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">User Benefits</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Business Benefits</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Add Business</a>
+                            </li>
                         </ul>
                     </div> <!-- /.panel -->
                 </div>
@@ -81,9 +107,15 @@
 
                         <!-- List group -->
                         <ul class="list-group">
-                            <li class="list-group-item">FAQ</li>
-                            <li class="list-group-item">Privacy Policy</li>
-                            <li class="list-group-item">Terms and Conditions</li>
+                            <li class="list-group-item">
+                                <a href="#">FAQ</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Privacy Policy</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Terms and Conditions</a>
+                            </li>
                         </ul>
                     </div> <!-- /.panel -->
                 </div>

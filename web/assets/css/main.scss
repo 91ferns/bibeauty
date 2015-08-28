@@ -9,6 +9,7 @@ $fa-font-path: '../components/fontawesome/fonts';
 // Bootstrap Overrides
 $navbar-height: 96px;
 $gray-light: #bbbbbb;
+$gray-medium: #919191;
 $gray: #3f4040;
 $icon-font-path: '../components/bootstrap-sass-official/assets/fonts/bootstrap/';
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, sans-serif;
@@ -55,6 +56,9 @@ $logo-height: 78px;
   text-transform: uppercase;
   top: 33px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+  -webkit-transition:all .5s;
+  -moz-transition:all .5s;
+  transition:all .5s;
 }    
 
 #notify-btn a:hover {
@@ -73,6 +77,14 @@ $logo-height: 78px;
   margin-left: 12px;
   margin-right: 12px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+  -webkit-transition:all .5s;
+  -moz-transition:all .5s;
+  transition:all .5s;
+}
+
+.glyphicon-play-circle {
+      padding-left: 4px;
+      font-size: 0.9em;
 }
 
 #login-btn a:hover {
@@ -107,6 +119,11 @@ $logo-height: 78px;
     color: white;
     padding-left: 0px;
     padding-right: 0px;
+
+    a {
+      color:white;
+      text-decoration: none;
+    }
   }
 
   .panel {
@@ -138,6 +155,10 @@ $logo-height: 78px;
 
 // Homepage stuff
 // 130 80
+hr {
+  width: 85%;
+}
+
 #top-slider {
   .jumbotron {
     background-image: url('../images/feature_banner.jpg');
@@ -174,6 +195,8 @@ $logo-height: 78px;
 
 main section {
   padding: 80px 0;
+
+
   .section-header {
     padding-top: 50px;
     padding-bottom: 30px;
@@ -239,5 +262,58 @@ main section {
     a {
       text-transform: uppercase;
     }
+    .btn-primary {
+      padding: 10px 60px;
+      background-color: $brand-primary;
+      color: white;
+      -webkit-transition:all .5s;
+      -moz-transition:all .5s;
+      transition:all .5s;
+      text-transform: uppercase;
+    }
+    .btn-primary:hover {
+      background-color: $brand-turquoise;
+    }
   }
+}
+
+#deals-border {
+  border: 1px solid $gray-medium;
+  padding: 0px;
+}
+
+.caption{
+  
+  #deals-text {
+    color: $gray-medium; 
+  }
+  #deals-title {
+    font-size: 1.2em;
+  }
+  
+  .btn-primary {
+    padding: 5px 10px;
+    width: 120px;
+    background-color: $brand-primary;
+    color: white;
+    -webkit-transition:all .5s;
+    -moz-transition:all .5s;
+    transition:all .5s;
+    text-transform: uppercase;
+  }
+  .btn-primary:hover {
+    background-color: $brand-turquoise;
+  }
+}
+#searchbar-front .btn-default {
+  color: white;
+  background-color: $brand-primary;
+  text-transform: uppercase;
+  -webkit-transition:all .5s;
+  -moz-transition:all .5s;
+  transition:all .5s;
+}
+
+#searchbar-front .btn-default:hover {
+  background-color: $brand-turquoise;
 }
