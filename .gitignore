@@ -10,3 +10,5 @@ node_modules
 /composer.phar
 /vendor/
 /web/bundles/
+
+*.php~

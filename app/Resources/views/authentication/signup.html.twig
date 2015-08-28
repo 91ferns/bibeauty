@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<section id="login" class="nav-pad">
+
+  <div class="container">
+
+    <div class="jumbotron">
+
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+        <input type="submit" value="Sign Up"
+             class="btn btn-default pull-right" />
+      {{ form_end(form) }}
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endblock %}

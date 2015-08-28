@@ -5,9 +5,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="app_users")
+ * @UniqueEntity("email", message="Sorry, this email address is already in use.")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable {
@@ -43,11 +48,15 @@ class User implements AdvancedUserInterface, \Serializable {
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 3)
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=120, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email
      */
     private $email;
 
@@ -65,7 +74,7 @@ class User implements AdvancedUserInterface, \Serializable {
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->email;
     }
 
     public function getSalt()
@@ -118,7 +127,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -154,7 +163,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -177,7 +186,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {

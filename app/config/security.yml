@@ -3,7 +3,7 @@
 security:
 
     encoders:
-        Symfony\Component\Security\Core\User\User:
+        AppBundle\Entity\User:
             algorithm: bcrypt
             cost: 12
 
