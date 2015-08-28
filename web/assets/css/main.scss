@@ -45,6 +45,57 @@ $logo-height: 78px;
   padding-bottom: ($navbar-height - $logo-height) / 2;
 }
 
+// buttons for navbar
+
+#notify-btn a {
+  color: white;
+  padding: 5px 10px;
+  border: 1px solid $brand-primary;
+  background-color: $brand-primary;
+  text-transform: uppercase;
+  top: 33px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+}    
+
+#notify-btn a:hover {
+  color: $brand-primary;
+  background-color: white;
+  border: 1px solid white;
+}
+
+#login-btn a {
+  color: $brand-primary;
+  background-color: white;
+  border: 1px solid white;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  top: 33px;
+  margin-left: 12px;
+  margin-right: 12px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+}
+
+#login-btn a:hover {
+  color: white;
+  background-color: $brand-primary;
+  border: 1px solid $brand-primary;
+}
+
+.fa-facebook {
+  color: $brand-primary;
+}
+
+.fa-twitter {
+  color: $brand-primary;
+}
+
+.glyphicon-question-sign {
+  color: $brand-primary;
+  top: 38px;
+  left: 5px;
+  font-size: 1.4em;
+}
+
 // Footer
 
 #site-main-footer {
