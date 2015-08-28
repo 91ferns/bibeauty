@@ -47,6 +47,15 @@ class AuthenticationController extends Controller {
    }
 
    /**
+    * @Route("/logout", name="logout_path")
+    * @Method({"GET", "POST"})
+    */
+   public function logoutAction() {
+      // this controller will not be executed,
+      // as the route is handled by the Security system
+   }
+
+   /**
     * @Route("/signup", name="signup_route")
     * @Method({"GET"})
     */
