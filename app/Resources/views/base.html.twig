@@ -31,20 +31,32 @@
                 <li class="hidden-xs">
                     <i class="glyphicon glyphicon-question-sign"></i>
                 </li>
-                <li class="">
+                <li class="hidden-xs">
                     <a href="#">Need Help</a>
                 </li>
-                <li class="" id="notify-btn">
+                <li class="hidden-lg hidden-md hidden-sm">
+                    <a href="#">Need Help</a>
+                </li>
+                <li class="hidden-xs" id="notify-btn">
                     <a href="#">Notify Me</a>
                 </li>
-                <li class="" id="login-btn">
+                <li class="hidden-lg hidden-md hidden-sm">
+                  <a href="#">Notify Me</a>
+                </li>
+                <li class="hidden-xs" id="login-btn">
                     <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
                 </li>
-                <li class="" id ="notify-btn">
+                <li class="hidden-lg hidden-md hidden-sm">
+                  <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
+                </li>
+                <li class="hidden-xs" id ="notify-btn">
                     <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
                 </li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li class="hidden-lg hidden-md hidden-sm">
+                    <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
+                </li>
+                <li><a href="#"><i class="fa fa-facebook hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Facebook</span></a></li>
+                <li><a href="#"><i class="fa fa-twitter hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Twitter</span></a></li>
             </ul>
         </div>
     </div>
