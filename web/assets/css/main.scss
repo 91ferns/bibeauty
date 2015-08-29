@@ -59,7 +59,7 @@ $logo-height: 78px;
   -webkit-transition:all .5s;
   -moz-transition:all .5s;
   transition:all .5s;
-}    
+}
 
 #notify-btn a:hover {
   color: $brand-primary;
@@ -283,14 +283,14 @@ main section {
 }
 
 .caption{
-  
+
   #deals-text {
-    color: $gray-medium; 
+    color: $gray-medium;
   }
   #deals-title {
     font-size: 1.2em;
   }
-  
+
   .btn-primary {
     padding: 5px 10px;
     width: 120px;
@@ -305,15 +305,41 @@ main section {
     background-color: $brand-turquoise;
   }
 }
+
 #searchbar-front .btn-default {
   color: white;
   background-color: $brand-primary;
   text-transform: uppercase;
-  -webkit-transition:all .5s;
-  -moz-transition:all .5s;
-  transition:all .5s;
+  -webkit-transition:all 1s;
+  -moz-transition:all 1s;
+  transition:all 1s;
 }
 
 #searchbar-front .btn-default:hover {
   background-color: $brand-turquoise;
+}
+
+#popular-categories {
+
+  .image-wrapper {
+    overflow: hidden;
+    position: relative;
+    border: 5px solid white;
+
+    #image-zoom  {
+      z-index: -1;
+      transform: scale(1.2);
+      -webkit-transform: scale(1.2);
+      -moz-transform: scale(1.2);
+      -webkit-transition: all .5s ease-in;
+      -moz-transition: all .5s ease-in;
+      transition: all .5s ease-in;
+    }
+
+    #image-zoom:hover {
+      -webkit-transform: scale(1.6);
+      -moz-transform: scale(1.6);
+      transform: scale(1.6);
+    }
+  }
 }
