@@ -44,18 +44,31 @@
                 <li class="hidden-lg hidden-md hidden-sm">
                   <a href="#">Notify Me</a>
                 </li>
-                <li class="hidden-xs" id="login-btn">
+                {% if app.user %}
+                  <li>
+                    <a href="{{path('admin_path')}}">
+                      Account
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{path('logout_path')}}">
+                      Logout
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="hidden-xs" id="login-btn">
+                      <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
+                  </li>
+                  <li class="hidden-lg hidden-md hidden-sm">
                     <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
-                </li>
-                <li class="hidden-lg hidden-md hidden-sm">
-                  <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
-                </li>
-                <li class="hidden-xs" id ="notify-btn">
-                    <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
-                </li>
-                <li class="hidden-lg hidden-md hidden-sm">
-                    <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
-                </li>
+                  </li>
+                  <li class="hidden-xs" id ="notify-btn">
+                      <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
+                  </li>
+                  <li class="hidden-lg hidden-md hidden-sm">
+                      <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
+                  </li>
+                {% endif %}
                 <li><a href="#"><i class="fa fa-facebook hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Facebook</span></a></li>
                 <li><a href="#"><i class="fa fa-twitter hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Twitter</span></a></li>
             </ul>
