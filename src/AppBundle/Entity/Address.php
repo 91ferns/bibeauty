@@ -27,7 +27,7 @@ class Address {
    /**
      * @ORM\Column(type="string", length=255)
      */
-   protected $line2;
+   protected $line2 = '';
 
    /**
      * @ORM\Column(type="string", length=150)
@@ -77,7 +77,7 @@ class Address {
        $geocoder = new \Geocoder\Provider\GoogleMaps($curl);
 
        try {
-           $result = $geocoder->geocode($this->getAddressString());
+           $result = $geocoder->limit(1)->geocode($this->getAddressString())->first();
 
            $this->active = true;
            $this->latitude = $result->getLatitude();
@@ -207,7 +207,11 @@ class Address {
      */
     public function setLine2($line2)
     {
-        $this->line2 = $line2;
+        if (empty($line2)) {
+            $this->line2 = '';
+        } else {
+            $this->line2 = $line2;
+        }
 
         return $this;
     }
