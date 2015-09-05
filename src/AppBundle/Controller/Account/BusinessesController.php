@@ -45,7 +45,6 @@ class BusinessesController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-
             $headerAttachment = $business->getHeaderAttachment();
             $address = $business->getAddress();
 
@@ -63,7 +62,7 @@ class BusinessesController extends Controller
             }
 
             $em->persist($business);
-            
+
             $em->flush();
 
             return $this->redirectToRoute('homepage');

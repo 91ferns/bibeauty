@@ -21,7 +21,8 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "google/apiclient": "1.0.*@beta",
-        "aws/aws-sdk-php": "~3.3"
+        "aws/aws-sdk-php": "~3.3",
+        "symfony/serializer": "~2.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -24,7 +24,7 @@ class Business {
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Address", cascade={"persist", "remove"}, orphanRemoval=true, fetch="EAGER")
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
     protected $address;
@@ -46,7 +46,7 @@ class Business {
     protected $owner;
 
     /**
-     * @ORM\OneToOne(targetEntity="Attachment")
+     * @ORM\OneToOne(targetEntity="Attachment", cascade={"remove"}, orphanRemoval=true, fetch="EAGER")
      * @ORM\JoinColumn(name="header_attachment_id", referencedColumnName="id")
      */
     protected $headerAttachment;
@@ -61,7 +61,7 @@ class Business {
      */
     public function setCreatedAtValue() {
         $this->createdAt = new \DateTime();
-        $this->updated = new \DateTime(); 
+        $this->updated = new \DateTime();
     }
 
     /**
