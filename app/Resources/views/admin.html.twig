@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}BiBeauty{% endblock %}</title>
     {% stylesheets
         'assets/css/main.scss'
         filter='sass,cssrewrite' output='css/main.css' %}
@@ -15,35 +15,42 @@
 </head>
 <body class="admin">
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <a class="navbar-brand" href="/">
-        <img src="{{ asset('assets/images/logo.png') }}">
-    </a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navagation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <div class="navbar-collapse collapse">
-            <div class="container-fluid">
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="notify-btn">
-                        <a href="#" class="btn btn-default">{{ app.user.getEmail() }}</a>
-                    </li>
-                    <li id="login-btn">
-                        <a href="{{path('logout_path')}}" class="btn btn-default">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" class="btn btn-default">
+              <span class="account-label">My Account</span>
+              <span class="account-icon"><img src="{{asset('assets/images/account-generic.png') }}"></span>
+              <span class="account-email">{{ app.user.getEmail() }}</span>
+            </a></li>
+            <li><a href="{{path('logout_path')}}" class="btn btn-default">Logout</a></li>
+        </ul>
+    </div>
 </nav>
 
 <main>
-{% block body %}{% endblock %}
+
+  <nav id="secondary">
+    <ul class="nav nav-pills nav-stacked">
+      <li class="header"><a href="#" disabled>Business</a></li>
+      <li role="presentation" class="active"><a href="#">Home</a></li>
+      <li role="presentation"><a href="#">Profile</a></li>
+      <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+  </nav>
+
+  <section id="admin-main">
+    <div class="alert" role="alert">
+
+    </div>
+
+    <div class="admin-main-inner">
+      {% block body %}{% endblock %}
+    </div>
+
+  </section>
+
 </main>
-
-
 
 <!-- footer -->
 

@@ -50,6 +50,7 @@ assetic:
                 - 'assets/components/jquery/dist/jquery.min.js'
                 - 'assets/components/jquery-ui/jquery-ui.min.js'
                 - 'assets/components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
+                - 'assets/components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js'
                 - 'assets/components/react/react.min.js'
     #java: /usr/bin/java
     filters:
