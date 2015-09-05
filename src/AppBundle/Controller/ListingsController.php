@@ -27,14 +27,25 @@ class ListingsController extends Controller
     {
         return $this->render('listings/search.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'results'  => ['business_name'=>'blah','star_img'=>'oops',
-                            'num_reviews'=>5, 'map_link'=>'x',
-                            'city'=>'x','state'=>'x','logo'=>'x',
-                            'description'=>'x','treatment'=>
-                                ['id'=>1,'name'=>'x',
+            'results'  => [
+                            ['business_name'=>'Some Business Name',
+                             'star_img'=>'oops',
+                             'reviews_num'=>5, 
+                             'map_link'=>'x',
+                             'city'=>'Norwalk',
+                             'state'=>'CT',
+                             'logo'=>'x',
+                             'description'=>'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                             'treatments'=>[
+                                ['id'=>1,'name'=>'The Works',
                                  'percent_discount'=>4,'start_dollars'=>20,
-                                 'num_remaining'=>4]
+                                 'num_remaining'=>4],
+                                 ['id'=>2,'name'=>'Another One',
+                                 'percent_discount'=>4,'start_dollars'=>20,
+                                 'num_remaining'=>3],
+                              ]
                             ],
+                          ]
         ));
     }
 }
