@@ -9,8 +9,13 @@ parameters:
         credentials:
             key: 'AKIAIBIIEKOCJZS4Y2HA'
             secret: '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'
+    braintree:
+        version: 'latest'
 
 services:
+    braintree.factory:
+        class: AppBundle\Services\BraintreeFactory
+        arguments: ["%braintree%", @logger]
     aws.factory:
         class: AppBundle\Services\AWSFactory
         arguments: ["%aws%", @logger]

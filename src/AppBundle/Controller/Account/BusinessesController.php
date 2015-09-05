@@ -48,17 +48,20 @@ class BusinessesController extends Controller
             $headerAttachment = $business->getHeaderAttachment();
             $address = $business->getAddress();
 
-            $upload = $this->get('aws.factory')->upload(
-                $headerAttachment->attachment->getRealPath(),
-                $headerAttachment->attachment->getClientOriginalName()
-            );
+            if ($headerAttachment) {
 
-            if ($upload instanceof Exception) {
-                // it failed
-            } else {
-                $headerAttachment->setUploadState($upload);
-                $headerAttachment->setOwner($this->getUser());
-                $em->persist($headerAttachment);
+                $upload = $this->get('aws.factory')->upload(
+                    $headerAttachment->attachment->getRealPath(),
+                    $headerAttachment->attachment->getClientOriginalName()
+                );
+
+                if ($upload instanceof Exception) {
+                    // it failed
+                } else {
+                    $headerAttachment->setUploadState($upload);
+                    $headerAttachment->setOwner($this->getUser());
+                    $em->persist($headerAttachment);
+                }
             }
 
             $em->persist($business);

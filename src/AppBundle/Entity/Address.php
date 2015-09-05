@@ -65,7 +65,7 @@ class Address {
    protected $latitude = 0.0;
 
    /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
    protected $active = false;
 

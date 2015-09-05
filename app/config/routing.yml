@@ -1,6 +1,3 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-listings:
-    resource: "@AppBundle/Controller/ListingsController.php"
-    type:     annotation

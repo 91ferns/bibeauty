@@ -71,7 +71,7 @@
           <div class="col-md-9">
             <h3 class="business-name">{{result.business_name }}</h3>
             <div class="reviews">
-              
+
               <div class="reviews-number col-md-3">{{result.reviews_num}} Reviews</div>
               <a class="col-md-9" href="{{result.map_link}}"><i class="glyphicon glyphicon-map-marker"></i>Show on Map</a>
               <div class="location">{{result.city}},{{result.state}}</div>
@@ -107,8 +107,8 @@
 
 {% block javascripts %}
    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="{{ asset('/assets/js/resultsmap.js') }}" type="text/javascript"></script> 
-     <script src="{{ asset('/assets/js/datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>  
+    <script src="{{ asset('/assets/js/resultsmap.js') }}" type="text/javascript"></script>
+     <script src="{{ asset('/assets/js/datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
      <script>$(document).ready(function(){
            $('#day').datepicker()
        });</script>
