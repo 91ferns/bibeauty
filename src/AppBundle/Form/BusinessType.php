@@ -21,16 +21,19 @@ class BusinessType extends AbstractType
                 'label' => false,
                 'attr' => array(
                     'placeholder' => 'Yelp Link'
-                )
+                ),
+                'required' => false
             ))
-             ->add('description', 'text', array(
+             ->add('description', 'textarea', array(
                  'label' => false,
                  'attr' => array(
                     'placeholder' => 'Description'
                  )
               ))
               ->add('address', new AddressType())
-              ->add('headerAttachment', new AttachmentType())
+              ->add('headerAttachment', new AttachmentType(), array(
+                  'required' => false
+              ))
         ;
     }
 

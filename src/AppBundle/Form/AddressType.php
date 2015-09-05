@@ -23,7 +23,8 @@ class AddressType extends AbstractType
                  'label' => false,
                  'attr' => array(
                     'placeholder' => 'Apartment Number'
-                 )
+                ),
+                'required' => false
             ))
             ->add('city', 'text', array(
                  'label' => false,
@@ -50,7 +51,8 @@ class AddressType extends AbstractType
                  'label' => false,
                  'attr' => array(
                     'placeholder' => 'Phone Number'
-                 )
+                ),
+                'required' => false
             ))
             ->add('country', 'choice', array(
                  'label' => false,

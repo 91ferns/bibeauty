@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Cocur\Slugify\Slugify;
+
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
@@ -17,6 +19,11 @@ class Business {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -59,9 +66,17 @@ class Business {
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue() {
-        $this->createdAt = new \DateTime();
+    public function setAutomaticFields() {
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
         $this->updated = new \DateTime();
+        $this->setSlug($this->generateSlug());
+    }
+
+    protected function generateSlug() {
+        $slugify = new Slugify();
+        return $slugify->slugify($this->name); // hello-world
     }
 
     /**
@@ -235,6 +250,11 @@ class Business {
         return $this->owner;
     }
 
+    public function hasHeaderAttachment() {
+        if ($this->headerAttachment) return true;
+        return false;
+    }
+
     /**
      * Set headerAttachment
      *
@@ -258,6 +278,29 @@ class Business {
         return $this->headerAttachment;
     }
 
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Business
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
     public function toJSON() {
         return array(
             'address' => array(
@@ -273,7 +316,9 @@ class Business {
                 'latitude' => $this->address->getLatitude()
             ),
             'name' => $this->getName(),
-            'description' => $this->getDescription()
+            'description' => $this->getDescription(),
+            'slug' => $this->getSlug(),
+            'id' => $this->getID()
         );
     }
 }

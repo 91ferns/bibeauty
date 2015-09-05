@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<section id="business-information" class="nav-pad">
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{{business.getName}}</h1>
+            <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</h2>
+
+            <div class="row">
+              <div class="col-md-8">
+                <div class="header-attachment-wrapper" style="height: 290px;">
+                  {% if business.hasHeaderAttachment %}
+                    There is an awesome attachment
+                  {% else %}
+                    No awesome attachment here
+                  {% endif %}
+                </div> <!-- /.header-attachment-wrapper -->
+                <nav class="business-tab-navigation">
+                  <ul class="nav nav-pills">
+                    <li role="presentation" class="active"><a href="#">Overview</a></li>
+                    <li role="presentation"><a href="#">Services</a></li>
+                    <li role="presentation"><a href="#">Reviews</a></li>
+                  </ul>
+                </nav>
+              </div> <!-- /.col -->
+              <div class="col-md-4">
+
+                <aside class="business-aside">
+
+                  <div class="ratings">
+
+                    <div class="row">
+                      <div class="col-sm-5">
+
+                      </div>
+                      <div class="col-sm-7">
+
+                      </div>
+                    </div>
+
+                    <a class="btn btn-default btn-fullwidth">
+                      Reserve Now
+                    </a>
+
+                  </div>
+
+                  <hr>
+
+                  <div class="business-info">
+                    <h1>{{business.getName}}</h1>
+                    <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{business.getAddress.getState}}, {{business.getAddress.getCountry}}</h2>
+
+                    <ul class="nav nav-list">
+                      <li class="active"><a href="#">
+                        Show on Map
+                      </a></li>
+                      <li><a href="#">
+                        {{business.getAddress.getPhone}}
+                      </a></li>
+                      <li><a href="mailto:" class="email-link">
+
+                      </a></li>
+                      <li><a href="" target="_blank" class="website-link">
+
+                      </a></li>
+                    </ul>
+                  </div>
+
+                  <hr>
+
+                  <div class="business-hours">
+                    <h3>Opening Hours</h3>
+                    <dl class="dl-horizontal">
+                      <dt>MON-SUN</dt>
+                      <dd>2-3</dd>
+                    </dl>
+                  </div>
+
+                  <div class="payment-info">
+                    <h3>We Accept</h3>
+                  </div>
+
+                </aside>
+
+              </div>
+            </div> <!-- /.row -->
+
+        </div>
+    </div> <!-- /.jumbotron -->
+
+    <div class="business-main-content">
+      <div class="container">
+        <div class="business-description">
+          <div class="row">
+            <div class="col-md-8">
+                <h2>Welcome to {{business.getName}}</h2>
+                <p>{{business.getDescription}}</p>
+                <hr>
+              </div> <!-- /.business-description -->
+
+          </div> <!-- /.row -->
+        </div>  <!-- /.business-description -->
+
+        <div class="business-services">
+          <h4>Services</h4>
+
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Collapsible Group Item #1
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div> <!-- .panel-default -->
+          </div> <!-- /.panel-group -->
+
+          <p class="services-notify-me">
+            Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.
+          </p>
+
+          <p>
+            <a class="btn btn-primary">Notify Me</a>
+          </p>
+
+        </div> <!-- /.business-services -->
+
+        <hr>
+
+        <div class="business-reviews">
+          <h4>Ratings <small><em>(written by customers after their visit)</em></small></h4>
+          <div class="panel panel-default">
+            <div class="panel-heading">Chain Rating</div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div> <!-- /.panel -->
+          <hr>
+            <p>Have you been here? <a class="btn btn-secondary">Write a Review</a>
+          <hr>
+
+          <div class="review-comments">
+            {% for i in 0..5 %}
+            <div class="media">
+              <div class="media-left media-middle">
+                <a href="#">
+                  <img class="media-object" src="..." alt="...">
+                </a>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">Sophia</h4>
+                ...
+              </div>
+            </div> <!-- /.media -->
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}
