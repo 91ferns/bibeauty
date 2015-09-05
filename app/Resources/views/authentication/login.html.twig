@@ -5,31 +5,33 @@
 <section id="login" class="nav-pad">
 
   <div class="container">
+    <div class="col-lg-offset-3 col-lg-6 col-lg-offset-3 col-md-offset-3 col-md-6 col-md-offset-3 col-sm-offset-2 col-sm-8 col-sm-offset-2 col-xs-offset-1 col-xs-10 col-xs-offset-1">
 
-    <div class="jumbotron">
-      {% if error %}
-        <div class="alert alert-warning">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-      {% endif %}
+      <div class="jumbotron login-area">
+        {% if error %}
+          <div class="alert alert-warning">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <h1 class="login-title"><strong>Login</strong></h1>
 
-      <form action="{{ path('login_check') }}" method="post">
-        <div class="form-group">
-          <label for="username" class="control-label">Username:</label>
-          <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
-        </div>
+        <form action="{{ path('login_check') }}" method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" id="username" name="_username" placeholder="Email" value="{{ last_username }}" />
+          </div>
 
-        <div class="form-group">
-          <label for="password" class="control-label">Password:</label>
-          <input type="password" class="form-control" id="password" name="_password" />
-        </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="password" name="_password" placeholder="Password" />
+          </div>
 
-          {#
-              If you want to control the URL the user
-              is redirected to on success (more details below)
-              <input type="hidden" name="_target_path" value="/account" />
-          #}
+            {#
+                If you want to control the URL the user
+                is redirected to on success (more details below)
+                <input type="hidden" name="_target_path" value="/account" />
+            #}
+            <button type="submit" class="btn btn-default pull-right" id="login-btn">Login</button>
+        </form>
+      </div>
 
-          <button type="submit" class="btn btn-default">Login</button>
-      </form>
+        <a href="#" class="center-block forgot-password">Forgot your password?</a>
 
     </div>
 
