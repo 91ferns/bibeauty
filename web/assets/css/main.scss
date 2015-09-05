@@ -442,3 +442,11 @@ $admin-side-width: 250px;
   }
 
 }
+
+.below-map {
+  .input-group{
+    .form-control{border-right:none;}
+    &:not(:last-child){margin-bottom:5px;}
+    .input-group-addon{padding:0 12px; background-color: #fff;border: none; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; color:$brand-primary;}//border-radius:50px; color: #fff;background-color:$brand-primar;
+  }
+}

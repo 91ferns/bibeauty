@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <script src="{{ asset('/assets/js/datepicker/css/datepicker.css') }}" type="text/javascript"></script>
+{% endblock stylesheets %}
+
+{% block body %}
+<style>
+  .below-map .input-group:not(:last-child){margin-bottom:5px;}
+  .below-map .input-group .form-control{border-right:none;}
+  .below-map  .input-group-addon{padding:0 12px; background-color: #fff;border: none;  border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; color:#52c8e6;
+  /*border-radius:50px; color: #fff;background-color*/}
+</style>
+  <section class="top-map" class="col-md-12">
+  <div id="map_results"></div>
+  </section>
+  <section class="below-map col-md-12">
+    <div class="container">
+      <div class="col-md-3" class="filters-sidebar pull-left">
+        <form>
+          <div class="form-group">
+            <h3>Availability</h3>
+            <div class="input-group">
+  <input type="text" id="day" name="day" class="form-control" />
+            <span class="input-group-addon" id="basic-addon1">v</span></div>
+           <div class=" input-group"><input type="text" id="time" name="time" class="form-control"  />
+           <span class="input-group-addon" id="basic-addon1">v</span></div>
+          </div>
+          <div class="form-group">
+            <h3>Location</h3>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Enter Area or postcode"/>
+          </div>
+          <div class="form-group">
+            <h3>Treatment Type/Category</h3>
+            <select id="treatment_type" name="treatment_type" class="form-control input-lg"><option>Treatment Type</option></select>
+            <select id="treatment" name="treatment" class="form-control input-lg"><option>Treatment</option></select>
+          </div>
+        </form>
+      </div>
+    <div id="search_results" class="col-md-8">
+  {% if results %}
+    {% for result in results %}
+      <div class="result">
+        <div class="row location">
+          <div class="col-md-9">
+          <h3 class="business-name">{{result.business_name}}</h3>
+          <div class="reviews">
+          
+            <i class="glyphicon glyphicon-map-marker"></i>
+            <div class="reviews-number">{{result.num_reviews}} Reviews</div>
+            <a href="{{result.map_link}}"><img src="/images/loc-icon.png" />Show on Map</a>
+            <div class="location">{{result.city}},{{result.state}}</div>
+            <div class="description>">{{result.description}}</div>
+          </div>
+          <div class="col-md-3"><img class="business-logo" src="{{result.logo}}"/></div>
+        </div>
+        <ul class="list-group">
+          {% for treatment in result.treatments %}
+          <li class="list-group-item">
+            <a href="treatment/detail/{{treatment.id}}">
+              <div class="col-md-8 treatment-name">{{treatment.name}}</div>
+              <div class="col-md-3">
+                <div class="col-md-6">Save <span class="blue">{{treatment.percent_discount}}%</span></div>
+                <div class="col-md-6 notify-btn"><a href="#">From ${{treatment.start_dollars}}</a></div>
+              </div>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="notify-btn"><a href="#">Show {{treatment.num_remaining}} More</a></div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-warning">Sorry There are no Results.</div>
+  {% endif %}
+      </div>
+  </section>
+{% endblock body %}
+
+{% block javascripts %}
+   <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="{{ asset('/assets/js/resultsmap.js') }}" type="text/javascript"></script> 
+     <script src="{{ asset('/assets/js/datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>  
+     <script>$(document).ready(function(){
+           $('#day').datepicker()
+       });</script>
+{% endblock javascripts %}
