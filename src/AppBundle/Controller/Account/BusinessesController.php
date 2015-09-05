@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Form\BusinessType;
+use AppBundle\Form\AddressType;
 use AppBundle\Entity\Business;
+use AppBundle\Entity\Address;
 
 class BusinessesController extends Controller
 {
@@ -17,6 +19,8 @@ class BusinessesController extends Controller
     public function indexAction(Request $request)
     {
         $business = new Business();
+        $address = new Address();
+
         $form = $this->createForm(new BusinessType(), $business);
         // replace this example code with whatever you need
         return $this->render('account/businesses/index.html.twig', array(

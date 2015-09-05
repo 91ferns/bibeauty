@@ -12,17 +12,25 @@ class BusinessType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => false,
+                'label' => 'Business Information',
                 'attr' => array(
                    'placeholder' => 'Name'
                 )
              ))
+            ->add('yelpId', 'text', array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Yelp Link'
+                )
+            ))
              ->add('description', 'text', array(
                  'label' => false,
                  'attr' => array(
                     'placeholder' => 'Description'
                  )
               ))
+              ->add('address', new AddressType())
+              ->add('headerAttachment', new AttachmentType())
         ;
     }
 

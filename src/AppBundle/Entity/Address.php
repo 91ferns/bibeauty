@@ -53,12 +53,74 @@ class Address {
      */
    protected $country = 'US';
 
+   public static function getCountries() {
+    return array(
+        'US' => 'United States'
+    );
+    }
 
+    public static function getStates() {
+        $states = array(
+            'AL'=>'Alabama',
+            'AK'=>'Alaska',
+            'AZ'=>'Arizona',
+            'AR'=>'Arkansas',
+            'CA'=>'California',
+            'CO'=>'Colorado',
+            'CT'=>'Connecticut',
+            'DE'=>'Delaware',
+            'DC'=>'District of Columbia',
+            'FL'=>'Florida',
+            'GA'=>'Georgia',
+            'HI'=>'Hawaii',
+            'ID'=>'Idaho',
+            'IL'=>'Illinois',
+            'IN'=>'Indiana',
+            'IA'=>'Iowa',
+            'KS'=>'Kansas',
+            'KY'=>'Kentucky',
+            'LA'=>'Louisiana',
+            'ME'=>'Maine',
+            'MD'=>'Maryland',
+            'MA'=>'Massachusetts',
+            'MI'=>'Michigan',
+            'MN'=>'Minnesota',
+            'MS'=>'Mississippi',
+            'MO'=>'Missouri',
+            'MT'=>'Montana',
+            'NE'=>'Nebraska',
+            'NV'=>'Nevada',
+            'NH'=>'New Hampshire',
+            'NJ'=>'New Jersey',
+            'NM'=>'New Mexico',
+            'NY'=>'New York',
+            'NC'=>'North Carolina',
+            'ND'=>'North Dakota',
+            'OH'=>'Ohio',
+            'OK'=>'Oklahoma',
+            'OR'=>'Oregon',
+            'PA'=>'Pennsylvania',
+            'RI'=>'Rhode Island',
+            'SC'=>'South Carolina',
+            'SD'=>'South Dakota',
+            'TN'=>'Tennessee',
+            'TX'=>'Texas',
+            'UT'=>'Utah',
+            'VT'=>'Vermont',
+            'VA'=>'Virginia',
+            'WA'=>'Washington',
+            'WV'=>'West Virginia',
+            'WI'=>'Wisconsin',
+            'WY'=>'Wyoming',
+        );
+
+        return $states;
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -81,7 +143,7 @@ class Address {
     /**
      * Get street
      *
-     * @return string 
+     * @return string
      */
     public function getStreet()
     {
@@ -104,7 +166,7 @@ class Address {
     /**
      * Get line2
      *
-     * @return string 
+     * @return string
      */
     public function getLine2()
     {
@@ -127,7 +189,7 @@ class Address {
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -150,7 +212,7 @@ class Address {
     /**
      * Get state
      *
-     * @return string 
+     * @return string
      */
     public function getState()
     {
@@ -173,7 +235,7 @@ class Address {
     /**
      * Get zip
      *
-     * @return string 
+     * @return string
      */
     public function getZip()
     {
@@ -196,7 +258,7 @@ class Address {
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -219,7 +281,7 @@ class Address {
     /**
      * Get country
      *
-     * @return string 
+     * @return string
      */
     public function getCountry()
     {
