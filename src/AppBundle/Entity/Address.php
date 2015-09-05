@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="app_addresses")
  */
 class Address {
@@ -53,10 +54,48 @@ class Address {
      */
    protected $country = 'US';
 
+   /**
+     * @ORM\Column(type="float", length=10, nullable=true)
+     */
+   protected $longitude = 0.0;
+
+   /**
+     * @ORM\Column(type="float", length=10, nullable=true)
+     */
+   protected $latitude = 0.0;
+
+   /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+   protected $active = false;
+
+   /**
+    * @ORM\PrePersist
+    */
+   public function geocode() {
+       $curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
+       $geocoder = new \Geocoder\Provider\GoogleMaps($curl);
+
+       try {
+           $result = $geocoder->geocode($this->getAddressString());
+
+           $this->active = true;
+           $this->latitude = $result->getLatitude();
+           $this->longitude = $result->getLongitude();
+       } catch (\Exception $e) {
+           $this->active = false;
+       }
+
+   }
+
    public static function getCountries() {
     return array(
         'US' => 'United States'
     );
+    }
+
+    public static function haversine() {
+
     }
 
     public static function getStates() {
@@ -115,6 +154,16 @@ class Address {
         );
 
         return $states;
+    }
+
+    public function getAddressString() {
+
+        $string = $this->getStreet();
+        $string .= ',' . $this->getCity();
+        $string .= ',' . $this->getState();
+        $string .= ',' . $this->getCountry();
+
+        return $string;
     }
 
     /**
@@ -286,5 +335,74 @@ class Address {
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     * @return Address
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     * @return Address
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Address
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active === true;
     }
 }

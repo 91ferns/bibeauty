@@ -26,6 +26,8 @@ class BusinessesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository("AppBundle:Business")->findAll();
 
+        $records[0]->getAddress()->geocode();
+
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
 
