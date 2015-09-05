@@ -2,8 +2,18 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
 #    parameter_name: value
+    aws:
+        version: 'latest'
+        region: 'us-west-1'
+        bucket: 'bibeauty-dev'
+        credentials:
+            key: 'AKIAIBIIEKOCJZS4Y2HA'
+            secret: '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'
 
 services:
+    aws.factory:
+        class: AppBundle\Services\AWSFactory
+        arguments: ["%aws%", @logger]
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

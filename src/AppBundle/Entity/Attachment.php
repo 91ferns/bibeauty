@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use AppBundle\Entity\User;
+
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
@@ -62,11 +64,21 @@ class Attachment {
         $this->createdAt = new \DateTime();
     }
 
+    // Attr Accessor
+    public $attachment;
+
+    public function setUploadState($upload) {
+        // An AWS Object
+        $this->setKey($upload['Key']);
+        $this->setMime('image/jpeg');
+        $this->setActive(true);
+    }
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -89,7 +101,7 @@ class Attachment {
     /**
      * Get key
      *
-     * @return string 
+     * @return string
      */
     public function getKey()
     {
@@ -112,7 +124,7 @@ class Attachment {
     /**
      * Get size
      *
-     * @return integer 
+     * @return integer
      */
     public function getSize()
     {
@@ -135,7 +147,7 @@ class Attachment {
     /**
      * Get mime
      *
-     * @return string 
+     * @return string
      */
     public function getMime()
     {
@@ -158,7 +170,7 @@ class Attachment {
     /**
      * Get processed
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getProcessed()
     {
@@ -181,7 +193,7 @@ class Attachment {
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -204,7 +216,7 @@ class Attachment {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -227,7 +239,7 @@ class Attachment {
     /**
      * Get owner
      *
-     * @return \AppBundle\Entity\User 
+     * @return \AppBundle\Entity\User
      */
     public function getOwner()
     {

@@ -5,11 +5,14 @@ namespace AppBundle\Controller\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/account", name="admin_path")
+     * @Method("GET")
      */
     public function indexAction(Request $request)
     {

@@ -24,7 +24,7 @@ class Business {
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="Address", cascade={"persist"})
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
     protected $address;
@@ -61,22 +61,26 @@ class Business {
      */
     public function setCreatedAtValue() {
         $this->createdAt = new \DateTime();
+        $this->updated = new \DateTime(); 
     }
 
-    /** @ORM\Column(type="datetime") */
-    private $updated;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated;
 
+    /**
+     * @ORM\PreUpdate
+     */
     public function setUpdated() {
         // will NOT be saved in the database
         $this->updated->modify("now");
     }
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -99,7 +103,7 @@ class Business {
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -122,7 +126,7 @@ class Business {
     /**
      * Get yelpId
      *
-     * @return string 
+     * @return string
      */
     public function getYelpId()
     {
@@ -145,7 +149,7 @@ class Business {
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -168,7 +172,7 @@ class Business {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -178,7 +182,7 @@ class Business {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -201,7 +205,7 @@ class Business {
     /**
      * Get address
      *
-     * @return \AppBundle\Entity\Address 
+     * @return \AppBundle\Entity\Address
      */
     public function getAddress()
     {
@@ -224,7 +228,7 @@ class Business {
     /**
      * Get owner
      *
-     * @return \AppBundle\Entity\User 
+     * @return \AppBundle\Entity\User
      */
     public function getOwner()
     {
@@ -247,7 +251,7 @@ class Business {
     /**
      * Get headerAttachment
      *
-     * @return \AppBundle\Entity\Attachment 
+     * @return \AppBundle\Entity\Attachment
      */
     public function getHeaderAttachment()
     {
