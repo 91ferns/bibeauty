@@ -49,7 +49,6 @@ $logo-height: 78px;
 
   width: 100%;
   position: fixed;
-  top: 0px;
 
   @media (min-width: $screen-md-min) {
     position: absolute;
@@ -68,8 +67,65 @@ $logo-height: 78px;
 }
 
 // buttons for navbar
+@media (max-width : 767px) {
+  .btn-default {
+    text-align: left;
+    background: none;
+    border: none;
+  }
+}
+@media (min-width : 768px) {
 
-#notify-btn a {
+  .navbar {
+
+    .btn-default {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      padding: 5px 10px;
+    }
+    #need-help {
+      border: none;
+      background: none;
+      top: 30px;
+    }
+    #blue-button {
+      color: white;
+      border: 1px solid $brand-primary;
+      background-color: $brand-primary;
+      text-transform: uppercase;
+      top: 33px;
+      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+      -webkit-transition:all .5s;
+      -moz-transition:all .5s;
+      transition:all .5s;
+    }
+    #blue-button:hover {
+      color: $brand-primary;
+      background-color: white;
+      border: 1px solid white;
+    }
+    #white-button {
+      color: $brand-primary;
+      background-color: white;
+      border: 1px solid white;
+      text-transform: uppercase;
+      top: 33px;
+      margin-left: 12px;
+      margin-right: 12px;
+      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+      -webkit-transition:all .5s;
+      -moz-transition:all .5s;
+      transition:all .5s;
+    }
+    #white-button:hover {
+      color: white;
+      background-color: $brand-primary;
+      border: 1px solid $brand-primary;
+    }
+  }
+}
+.notify-btn a {
   color: white;
   padding: 5px 10px;
   border: 1px solid $brand-primary;
@@ -82,13 +138,9 @@ $logo-height: 78px;
   transition:all .5s;
 }
 
-#notify-btn a:hover {
-  color: $brand-primary;
-  background-color: white;
-  border: 1px solid white;
-}
 
-#login-btn a {
+
+.login-btn a {
   color: $brand-primary;
   background-color: white;
   border: 1px solid white;
@@ -108,11 +160,7 @@ $logo-height: 78px;
       font-size: 0.9em;
 }
 
-#login-btn a:hover {
-  color: white;
-  background-color: $brand-primary;
-  border: 1px solid $brand-primary;
-}
+
 
 .fa-facebook {
   color: $brand-primary;
@@ -124,9 +172,9 @@ $logo-height: 78px;
 
 .glyphicon-question-sign {
   color: $brand-primary;
-  top: 38px;
-  left: 5px;
   font-size: 1.4em;
+  top: 4px;
+  padding-right: 5px;
 }
 
 // Footer
