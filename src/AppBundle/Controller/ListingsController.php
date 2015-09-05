@@ -20,14 +20,14 @@ class ListingsController extends Controller
         ));
     }
     /**
-     * @Route("/listings_search", name="listings_search_path")
+     * @Route("/listings/search", name="listings_search_path")
      * @Method({"GET"})
      */
     public function searchAction(Request $request)
     {
         return $this->render('listings/search.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'results'  => ['business_name'=>'blah','star_img'=>'oops',
+            'results'  => (object) ['business_name'=>'blah','star_img'=>'oops',
                             'num_reviews'=>5, 'map_link'=>'x',
                             'city'=>'x','state'=>'x','logo'=>'x',
                             'description'=>'x','treatment'=>

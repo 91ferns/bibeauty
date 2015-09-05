@@ -1,5 +1,5 @@
 jQuery(function($) {
-	console.log('test');
+
 });
 
 //window scroll function for navbar opacity
