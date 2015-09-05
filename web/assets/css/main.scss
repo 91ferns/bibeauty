@@ -46,6 +46,15 @@ $logo-height: 78px;
   -webkit-transition: background 2s ease-in;
   -moz-transition: background 2s ease-in;
   transition: background 2s ease-in;
+
+  width: 100%;
+  position: fixed;
+
+  @media (min-width: $screen-md-min) {
+    position: absolute;
+  }
+
+
 }
 
 .navbar-default.opaque {
