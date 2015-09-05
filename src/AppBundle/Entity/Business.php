@@ -257,4 +257,23 @@ class Business {
     {
         return $this->headerAttachment;
     }
+
+    public function toJSON() {
+        return array(
+            'address' => array(
+                'street' => $this->address->getStreet(),
+                'line2' => $this->address->getLine2(),
+                'city' => $this->address->getCity(),
+                'state' => $this->address->getState(),
+                'zip' => $this->address->getZip(),
+                'country' => $this->address->getCountry()
+            ),
+            'coordinates' => array(
+                'longitude' => $this->address->getLongitude(),
+                'latitude' => $this->address->getLatitude()
+            ),
+            'name' => $this->getName(),
+            'description' => $this->getDescription()
+        );
+    }
 }

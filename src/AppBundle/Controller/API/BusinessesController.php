@@ -26,22 +26,17 @@ class BusinessesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository("AppBundle:Business")->findAll();
 
-        $records[0]->getAddress()->geocode();
-
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
 
-        $serializer = new Serializer($normalizers, $encoders);
-        $data = $serializer->serialize( array(
-            'data' => $records,
-            'status' => 'ok'
-        ), 'json' );
+        $data = array_map(function($business) {
+            return $business->toJSON();
+        }, $records);
 
-        $response = new Response($data);
-        $response->setStatusCode(Response::HTTP_OK);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return new JSONResponse(array(
+            'status' => 'ok',
+            'data' => $data
+        ), Response::HTTP_OK);
 
 
     }
