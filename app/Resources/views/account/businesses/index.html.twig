@@ -2,12 +2,16 @@
 
 {% block body %}
 
-<div class="nav-pad">
-{{ form_start(form) }}
-{{ form_widget(form) }}
-  <input type="submit" value="Create"
-       class="btn btn-default pull-right" />
-{{ form_end(form) }}
+<div class="panel panel-default">
+  <div class="panel-heading">Add a business</div>
+  <div class="panel-body">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+      <input type="submit" value="Create"
+           class="btn btn-default pull-right" />
+    {{ form_end(form) }}
+  </div>
 </div>
+
 
 {% endblock %}
