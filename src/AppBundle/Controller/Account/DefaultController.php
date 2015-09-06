@@ -16,8 +16,14 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Business");
+
+        $businesses = $repository->findByOwner($this->getUser()->getId());
+
         // replace this example code with whatever you need
         return $this->render('account/default/index.html.twig', array(
+            'businesses' => $businesses,
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
     }

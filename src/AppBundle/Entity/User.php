@@ -61,6 +61,20 @@ class User implements AdvancedUserInterface, \Serializable {
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=120, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 2)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=120, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 2)
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
@@ -75,6 +89,10 @@ class User implements AdvancedUserInterface, \Serializable {
     public function getUsername()
     {
         return $this->email;
+    }
+
+    public function getDisplayName() {
+        return $this->getUsername();
     }
 
     public function getSalt()
@@ -191,5 +209,51 @@ class User implements AdvancedUserInterface, \Serializable {
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 }

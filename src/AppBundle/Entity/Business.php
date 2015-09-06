@@ -6,6 +6,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity()
@@ -27,8 +29,32 @@ class Business {
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
+     */
+    protected $website = null;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Email
+     */
+    protected $email = null;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $acceptsCash = true;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $acceptsCredit = true;
 
     /**
      * @ORM\OneToOne(targetEntity="Address", cascade={"persist", "remove"}, orphanRemoval=true, fetch="EAGER")
@@ -37,12 +63,26 @@ class Business {
     protected $address;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Review", cascade={"persist"}, mappedBy="business")
      */
-    protected $yelpId;
+    protected $reviews;
+
+    /**
+     * @ORM\OneToOne(targetEntity="OperatingSchedule", cascade={"persist", "remove"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\JoinColumn(name="operation_id", referencedColumnName="id")
+     */
+    protected $operation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Url()
+     */
+    protected $yelpId = '';
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 10)
      */
     protected $description;
 
@@ -57,6 +97,12 @@ class Business {
      * @ORM\JoinColumn(name="header_attachment_id", referencedColumnName="id")
      */
     protected $headerAttachment;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Attachment", cascade={"remove"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\JoinColumn(name="logo_attachment_id", referencedColumnName="id")
+     */
+    protected $logoAttachment;
 
     /**
      * @ORM\Column(type="datetime")
@@ -133,7 +179,8 @@ class Business {
      */
     public function setYelpId($yelpId)
     {
-        $this->yelpId = $yelpId;
+        if (!empty($yelpId))
+            $this->yelpId = $yelpId;
 
         return $this;
     }
@@ -320,5 +367,187 @@ class Business {
             'slug' => $this->getSlug(),
             'id' => $this->getID()
         );
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     * @return Business
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Business
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set acceptsCash
+     *
+     * @param boolean $acceptsCash
+     * @return Business
+     */
+    public function setAcceptsCash($acceptsCash)
+    {
+        $this->acceptsCash = $acceptsCash;
+
+        return $this;
+    }
+
+    /**
+     * Get acceptsCash
+     *
+     * @return boolean
+     */
+    public function getAcceptsCash()
+    {
+        return $this->acceptsCash;
+    }
+
+    /**
+     * Set acceptsCredit
+     *
+     * @param boolean $acceptsCredit
+     * @return Business
+     */
+    public function setAcceptsCredit($acceptsCredit)
+    {
+        $this->acceptsCredit = $acceptsCredit;
+
+        return $this;
+    }
+
+    /**
+     * Get acceptsCredit
+     *
+     * @return boolean
+     */
+    public function getAcceptsCredit()
+    {
+        return $this->acceptsCredit;
+    }
+
+    /**
+     * Set operation
+     *
+     * @param \AppBundle\Entity\OperatingSchedule $operation
+     * @return Business
+     */
+    public function setOperation(\AppBundle\Entity\OperatingSchedule $operation = null)
+    {
+        $this->operation = $operation;
+
+        return $this;
+    }
+
+    /**
+     * Get operation
+     *
+     * @return \AppBundle\Entity\OperatingSchedule
+     */
+    public function getOperation()
+    {
+        return $this->operation;
+    }
+
+    /**
+     * Set logoAttachment
+     *
+     * @param \AppBundle\Entity\Attachment $logoAttachment
+     * @return Business
+     */
+    public function setLogoAttachment(\AppBundle\Entity\Attachment $logoAttachment = null)
+    {
+        $this->logoAttachment = $logoAttachment;
+
+        return $this;
+    }
+
+    /**
+     * Get logoAttachment
+     *
+     * @return \AppBundle\Entity\Attachment
+     */
+    public function getLogoAttachment()
+    {
+        return $this->logoAttachment;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reviews
+     *
+     * @param \AppBundle\Entity\Review $reviews
+     * @return Business
+     */
+    public function addReview(\AppBundle\Entity\Review $reviews)
+    {
+        $this->reviews[] = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * Remove reviews
+     *
+     * @param \AppBundle\Entity\Review $reviews
+     */
+    public function removeReview(\AppBundle\Entity\Review $reviews)
+    {
+        $this->reviews->removeElement($reviews);
+    }
+
+    public function hasReviews() {
+        return $this->reviews->count() > 0;
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 }
