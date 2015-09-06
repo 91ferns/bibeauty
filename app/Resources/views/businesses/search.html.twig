@@ -4,53 +4,23 @@
 {% endblock stylesheets %}
 
 {% block body %}
-<style>
-  #search_results{margin-top:48px;}
-  section.below-map{background-color:#fff;}
-  .below-map .row.treatments,
-  .below-map .list-group-item.row{margin-left:0;}
-  .below-map .form-group > h3{color:rgb(63, 64, 64);font-size:18px;}
-  h3.business-name{color:rgb(63, 64, 64);}
-  #search_results .reviews, #search_results .treatments .treatment-name, .treatments .savings{color:#919191;}
-  .treatments span.blue{color:#52c8e6;}
-  .below-map .form-group select{color:#919191;}
-  .row.location{    border-top: 1px solid #ddd;}
-  .reviews-number{    margin-left: -15px;}
-  .reviews{margin-bottom:20px;}
-  .reviews>*{padding-bottom:5px;}
-  .business-logo{margin-top:20px;}
-  .treatments .notify-btn > a{
-        color: white;
-    padding: 5px 10px;
-    border: 1px solid #52c8e6;
-    background-color: #52c8e6;
-    text-transform: uppercase;
-    top: 33px;
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
-    -webkit-transition: all .5s;
-    -moz-transition: all .5s;
-    transition: all .5s;
-  }
-  .treatments .notify-btn > a[href^="treatment"]{display:none;}
-  .below-map .input-group:not(:last-child), .below-map .form-group > select:not(:last-child){margin-bottom:5px;}
-  .below-map .input-group .form-control{border-right:none;}
-  .below-map  .input-group-addon{padding:0 12px; background-color: #fff;border: none;  border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; color:#52c8e6;
-  /*border-radius:50px; color: #fff;background-color*/}
-</style>
   <section class="top-map" class="col-md-12">
-  <div id="map_results"></div>
+    <div id="map_results"></div>
   </section>
   <section class="below-map col-md-12">
     <div class="container">
+
       <div class="col-md-3" class="filters-sidebar pull-left">
         <form>
           <div class="form-group">
             <h3>Availability</h3>
             <div class="input-group">
-  <input type="text" id="day" name="day" class="form-control" />
-            <span class="input-group-addon" id="basic-addon1">v</span></div>
-           <div class=" input-group"><input type="text" id="time" name="time" class="form-control"  />
-           <span class="input-group-addon" id="basic-addon1">v</span></div>
+              <input type="text" id="day" name="day" class="form-control"/>
+              <span class="input-group-addon" id="basic-addon1">v</span>
+            </div>
+            <div class=" input-group"><input type="text" id="time" name="time" class="form-control"/>
+              <span class="input-group-addon" id="basic-addon1">v</span>
+            </div>
           </div>
           <div class="form-group">
             <h3>Location</h3>
@@ -63,47 +33,70 @@
           </div>
         </form>
       </div>
-    <div id="search_results" class="col-md-8">
-  {% if results %}
-    {% for result in results %}
-      <div class="result">
-        <div class="row location">
-          <div class="col-md-9">
-            <h3 class="business-name">{{result.business_name }}</h3>
-            <div class="reviews">
 
-              <div class="reviews-number col-md-3">{{result.reviews_num}} Reviews</div>
-              <a class="col-md-9" href="{{result.map_link}}"><i class="glyphicon glyphicon-map-marker"></i>Show on Map</a>
-              <div class="location">{{result.city}},{{result.state}}</div>
-              <div class="description>">{{result.description}}</div>
-            </div>
-          </div>
-          <div class="col-md-3"><img class="business-logo" src="{{result.logo}}"/></div>
-        </div>
-        <div class="row treatments">
-          <ul class="col-md-12 list-group">
-            {% for treatment in result.treatments %}
-            <li class="list-group-item row">
-              <a href="treatment/detail/{{treatment.id}}">
-                <div class="col-md-8 treatment-name">{{treatment.name}}</div>
-                <div class="col-md-4">
-                  <div class="col-md-6 savings">Save <span class="blue">{{treatment.percent_discount}}%</span></div>
-                  <div class="notify-btn"><a href="#">From ${{treatment.start_dollars}}</a></div>
+        <div id="search_results" class="col-md-8">
+          {% if results %}
+          {% for result in results %}
+          <div class="result">
+            <div class="row location">
+              <div class="col-md-9">
+                <h3 class="business-name">{{result.business_name }}</h3>
+                <div class="reviews">
+                  <div class="reviews-number col-md-3">
+                    {{result.reviews_num}} Reviews
+                  </div>
+                  <a class="col-md-9" href="{{result.map_link}}">
+                    <i class="glyphicon glyphicon-map-marker"></i>Show on Map
+                  </a>
+                  <div class="location">
+                    {{result.city}},{{result.state}}
+                  </div>
+                  <div class="description>">
+                    {{result.description}}
+                  </div>
                 </div>
-              </a>
-            </li>
+              </div>
+              <div class="col-md-3">
+                <img class="business-logo" src="{{result.logo}}"/>
+              </div>
+            </div>
+
+            <div class="row treatments">
+              <ul class="col-md-12 list-group">
+                {% for treatment in result.treatments %}
+                <li class="list-group-item row">
+                    <a href="treatment/detail/{{treatment.id}}">
+                      <div class="col-md-8 treatment-name">
+                          {{treatment.name}}
+                      </div>
+                      <div class="col-md-4">
+                        <div class="col-md-6 savings">
+                            Save <span class="blue">{{treatment.percent_discount}}%</span>
+                        </div>
+                        <div class="notify-btn">
+                          <a href="#">From ${{treatment.start_dollars}}</a>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <div class="notify-btn">
+                  <a href="#">Show {{treatment.num_remaining}} More</a>
+                </div>
+              </div>
+            </div>
             {% endfor %}
-          </ul>
-        <div class="notify-btn"><a href="#">Show {{treatment.num_remaining}} More</a></div>
-      </div>
-    </div>
-    {% endfor %}
-  {% else %}
-    <div class="alert alert-warning">Sorry There are no Results.</div>
-  {% endif %}
-      </div>
-  </section>
-{% endblock body %}
+            {% else %}
+
+            <div class="alert alert-warning">
+              Sorry There are no Results.
+            </div>
+
+            {% endif %}
+          </div>
+        </section>
+  {% endblock body %}
 
 {% block javascripts %}
    <script src="https://maps.googleapis.com/maps/api/js"></script>

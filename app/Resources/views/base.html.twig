@@ -16,7 +16,7 @@
 </head>
 <body class="base">
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <a class="navbar-brand" href="/">
             <img src="{{ asset('assets/images/logo.png') }}">
@@ -29,48 +29,49 @@
         </button>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="hidden-xs">
-                    <i class="glyphicon glyphicon-question-sign"></i>
+                <li class="">
+                    <a href="#" class="btn btn-default" id="need-help">
+                      <i class="glyphicon glyphicon-question-sign hidden-xs"></i>Need Help
+                    </a>
                 </li>
-                <li class="hidden-xs">
-                    <a href="#">Need Help</a>
-                </li>
-                <li class="hidden-lg hidden-md hidden-sm">
-                    <a href="#">Need Help</a>
-                </li>
-                <li class="hidden-xs" id="notify-btn">
-                    <a href="#">Notify Me</a>
-                </li>
-                <li class="hidden-lg hidden-md hidden-sm">
-                  <a href="#">Notify Me</a>
+                <li class="">
+                    <a href="#" class="btn btn-default" id="blue-button">
+                      Notify Me
+                    </a>
                 </li>
                 {% if app.user %}
                   <li>
-                    <a href="{{path('admin_path')}}">
-                      Account
-                    </a>
-                  </li>
-                  <li>
-                    <a href="{{path('logout_path')}}">
+                    <a href="{{path('logout_path')}}" class="btn btn-default" id="white-button">
                       Logout
                     </a>
                   </li>
+                  <li>
+                    <a href="{{path('admin_path')}}" class="btn btn-default" id="blue-button">
+                      Account
+                    </a>
+                  </li>
                 {% else %}
-                  <li class="hidden-xs" id="login-btn">
-                      <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
+                  <li class="">
+                      <a href="{{ path('login_route') }}" class="btn btn-default" id="white-button">
+                        Login<i class="glyphicon glyphicon-play-circle hidden-xs"></i>
+                      </a>
                   </li>
-                  <li class="hidden-lg hidden-md hidden-sm">
-                    <a href="{{ path('login_route') }}">Login<i class="glyphicon glyphicon-play-circle"></i></a>
-                  </li>
-                  <li class="hidden-xs" id ="notify-btn">
-                      <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
-                  </li>
-                  <li class="hidden-lg hidden-md hidden-sm">
-                      <a href="{{ path('signup_route') }}">Sign Up<i class="glyphicon glyphicon-play-circle"></i></a>
+                  <li class="">
+                      <a href="{{ path('signup_route') }}" class="btn btn-default" id="blue-button">
+                        Sign Up<i class="glyphicon glyphicon-play-circle hidden-xs"></i>
+                      </a>
                   </li>
                 {% endif %}
-                <li><a href="#"><i class="fa fa-facebook hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Facebook</span></a></li>
-                <li><a href="#"><i class="fa fa-twitter hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Twitter</span></a></li>
+                <li>
+                  <a href="#">
+                    <i class="fa fa-facebook hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Facebook</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fa fa-twitter hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Twitter</span>
+                  </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -166,9 +167,6 @@
     filter='uglifyjs2' %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
-<script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChknyNMPI6yvXfQN3fnalk4PGSR9sHQOo&callback=RESULTS_MAP">
-    </script>
 {% block javascripts %}{% endblock %}
 </body>
 </html>
