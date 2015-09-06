@@ -39,6 +39,17 @@
               <select id="treatment" name="treatment" class="form-control"><option>Treatment</option></select>
             </div>
           </div>
+          <hr>
+          <div class="form-group">
+            <h4>Price Range</h4>
+            <div class="range">
+  	           <input type="text" id="amount_left" readonly style="">
+               <input type="text" id="amount_right" readonly style="">
+               <div id="slider-range"></div>
+            </div>
+          </div>
+          <hr>
+          <p>Update Button goes here</p>
         </form>
       </div>
 
@@ -102,6 +113,7 @@
             </div>
 
             {% endif %}
+
           </div>
         </section>
   {% endblock body %}
