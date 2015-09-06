@@ -7,40 +7,45 @@
       <strong>My Bookings (placeholder)</strong>
       <a href="#" class="admin-btn"><i class="fa fa-trash-o fa-lg"></i><strong>Delete</strong></a>
       <a href="#" class="admin-btn"><i class="fa fa-pencil-square-o fa-lg"></i><strong>Edit</strong></a>
-      <a href="{{path('admin_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
+      <a href="{{path('admin_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business(dev)</strong></a>
     </div>
+
     <div class="panel-body">
-
-
       {% if businesses %}
         <table class="table businesses-table">
           <thread>
             <tr>
               <th>ID</th>
-              <th>Business Name</th>
+              <th><a href="#" id="check-all-box">All</a></th>
+              <th>Cilent</th>
+              <th>Services</th>
+              <th>Category</th>
               <th>Treatment</th>
               <th>Date</th>
               <th>Time</th>
               <th>Price</th>
-              <th>Duration</th>
-              <th>Enabled</th>
+              <th>Therapist</th>
+              <th>Status</th>
             </tr>
           </thread>
           <tbody>
 
         {% for business in businesses %}
         <tr>
+          <td>01</td>
+          <td>tick</td>
+          <td>Steve</td>
+          <td>empty</td>
+          <td>empty</td>
+          <td>empty</td>
+          <td>empty</td>
+          <td>empty</td>
           <td>empty</td>
           <td>
             <a href="{{ path('business_path', { 'slug': business.slug, 'id': business.id} ) }}">
-              {{ business.name }}
-            </a>
-          </td>
-          <td>empty</td>
-          <td>empty</td>
-          <td>empty</td>
-          <td>empty</td>
-          <td>empty</td>
+            {{ business.name }}
+          </a>
+        </td>
           <td>empty</td>
         </tr>
         {% endfor %}
