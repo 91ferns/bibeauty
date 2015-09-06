@@ -11,14 +11,29 @@ parameters:
             secret: '1tg5sjXCuxrtPUWdG/6ZeO8Am3Zqdr6x5n4GbR6k'
     braintree:
         version: 'latest'
+    yelp:
+        consumer_key: '-S2PvM-f9LLrDjGJgsi-Fw'
+        consumer_secret: 'NjoaIcbHauneS1VA4vO9gMll3Vo'
+        token: '8K4AQnikVYMd1hxzfLQWETpUFaaxZHqa'
+        token_secret: 'r18hQFFO0SC15F14svVeH_vRhTU'
+#        api_host: 'api.yelp.com'
 
 services:
-    braintree.factory:
-        class: AppBundle\Services\BraintreeFactory
-        arguments: ["%braintree%", @logger]
     aws.factory:
         class: AppBundle\Services\AWSFactory
         arguments: ["%aws%", @logger]
+    braintree.factory:
+        class: AppBundle\Services\BraintreeFactory
+        arguments: ["%braintree%", @logger]
+    yelp.factory:
+        class: AppBundle\Services\YelpFactory
+        arguments: ["%yelp%", @logger]
+    app.twig_extension:
+        class: AppBundle\Twig\AppExtension
+        public: false
+        arguments: ["%aws%"]
+        tags:
+            - { name: twig.extension }
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

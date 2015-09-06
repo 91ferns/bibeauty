@@ -75,9 +75,10 @@ class Business {
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      * @Assert\Url()
      */
-    protected $yelpId = '';
+    protected $yelpLink;
 
     /**
      * @ORM\Column(type="text")
@@ -172,27 +173,38 @@ class Business {
     }
 
     /**
-     * Set yelpId
+     * Set yelpLink
      *
-     * @param string $yelpId
+     * @param string $yelpLink
      * @return Business
      */
-    public function setYelpId($yelpId)
+    public function setYelpLink($yelpLink)
     {
-        if (!empty($yelpId))
-            $this->yelpId = $yelpId;
+        if (!empty($yelpLink)) {
+            $this->$yelpLink = $yelpLink;
+        }
 
         return $this;
     }
 
     /**
-     * Get yelpId
+     * Get yelpId. Converts to ID from the link
      *
      * @return string
      */
     public function getYelpId()
     {
-        return $this->yelpId;
+        $regex = '/https?:\/\/(www.)?yelp.com\/biz\/(?P<id>[^\/])+/';
+
+        if (preg_match($regex, $this->yelpLink, $matches)) {
+            return $matches['id'];
+        }
+        return false;
+
+    }
+
+    public function getYelpLink() {
+        return $this->yelpLink;
     }
 
     /**
@@ -549,5 +561,15 @@ class Business {
     public function getReviews()
     {
         return $this->reviews;
+    }
+
+    protected $averageRating = false;
+
+    public function getAverageRating() {
+        return $this->averageRating;
+    }
+
+    public function setAverageRating($averageRating) {
+        $this->averageRating = $averageRating;
     }
 }

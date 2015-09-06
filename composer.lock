@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6e29ac9c532f2b77df0665b9d75e6ae4",
+    "hash": "60499d7c84c52953cd40b0686e4211fc",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1090,6 +1090,69 @@
             "time": "2015-08-12 09:35:40"
         },
         {
+            "name": "giggsey/libphonenumber-for-php",
+            "version": "7.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
+                "reference": "548dfad32e5a08681d81d68358f70e0ffec90c9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/548dfad32e5a08681d81d68358f70e0ffec90c9a",
+                "reference": "548dfad32e5a08681d81d68358f70e0ffec90c9a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
+            },
+            "require-dev": {
+                "pear/pear-core-minimal": "^1.9",
+                "pear/pear_exception": "*",
+                "pear/versioncontrol_git": "dev-master",
+                "phing/phing": "~2.7",
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6",
+                "symfony/console": "~2.4"
+            },
+            "suggest": {
+                "ext-intl": "To use the geocoder and carrier mapping"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "libphonenumber": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "http://giggsey.com/"
+                }
+            ],
+            "description": "PHP Port of Google's libphonenumber",
+            "homepage": "https://github.com/giggsey/libphonenumber-for-php",
+            "keywords": [
+                "geocoding",
+                "geolocation",
+                "libphonenumber",
+                "mobile",
+                "phonenumber",
+                "validation"
+            ],
+            "time": "2015-09-01 20:26:39"
+        },
+        {
             "name": "google/apiclient",
             "version": "1.0.6-beta",
             "source": {
@@ -1195,6 +1258,57 @@
                 "web service"
             ],
             "time": "2015-07-04 20:09:24"
+        },
+        {
+            "name": "guzzlehttp/oauth-subscriber",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/oauth-subscriber.git",
+                "reference": "04960cdef3cd80ea401d6b0ca8b3e110e9bf12cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/oauth-subscriber/zipball/04960cdef3cd80ea401d6b0ca8b3e110e9bf12cf",
+                "reference": "04960cdef3cd80ea401d6b0ca8b3e110e9bf12cf",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Subscriber\\Oauth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle OAuth 1.0 subscriber",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "oauth"
+            ],
+            "time": "2015-08-15 19:44:28"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1901,6 +2015,57 @@
             ],
             "description": "A security checker for your composer.lock",
             "time": "2015-08-11 12:11:25"
+        },
+        {
+            "name": "stevenmaguire/yelp-php",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stevenmaguire/yelp-php.git",
+                "reference": "32fec744fd618347349bbcbb1e04ab308ec84451"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stevenmaguire/yelp-php/zipball/32fec744fd618347349bbcbb1e04ab308ec84451",
+                "reference": "32fec744fd618347349bbcbb1e04ab308ec84451",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/oauth-subscriber": "~0.3",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stevenmaguire\\Yelp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steven Maguire",
+                    "email": "stevenmaguire@gmail.com",
+                    "homepage": "http://stevenmaguire.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A php client for consuming Yelp API",
+            "homepage": "http://github.com/stevenmaguire/yelp-php",
+            "keywords": [
+                "api",
+                "oauth1",
+                "php",
+                "yelp"
+            ],
+            "time": "2015-08-27 19:59:12"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use AppBundle\Entity\User;
+
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
@@ -293,5 +295,29 @@ class Review {
     public function getBusiness()
     {
         return $this->business;
+    }
+
+    public static function fromYelp($reviewObject) {
+
+        $review = new Review();
+
+        $review->setRating($reviewObject->rating);
+        $review->setContent($reviewObject->excerpt);
+
+        $date = new \DateTime();
+        $date->setTimestamp($reviewObject->time_created);
+        $review->setCreatedAt($date);
+
+        $theUser = new User();
+
+        $user = $reviewObject->user;
+        if ($user) {
+            $theUser->setFirstName($user->name);
+        }
+
+        $review->setPoster($theUser);
+
+        return $review;
+
     }
 }

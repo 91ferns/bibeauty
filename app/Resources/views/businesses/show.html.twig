@@ -10,13 +10,12 @@
 
             <div class="row">
               <div class="col-md-8">
-                <div class="header-attachment-wrapper" style="height: 290px;">
                   {% if business.hasHeaderAttachment %}
-                    There is an awesome attachment
+                    <div class="header-attachment-wrapper" style="background-image: url({{ business.getHeaderAttachment.getKey | s3 }})">
                   {% else %}
-                    No awesome attachment here
+                    <div class="header-attachment-wrapper" style="">
                   {% endif %}
-                </div> <!-- /.header-attachment-wrapper -->
+                  </div> <!-- /.header-attachment-wrapper -->
                 <nav class="business-tab-navigation">
                   <ul class="nav nav-pills">
                     <li role="presentation" class="active"><a href="#">Overview</a></li>
@@ -33,7 +32,16 @@
 
                     <div class="row">
                       <div class="col-sm-5">
-
+                        <div class="ratings-lead">
+                          <small>Rating</small><br>
+                          <span class="ratings-number">
+                            {{business.getAverageRating}}
+                          </span>
+                        </div>
+                        <div class="stars">
+                          {{ business.getAverageRating | rating }}
+                        </div> <!-- /.stars -->
+                        <p>From Yelp</p>
                       </div>
                       <div class="col-sm-7">
 
@@ -50,14 +58,14 @@
 
                   <div class="business-info">
                     <h1>{{business.getName}}</h1>
-                    <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{business.getAddress.getState}}, {{business.getAddress.getCountry}}</h2>
+                    <h2>{{business.address.getFullAddressString}}</h2>
 
                     <ul class="nav nav-list">
-                      <li class="active"><a href="#">
+                      <li class="active"><a href="{{business.address.getGoogleMapsUrl}}" target="_blank">
                         Show on Map
                       </a></li>
-                      <li><a href="#">
-                        {{business.getAddress.getPhone}}
+                      <li><a href="tel:{{business.getAddress.getPhone | phone}}">
+                        {{business.getAddress.getPhone | phone}}
                       </a></li>
                       {% if business.getEmail %}
                       <li><a href="mailto:{{business.getEmail}}" class="email-link">
@@ -65,7 +73,7 @@
                       </a></li>
                       {% endif %}
                       {% if business.getWebsite %}
-                      <li><a href="" target="_blank" class="website-link">
+                      <li><a href="{{business.getWebsite}}" target="_blank" class="website-link">
                         {{business.getWebsite}}
                       </a></li>
                       {% endif %}
@@ -141,10 +149,24 @@
 
         <div class="business-reviews">
           <h4>Ratings <small><em>(written by customers after their visit)</em></small></h4>
-          <div class="panel panel-default">
-            <div class="panel-heading">Chain Rating</div>
+          <div class="panel panel-default ratings-panel">
+            <div class="panel-heading">
+              <div class="ratings">
+                <div class="row">
+                  <div class="pull-left full-rating">
+                    {{business.getAverageRating}}
+                  </div>
+                  <div class="col-sm-6">
+                    <small>Chain Rating</small>
+                    <div class="stars">
+                      {{ business.getAverageRating | rating }} <small>from Yelp</small>
+                    </div>
+                  </div>
+                </div> <!-- /.row -->
+              </div> <!-- /.ratings -->
+            </div>
             <div class="panel-body">
-              Panel content
+              Advanced ratings coming soon.
             </div>
           </div> <!-- /.panel -->
           <hr>
@@ -155,10 +177,16 @@
             {% for review in business.getReviews %}
             <div class="media">
               <div class="media-left media-middle">
-                <img class="media-object" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
+                <img class="media-object img-circle" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
               </div>
               <div class="media-body">
                 <h4 class="media-heading">{{ review.poster.getDisplayName }}</h4>
+                <div class="ratings">
+                  <div class="stars">
+                    {{ review.getRating | rating }}
+                  </div>
+                  <em>{{ review.getCreatedAt | elapsed }}</em>
+                </div>
                 <p class="comment-text">{{ review.getContent }}</p>
               </div>
             </div> <!-- /.media -->

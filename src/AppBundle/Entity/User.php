@@ -92,7 +92,16 @@ class User implements AdvancedUserInterface, \Serializable {
     }
 
     public function getDisplayName() {
-        return $this->getUsername();
+        $firstName = $this->getFirstName();
+        $lastName = $this->getLastName();
+
+        $displayName = $firstName;
+
+        if ($lastName) {
+            $displayName .= ' ' . $lastName;
+        }
+
+        return $displayName;
     }
 
     public function getSalt()
@@ -227,7 +236,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -250,10 +259,16 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    public function getGravatar($s = 60, $d = 'mm', $r = 'g') {
+        $format = 'http://www.gravatar.com/avatar/%s?s=%s&d=%s&r=%s';
+        $emailHash = md5( strtolower( trim( $this->getEmail() ) ) );
+        return sprintf($format, $emailHash, $s, $d, $r);;
     }
 }

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Business;
+use AppBundle\Entity\Review;
 
 class BusinessesController extends Controller
 {
@@ -43,6 +44,20 @@ class BusinessesController extends Controller
 
         if (!$business) {
             throw $this->createNotFoundException('We couldn\'t find that business');
+        }
+
+        if ($business->getYelpId()) {
+            $yelp = $this->get('yelp.factory');
+            $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
+
+            if ($response->rating) {
+                $business->setAverageRating($response->rating);
+            }
+
+            foreach($response->reviews as $review) {
+                $theReview = Review::fromYelp($review);
+                $business->addReview($theReview);
+            }
         }
 
         return $this->render('businesses/show.html.twig', array(

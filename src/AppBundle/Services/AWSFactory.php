@@ -34,12 +34,15 @@ class AWSFactory
         ));
     }
 
-    public function upload($path, $filename = null) {
+    public function upload($path, $filename = null, $acl = 'public-read') {
         $s3 = $this->S3();
-
 
         if ($filename === null) {
             $filename = basename($path);
+        } else {
+            if (is_array($filename)) {
+                $filename = join(PATH_SEPARATOR, $filename);
+            }
         }
 
         $uploader = new MultipartUploader(
@@ -47,7 +50,8 @@ class AWSFactory
             $path,
             array(
                 'bucket' => $this->config['bucket'],
-                'key' => $filename
+                'key' => $filename,
+                'ACL' => $acl
             )
         );
 

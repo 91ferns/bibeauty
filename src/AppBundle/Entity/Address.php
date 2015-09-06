@@ -410,4 +410,18 @@ class Address {
         return $this->active === true;
     }
 
+    public function getGoogleMapsUrl() {
+        return sprintf('http://maps.google.com/?q=%s', urlencode($this->getFullAddressString()));
+    }
+
+    public function getFullAddressString() {
+        return sprintf(
+            '%s, %s, %s, %s',
+            $this->getStreet(),
+            $this->getCity(),
+            $this->getState(),
+            $this->getCountry()
+        );
+    }
+
 }

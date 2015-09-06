@@ -89,8 +89,66 @@
   }
 
   .header-attachment-wrapper {
+    height: 290px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     background: rgba(255,255,255,0.3);
     margin-bottom: 15px;
   }
 
+  .business-aside .ratings {
+    text-align: center;
+  }
+
+  .ratings {
+
+    .stars {
+      .active {color: #ffcc30;}
+      font-size: 13px;
+    }
+
+    .ratings-number {
+      font-size: 52px;
+      line-height: 56px;
+    }
+
+    .ratings-lead {
+      > small {
+        font-size: 18px;
+        line-height: 20px;
+        color: #3d3d3d;
+      }
+    }
+
+    p {
+      font-size: 12px;;
+      line-height: 12px;
+      color: #3d3d3d;
+      margin-top: 3px;
+      margin-bottom: 15px;
+      font-weight: 200;
+      text-transform: uppercase;
+    }
+
+  }
+
+}
+
+.review-comments {
+  > .media {
+    background-color: #f7f7f7;
+    padding: 22px 15px;
+    margin-bottom: 15px;
+
+    .media-heading {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .comment-text {
+      font-size: 13px;
+      color: #2a2a2a;
+    }
+  }
 }
