@@ -46,6 +46,7 @@ $border-radius-large: $border-radius-base;
   box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.18);
 }
 
+
 .nav-pad {
   margin-top: $navbar-height;
 }
@@ -62,15 +63,14 @@ $logo-height: 78px;
   transition: background 2s ease-in;
 
   &.navbar-static-top {
-    width: 100%;
-    position: fixed;
-    top: 0px;
+  width: 100%;
+  position: fixed;
+  top: 0px;
 
     @media (min-width: $screen-md-min) {
       position: absolute;
     }
   }
-
 }
 
 .navbar-default.opaque {
@@ -491,73 +491,88 @@ main section {
   background: none;
 }
 // businesses search page
-#search_results {
-  margin-top:48px;
+#below-map {
+  .input-group {
+    padding: 3px;
+  }
+  #day {
+    border-right: none;
+  }
+  #time {
+    border-right: none;
+  }
+  #basic-addon1 {
+    background: none;
+    border-left: none;
+    color: $brand-primary;
+  }
+  .form-group {
+    padding-bottom: 25px;
+    padding-top: 10px;
+  }
+  .dropdown-group {
+    padding: 3px;
+    select {
+      background: url
+    }
+  }
 }
-section.below-map {
-  background-color:#fff;
+//slider
+
+
+.range:before,
+.range:after {
+	display:table;
+	content:"";
 }
-.below-map .row.treatments, .below-map .list-group-item.row {
-  margin-left:0;
+
+.range:before,
+.range:after {
+	clear:both;
 }
-.below-map .form-group > h3 {
-  color:rgb(63, 64, 64);
-  font-size:18px;
+.range {
+	margin:15px 0 0 0;
 }
-h3.business-name {
-  color:rgb(63, 64, 64);
+
+#amount_left,
+#amount_right {
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0;
+    padding: 2px;
+    width: 40px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid #ddd;
+    outline: 0;
+	  color:#000;
+    text-align: center;
+    vertical-align: text-bottom;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+	  border-radius: .3125em;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
+    -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
 }
-#search_results .reviews, #search_results .treatments .treatment-name, .treatments .savings {
-  color:#919191;
+#amount_right {
+	float:right;
 }
-.treatments span.blue {
-  color:#52c8e6;
-}
-.below-map .form-group select {
-  color:#919191;
-}
-.row.location {
-  border-top: 1px solid #ddd;
-}
-.reviews-number {
-  margin-left: -15px;
-}
-.reviews {
-  margin-bottom:20px;
-}
-.reviews>* {
-  padding-bottom:5px;
-}
-.business-logo {
-  margin-top:20px;
-}
-.treatments .notify-btn > a{
-  color: white;
-  padding: 5px 10px;
-  border: 1px solid #52c8e6;
-  background-color: #52c8e6;
-  text-transform: uppercase;
-  top: 33px;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
-  -webkit-transition: all .5s;
-  -moz-transition: all .5s;
-  transition: all .5s;
-}
-.treatments .notify-btn > a[href^="treatment"] {
-  display:none;
-}
-.below-map .input-group:not(:last-child), .below-map .form-group > select:not(:last-child) {
-  margin-bottom:5px;
-}
-.below-map .input-group .form-control {
-  border-right:none;
-}
-.below-map  .input-group-addon {
-  padding:0 12px;
-  background-color: #fff;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  border-top: 1px solid #ccc;
-  color:#52c8e6;
-  /*border-radius:50px; color: #fff;background-color*/
+
+#slider-range {
+  position: relative;
+  overflow: visible;
+  height: 10px;
+  margin: 8px 60px 0;
+	background:#e9e9e9;
+	border:1px solid #ddd;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
+  -moz-box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.2);
 }
