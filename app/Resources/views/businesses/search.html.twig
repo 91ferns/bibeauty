@@ -4,32 +4,40 @@
 {% endblock stylesheets %}
 
 {% block body %}
-  <section class="top-map" class="col-md-12">
+
+  <section id="top-map" class="nav-pad">
     <div id="map_results"></div>
   </section>
-  <section class="below-map col-md-12">
-    <div class="container">
 
-      <div class="col-md-3" class="filters-sidebar pull-left">
+  <section id="below-map" class="nav-pad">
+    <div class="container">
+      <div class="col-lg-4">
         <form>
           <div class="form-group">
-            <h3>Availability</h3>
-            <div class="input-group">
-              <input type="text" id="day" name="day" class="form-control"/>
-              <span class="input-group-addon" id="basic-addon1">v</span>
-            </div>
-            <div class=" input-group"><input type="text" id="time" name="time" class="form-control"/>
-              <span class="input-group-addon" id="basic-addon1">v</span>
-            </div>
+            <h4>Availability</h4>
+          <div class="input-group">
+            <input type="text" id="day" name="day" class="form-control" placeholder="Day"/>
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
           </div>
+          <div class="input-group">
+            <input type="text" id="time" name="time" class="form-control" placeholder="Time"/>
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
+          </div>
+        </div>
+        <hr>
           <div class="form-group">
-            <h3>Location</h3>
+            <h4>Location</h4>
             <input type="text" id="location" name="location" class="form-control" placeholder="Enter Area or postcode"/>
           </div>
+          <hr>
           <div class="form-group">
-            <h3>Treatment Type/Category</h3>
-            <select id="treatment_type" name="treatment_type" class="form-control"><option>Treatment Type</option></select>
-            <select id="treatment" name="treatment" class="form-control"><option>Treatment</option></select>
+            <h4>Treatment Type / Category</h4>
+            <div class="dropdown-group">
+              <select id="treatment_type" name="treatment_type" class="form-control"><option>Treatment Type</option></select>
+            </div>
+            <div class="dropdown-group">
+              <select id="treatment" name="treatment" class="form-control"><option>Treatment</option></select>
+            </div>
           </div>
         </form>
       </div>
@@ -99,10 +107,11 @@
   {% endblock body %}
 
 {% block javascripts %}
-   <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="{{ asset('/assets/js/resultsmap.js') }}" type="text/javascript"></script>
-     <script src="{{ asset('/assets/js/datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
-     <script>$(document).ready(function(){
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="{{ asset('/assets/js/resultsmap.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('/assets/js/datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+  <script>$(document).ready(function(){
            $('#day').datepicker()
-       });</script>
+         });
+  </script>
 {% endblock javascripts %}
