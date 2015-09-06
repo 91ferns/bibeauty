@@ -40,7 +40,7 @@
                       </div>
                     </div>
 
-                    <a class="btn btn-default btn-fullwidth">
+                    <a class="btn btn-primary btn-fullwidth btn-lg">
                       Reserve Now
                     </a>
 
@@ -59,12 +59,16 @@
                       <li><a href="#">
                         {{business.getAddress.getPhone}}
                       </a></li>
-                      <li><a href="mailto:" class="email-link">
-
+                      {% if business.getEmail %}
+                      <li><a href="mailto:{{business.getEmail}}" class="email-link">
+                        {{business.getEmail}}
                       </a></li>
+                      {% endif %}
+                      {% if business.getWebsite %}
                       <li><a href="" target="_blank" class="website-link">
-
+                        {{business.getWebsite}}
                       </a></li>
+                      {% endif %}
                     </ul>
                   </div>
 
