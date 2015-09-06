@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  <title>An Error Occurred: {{ status_text }}</title>
+<section id="error-page" class="nav-pad">
+  <div class="container">
+    <div class="col-lg-offset-3 col-lg-6 col-lg-offset-3">
+      <img src="{{ asset('assets/images/404-image.png') }}">
+      <h1><strong>{{ status_code }} {{ status_text }}</strong></h1><br>
+      <p>If the problem persists please contact us at<p><br>
+      <a href="#">hello@bibeauty.com</a>
+    </div>
+  </div>
+</section>
+
+{% endblock body %}
