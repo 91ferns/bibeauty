@@ -67,14 +67,14 @@ $logo-height: 78px;
 }
 
 // buttons for navbar
-@media (max-width : 767px) {
+@media (max-width : 767px) {    //for xs devices for navbar
   .btn-default {
     text-align: left;
     background: none;
     border: none;
   }
 }
-@media (min-width : 768px) {
+@media (min-width : 768px) {    //for normal devices sm or higher
 
   .navbar {
 
@@ -466,4 +466,80 @@ main section {
 .forgot-password:hover {
   text-decoration: none;
   color: $gray;
+}
+// signup page
+
+.signup-area {
+  background: none;
+}
+// businesses search page
+#search_results {
+  margin-top:48px;
+}
+section.below-map {
+  background-color:#fff;
+}
+.below-map .row.treatments, .below-map .list-group-item.row {
+  margin-left:0;
+}
+.below-map .form-group > h3 {
+  color:rgb(63, 64, 64);
+  font-size:18px;
+}
+h3.business-name {
+  color:rgb(63, 64, 64);
+}
+#search_results .reviews, #search_results .treatments .treatment-name, .treatments .savings {
+  color:#919191;
+}
+.treatments span.blue {
+  color:#52c8e6;
+}
+.below-map .form-group select {
+  color:#919191;
+}
+.row.location {
+  border-top: 1px solid #ddd;
+}
+.reviews-number {
+  margin-left: -15px;
+}
+.reviews {
+  margin-bottom:20px;
+}
+.reviews>* {
+  padding-bottom:5px;
+}
+.business-logo {
+  margin-top:20px;
+}
+.treatments .notify-btn > a{
+  color: white;
+  padding: 5px 10px;
+  border: 1px solid #52c8e6;
+  background-color: #52c8e6;
+  text-transform: uppercase;
+  top: 33px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  transition: all .5s;
+}
+.treatments .notify-btn > a[href^="treatment"] {
+  display:none;
+}
+.below-map .input-group:not(:last-child), .below-map .form-group > select:not(:last-child) {
+  margin-bottom:5px;
+}
+.below-map .input-group .form-control {
+  border-right:none;
+}
+.below-map  .input-group-addon {
+  padding:0 12px;
+  background-color: #fff;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  color:#52c8e6;
+  /*border-radius:50px; color: #fff;background-color*/
 }

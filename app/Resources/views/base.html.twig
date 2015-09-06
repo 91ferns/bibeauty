@@ -39,7 +39,6 @@
                       Notify Me
                     </a>
                 </li>
-
                 {% if app.user %}
                   <li>
                     <a href="{{path('logout_path')}}" class="btn btn-default" id="white-button">
@@ -57,13 +56,11 @@
                         Login<i class="glyphicon glyphicon-play-circle hidden-xs"></i>
                       </a>
                   </li>
-
                   <li class="">
                       <a href="{{ path('signup_route') }}" class="btn btn-default" id="blue-button">
                         Sign Up<i class="glyphicon glyphicon-play-circle hidden-xs"></i>
                       </a>
                   </li>
-
                 {% endif %}
                 <li>
                   <a href="#">
