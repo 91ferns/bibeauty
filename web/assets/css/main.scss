@@ -47,14 +47,15 @@ $logo-height: 78px;
   -moz-transition: background 2s ease-in;
   transition: background 2s ease-in;
 
-  width: 100%;
-  position: fixed;
-  top: 0px;
+  &.navbar-static-top {
+    width: 100%;
+    position: fixed;
+    top: 0px;
 
-  @media (min-width: $screen-md-min) {
-    position: absolute;
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+    }
   }
-
 
 }
 

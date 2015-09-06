@@ -11,28 +11,49 @@ class BusinessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('headerAttachment', new AttachmentType(), array(
+                'required' => false
+            ))
+            ->add('logoAttachment', new AttachmentType(), array(
+                'required' => false
+            ))
             ->add('name', 'text', array(
-                'label' => 'Business Information',
+                'label' => false,
                 'attr' => array(
                    'placeholder' => 'Name'
                 )
              ))
-            ->add('yelpId', 'text', array(
-                'label' => false,
-                'attr' => array(
-                    'placeholder' => 'Yelp Link'
-                ),
-                'required' => false
-            ))
-             ->add('description', 'textarea', array(
-                 'label' => false,
-                 'attr' => array(
-                    'placeholder' => 'Description'
-                 )
+              ->add('address', new AddressType(), array(
+                  'label' => 'Business Details'
               ))
-              ->add('address', new AddressType())
-              ->add('headerAttachment', new AttachmentType(), array(
+               ->add('description', 'textarea', array(
+                   'label' => 'Business Overview',
+                   'attr' => array(
+                      'placeholder' => 'Tell customers a little about what your business does and what makes it stand out :)'
+                   )
+                ))
+                ->add('yelpId', 'text', array(
+                    'label' => false,
+                    'attr' => array(
+                        'placeholder' => 'Yelp Link'
+                    ),
+                    'required' => false
+                ))
+              ->add('email', 'email', array(
+                  'label' => false,
+                  'attr' => array(
+                      'placeholder' => 'Email Address'
+                  )
+              ))
+              ->add('website', 'text', array(
+                  'label' => false,
+                  'attr' => array(
+                      'placeholder' => 'Website'
+                  ),
                   'required' => false
+              ))
+              ->add('operation', new OperatingScheduleType(), array(
+                  'label' => 'Opening Times'
               ))
         ;
     }

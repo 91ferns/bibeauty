@@ -148,16 +148,14 @@
           <hr>
 
           <div class="review-comments">
-            {% for i in 0..5 %}
+            {% for review in business.getReviews %}
             <div class="media">
               <div class="media-left media-middle">
-                <a href="#">
-                  <img class="media-object" src="..." alt="...">
-                </a>
+                <img class="media-object" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
               </div>
               <div class="media-body">
-                <h4 class="media-heading">Sophia</h4>
-                ...
+                <h4 class="media-heading">{{ review.poster.getDisplayName }}</h4>
+                <p class="comment-text">{{ review.getContent }}</p>
               </div>
             </div> <!-- /.media -->
             {% endfor %}

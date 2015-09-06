@@ -46,32 +46,63 @@ class BusinessesController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $headerAttachment = $business->getHeaderAttachment();
+            $logoAttachment = $business->getLogoAttachment();
             $address = $business->getAddress();
 
-            if ($headerAttachment) {
+            $business->setOwner($this->getUser());
 
-                $upload = $this->get('aws.factory')->upload(
-                    $headerAttachment->attachment->getRealPath(),
-                    $headerAttachment->attachment->getClientOriginalName()
-                );
+            try {
 
-                if ($upload instanceof Exception) {
-                    // it failed
-                } else {
+                if ($headerAttachment) {
+
+                    $upload = $this->get('aws.factory')->upload(
+                        $headerAttachment->attachment->getRealPath(),
+                        $headerAttachment->attachment->getClientOriginalName()
+                    );
+
+                    if ($upload instanceof Exception) {
+                        throw $upload;
+                    }
+
                     $headerAttachment->setUploadState($upload);
                     $headerAttachment->setOwner($this->getUser());
+
                     $em->persist($headerAttachment);
+
                 }
+
+                if ($logoAttachment) {
+
+                    $upload = $this->get('aws.factory')->upload(
+                        $logoAttachment->attachment->getRealPath(),
+                        $logoAttachment->attachment->getClientOriginalName()
+                    );
+
+                    if ($upload instanceof Exception) {
+                        throw $upload;
+                    }
+
+                    $logoAttachment->setUploadState($upload);
+                    $logoAttachment->setOwner($this->getUser());
+
+                    $em->persist($logoAttachment);
+
+                }
+
+            } catch (Exception $e) {
+
             }
 
-            $em->persist($business);
 
+            $em->persist($business);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('admin_path');
 
-            $form['attachment']->getData()->move($dir, $someNewFilename);
-
+        } else {
+            return $this->render('account/businesses/index.html.twig', array(
+                'form' => $form->createView()
+            ));
         }
 
     }
