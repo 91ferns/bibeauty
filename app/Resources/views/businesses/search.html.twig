@@ -6,7 +6,7 @@
 {% block body %}
 
   <section id="top-map" class="nav-pad">
-    <div id="map_results"></div>
+    <div id="results_map"></div>
   </section>
 
   <section id="below-map" class="nav-pad">
@@ -125,7 +125,7 @@
   <script src="{{ asset('/assets/js/resultsmap.js') }}" type="text/javascript"></script>
   <script src="{{ asset('/assets/js/datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
   <script>$(document).ready(function(){
-           $('#day').datepicker()
+           $('#day').datepicker();
          });
   </script>
 {% endblock javascripts %}
