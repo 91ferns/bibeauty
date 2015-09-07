@@ -35,7 +35,7 @@
                         <div class="ratings-lead">
                           <small>Rating</small><br>
                           <span class="ratings-number">
-                            {{business.getAverageRating}} 5
+                            {{business.getAverageRating}}
                           </span>
                           <p>From Yelp</p>
                         </div>
@@ -57,8 +57,8 @@
                   <hr>
 
                   <div class="business-info">
-                    <h1>{{business.getName}}</h1>
-                    <h2>{{business.address.getFullAddressString}}</h2>
+                    <h1 class="business-name">{{business.getName}}</h1>
+                    <h2 class="business-address">{{business.address.getFullAddressString}}</h2>
 
                     <ul class="nav nav-list">
                       <li class="active"><a href="{{business.address.getGoogleMapsUrl}}" class="map-show" target="_blank">
@@ -109,8 +109,8 @@
         <div class="business-description">
           <div class="row">
             <div class="col-md-8">
-                <h2>Welcome to {{business.getName}}</h2>
-                <p>{{business.getDescription}}</p>
+                <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
+                <p class="business-description">{{business.getDescription}}</p>
                 <hr>
               </div> <!-- /.business-description -->
 

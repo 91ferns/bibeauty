@@ -181,23 +181,37 @@
     }
 
   }
+  hr {
+    width: 100%;
+  }
 
-}
+  .business-welcome {
+    font-size: 18px;
+    margin-top: 0px;
+  }
+  .yelp-logo {
+    margin-top: 8px;
+  }
+  .review-comments {
+    > .media {
+      background-color: #f7f7f7;
+      padding: 22px 15px;
+      margin-bottom: 15px;
 
-.review-comments {
-  > .media {
-    background-color: #f7f7f7;
-    padding: 22px 15px;
-    margin-bottom: 15px;
+      .media-heading {
+        font-size: 14px;
+        font-weight: bold;
+      }
 
-    .media-heading {
-      font-size: 14px;
-      font-weight: bold;
-    }
+      .comment-text {
+        font-size: 13px;
+        color: #2a2a2a;
+      }
 
-    .comment-text {
-      font-size: 13px;
-      color: #2a2a2a;
+      .stars {
+        font-size: 13px;
+      }
     }
   }
+
 }
