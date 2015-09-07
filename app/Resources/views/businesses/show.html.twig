@@ -31,21 +31,21 @@
                   <div class="ratings">
 
                     <div class="row">
-                      <div class="col-sm-5">
+                      <div class="col-lg-4">
                         <div class="ratings-lead">
                           <small>Rating</small><br>
                           <span class="ratings-number">
-                            {{business.getAverageRating}}
+                            {{business.getAverageRating}} 5
                           </span>
+                          <p>From Yelp</p>
                         </div>
-                        <div class="stars">
+                      </div>
+                        <div class="stars col-lg-8">
+                          <img src="{{ asset('assets/images/yelp-logo.jpg') }}" class="yelp-logo right-block" height="35px" width="78.5px">
+                          <div class="row">
                           {{ business.getAverageRating | rating }}
+                          </div>
                         </div> <!-- /.stars -->
-                        <p>From Yelp</p>
-                      </div>
-                      <div class="col-sm-7">
-
-                      </div>
                     </div>
 
                     <a class="btn btn-primary btn-fullwidth btn-lg">
@@ -61,20 +61,20 @@
                     <h2>{{business.address.getFullAddressString}}</h2>
 
                     <ul class="nav nav-list">
-                      <li class="active"><a href="{{business.address.getGoogleMapsUrl}}" target="_blank">
-                        Show on Map
+                      <li class="active"><a href="{{business.address.getGoogleMapsUrl}}" class="map-show" target="_blank">
+                        <i class="fa fa-map-marker"></i>Show on Map
                       </a></li>
-                      <li><a href="tel:{{business.getAddress.getPhone | phone}}">
-                        {{business.getAddress.getPhone | phone}}
+                      <li><a href="tel:{{business.getAddress.getPhone | phone}}" class="phone">
+                        <i class="fa fa-phone"></i>{{business.getAddress.getPhone | phone}}
                       </a></li>
                       {% if business.getEmail %}
                       <li><a href="mailto:{{business.getEmail}}" class="email-link">
-                        {{business.getEmail}}
+                        <i class="fa fa-envelope-o"></i>{{business.getEmail}}
                       </a></li>
                       {% endif %}
                       {% if business.getWebsite %}
                       <li><a href="{{business.getWebsite}}" target="_blank" class="website-link">
-                        {{business.getWebsite}}
+                        <i class="fa fa-globe"></i>{{business.getWebsite}}
                       </a></li>
                       {% endif %}
                     </ul>
@@ -89,6 +89,8 @@
                       <dd>2-3</dd>
                     </dl>
                   </div>
+
+                  <hr>
 
                   <div class="payment-info">
                     <h3>We Accept</h3>

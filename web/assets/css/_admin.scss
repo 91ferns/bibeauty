@@ -11,7 +11,7 @@ $admin-side-width: 250px;
     min-height: $admin-nav-height;
     padding-left: 15px;
     padding-right: 15px;
-
+    z-index: 3;
     padding-top: 21px;
 
     .navbar-nav > li > a {
@@ -27,8 +27,20 @@ $admin-side-width: 250px;
       height: 42px;
       line-height: 42px;
     }
-    z-index: 3;
+
   }
+
+  a.hide-menu {
+    font-size: 20px;
+    text-decoration: none;
+    color: $gray;
+    border: none;
+  }
+  a.hide_menu:hover {
+    background-color: white;
+    text-decoration: none;
+  }
+
 
   main {
     padding-top: $admin-nav-height;
@@ -61,9 +73,37 @@ $admin-side-width: 250px;
       .active > a {
         color: white;
       }
-
+      li.header {
+        background-color: #f1f0ec;
+      }
       li.header > a {
         height: 50px;
+        color: black;
+      }
+      .fa-cutlery {
+        padding-right: 10px;
+      }
+      .fa-pencil {
+        float: right;
+        padding-top: 5px;
+      }
+      .fa-book {
+        padding-right: 10px;
+      }
+      .fa-home {
+        padding-right: 10px;
+      }
+      .fa-glass {
+        padding-right: 10px;
+      }
+      .fa-user {
+        padding-right: 15px;
+      }
+      .fa-line-chart {
+        padding-right: 10px;
+      }
+      .fa-cogs {
+        padding-right: 10px;
       }
     }
   }
@@ -85,4 +125,45 @@ $admin-side-width: 250px;
     padding-right: 15px;
   }
 
+}
+// index (default) page
+
+  .panel-default {
+
+    .panel-heading {
+      background-color: $brand-primary;
+      color: white;
+      font-size: 1.5em;
+
+      a.admin-btn {
+        font-size: 0.7em;
+        background-color: $brand-turquoise;
+        color: white;
+        border: 1px solid $brand-turquoise;
+        float: right;
+        padding: 3px 10px;
+        margin-right: 5px;
+
+      }
+      .fa-pencil-square-o {
+        padding-right: 3px;
+      }
+      .fa-trash-o {
+        padding-right: 3px;
+      }
+      .fa-plus {
+        padding-right: 3px;
+      }
+    }
+}
+
+.businesses-table {
+
+  #check-all-box {
+    text-decoration: none;
+    color: black;
+  }
+  #check-all-box:hover{
+    color:black;
+  }
 }

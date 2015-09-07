@@ -32,6 +32,51 @@
       h2 {
         text-transform: none;
       }
+      .map-show {
+        padding: 2px;
+        font-size: 14px;
+        text-decoration: none;
+        -webkit-transition:all .5s ease-in;
+        -moz-transition:all .5s ease-in;
+        transition:all .5s ease-in;
+      }
+      .map-show:hover {
+        background: none;
+        color: black;
+      }
+      .phone {
+        padding: 2px;
+        font-size: 14px;
+        color: $gray;
+        text-decoration: none;
+      }
+      .phone:hover {
+        color: $gray;
+        background: none;
+      }
+      .email-link {
+        padding: 2px;
+        font-size: 14px;
+        color: $gray;
+        text-decoration: none;
+      }
+      .email-link:hover {
+        color: $gray;
+        background: none;
+      }
+      .website-link {
+        padding: 2px;
+        font-size: 14px;
+        color: $gray;
+        text-decoration: none;
+      }
+      .website-link:hover {
+        color: $gray;
+        background: none;
+      }
+      .fa {
+        padding-right: 5px;
+      }
     }
   }
 
@@ -43,6 +88,7 @@
     background-color: #424242;
     color: white;
     padding-top: 30px;
+
 
     h1 {
       font-size: 22px;
@@ -61,6 +107,7 @@
 
       > li {
         margin-right: 6px;
+        top: 16px;
       }
 
       > li > a {
@@ -105,7 +152,9 @@
 
     .stars {
       .active {color: #ffcc30;}
-      font-size: 13px;
+      font-size: 35px;
+      bottom: 20px;
+      right: 35px;
     }
 
     .ratings-number {

@@ -588,3 +588,15 @@ main section {
     line-height: 37px;
   }
 }
+ //error page
+
+ #error-page {
+   text-align: center;
+   p {
+     font-size: 1.2em;
+   }
+   h1 {
+     color: $brand-primary;
+
+   }
+ }
