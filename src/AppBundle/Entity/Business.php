@@ -181,10 +181,19 @@ class Business {
     public function setYelpLink($yelpLink)
     {
         if (!empty($yelpLink)) {
-            $this->$yelpLink = $yelpLink;
+            $this->yelpLink = $yelpLink;
         }
 
         return $this;
+    }
+
+    /**
+     * Get yelpLink.
+     *
+     * @return string
+     */
+    public function getYelpLink() {
+        return $this->yelpLink;
     }
 
     /**
@@ -201,10 +210,6 @@ class Business {
         }
         return false;
 
-    }
-
-    public function getYelpLink() {
-        return $this->yelpLink;
     }
 
     /**
