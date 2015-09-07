@@ -80,12 +80,13 @@
               </div>
             </div>
 
+ {% if result.treatments %}
             <div class="row treatments">
               <ul class="col-md-12 list-group">
                 {% for treatment in result.treatments %}
-                <li class="list-group-item row">
-                    <a href="treatment/detail/{{treatment.id}}">
-                      <div class="col-md-8 treatment-name">
+              <li class="list-group-item row">
+              <a href="treatment/detail/{{treatment.id}}">
+              <div class="col-md-8 treatment-name">
                           {{treatment.name}}
                       </div>
                       <div class="col-md-4">
@@ -96,13 +97,14 @@
                           <a href="#">From ${{treatment.start_dollars}}</a>
                         </div>
                       </div>
-                    </a>
-                  </li>
-                  {% endfor %}
+              </a>
+              </li>
+                  {% endfor %}           
                 </ul>
                 <div class="notify-btn">
-                  <a href="#">Show {{treatment.num_remaining}} More</a>
+                  <a href="#">Show  More</a>
                 </div>
+                {% endif %}  
               </div>
             </div>
             {% endfor %}

@@ -32,7 +32,7 @@ class BusinessType extends AbstractType
                       'placeholder' => 'Tell customers a little about what your business does and what makes it stand out :)'
                    )
                 ))
-                ->add('yelpId', 'text', array(
+                ->add('yelpLink', 'text', array(
                     'label' => false,
                     'attr' => array(
                         'placeholder' => 'Yelp Link'
