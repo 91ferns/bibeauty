@@ -37,7 +37,7 @@ class BusinessType extends AbstractType
                     'attr' => array(
                         'placeholder' => 'Yelp Link'
                     ),
-                    'required' => false
+                    'required' => true
                 ))
               ->add('email', 'email', array(
                   'label' => false,
