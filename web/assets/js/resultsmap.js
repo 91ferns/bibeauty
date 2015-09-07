@@ -14,9 +14,9 @@
     });
     </script>
 */
-var RESULTS_MAP = function(){
-  var gMap = google.maps;
+var RESULTS_MAP = (function(){
     var themap          = {},
+        gMap            = {},
         currentMarkers  = [],
         center          = [41.110079,-73.421902],
         mapId           = 'results_map',
@@ -25,14 +25,15 @@ var RESULTS_MAP = function(){
             zoom: 13,
             mapTypeId: gMap.MapTypeId.ROADMAP
         },
-        init    = function(resultsmarkers){
+        init    = function(g,resultsmarkers){
            //to do make opts, center, mapId updatable in constructor
+           gMap = g;
            initCenter();
            createTheMap();
-
+           
            if(typeof resultsmarkers !== "undefined"){
                 addMarkers(resultsmarkers);
-           }
+           }        
         },
         createTheMap = function(){
            themap = new gMap.Map(document.getElementById(mapId), opts);
@@ -62,7 +63,7 @@ var RESULTS_MAP = function(){
         },
         removeCurrentMarkers = function(){
             currentMarkers.forEach(function(marker){
-               marker.setMap(null);
+               marker.setMap(null); 
             });
             currentMarkers = [];
             currentCoords  = [];
@@ -72,11 +73,11 @@ var RESULTS_MAP = function(){
             for (var i = 0; i < currentCoords.length; i++) {
                 bounds.extend(currentCoords[i]);
             }
-            return bounds.getCenter();
+            return bounds.getCenter();  
         },
         resetCenter = function(newpos){
           newpos = (typeof newpos === 'undefined') ? getCurrentCenter() : newpos;
-          themap.setOptions({center: newpos});
+          themap.setOptions({center: newpos}); 
         },
         makeInfoWindow = function(data,marker){
             var iw = new gMap.InfoWindow({
@@ -100,5 +101,5 @@ var RESULTS_MAP = function(){
     return {
       init:init,
       updateResults:updateResults
-    };
-};
+    }; 
+}());
