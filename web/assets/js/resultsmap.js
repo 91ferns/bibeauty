@@ -22,15 +22,15 @@ var RESULTS_MAP = (function(){
         mapId           = 'results_map',
         currentCoords   = [],
         opts            = {
-            zoom: 13,
-            mapTypeId: gMap.MapTypeId.ROADMAP
+            zoom: 13
+            
         },
         init    = function(g,resultsmarkers){
            //to do make opts, center, mapId updatable in constructor
            gMap = g;
+           gMap.MapTypeId.ROADMAP
            initCenter();
            createTheMap();
-           
            if(typeof resultsmarkers !== "undefined"){
                 addMarkers(resultsmarkers);
            }        
