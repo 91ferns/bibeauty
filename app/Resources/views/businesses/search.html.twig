@@ -59,16 +59,16 @@
           <div class="result">
             <div class="row location">
               <div class="col-md-9">
-                <h3 class="business-name">{{result.business_name }}</h3>
+                <h3 class="business-name">{{result.name }}</h3>
                 <div class="reviews">
                   <div class="reviews-number col-md-3">
-                    {{result.reviews_num}} Reviews
+                    5 Reviews
                   </div>
-                  <a class="col-md-9" href="{{result.map_link}}">
+                  <a class="col-md-9" href="#">
                     <i class="glyphicon glyphicon-map-marker"></i>Show on Map
                   </a>
                   <div class="location">
-                    {{result.city}},{{result.state}}
+                    {{result.address.city}},{{result.address.state}}
                   </div>
                   <div class="description>">
                     {{result.description}}

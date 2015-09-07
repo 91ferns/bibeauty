@@ -71,9 +71,22 @@ class BusinessesController extends Controller
      */
     public function searchAction(Request $request)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$records = $em->getRepository("AppBundle:Business")->findAll();
+        $results = [];		
+        foreach($records as $k => $record){
+        	$results[$k] = $record->toJSON();
+        	$results[$k]['logo'] = 'x.png';
+        	$results[$k]['treatments']= [
+                                	['id'=>1,'name'=>'x',
+                                 	 'percent_discount'=>4,
+                                 	 'start_dollars'=>20,
+                                 	 'num_remaining'=>4]
+                            	];
+        }
         return $this->render('businesses/search.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'results'  => [(object) ['business_name'=>'blah','star_img'=>'oops',
+            'results'  => $results/*[(object) ['business_name'=>'blah','star_img'=>'oops',
                             'reviews_num'=>5, 'map_link'=>'x',
                             'city'=>'x','state'=>'x','logo'=>'x',
                             'description'=>'x',
@@ -84,7 +97,7 @@ class BusinessesController extends Controller
                                  	 'num_remaining'=>4]
                             		],
                             	]
-                          ]
+                          ]*/
         ));
     }
 }
