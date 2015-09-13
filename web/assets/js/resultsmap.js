@@ -1,19 +1,3 @@
-/** Usage:
-    <div id="results_map"></div>
-    <a id="update-results" href="#">Update results</a>
-    <script>
-    $(document).ready(function(){
-        RESULTS_MAP.init();
-        var marks = '[{"name":"NCC","lat":"41.103010","lng":"-73.451814"},{"name":"Magrath Park","lat":"41.103617","lng":"-73.450247"},{"name":"St.Mathew\'s Church","lat":"41.110606","lng":"-73.448215"}]';
-        var marks2 = '[{"name":"Darinor Shopping Plaza","lat":"41.098768","lng":" -73.444656"},{"name":"Post Road Diner","lat":"41.102385","lng":"-73.437096"},{"name":"Silver Star Diner","lat":"41.104152","lng":"-73.432964"}]';
-        RESULTS_MAP.updateResults(marks);
-        $('#update-results').on('click',function(e){
-            e.preventDefault();
-            RESULTS_MAP.updateResults(marks2);
-        });
-    });
-    </script>
-*/
 var RESULTS_MAP = (function(){
     var themap          = {},
         gMap            = {},
@@ -23,7 +7,7 @@ var RESULTS_MAP = (function(){
         currentCoords   = [],
         opts            = {
             zoom: 13
-            
+
         },
         init    = function(g,resultsmarkers){
            //to do make opts, center, mapId updatable in constructor
@@ -33,7 +17,7 @@ var RESULTS_MAP = (function(){
            createTheMap();
            if(typeof resultsmarkers !== "undefined"){
                 addMarkers(resultsmarkers);
-           }        
+           }
         },
         createTheMap = function(){
            themap = new gMap.Map(document.getElementById(mapId), opts);
@@ -63,7 +47,7 @@ var RESULTS_MAP = (function(){
         },
         removeCurrentMarkers = function(){
             currentMarkers.forEach(function(marker){
-               marker.setMap(null); 
+               marker.setMap(null);
             });
             currentMarkers = [];
             currentCoords  = [];
@@ -73,11 +57,11 @@ var RESULTS_MAP = (function(){
             for (var i = 0; i < currentCoords.length; i++) {
                 bounds.extend(currentCoords[i]);
             }
-            return bounds.getCenter();  
+            return bounds.getCenter();
         },
         resetCenter = function(newpos){
           newpos = (typeof newpos === 'undefined') ? getCurrentCenter() : newpos;
-          themap.setOptions({center: newpos}); 
+          themap.setOptions({center: newpos});
         },
         makeInfoWindow = function(data,marker){
             var iw = new gMap.InfoWindow({
@@ -101,5 +85,5 @@ var RESULTS_MAP = (function(){
     return {
       init:init,
       updateResults:updateResults
-    }; 
+    };
 }());

@@ -152,9 +152,6 @@
 
     .stars {
       .active {color: #ffcc30;}
-      font-size: 35px;
-      bottom: 20px;
-      right: 35px;
     }
 
     .ratings-number {
@@ -208,10 +205,17 @@
         color: #2a2a2a;
       }
 
-      .stars {
-        font-size: 13px;
-      }
     }
+  }
+
+  .stars {
+    font-size: 13px;
+  }
+
+  .business-aside .stars {
+    font-size: 35px;
+    bottom: 20px;
+    right: 35px;
   }
 
 }

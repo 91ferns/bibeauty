@@ -224,10 +224,34 @@ class ServiceCategory {
     /**
      * Get services
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getServices()
     {
         return $this->services;
+    }
+
+    /**
+     * Iterates through all services and returns lowest list price
+     *
+     * @return float
+     */
+    public function getLowestPrice()
+    {
+        $services = $this->getServices();
+        if (count($services) < 1) return 0.0;
+
+        usort($services, function($a, $b) {
+            $a = $a->$currentPrice();
+            $b = $b->$currentPrice();
+
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
+        });
+
+        return min($services);
+
     }
 }

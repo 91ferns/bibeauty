@@ -29,6 +29,8 @@ $border-radius-large: $border-radius-base;
 // Jasny
 @import '../../../web/assets/components/jasny-bootstrap/scss/jasny-bootstrap';
 
+@import '../components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';
+
 // Our stuff
 
 .btn.btn-fullwidth {

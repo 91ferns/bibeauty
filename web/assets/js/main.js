@@ -6,7 +6,7 @@ jQuery(function($) {
 
 jQuery(function($) {
 	$(window).scroll(function() {
-		if($(this).scrollTop() > 25){
+		if ($(this).scrollTop() > 25){
 			$('.navbar-default').addClass('opaque');
 		} else {
 			$('.navbar-default').removeClass('opaque');

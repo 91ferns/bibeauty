@@ -119,22 +119,49 @@
 
         <div class="business-services">
           <h4>Services</h4>
+          {% if business.getServiceCategories.count > 0 %}
+          <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
 
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            {% for serviceCategory in business.getServiceCategories %}
             <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="headingOne">
+              <div class="panel-heading" role="tab"
+                id="service-{{ serviceCategory.getSlug }}">
                 <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Collapsible Group Item #1
+                  <a role="button"
+                    data-toggle="collapse"
+                    aria-controls="service-content-{{ serviceCategory.getSlug }}"
+                    data-parent="#service-accordion"
+                    href="#service-content-{{ serviceCategory.getSlug }}"
+                    aria-expanded="true">
+                      {{ serviceCategory.getLabel }}
+                      <small>See all {{ serviceCategory.getServices.length }} offers</small>
+                      <strong class="pull-right">
+                        from {{ serviceCategory.getLowestPrice }}
+                      </strong>
                   </a>
                 </h4>
               </div>
-              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div id="service-content-{{ serviceCategory.getSlug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ serviceCategory.getSlug }}">
                 <div class="panel-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  {# This is where the individual services go, as their own accordions #}
+                  <ul class="list-group">
+                  {% for service in serviceCategory.getServices %}
+                    <li class="list-group-item">
+                      <span class="service-name">
+                        {{ service.getLabel }}
+                      </span>
+                      <span class="service-time">
+                        {{ service.getTimeForPrint }}
+                      </span>
+                    </li>
+                  {% endfor %}
+                  </ul>
+                  {# end services #}
                 </div>
               </div>
             </div> <!-- .panel-default -->
+            {% endfor %}
+
           </div> <!-- /.panel-group -->
 
           <p class="services-notify-me">
@@ -144,6 +171,10 @@
           <p>
             <a class="btn btn-primary">Notify Me</a>
           </p>
+          
+          {% else %}
+            <p>There are no service categories available for this business.</p>
+          {% endif %}
 
         </div> <!-- /.business-services -->
 

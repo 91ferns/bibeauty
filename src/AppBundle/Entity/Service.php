@@ -111,7 +111,7 @@ class Service {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -134,7 +134,7 @@ class Service {
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -157,7 +157,7 @@ class Service {
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -180,7 +180,7 @@ class Service {
     /**
      * Get hours
      *
-     * @return integer 
+     * @return integer
      */
     public function getHours()
     {
@@ -203,7 +203,7 @@ class Service {
     /**
      * Get minutes
      *
-     * @return integer 
+     * @return integer
      */
     public function getMinutes()
     {
@@ -226,7 +226,7 @@ class Service {
     /**
      * Get originalPrice
      *
-     * @return float 
+     * @return float
      */
     public function getOriginalPrice()
     {
@@ -249,7 +249,7 @@ class Service {
     /**
      * Get currentPrice
      *
-     * @return float 
+     * @return float
      */
     public function getCurrentPrice()
     {
@@ -272,7 +272,7 @@ class Service {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -282,7 +282,7 @@ class Service {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -305,10 +305,31 @@ class Service {
     /**
      * Get serviceCategory
      *
-     * @return \AppBundle\Entity\ServiceCategory 
+     * @return \AppBundle\Entity\ServiceCategory
      */
     public function getServiceCategory()
     {
         return $this->serviceCategory;
+    }
+
+    /**
+     * Get time for printing
+     *
+     * @return String
+     */
+    public function getTimeForPrint()
+    {
+        $hours = $this->getHours();
+        $minutes = $this->getMinutes();
+
+        $string = '';
+
+        if ($hours > 0) {
+            $string .= sprintf('%d hr%s ', $hours, $hours == 1 ? '' : 's');
+        }
+
+        $string .= sprintf('%d min%s', $minutes, $minutes == 1 ? '' : 's');
+
+        return $string;
     }
 }
