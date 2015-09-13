@@ -39,33 +39,14 @@ class ServiceCategory {
     protected $createdAt;
 
     /**
-     * @ORM\PrePersist
+     * @ORM\OneToMany(targetEntity="Service", cascade={"persist", "remove"}, mappedBy="serviceCategory")
      */
-    public function setAutomaticFields() {
-        if (!$this->createdAt) {
-            $this->createdAt = new \DateTime();
-        }
-        $this->updated = new \DateTime();
-        $this->setSlug($this->generateSlug());
-    }
-
-    protected function generateSlug() {
-        $slugify = new Slugify();
-        return $slugify->slugify($this->label);
-    }
+    protected $services;
 
     /**
      * @ORM\Column(type="datetime")
      */
     protected $updated;
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdated() {
-        // will NOT be saved in the database
-        $this->updated->modify("now");
-    }
 
     /**
      * @ORM\ManyToOne(targetEntity="Business")
@@ -77,7 +58,7 @@ class ServiceCategory {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -100,7 +81,7 @@ class ServiceCategory {
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -123,7 +104,7 @@ class ServiceCategory {
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -146,7 +127,7 @@ class ServiceCategory {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -156,7 +137,7 @@ class ServiceCategory {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -179,10 +160,74 @@ class ServiceCategory {
     /**
      * Get business
      *
-     * @return \AppBundle\Entity\Business 
+     * @return \AppBundle\Entity\Business
      */
     public function getBusiness()
     {
         return $this->business;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setAutomaticFields() {
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
+        $this->updated = new \DateTime();
+        $this->setSlug($this->generateSlug());
+    }
+
+    protected function generateSlug() {
+        $slugify = new Slugify();
+        return $slugify->slugify($this->label);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdated() {
+        // will NOT be saved in the database
+        $this->updated->modify("now");
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->services = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add services
+     *
+     * @param \AppBundle\Entity\Service $services
+     * @return ServiceCategory
+     */
+    public function addService(\AppBundle\Entity\Service $services)
+    {
+        $this->services[] = $services;
+
+        return $this;
+    }
+
+    /**
+     * Remove services
+     *
+     * @param \AppBundle\Entity\Service $services
+     */
+    public function removeService(\AppBundle\Entity\Service $services)
+    {
+        $this->services->removeElement($services);
+    }
+
+    /**
+     * Get services
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServices()
+    {
+        return $this->services;
     }
 }

@@ -68,6 +68,11 @@ class User implements AdvancedUserInterface, \Serializable {
     private $firstName;
 
     /**
+     * @ORM\OneToMany(targetEntity="Subscription", cascade={"persist"}, mappedBy="user")
+     */
+    protected $subscriptions;
+
+    /**
      * @ORM\Column(type="string", length=120, unique=true)
      * @Assert\NotBlank()
      * @Assert\Length(min = 2)
@@ -270,5 +275,38 @@ class User implements AdvancedUserInterface, \Serializable {
         $format = 'http://www.gravatar.com/avatar/%s?s=%s&d=%s&r=%s';
         $emailHash = md5( strtolower( trim( $this->getEmail() ) ) );
         return sprintf($format, $emailHash, $s, $d, $r);;
+    }
+
+    /**
+     * Add subscriptions
+     *
+     * @param \AppBundle\Entity\Subscription $subscriptions
+     * @return User
+     */
+    public function addSubscription(\AppBundle\Entity\Subscription $subscriptions)
+    {
+        $this->subscriptions[] = $subscriptions;
+
+        return $this;
+    }
+
+    /**
+     * Remove subscriptions
+     *
+     * @param \AppBundle\Entity\Subscription $subscriptions
+     */
+    public function removeSubscription(\AppBundle\Entity\Subscription $subscriptions)
+    {
+        $this->subscriptions->removeElement($subscriptions);
+    }
+
+    /**
+     * Get subscriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSubscriptions()
+    {
+        return $this->subscriptions;
     }
 }

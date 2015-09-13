@@ -111,33 +111,14 @@ class Business {
     protected $createdAt;
 
     /**
-     * @ORM\PrePersist
-     */
-    public function setAutomaticFields() {
-        if (!$this->createdAt) {
-            $this->createdAt = new \DateTime();
-        }
-        $this->updated = new \DateTime();
-        $this->setSlug($this->generateSlug());
-    }
-
-    protected function generateSlug() {
-        $slugify = new Slugify();
-        return $slugify->slugify($this->name); // hello-world
-    }
-
-    /**
      * @ORM\Column(type="datetime")
      */
     protected $updated;
 
     /**
-     * @ORM\PreUpdate
+     * @ORM\OneToMany(targetEntity="ServiceCategory", cascade={"persist"}, mappedBy="business")
      */
-    public function setUpdated() {
-        // will NOT be saved in the database
-        $this->updated->modify("now");
-    }
+    protected $serviceCategories;
 
     /**
      * Get id
@@ -576,5 +557,63 @@ class Business {
 
     public function setAverageRating($averageRating) {
         $this->averageRating = $averageRating;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setAutomaticFields() {
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
+        $this->updated = new \DateTime();
+        $this->setSlug($this->generateSlug());
+    }
+
+    protected function generateSlug() {
+        $slugify = new Slugify();
+        return $slugify->slugify($this->name); // hello-world
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdated() {
+        // will NOT be saved in the database
+        $this->updated->modify("now");
+    }
+
+
+    /**
+     * Add serviceCategories
+     *
+     * @param \AppBundle\Entity\ServiceCategory $serviceCategories
+     * @return Business
+     */
+    public function addServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategories)
+    {
+        $this->serviceCategories[] = $serviceCategories;
+
+        return $this;
+    }
+
+    /**
+     * Remove serviceCategories
+     *
+     * @param \AppBundle\Entity\ServiceCategory $serviceCategories
+     */
+    public function removeServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategories)
+    {
+        $this->serviceCategories->removeElement($serviceCategories);
+    }
+
+    /**
+     * Get serviceCategories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServiceCategories()
+    {
+        return $this->serviceCategories;
     }
 }
