@@ -65,7 +65,7 @@ var RESULTS_MAP = (function(){
         },
         makeInfoWindow = function(data,marker){
             var iw = new gMap.InfoWindow({
-                content: "<div class='loc-info'>" + data +"</div>",
+                content: "<div className='loc-info'>" + data +"</div>",
                 maxWidth:200
             });
             marker.addListener('click', function() {
