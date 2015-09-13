@@ -25,7 +25,7 @@ class BusinessesController extends Controller
     }
 
     /**
-     * @Route("/business/{slug}/{id}", name="business_path")
+     * @Route("/businesses/{id}/{slug}", name="business_path")
      * @Method({"GET"})
      */
     public function showAction($slug, $id, Request $request)
@@ -73,7 +73,7 @@ class BusinessesController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$records = $em->getRepository("AppBundle:Business")->findAll();
-        $results = [];		
+        $results = [];
         foreach($records as $k => $record){
         	$results[$k] = $record->toJSON();
         	$results[$k]['logo'] = 'x.png';
