@@ -29,4 +29,24 @@ class ApplicationController extends Controller
         return $business;
     }
 
+    protected function serviceBySlugAndId($slug, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Service");
+
+        $query = $repository->createQueryBuilder('b')
+            ->where('b.id = :id')
+            ->andWhere('b.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        $service = $query->setMaxResults(1)->getOneOrNullResult();
+
+        if (!$service) {
+            throw $this->createNotFoundException('We couldn\'t find that business');
+        }
+
+        return $service;
+    }
+
 }
