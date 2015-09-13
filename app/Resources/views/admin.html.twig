@@ -8,7 +8,7 @@
     <title>{% block title %}BiBeauty{% endblock %}</title>
     {% stylesheets
         'assets/css/main.scss'
-        filter='sass,cssrewrite' output='css/main.css' %}
+        filter='scssphp,cssrewrite' output='css/main.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
     {% block stylesheets %}{% endblock %}

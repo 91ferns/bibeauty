@@ -55,8 +55,8 @@ assetic:
                 - 'assets/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
     #java: /usr/bin/java
     filters:
-        sass: ~
-#        reactjsx: ~
+        scssphp: ~
+        reactjsx: ~
         autoprefixer: ~
         cssrewrite: ~
         uglifyjs2:

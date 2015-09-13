@@ -43,7 +43,7 @@ class AppExtension extends \Twig_Extension
         $stars = array();
         for ($i = 1; $i <= 5; $i++) {
             $active = ($i <= $number) ? 'active' : '';
-            $stars[] = sprintf('<i class="glyphicon glyphicon-star %s"></i>', $active);
+            $stars[] = sprintf('<i class="fa fa-star %s"></i>', $active);
         }
 
         return join('', $stars);

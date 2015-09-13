@@ -8,7 +8,7 @@
     <title>{% block title %}BiBeauty{% endblock %}</title>
     {% stylesheets
         'assets/css/main.scss'
-        filter='sass,cssrewrite' output='css/main.css' %}
+        filter='scssphp,cssrewrite' output='css/main.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
     {% block stylesheets %}{% endblock %}
@@ -30,7 +30,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="#" class="btn btn-default" id="need-help">
-                      <i class="glyphicon glyphicon-question-sign hidden-xs"></i>Need Help
+                      <i class="fa fa-question-circle hidden-xs"></i> Need Help
                     </a>
                 </li>
                 <li class="">
