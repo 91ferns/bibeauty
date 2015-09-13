@@ -28,7 +28,7 @@ class BusinessesController extends Controller
      * @Route("/businesses/{id}/{slug}", name="business_path")
      * @Method({"GET"})
      */
-    public function showAction($slug, $id, Request $request)
+    public function showAction($id, $slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("AppBundle:Business");
