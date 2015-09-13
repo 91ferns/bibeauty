@@ -4,6 +4,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -26,6 +27,11 @@ class Service {
      * @ORM\Column(type="string", length=255)
      */
     protected $label;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
 
     /**
      * @Assert\NotBlank()
@@ -90,7 +96,7 @@ class Service {
 
     protected function generateSlug() {
         $slugify = new Slugify();
-        return $slugify->slugify($this->name); // hello-world
+        return $slugify->slugify($this->label); // hello-world
     }
 
     /**
@@ -331,5 +337,28 @@ class Service {
         $string .= sprintf('%d min%s', $minutes, $minutes == 1 ? '' : 's');
 
         return $string;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Service
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
