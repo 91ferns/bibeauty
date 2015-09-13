@@ -3,13 +3,21 @@
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">Add a business</div>
+  <div class="panel-heading">Businesses</div>
   <div class="panel-body">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-      <input type="submit" value="Create"
-           class="btn btn-default pull-right" />
-    {{ form_end(form) }}
+    {% if businesses | length > 0 %}
+    <ul class="list-group">
+      {% for business in businesses %}
+      <li class="list-group-item">
+        <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+          {{ business.getName }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no businesses</p>
+    {% endif %}
   </div>
 </div>
 

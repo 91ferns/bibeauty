@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\Account;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -19,6 +19,24 @@ class BusinessesController extends Controller
      * @Method("GET")
      */
     public function indexAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Business");
+
+        $businesses = $repository->findByOwner($this->getUser());
+
+        // replace this example code with whatever you need
+        return $this->render('account/businesses/index.html.twig', array(
+            'businesses' => $businesses
+        ));
+
+    }
+
+    /**
+     * @Route("/account/businesses/new", name="admin_new_businesses_path")
+     * @Method("GET")
+     */
+    public function newAction(Request $request)
     {
         $business = new Business();
         $address = new Address();
@@ -104,6 +122,21 @@ class BusinessesController extends Controller
                 'form' => $form->createView()
             ));
         }
+
+    }
+
+    /**
+     * @Route("/account/businesses/{id}/{slug}", name="admin_business_path")
+     * @Method("GET")
+     */
+    public function showAction($id, $slug, Request $request)
+    {
+        $business = $this->businessBySlugAndId($slug, $id);
+
+        // replace this example code with whatever you need
+        return $this->render('account/businesses/show.html.twig', array(
+            'business' => $business
+        ));
 
     }
 }

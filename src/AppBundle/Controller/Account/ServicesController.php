@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\Account;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -17,21 +17,7 @@ class ServicesController extends Controller
      */
     public function indexAction($id, $slug, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("AppBundle:Business");
-
-        $query = $repository->createQueryBuilder('b')
-            ->where('b.id = :id')
-            ->andWhere('b.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->setParameter('id', $id)
-            ->getQuery();
-
-        $business = $query->setMaxResults(1)->getOneOrNullResult();
-
-        if (!$business) {
-            throw $this->createNotFoundException('We couldn\'t find that business');
-        }
+        $business = $this->getBusinessBySlugAndId($slug, $id);
 
         // replace this example code with whatever you need
         return $this->render('account/services/index.html.twig', array(
