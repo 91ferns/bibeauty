@@ -6,19 +6,29 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Doctrine\ORM\EntityRepository;
+
 use AppBundle\Entity\Attachment;
 
 class ServiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-            ->add('serviceCategory', 'choice', array(
+            ->add('serviceCategory', 'entity', array(
                 'label' => 'Category',
                 'attr' => array(
                    'placeholder' => 'Category'
                 ),
-                'choices' => $options['categories'],
+                'class' => 'AppBundle:ServiceCategory',
+                'query_builder' => function (EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.business = :business')
+                        ->setParameter('business', $options['business'])
+                        ->orderBy('c.updated', 'DESC');
+                },
+                'choice_label' => 'label',
                 'multiple' => false,
                 'expanded' => false,
             ))
@@ -33,7 +43,33 @@ class ServiceType extends AbstractType
                  'attr' => array(
                     'placeholder' => 'Description'
                 )
-            ));
+            ))
+            ->add('hours', 'integer', array(
+                 'label' => 'Hours',
+                 'attr' => array(
+                    'placeholder' => 'Hours'
+                )
+            ))
+            ->add('minutes', 'integer', array(
+                 'label' => 'Minutes',
+                 'attr' => array(
+                    'placeholder' => 'Minutes'
+                )
+            ))
+            ->add('currentPrice', 'money', array(
+                 'label' => 'Discounted Price',
+                 'attr' => array(
+                    'placeholder' => '0.00'
+                ),
+                'currency' => 'USD'
+            ))
+            ->add('originalPrice', 'money', array(
+                 'label' => 'Full Price',
+                 'attr' => array(
+                    'placeholder' => '0.00'
+                ),
+                'currency' => 'USD'
+            ))
         ;
     }
 
@@ -41,14 +77,14 @@ class ServiceType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Service',
-            'categories' => array()
+            'business' => null
         ));
     }
 
     public function getDefaultOptions(array $options) {
         return array(
             'validation_groups' => array('service'),
-            'categories' => array()
+            'business' => null
         );
     }
 

@@ -36,7 +36,7 @@ class ServicesController extends Controller
                 'slug' => $slug,
                 'id' => $id
             )),
-            'categories' => $business->getCategoriesAsChoices()
+            'business' => $business
         ));
 
         // replace this example code with whatever you need
@@ -112,9 +112,9 @@ class ServicesController extends Controller
 
         $service = new Service();
 
-        $service->setBusiness($business);
-
-        $serviceForm = $this->createForm(new ServiceType(), $service);
+        $serviceForm = $this->createForm(new ServiceType(), $service, array(
+            'business' => $business
+        ));
         $serviceForm->handleRequest($request);
 
         if ($serviceForm->isValid()) {
@@ -123,12 +123,22 @@ class ServicesController extends Controller
             $em->persist($service);
             $em->flush();
 
+            $this->addFlash(
+                'notice',
+                'Your service was created'
+            );
+
             return $this->redirectToRoute('admin_path');
 
         } else {
-            return $this->render('account/businesses/show.html.twig', array(
-                'categoryForm' => $categoryForm->createView(),
-                'business' => $business
+
+            $this->addFlash(
+                'error',
+                $serviceForm->getErrorsAsString()
+            );
+            return $this->redirectToRoute('admin_business_services_path', array(
+                'slug' => $business->getSlug(),
+                'id' => $business->getId()
             ));
         }
 

@@ -47,8 +47,20 @@
   </nav>
 
   <section id="admin-main">
+
     <div class="alert" role="alert">
-      <strong>Put error text in here</strong>
+      <ul>
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+          <li class="notice">
+              {{ flashMessage }}
+          </li>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+          <li class="error">
+              {{ flashMessage }}
+          </li>
+        {% endfor %}
+      </ul>
     </div>
 
     <div class="admin-main-inner">

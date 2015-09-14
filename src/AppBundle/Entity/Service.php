@@ -42,6 +42,7 @@ class Service {
 
     /**
      * @ORM\Column(type="integer", length=2)
+     * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(
      *     value = 0
      * )
@@ -50,6 +51,7 @@ class Service {
 
     /**
      * @ORM\Column(type="integer", length=2)
+     * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(
      *     value = 0
      * )
@@ -58,6 +60,7 @@ class Service {
 
     /**
      * @ORM\Column(type="float", length=8)
+     * @Assert\NotBlank()
      * @Assert\GreaterThan(
      *     value = 0.00
      * )
@@ -66,6 +69,7 @@ class Service {
 
     /**
      * @ORM\Column(type="float", length=8)
+     * @Assert\NotBlank()
      * @Assert\GreaterThan(
      *     value = 0.00
      * )
@@ -111,7 +115,6 @@ class Service {
         // will NOT be saved in the database
         $this->updated->modify("now");
     }
-
 
 
     /**
