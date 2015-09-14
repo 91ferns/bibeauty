@@ -54,11 +54,14 @@
                       <span class="service-name">
                         {{ service.getLabel }}
                       </span>
+                      <a href="#" class="service-price">
+                        $70 <!-- temp price -->
+                      </a>
+                      <span class="service-old-price">
+                        $100
+                      </span>
                       <span class="service-time">
                         {{ service.getTimeForPrint }}
-                      </span>
-                      <span class="service-old-price">
-                        100
                       </span>
                     </li>
                   {% endfor %}
@@ -110,27 +113,29 @@
             </div>
           </div> <!-- /.panel -->
           <!--hr>
-            <p>Have you been here? <a class="btn btn-secondary">Write a Review</a></p>-->
+            -->
           <hr>
-
-          <div class="review-comments">
-            {% for review in business.getReviews %}
-            <div class="media">
-              <div class="media-left media-middle">
-                <img class="media-object img-circle" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">{{ review.poster.getDisplayName }}</h4>
-                <div class="ratings">
-                  <div class="stars">
-                    {{ review.getRating | rating }}
-                  </div>
-                  <em>{{ review.getCreatedAt | elapsed }}</em>
+          <div class="business-comments">
+          <!--  <p>Have you been here? <a class="btn btn-secondary">Write a Review</a></p> -->
+            <div class="review-comments">
+              {% for review in business.getReviews %}
+              <div class="media">
+                <div class="media-left media-middle">
+                  <img class="media-object img-circle" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
                 </div>
-                <p class="comment-text">{{ review.getContent }}</p>
-              </div>
-            </div> <!-- /.media -->
-            {% endfor %}
+                <div class="media-body">
+                  <h4 class="media-heading">{{ review.poster.getDisplayName }}</h4>
+                  <div class="ratings">
+                    <div class="stars">
+                      {{ review.getRating | rating }}
+                    </div>
+                    <em>{{ review.getCreatedAt | elapsed }}</em>
+                  </div>
+                  <p class="comment-text">{{ review.getContent }}</p>
+                </div>
+              </div> <!-- /.media -->
+              {% endfor %}
+            </div>
           </div>
         </div>
       </div>

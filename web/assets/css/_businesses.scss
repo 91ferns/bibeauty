@@ -187,7 +187,9 @@
     margin-top: 0px;
   }
   .yelp-logo {
-    margin-top: 8px;
+    margin-top: -5px;
+    position: relative;
+    margin-left: 90%;
   }
   .review-comments {
     > .media {
@@ -253,10 +255,42 @@
        .list-group-item {
 
           .service-time {
-            margin-left: 10%;
+            float: right;
+            margin-right: 50%;
+            color: $gray-medium;
+          }
+          .service-old-price {
+            float: right;
+            text-decoration: line-through;
+            padding-right: 30px;
+          }
+          .service-price {
+            float: right;
+            padding-right: 30px;
+            background-color: $brand-primary;
+            color: white;
+            padding: 5px 30px;
+            position: relative;
+            bottom: 5px;
+            text-decoration: none;
           }
        }
      }
+   }
+ }
+ .business-comments {
+
+   .btn-secondary {
+     margin-left: 50px;
+     text-transform: uppercase;
+     padding: 5px 20px;
+     -webkit-transition:all 1s ease-in;
+     -moz-transition:all 1s ease-in;
+     transition:all 1s ease-in;
+   }
+   .btn-secondary:hover {
+     background-color: white;
+     color: $brand-primary;
    }
  }
 
