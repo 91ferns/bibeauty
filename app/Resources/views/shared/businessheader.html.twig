@@ -1,0 +1,100 @@
+<div class="jumbotron">
+    <div class="container">
+        <h1>{{business.getName}}</h1>
+        <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</h2>
+
+        <div class="row">
+          <div class="col-md-8">
+              {% if business.hasHeaderAttachment %}
+                <div class="header-attachment-wrapper" style="background-image: url({{ business.getHeaderAttachment.getKey | s3 }})">
+              {% else %}
+                <div class="header-attachment-wrapper" style="">
+              {% endif %}
+              </div> <!-- /.header-attachment-wrapper -->
+            <nav class="business-tab-navigation">
+              <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="#">Overview</a></li>
+                <li role="presentation"><a href="#">Services</a></li>
+                <li role="presentation"><a href="#">Reviews</a></li>
+              </ul>
+            </nav>
+          </div> <!-- /.col -->
+          <div class="col-md-4">
+
+            <aside class="business-aside">
+
+              <div class="ratings">
+
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="ratings-lead">
+                      <small>Rating</small><br>
+                      <span class="ratings-number">
+                        {{business.getAverageRating}}
+                      </span>
+                      <p>From Yelp</p>
+                    </div>
+                  </div>
+                    <div class="stars col-lg-8">
+                      <img src="{{ asset('assets/images/yelp-logo.jpg') }}" class="yelp-logo right-block" height="35px" width="78.5px">
+                      <div class="row">
+                      {{ business.getAverageRating | rating }}
+                      </div>
+                    </div> <!-- /.stars -->
+                </div>
+
+                <a class="btn btn-primary btn-fullwidth btn-lg">
+                  Reserve Now
+                </a>
+
+              </div>
+
+              <hr>
+
+              <div class="business-info">
+                <h1 class="business-name">{{business.getName}}</h1>
+                <h2 class="business-address">{{business.address.getFullAddressString}}</h2>
+
+                <ul class="nav nav-list">
+                  <li class="active"><a href="{{business.address.getGoogleMapsUrl}}" class="map-show" target="_blank">
+                    <i class="fa fa-map-marker"></i>Show on Map
+                  </a></li>
+                  <li><a href="tel:{{business.getAddress.getPhone | phone}}" class="phone">
+                    <i class="fa fa-phone"></i>{{business.getAddress.getPhone | phone}}
+                  </a></li>
+                  {% if business.getEmail %}
+                  <li><a href="mailto:{{business.getEmail}}" class="email-link">
+                    <i class="fa fa-envelope-o"></i>{{business.getEmail}}
+                  </a></li>
+                  {% endif %}
+                  {% if business.getWebsite %}
+                  <li><a href="{{business.getWebsite}}" target="_blank" class="website-link">
+                    <i class="fa fa-globe"></i>{{business.getWebsite}}
+                  </a></li>
+                  {% endif %}
+                </ul>
+              </div>
+
+              <hr>
+
+              <div class="business-hours">
+                <h3>Opening Hours</h3>
+                <dl class="dl-horizontal">
+                  <dt>MON-SUN</dt>
+                  <dd>2-3</dd>
+                </dl>
+              </div>
+
+              <hr>
+
+              <div class="payment-info">
+                <h3>We Accept</h3>
+              </div>
+
+            </aside>
+
+          </div>
+        </div> <!-- /.row -->
+
+    </div>
+</div> <!-- /.jumbotron -->

@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Controllers\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Business;
@@ -30,21 +30,8 @@ class BusinessesController extends Controller
      */
     public function showAction($id, $slug, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("AppBundle:Business");
 
-        $query = $repository->createQueryBuilder('b')
-            ->where('b.id = :id')
-            ->andWhere('b.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->setParameter('id', $id)
-            ->getQuery();
-
-        $business = $query->setMaxResults(1)->getOneOrNullResult();
-
-        if (!$business) {
-            throw $this->createNotFoundException('We couldn\'t find that business');
-        }
+        $business = $this->businessBySlugAndId($slug, $id);
 
         if ($business->getYelpId()) {
             $yelp = $this->get('yelp.factory');
@@ -61,6 +48,33 @@ class BusinessesController extends Controller
         }
 
         return $this->render('businesses/show.html.twig', array(
+            'business' => $business
+        ));
+    }
+
+    /**
+     * @Route("/businesses/{id}/{slug}/book/{id}", name="business_book_path")
+     * @Method({"GET"})
+     */
+    public function bookAction($id, $slug, Request $request)
+    {
+        $business = $this->businessBySlugAndId($slug, $id);
+
+        if ($business->getYelpId()) {
+            $yelp = $this->get('yelp.factory');
+            $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
+
+            if ($response->rating) {
+                $business->setAverageRating($response->rating);
+            }
+
+            foreach($response->reviews as $review) {
+                $theReview = Review::fromYelp($review);
+                $business->addReview($theReview);
+            }
+        }
+
+        return $this->render('businesses/book.html.twig', array(
             'business' => $business
         ));
     }
