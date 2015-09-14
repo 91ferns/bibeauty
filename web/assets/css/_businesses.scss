@@ -217,5 +217,47 @@
     bottom: 20px;
     right: 35px;
   }
+ .business-services {
+
+   .services {
+     font-family: "Open Sans";
+     font-weight: 200px;
+     font-size: 1.5em;
+   }
+
+   .panel-default {
+     background-color: #f7f7f7;
+     border: none;
+     color: black;
+
+     .fa-tag {
+       color: $brand-primary;
+       padding-right: 5px;
+     }
+     .panel-heading {
+       color: black;
+       background-color: #f7f7f7;
+       border: none;
+     }
+     .panel-title {
+       a {
+         text-decoration: none;
+       }
+       small {
+         padding-left: 10px;
+        }
+     }
+     .panel-body {
+       border: none;
+
+       .list-group-item {
+
+          .service-time {
+            margin-left: 10%;
+          }
+       }
+     }
+   }
+ }
 
 }

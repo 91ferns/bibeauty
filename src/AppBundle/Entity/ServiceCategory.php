@@ -238,12 +238,12 @@ class ServiceCategory {
      */
     public function getLowestPrice()
     {
-        $services = $this->getServices();
+        $services = $this->getServices()->toArray();
         if (count($services) < 1) return 0.0;
 
         usort($services, function($a, $b) {
-            $a = $a->$currentPrice();
-            $b = $b->$currentPrice();
+            $a = $a->getCurrentPrice();
+            $b = $b->getCurrentPrice();
 
             if ($a == $b) {
                 return 0;
@@ -251,7 +251,7 @@ class ServiceCategory {
             return ($a < $b) ? -1 : 1;
         });
 
-        return min($services);
-
+        $lowest = min($services);
+        return $lowest->getCurrentPrice();
     }
 }
