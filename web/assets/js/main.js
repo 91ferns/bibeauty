@@ -1,5 +1,5 @@
 jQuery(function($) {
-
+   	$('#day').datepicker();
 });
 
 //window scroll function for navbar opacity
@@ -15,16 +15,16 @@ jQuery(function($) {
 });
 
 jQuery(function($) {
-		$("#slider-range").slider({
-			range: true,
-			min: 0,
-			max: 500,
-			values: [ 75, 300 ],
-			slide: function( event, ui ) {
-				$( "#amount_left" ).val( "$" + ui.values[ 0 ]);
-				$( "#amount_right" ).val("$" + ui.values[ 1 ] );
-			}
-		});
-		$( "#amount_left" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ));
-		$( "#amount_right" ).val( "$" + $( "#slider-range" ).slider( "values", 1 ) );
+	$("#slider-range").slider({
+		range: true,
+		min: 0,
+		max: 500,
+		values: [ 75, 300 ],
+		slide: function( event, ui ) {
+			$( "#amount_left" ).val( "$" + ui.values[ 0 ]);
+			$( "#amount_right" ).val("$" + ui.values[ 1 ] );
+		}
 	});
+	$( "#amount_left" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ));
+	$( "#amount_right" ).val( "$" + $( "#slider-range" ).slider( "values", 1 ) );
+});

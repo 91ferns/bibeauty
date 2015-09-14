@@ -9,10 +9,14 @@ var RESULTS_MAP = (function(){
             zoom: 13
 
         },
+        setGoogle = function(g) {
+          gMap = g;
+          gMap.MapTypeId.ROADMAP;
+        }
         init    = function(g,resultsmarkers){
            //to do make opts, center, mapId updatable in constructor
-           gMap = g;
-           gMap.MapTypeId.ROADMAP
+           console.log('Initing');
+           console.trace();
            initCenter();
            createTheMap();
            if(typeof resultsmarkers !== "undefined"){
@@ -60,6 +64,7 @@ var RESULTS_MAP = (function(){
             return bounds.getCenter();
         },
         resetCenter = function(newpos){
+          console.trace();
           newpos = (typeof newpos === 'undefined') ? getCurrentCenter() : newpos;
           themap.setOptions({center: newpos});
         },
@@ -84,6 +89,7 @@ var RESULTS_MAP = (function(){
         };
     return {
       init:init,
+      setGoogle: setGoogle,
       updateResults:updateResults
     };
 }());

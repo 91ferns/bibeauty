@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/91ferns/bibeauty#readme",
   "dependencies": {
+    "jsx": "^0.9.89",
+    "react-tools": "^0.13.3",
     "uglify-js": "^2.4.24",
     "uglifycss": "0.0.17"
   }

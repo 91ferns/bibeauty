@@ -45,18 +45,26 @@ assetic:
     use_controller: false
     bundles:        [ ]
     assets:
+        react_components:
+            inputs:
+                - 'assets/react/*'
+        head_assets:
+            inputs:
+                - 'assets/components/react/react-with-addons.js'
         vendor_assets:
             inputs:
+                - 'assets/components/react/react-with-addons.js'
                 - 'assets/components/jquery/dist/jquery.min.js'
                 - 'assets/components/jquery-ui/jquery-ui.min.js'
                 - 'assets/components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
                 - 'assets/components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js'
-                - 'assets/components/react/react.min.js'
                 - 'assets/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
     #java: /usr/bin/java
     filters:
         sass: ~
-        reactjsx: ~
+        reactjsx:
+            bin: "%kernel.root_dir%/../node_modules/react-tools/bin/jsx"
+            apply_to:   "\.jsx$"
         autoprefixer: ~
         cssrewrite: ~
         uglifyjs2:
