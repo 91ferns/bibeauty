@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Controllers\ApplicationController as Controller;
+use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Business;

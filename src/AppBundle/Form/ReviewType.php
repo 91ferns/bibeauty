@@ -8,41 +8,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use AppBundle\Entity\Review;
 
-class OperatingScheduleType extends AbstractType
+class ReviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('mondayStart', 'choice', array(
-                'label' => 'Monday',
-                'multiple' => false,
-                'expanded' => false,
-                'choices' => OperatingSchedule::getTimes(),
-            ))
-            ->add('mondayEnd', 'choice', array(
-                'label' => false,
-                'multiple' => false,
-                'expanded' => false,
-                'choices' => OperatingSchedule::getTimes(),
-            ));
+            
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\OperatingSchedule'
+            'data_class' => 'AppBundle\Entity\ReviewType'
         ));
     }
 
     public function getDefaultOptions(array $options) {
         return array(
-            'validation_groups' => array('operation')
+            'validation_groups' => array('review')
         );
     }
 
     public function getName()
     {
-        return 'operating_schedule';
+        return 'review';
     }
 }
