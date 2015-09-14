@@ -9,8 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use AppBundle\Form\BusinessType;
 use AppBundle\Form\AddressType;
+use AppBundle\Form\ServiceCategoryType;
+
 use AppBundle\Entity\Business;
 use AppBundle\Entity\Address;
+use AppBundle\Entity\ServiceCategory;
 
 class BusinessesController extends Controller
 {
@@ -133,10 +136,20 @@ class BusinessesController extends Controller
     {
         $business = $this->businessBySlugAndId($slug, $id);
 
+        $categoryForm = $this->createForm(new ServiceCategoryType(), new ServiceCategory(), array(
+            'action' => $this->generateUrl('admin_business_create_service_category', array(
+                'slug' => $slug,
+                'id' => $id
+            ))
+        ));
+
+
         // replace this example code with whatever you need
         return $this->render('account/businesses/show.html.twig', array(
+            'categoryForm' => $categoryForm->createView(),
             'business' => $business
         ));
 
     }
+
 }

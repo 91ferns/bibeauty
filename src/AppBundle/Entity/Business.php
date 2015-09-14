@@ -610,10 +610,20 @@ class Business {
     /**
      * Get serviceCategories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getServiceCategories()
     {
         return $this->serviceCategories;
+    }
+
+    public function getCategoriesAsChoices() {
+        $array = array();
+        foreach ($this->serviceCategories as $category) {
+            $id = $category->getId();
+            $array[$id] = $category->getLabel();
+        }
+
+        return $array;
     }
 }

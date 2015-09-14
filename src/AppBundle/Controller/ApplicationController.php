@@ -29,6 +29,28 @@ class ApplicationController extends Controller
         return $business;
     }
 
+    protected function categoryInBusiness($slug, $business) {
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:ServiceCategory");
+
+        $query = $repository->createQueryBuilder('c')
+            ->where('c.business = :business')
+            ->andWhere('c.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->setParameter('business', $business)
+            ->getQuery();
+
+        $category = $query->setMaxResults(1)->getOneOrNullResult();
+
+        if (!$category) {
+            throw $this->createNotFoundException('We couldn\'t find that category');
+        }
+
+        return $category;
+
+    }
+
     protected function serviceBySlugAndId($slug, $id) {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("AppBundle:Service");

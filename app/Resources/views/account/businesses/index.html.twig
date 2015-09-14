@@ -3,7 +3,10 @@
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">Businesses</div>
+  <div class="panel-heading">
+    Businesses
+    <a href="{{path('admin_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
+  </div>
   <div class="panel-body">
     {% if businesses | length > 0 %}
     <ul class="list-group">

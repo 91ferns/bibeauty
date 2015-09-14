@@ -1,0 +1,26 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Treatments in {{ category.getLabel }}
+    <a href="{{path('admin_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong></a>
+  </div>
+  {% if category.getServices.count > 0 %}
+    <ul class="list-group">
+    {% for service in category.getServices %}
+      <li class="list-group-item">
+        <a href="#">{{ service.getLabel }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+  <div class="panel-body">
+    <p>There are no treatments in this category.</p>
+  </div>
+  {% endif %}
+</div>
+
+
+{% endblock %}
