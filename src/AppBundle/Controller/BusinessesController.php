@@ -53,10 +53,10 @@ class BusinessesController extends Controller
     }
 
     /**
-     * @Route("/businesses/{id}/{slug}/book/{id}", name="business_book_path")
+     * @Route("/businesses/{id}/{slug}/book/{treatment}", name="business_book_path")
      * @Method({"GET"})
      */
-    public function bookAction($id, $slug, Request $request)
+    public function bookAction($id, $slug, $treatment, Request $request)
     {
         $business = $this->businessBySlugAndId($slug, $id);
 
@@ -75,7 +75,8 @@ class BusinessesController extends Controller
         }
 
         return $this->render('businesses/book.html.twig', array(
-            'business' => $business
+            'business' => $business,
+            'treatment' => $treatment
         ));
     }
 
