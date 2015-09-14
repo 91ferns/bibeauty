@@ -1,8 +1,6 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,600,300);
-
-
 // FA Overrides
 $fa-font-path: '../components/fontawesome/fonts';
+$icon-font-path: '../components/bootstrap-sass-official/assets/fonts/bootstrap/';
 
 @import '../../../web/assets/components/fontawesome/scss/font-awesome';
 
@@ -11,7 +9,6 @@ $navbar-height: 96px;
 $gray-light: #bbbbbb;
 $gray-medium: #919191;
 $gray: #3f4040;
-$icon-font-path: '../components/bootstrap-sass-official/assets/fonts/bootstrap/';
 $font-family-sans-serif: "Open Sans", Helvetica, Arial, sans-serif;
 
 // Swatches

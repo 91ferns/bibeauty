@@ -28,8 +28,7 @@
         "cocur/slugify": "~1.3",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "stevenmaguire/yelp-php": "~1.4",
-        "giggsey/libphonenumber-for-php": "~7.0",
-        "leafo/scssphp": "0.3.*"
+        "giggsey/libphonenumber-for-php": "~7.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
