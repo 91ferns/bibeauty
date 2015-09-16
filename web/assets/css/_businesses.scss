@@ -150,10 +150,6 @@
 
   .ratings {
 
-    .stars {
-      .active {color: #ffcc30;}
-    }
-
     .ratings-number {
       font-size: 52px;
       line-height: 56px;
@@ -337,4 +333,8 @@
     }
   }
 
+}
+
+.stars {
+  .active {color: #ffcc30;}
 }

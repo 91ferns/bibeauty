@@ -1,0 +1,21 @@
+#results-map-wrapper {
+  position: relative;
+
+  section {
+    padding: 0px;
+  }
+
+  #results_map {
+    height: 580px;
+    width: 100%;
+    min-height: 55vh;
+  }
+
+  .top-warning {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: 10000;
+
+  }
+}

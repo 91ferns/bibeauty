@@ -110,18 +110,7 @@ class BusinessesController extends Controller
         }
         return $this->render('businesses/search.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'results'  => $results/*[(object) ['business_name'=>'blah','star_img'=>'oops',
-                            'reviews_num'=>5, 'map_link'=>'x',
-                            'city'=>'x','state'=>'x','logo'=>'x',
-                            'description'=>'x',
-                            'treatments'=>
-                                [
-                                	['id'=>1,'name'=>'x',
-                                 	 'percent_discount'=>4,'start_dollars'=>20,
-                                 	 'num_remaining'=>4]
-                            		],
-                            	]
-                          ]*/
+            'results'  => $results
         ));
     }
 }
