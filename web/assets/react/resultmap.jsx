@@ -63,7 +63,9 @@ var ResultMap = React.createClass({
       var loc = new google.maps.Marker({
         position: pos,
         title: marker.name,
-        map: this.state.map
+        map: this.state.map,
+        animation: google.maps.Animation.DROP,
+        icon: '/assets/images/map/pin.png',
       });
       this.setState({
         markers: this.state.markers.push(loc)
