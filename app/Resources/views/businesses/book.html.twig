@@ -51,33 +51,36 @@
     <hr class="fullwidth">
     <p class="text-muted">Don’t have an account with us ? Simply just fill out the below to reserve your appointment</p>
 
-    <form action="" method="post" class="">
-
+    {{ form_start(form) }}
       <div class="form-group">
-        <label for="FullName">Full Name</label>
-        <input type="text" class="form-control input-lg" name="FullName" id="FullName" placeholder="Jane Doe">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        {{ form_errors(form.name) }}
       </div>
 
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="Email">Email address</label>
-            <input type="email" class="form-control input-lg" name="Email" id="Email" placeholder="jane@example.com">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
           </div>
-        </div>
+        </div> <!-- /.col -->
+
         <div class="col-md-6">
           <div class="form-group">
-            <label for="PhoneNumber">Email address</label>
-            <input type="text" class="form-control input-lg" name="Phone" id="PhoneNumber" placeholder="(XXX) XXX-XXXX">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone) }}
+            {{ form_errors(form.phone) }}
           </div>
-        </div>
-      </div>
+        </div> <!-- /.col -->
 
+      </div>
       <center>
         <button type="submit" class="btn btn-primary btn-lg">Reserve</button>
       </center>
+    {{ form_end(form) }}
 
-    </form>
   </div>
 
 </section>

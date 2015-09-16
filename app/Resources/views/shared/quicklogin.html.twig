@@ -8,10 +8,10 @@
       {% endif %}
     {% endif %}
 
-    {% if false and app.user %}
+    {% if app.user %}
       <h3 class="login-title">
         <img src="{{ asset('assets/images/lock.png')}}">
-        <strong>HEY {{ app.user.email }}.</strong> We filled your information out for you!
+        <strong>Hey, {{ app.user.firstname }}.</strong> We filled your information out for you!
       </h3>
     {% else %}
 

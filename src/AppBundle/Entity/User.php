@@ -303,10 +303,14 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get subscriptions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSubscriptions()
     {
         return $this->subscriptions;
+    }
+
+    public function getFullname() {
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 }

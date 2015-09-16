@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Business;
 use AppBundle\Entity\Review;
 
+use AppBundle\Entity\Booking;
+use AppBundle\Form\BookingType;
+
 class BusinessesController extends Controller
 {
     /**
@@ -74,9 +77,15 @@ class BusinessesController extends Controller
             }
         }
 
+        $bookingForm = $this->createForm(new BookingType(), new Booking(), array(
+            'action' => $this->generateUrl('listings_search_path', array()),
+            'user' => $this->getUser() ? $this->getUser() : null,
+        ));
+
         return $this->render('businesses/book.html.twig', array(
             'business' => $business,
-            'treatment' => $treatment
+            'treatment' => $treatment,
+            'form' => $bookingForm->createView()
         ));
     }
 
