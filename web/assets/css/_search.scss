@@ -1,13 +1,19 @@
 #results-map-wrapper {
   position: relative;
+  .results-map-wrapper-outer {
+    background: whitesmoke;
+  }
 
   section {
     padding: 0px;
   }
 
   #results_map {
-    height: 580px;
     width: 100%;
+  }
+
+  .results-map-wrapper-outer, #results_map {
+    height: 580px;
     min-height: 55vh;
   }
 

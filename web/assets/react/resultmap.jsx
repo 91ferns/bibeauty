@@ -59,7 +59,7 @@ var ResultMap = React.createClass({
       }
     },
     addMarker: function(marker) {
-      var pos = new google.maps.LatLng(marker.lat, marker.lng);
+      var pos = new google.maps.LatLng(marker.coordinates.latitude, marker.coordinates.longitude);
       var loc = new google.maps.Marker({
         position: pos,
         title: marker.name,
@@ -120,7 +120,9 @@ var ResultMap = React.createClass({
       return (
         <div className="results_map_wrapper">
           {warning}
-          <div id="results_map"></div>
+          <div className="results-map-wrapper-outer">
+            <div id="results_map"></div>
+          </div>
         </div>
       );
     }
