@@ -40,4 +40,28 @@ class BusinessesController extends Controller
 
 
     }
+
+    /**
+     * @Route("/api/businesses/{id}/treatment/{treatment}/availability")
+     * @Method("GET")
+     */
+    public function treatmentAction($id, $treatment, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $records = $em->getRepository("AppBundle:Business")->findAll();
+
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $data = array_map(function($business) {
+            return $business->toJSON();
+        }, $records);
+
+        return new JSONResponse(array(
+            'status' => 'ok',
+            'data' => $data
+        ), Response::HTTP_OK);
+
+
+    }
 }

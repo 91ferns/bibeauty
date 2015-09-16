@@ -241,6 +241,9 @@ $logo-height: 78px;
 // 130 80
 hr {
   width: 85%;
+  &.fullwidth {
+    width: 100%;
+  }
 }
 
 #top-slider {
@@ -599,3 +602,9 @@ main section {
 
    }
  }
+
+.jumbotron.no-margin {
+   margin-bottom: 0px;
+ }
+
+ @import 'treatments';

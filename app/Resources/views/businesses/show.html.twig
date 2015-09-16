@@ -38,7 +38,7 @@
                       <img src="{{ asset('assets/images/discount-tag.png')}}">
                       <big>{{ serviceCategory.getLabel }}</big>
                       {% if serviceCategory.getServices.count > 1 %}
-                      <small>See all {{ serviceCategory.getServices.count }} offers</small>
+                      <small>See all {{ serviceCategory.getServices.count }} offers <i class="fa fa-chevron-down"></i></small>
                       {% endif %}
                       <span class="pull-right">
                         from
@@ -63,13 +63,7 @@
                         <button class="btn btn-default service-old-price" disabled>
                           ${{ service.getOriginalPrice | number_format(2) }}
                         </button>
-                        <a class="btn btn-primary" href="{{
-                          path('business_book_path', {
-                            id: business.getId,
-                            slug: business.getSlug,
-                            treatment: service.getSlug,
-                          })
-                        }}">
+                        <a class="btn btn-primary" data-toggle="modal" href="#treatmentModal" data-whatever="@getbootstrap" data-treatment-id="{{ service.getId }}" data-business-id="{{ business.getId }}">
                           ${{ service.getCurrentPrice | number_format(2) }}
                         </a>
                       </div>
@@ -149,5 +143,23 @@
       </div>
     </div>
 </section>
+
+<div class="modal fade" id="treatmentModal" tabindex="-1" role="dialog" aria-labelledby="treatmentModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="treatmentModalLabel">Choose Available Time</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-wrapper"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Book</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

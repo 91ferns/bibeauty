@@ -2,144 +2,84 @@
 
 {% block body %}
 
-<section id="business-information" class="nav-pad">
+<section id="business-information" class="nav-pad" style="padding-bottom: 20px;">
 
-    {% include 'shared/businessheader.html.twig' %}
-
-    <div class="business-main-content">
+  <div class="jumbotron no-margin">
       <div class="container">
-        <div class="business-description">
+
           <div class="row">
             <div class="col-md-8">
-                <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
-                <p class="business-description">{{business.getDescription}}</p>
-                <hr>
-              </div> <!-- /.business-description -->
-
+              <h2 class="pull-right">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</h2>
+              <h1>{{business.getName}}</h1>
+              <div class="stars">
+                {{ business.getAverageRating | rating }}
+                from Yelp&trade;
+              </div> <!-- /.stars -->
+              <p></p>
+            </div>
           </div> <!-- /.row -->
-        </div>  <!-- /.business-description -->
+          <div class="row">
+            <div class="col-md-8">
+              {% if business.hasHeaderAttachment %}
+                <div class="header-attachment-wrapper" style="background-image: url({{ business.getHeaderAttachment.getKey | s3 }})">
+              {% else %}
+                <div class="header-attachment-wrapper" style="">
+              {% endif %}
+              </div> <!-- /.header-attachment-wrapper -->
+            </div> <!-- /.col -->
+            <div class="col-md-4">
 
-        <div class="business-services">
-          <h4 class="services">Services</h4>
-          {% if business.getServiceCategories.count > 0 %}
-          <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
+              <aside class="business-aside">
 
-            {% for serviceCategory in business.getServiceCategories %}
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab"
-                id="service-{{ serviceCategory.getSlug }}">
-                <h4 class="panel-title">
-                  <i class="fa fa-tag fa-lg"></i>
-                  <a role="button"
-                    data-toggle="collapse"
-                    aria-controls="service-content-{{ serviceCategory.getSlug }}"
-                    data-parent="#service-accordion"
-                    href="#service-content-{{ serviceCategory.getSlug }}"
-                    aria-expanded="true">
-                      {{ serviceCategory.getLabel }}
-                      <small> See all {{ serviceCategory.getServices.count }} offers</small>
-                      <span class="pull-right">
-                        from <strong>${{ serviceCategory.getLowestPrice }}
-                      </strong>
-                    </span>
-                  </a>
-                </h4>
-              </div>
-              <div id="service-content-{{ serviceCategory.getSlug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ serviceCategory.getSlug }}">
-                <div class="panel-body">
-                  {# This is where the individual services go, as their own accordions #}
-                  <ul class="list-group">
-                  {% for service in serviceCategory.getServices %}
-                    <li class="list-group-item">
-                      <span class="service-name">
-                        {{ service.getLabel }}
-                      </span>
-                      <a href="#" class="service-price">
-                        $70 <!-- temp price -->
-                      </a>
-                      <span class="service-old-price">
-                        $100
-                      </span>
-                      <span class="service-time">
-                        {{ service.getTimeForPrint }}
-                      </span>
-                    </li>
-                  {% endfor %}
-                  </ul>
-                  {# end services #}
-                </div>
-              </div>
-            </div> <!-- .panel-default -->
-            {% endfor %}
+                Treatment info here from availability set
 
-          </div> <!-- /.panel-group -->
+              </aside>
 
-          <p class="services-notify-me">
-            Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.
-          </p>
-
-          <p>
-            <a class="btn btn-primary">Notify Me</a>
-          </p>
-
-          {% else %}
-            <p>There are no service categories available for this business.</p>
-          {% endif %}
-
-        </div> <!-- /.business-services -->
-
-        <hr>
-
-        <div class="business-reviews">
-          <h4>Ratings <small><em>(written by customers after their visit)</em></small></h4>
-          <div class="panel panel-default ratings-panel">
-            <div class="panel-heading">
-              <div class="ratings">
-                <div class="row">
-                  <div class="pull-left full-rating">
-                    {{business.getAverageRating}}
-                  </div>
-                  <div class="col-sm-6">
-                    <small>Chain Rating</small>
-                    <div class="stars">
-                      {{ business.getAverageRating | rating }} <small>from Yelp</small>
-                    </div>
-                  </div>
-                </div> <!-- /.row -->
-              </div> <!-- /.ratings -->
             </div>
-            <div class="panel-body">
-              Advanced ratings coming soon.
-            </div>
-          </div> <!-- /.panel -->
-          <!--hr>
-            -->
-          <hr>
-          <div class="business-comments">
-          <!--  <p>Have you been here? <a class="btn btn-secondary">Write a Review</a></p> -->
-            <div class="review-comments">
-              {% for review in business.getReviews %}
-              <div class="media">
-                <div class="media-left media-middle">
-                  <img class="media-object img-circle" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
-                </div>
-                <div class="media-body">
-                  <h4 class="media-heading">{{ review.poster.getDisplayName }}</h4>
-                  <div class="ratings">
-                    <div class="stars">
-                      {{ review.getRating | rating }}
-                    </div>
-                    <em>{{ review.getCreatedAt | elapsed }}</em>
-                  </div>
-                  <p class="comment-text">{{ review.getContent }}</p>
-                </div>
-              </div> <!-- /.media -->
-              {% endfor %}
-            </div>
+          </div> <!-- /.row -->
+
+      </div>
+  </div> <!-- /.jumbotron -->
+
+  {% include 'shared/quicklogin.html.twig' %}
+
+</section>
+
+<section class="no-account booking-info">
+
+  <div class="container">
+    <hr class="fullwidth">
+    <p class="text-muted">Don’t have an account with us ? Simply just fill out the below to reserve your appointment</p>
+
+    <form action="" method="post" class="">
+
+      <div class="form-group">
+        <label for="FullName">Full Name</label>
+        <input type="text" class="form-control input-lg" name="FullName" id="FullName" placeholder="Jane Doe">
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Email">Email address</label>
+            <input type="email" class="form-control input-lg" name="Email" id="Email" placeholder="jane@example.com">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="PhoneNumber">Email address</label>
+            <input type="text" class="form-control input-lg" name="Phone" id="PhoneNumber" placeholder="(XXX) XXX-XXXX">
           </div>
         </div>
       </div>
-    </div>
+
+      <center>
+        <button type="submit" class="btn btn-primary btn-lg">Reserve</button>
+      </center>
+
+    </form>
+  </div>
+
 </section>
 
 {% endblock %}

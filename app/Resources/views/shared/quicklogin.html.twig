@@ -1,0 +1,47 @@
+<div class="quick-login">
+
+  <div class="container">
+
+    {% if error is defined %}
+      {% if error %}
+        <div class="alert alert-warning">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+      {% endif %}
+    {% endif %}
+
+    {% if false and app.user %}
+      <h3 class="login-title">
+        <img src="{{ asset('assets/images/lock.png')}}">
+        <strong>HEY {{ app.user.email }}.</strong> We filled your information out for you!
+      </h3>
+    {% else %}
+
+    <h3 class="login-title">
+      <img src="{{ asset('assets/images/lock.png')}}">
+      <strong>BOOK FASTER BY SIGNING IN.</strong> Make life easier and let us fill this in for you.
+    </h3>
+
+    <form action="{{ path('login_check') }}" method="post" class="">
+
+      <input type="hidden" name="_target_path" value="{{ app.request.uri }}" />
+
+      <div class="row">
+        <div class="col-sm-5">
+          <input type="text" class="form-control input-lg" id="username" name="_username" placeholder="Email" value="{{ last_username | default('') }}" />
+        </div>
+        <div class="col-sm-4">
+          <input type="password" class="form-control input-lg" id="password" name="_password" placeholder="Password" />
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-primary btn-lg btn-fullwidth" id="login-btn">Login<i class="glyphicon glyphicon-play-circle"></i></button>
+        </div>
+      </div>
+
+      <p style="margin: 0px; padding-top: 8px;"><a href="#" class="forgot-password">Forgot your password?</a></p>
+
+    </form>
+
+    {% endif %}
+
+  </div>
+
+</div>
