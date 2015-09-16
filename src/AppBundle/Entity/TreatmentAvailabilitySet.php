@@ -6,11 +6,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="app_treatment_availability_sets")
+ */
 class TreatmentAvailabilitySet {
-  /**
-   * @ORM\Entity
-   * @ORM\Table(name="app_availabilityset")
-   */
 
    /**
     * @ORM\Column(type="integer")
@@ -35,6 +36,5 @@ class TreatmentAvailabilitySet {
     * @ORM\Column(type="integer", options={"default": 0})
     */
    protected $isOpen;
-
 
 }
