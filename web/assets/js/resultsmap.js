@@ -11,8 +11,8 @@ var RESULTS_MAP = (function(){
         },
         setGoogle = function(g) {
           gMap = g;
-          gMap.MapTypeId.ROADMAP;
-        }
+          opts.MapTypeId = gMap.MapTypeId.ROADMAP;
+        },
         init    = function(g,resultsmarkers){
            //to do make opts, center, mapId updatable in constructor
            console.log('Initing');
