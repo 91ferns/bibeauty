@@ -12,17 +12,13 @@ var SearchableBusinessList = React.createClass({
             location     : '',
             treatment    : '',
             treatmentType: '',
-            tx_opts      :[],
-            txtype_opts  :[],
             businesses   :[],
-            map_results  :[]
+            mapResults  :[]
         };
     },
-    componentDidMount: function() {
+    componentWillMount: function() {
       this.setState({
-         tx_opts : opts1,
-         txtype_opts: opts2,
-         map_results: srch
+         mapResults: this.props.srch
        });
    },
    handleUserInput: function(dayInput, timeInput, locationInput, treatmentInput,treatmentTypeInput) {
@@ -53,7 +49,7 @@ var SearchableBusinessList = React.createClass({
         return (
           <div className="componentBody">
             <section id="top-map" className="nav-pad">
-              <ResultMap markers={this.state.map_results} />
+              <ResultMap map={this.props.map} mapResults={this.state.mapResults} />
             </section>
             <section id="below-map" className="nav-pad">
               <div className="container">
@@ -64,8 +60,8 @@ var SearchableBusinessList = React.createClass({
                       location      = {this.state.location}
                       treatment     = {this.state.treatment}
                       treatmentType = {this.state.treatmentType}
-                      tx_opts       = {this.state.tx_opts}
-                      txtype_opts   = {this.state.txtype_opts}
+                      tx_opts       = {this.props.opts1}
+                      txtype_opts   = {this.props.opts2}
                       onUserInput   = {this.handleUserInput}
                   />
                 </div>

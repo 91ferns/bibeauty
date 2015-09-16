@@ -6,7 +6,7 @@ var BusinessesList = React.createClass({
               rows.push(<Business info={business} />);
           }.bind(this));
         }else{
-          row.push(<div className='alert alert-danger'>No Results.</div>);
+          rows.push(<div className='alert alert-danger'>No Results.</div>);
         }
         return (
             <div id="search_results" className="col-md-8">
