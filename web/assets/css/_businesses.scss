@@ -253,16 +253,16 @@
        border: none;
 
        .list-group-item {
-
+          .service-name, .service-time {
+            line-height: 32px;
+          }
           .service-time {
-            float: right;
-            margin-right: 50%;
             color: $gray-medium;
+            padding-left: 10px;
           }
           .service-old-price {
-            float: right;
+            border-color: white !important;
             text-decoration: line-through;
-            padding-right: 30px;
           }
           .service-price {
             float: right;
@@ -293,5 +293,48 @@
      color: $brand-primary;
    }
  }
+
+}
+
+#business-information {
+
+  .business-services {
+    .panel-heading {
+      padding-top: 13px;
+      padding-bottom: 13px;
+    }
+    .panel-title  {
+
+      line-height: 22px;
+      img {
+        margin-top: -2px;
+      }
+
+      small {
+        font-style: italic;
+        font-size: 12px;
+        text-transform: none;
+      }
+
+      big {
+        font-weight: 100;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+    }
+
+    .panel {
+      border-bottom: 2px solid white;
+    }
+
+    .panel-body {
+      padding-top: 7px;
+      padding-bottom: 7px;
+
+      .list-group {
+        margin-bottom: 0px;
+      }
+    }
+  }
 
 }
