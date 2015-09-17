@@ -1,5 +1,5 @@
 jQuery(function($) {
-   	$('#day').datepicker();
+   	$('#DayField').datepicker();
 });
 
 //window scroll function for navbar opacity
