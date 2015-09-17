@@ -97,20 +97,9 @@ class BusinessesController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$records = $em->getRepository("AppBundle:Business")->findAll();
-        $results = [];
-        foreach($records as $k => $record){
-        	$results[$k] = $record->toJSON();
-        	$results[$k]['logo'] = 'x.png';
-        	$results[$k]['treatments']= [
-                                	['id'=>1,'name'=>'x',
-                                 	 'percent_discount'=>4,
-                                 	 'start_dollars'=>20,
-                                 	 'num_remaining'=>4]
-                            	];
-        }
+
         return $this->render('businesses/search.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'results'  => $results
+            'results' => $records
         ));
     }
 }
