@@ -78,6 +78,23 @@ class BusinessesController extends Controller
              ), Response::HTTP_OK);
      }
 
+     private function getServiceByTxAvail()
+     {
+       $txAvailSet = $this->getDoctrine()
+       ->getRepository('AppBundle:TreatmentAvailabilitySet')
+       ->find();
+
+       $services = $txAvailSet->getService()->getName();
+     }
+
+     private function getTxAvailByService($id)
+     {
+       $Service = $this->getDoctrine()
+                ->getRepository('AppBundle:TreatmentAvailabilitySet')
+                ->find($id);
+       $TxAvailSets = $Service->getTreatmentAvailabilitySets()->getName();
+     }
+
      private function runSearch($data)
      {
        $sql = $this->getBaseSearchSQL();

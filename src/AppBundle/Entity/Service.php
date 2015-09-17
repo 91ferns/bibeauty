@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity()
@@ -92,6 +93,16 @@ class Service {
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      */
     protected $businessId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="Service")
+     */
+    protected $treatmentAvailabilitySets;
+
+    public function __construct()
+    {
+      $this->treatmentAvailabilitySets = new ArrayCollection();
+    }
 
     /**
      * @ORM\PrePersist
@@ -369,5 +380,61 @@ class Service {
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set businessId
+     *
+     * @param \AppBundle\Entity\Business $businessId
+     * @return Service
+     */
+    public function setBusinessId(\AppBundle\Entity\Business $businessId = null)
+    {
+        $this->businessId = $businessId;
+
+        return $this;
+    }
+
+    /**
+     * Get businessId
+     *
+     * @return \AppBundle\Entity\Business
+     */
+    public function getBusinessId()
+    {
+        return $this->businessId;
+    }
+
+    /**
+     * Add treatmentAvailabilitySets
+     *
+     * @param \AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets
+     * @return Service
+     */
+    public function addTreatmentAvailabilitySet(\AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets)
+    {
+        $this->treatmentAvailabilitySets[] = $treatmentAvailabilitySets;
+
+        return $this;
+    }
+
+    /**
+     * Remove treatmentAvailabilitySets
+     *
+     * @param \AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets
+     */
+    public function removeTreatmentAvailabilitySet(\AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets)
+    {
+        $this->treatmentAvailabilitySets->removeElement($treatmentAvailabilitySets);
+    }
+
+    /**
+     * Get treatmentAvailabilitySets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTreatmentAvailabilitySets()
+    {
+        return $this->treatmentAvailabilitySets;
     }
 }

@@ -33,10 +33,10 @@ class TreatmentAvailabilitySet {
    protected $time;
 
    /**
-    * @ORM\ManyToOne(targetEntity="Service")
-    * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+    * @ORM\ManyToOne(targetEntity="Service", inversedBy="treatmentAvailabilitySets")
+    * @ORM\JoinColumn(name="serviceId", referencedColumnName="id")
     */
-    protected $service_id;
+    protected $serviceId;
 
    /**
     * @ORM\Column(type="integer", options={"default": 0})
@@ -47,7 +47,7 @@ class TreatmentAvailabilitySet {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -70,7 +70,7 @@ class TreatmentAvailabilitySet {
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -93,7 +93,7 @@ class TreatmentAvailabilitySet {
     /**
      * Get time
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTime()
     {
@@ -116,7 +116,7 @@ class TreatmentAvailabilitySet {
     /**
      * Get isOpen
      *
-     * @return integer 
+     * @return integer
      */
     public function getIsOpen()
     {
@@ -131,7 +131,7 @@ class TreatmentAvailabilitySet {
      */
     public function setServiceId(\AppBundle\Entity\Service $serviceId = null)
     {
-        $this->service_id = $serviceId;
+        $this->serviceId = $serviceId;
 
         return $this;
     }
@@ -139,10 +139,10 @@ class TreatmentAvailabilitySet {
     /**
      * Get service_id
      *
-     * @return \AppBundle\Entity\Service 
+     * @return \AppBundle\Entity\Service
      */
     public function getServiceId()
     {
-        return $this->service_id;
+        return $this->serviceId;
     }
 }
