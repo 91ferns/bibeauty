@@ -3,7 +3,7 @@ imports:
     - { resource: database.php }
 
 twig:
-    cache: true
+#    cache: true
 
 #framework:
 #    validation:
