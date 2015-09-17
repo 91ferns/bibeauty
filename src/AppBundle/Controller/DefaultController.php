@@ -14,6 +14,9 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
 
+        $twilio = $this->get('twilio.factory');
+        $twilio->sendMessage(9149438239, 'Hi stephen');
+
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),

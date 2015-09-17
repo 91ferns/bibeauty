@@ -17,6 +17,10 @@ parameters:
         token: '8K4AQnikVYMd1hxzfLQWETpUFaaxZHqa'
         token_secret: 'r18hQFFO0SC15F14svVeH_vRhTU'
 #        api_host: 'api.yelp.com'
+    twilio:
+        account_sid: AC2ddd561109c7c215d8b5504dbfa89bc3
+        auth_token: ef117c3bbe875056ad32ac5307186081
+        phone_number: 6506811823
 
 services:
     aws.factory:
@@ -28,6 +32,9 @@ services:
     yelp.factory:
         class: AppBundle\Services\YelpFactory
         arguments: ["%yelp%", @logger]
+    twilio.factory:
+        class: AppBundle\Services\TwilioFactory
+        arguments: ["%twilio%", @logger]
     app.twig_extension:
         class: AppBundle\Twig\AppExtension
         public: false

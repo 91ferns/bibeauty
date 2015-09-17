@@ -19,6 +19,7 @@ var ResultMap = React.createClass({
     componentDidMount: function() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
+
           var lat = position.coords.latitude;
           var long = position.coords.longitude;
           var pos = new google.maps.LatLng(lat, long);
