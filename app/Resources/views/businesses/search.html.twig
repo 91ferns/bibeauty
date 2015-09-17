@@ -77,25 +77,29 @@
 
           {% if results | length > 0 %}
             {% for business in results %}
+              <hr>
               <div class="business">
                 <div class="row">
-                  <div class="col-md-3 col-md-push-9">
+                  <div class="col-md-7 ">
                     {% if business.hasHeaderAttachment %}
                       <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive" alt="{{ business.getName }}">
                     {% else %}
 
                     {% endif %}
-                  </div>
-                  <div class="col-md-9 col-md-pull-3">
+
+
                     <h3>{{business.getName}}</h3>
-                    <div class="stars">
+                    <span class="stars">
                       {{ business.getAverageRating | rating }}
                       from Yelp&trade;
-                    </div> <!-- /.stars -->
+                    </span> <!-- /.stars -->
+                    <a class="map-icon" href="#"><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
                     <div class="address">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</div>
                     <p class="business-description">{{business.getDescription}}</p>
                   </div>
-
+                  <div class="col-md-5">
+                    <img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right">
+                  </div>
 
                 </div> <!-- /.row -->
 
@@ -109,6 +113,9 @@
                         From
                         <strong>${{ serviceCategory.getLowestPrice | number_format(2) }}</strong>
                       </a>
+                      <span class="save pull-right">
+                        Save <blue>20%</blue>
+                      </span>
                     </h4>
                   </li> <!-- .list-item-group -->
                   {% endfor %}
