@@ -46,14 +46,14 @@ class BusinessesController extends Controller
 
         $form = $this->createForm(new BusinessType(), $business);
         // replace this example code with whatever you need
-        return $this->render('account/businesses/index.html.twig', array(
+        return $this->render('account/businesses/new.html.twig', array(
             'form' => $form->createView()
         ));
 
     }
 
     /**
-     * @Route("/account/businesses")
+     * @Route("/account/businesses/new")
      * @Method("POST")
      */
     public function createAction(Request $request) {

@@ -2,17 +2,42 @@ imports:
     - { resource: config.yml }
     - { resource: database.php }
 
+twig:
+#    cache: true
+
 #framework:
 #    validation:
 #        cache: validator.mapping.cache.apc
 #    serializer:
 #        cache: serializer.mapping.cache.apc
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+#snc_redis:
+#    clients:
+#        default:
+#            type: predis
+#            alias: default
+#            dsn: "%redis_dsn%"
+#        doctrine:
+#            type: predis
+#            alias: doctrine
+#            dsn: "%redis_dsn%"
+#    doctrine:
+#        metadata_cache:
+#            client: doctrine
+#            entity_manager: default
+#            document_manager: default
+#        result_cache:
+#            client: doctrine
+#            entity_manager: [default]
+#        query_cache:
+#            client: doctrine
+#            entity_manager: default
+
+doctrine:
+    orm:
+#        metadata_cache_driver: redis
+#        query_cache_driver: redis
+#       result_cache_driver: redis
 
 monolog:
     handlers:

@@ -2,16 +2,61 @@
 
 {% block body %}
 
-<section id="login" class="nav-pad">
+<section id="signup" class="nav-pad">
 
   <div class="container">
 
     <div class="jumbotron signup-area">
+      <h1 class="login-title"><strong>Create Account</strong></h1>
+      <h2>Add your business to BiBeauty and fill those empty appointments now.</h2>
 
       {{ form_start(form) }}
-      {{ form_widget(form) }}
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              {{ form_label(form.email) }}
+              {{ form_widget(form.email, { 'attr': { 'class': 'input-lg' } }) }}
+              {{ form_errors(form.email) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              {{ form_label(form.firstName) }}
+              {{ form_widget(form.firstName, { 'attr': { 'class': 'input-lg' } }) }}
+              {{ form_errors(form.firstName) }}
+            </div>
+          </div> <!-- /.col -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              {{ form_label(form.lastName) }}
+              {{ form_widget(form.lastName, { 'attr': { 'class': 'input-lg' } }) }}
+              {{ form_errors(form.lastName) }}
+            </div>
+          </div> <!-- /.col -->
+
+        </div>
+
+        <div class="row">
+          {% for passwordField in form.password %}
+            <div class="col-md-6">
+              <div class="form-group">
+                  {{ form_label(passwordField) }}
+                  {{ form_widget(passwordField, { 'attr': { 'class': 'input-lg' } }) }}
+                  {{ form_errors(passwordField) }}
+              </div>
+            </div>
+          {% endfor %}
+        </div> <!-- /.row -->
+
         <input type="submit" value="Sign Up"
-             class="btn btn-default pull-right" />
+             class="btn btn-primary btn-lg" />
+
       {{ form_end(form) }}
 
     </div>
