@@ -583,3 +583,23 @@ main section {
 
 @import 'treatments';
 @import 'search';
+
+#signup, #login {
+  padding-top: 0px;
+  h1 {
+    color: $brand-primary;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+  }
+  h1, h2 {
+    font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 4px;
+  }
+  h2 {
+    margin-bottom: 1em;
+  }
+  .btn {
+    text-transform: none;
+  }
+}

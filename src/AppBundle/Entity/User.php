@@ -61,7 +61,7 @@ class User implements AdvancedUserInterface, \Serializable {
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=120, unique=true)
+     * @ORM\Column(type="string", length=120)
      * @Assert\NotBlank()
      * @Assert\Length(min = 2)
      */
@@ -73,7 +73,7 @@ class User implements AdvancedUserInterface, \Serializable {
     protected $subscriptions;
 
     /**
-     * @ORM\Column(type="string", length=120, unique=true)
+     * @ORM\Column(type="string", length=120)
      * @Assert\NotBlank()
      * @Assert\Length(min = 2)
      */

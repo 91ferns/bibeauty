@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 
@@ -98,6 +100,9 @@ class AuthenticationController extends Controller {
 
          $em->persist($user);
          $em->flush();
+
+         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+         $this->get('security.token_storage')->setToken($token);
 
          return $this->redirectToRoute('homepage');
       } else {
