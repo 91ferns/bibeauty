@@ -88,6 +88,12 @@ class Service {
     protected $serviceCategory;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business")
+     * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
+     */
+    protected $businessId;
+
+    /**
      * @ORM\PrePersist
      */
     public function setAutomaticFields() {

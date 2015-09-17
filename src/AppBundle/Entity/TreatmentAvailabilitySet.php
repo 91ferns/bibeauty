@@ -33,8 +33,116 @@ class TreatmentAvailabilitySet {
    protected $time;
 
    /**
+    * @ORM\ManyToOne(targetEntity="Service")
+    * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+    */
+    protected $service_id;
+
+   /**
     * @ORM\Column(type="integer", options={"default": 0})
     */
    protected $isOpen;
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return TreatmentAvailabilitySet
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set time
+     *
+     * @param \DateTime $time
+     * @return TreatmentAvailabilitySet
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return \DateTime 
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set isOpen
+     *
+     * @param integer $isOpen
+     * @return TreatmentAvailabilitySet
+     */
+    public function setIsOpen($isOpen)
+    {
+        $this->isOpen = $isOpen;
+
+        return $this;
+    }
+
+    /**
+     * Get isOpen
+     *
+     * @return integer 
+     */
+    public function getIsOpen()
+    {
+        return $this->isOpen;
+    }
+
+    /**
+     * Set service_id
+     *
+     * @param \AppBundle\Entity\Service $serviceId
+     * @return TreatmentAvailabilitySet
+     */
+    public function setServiceId(\AppBundle\Entity\Service $serviceId = null)
+    {
+        $this->service_id = $serviceId;
+
+        return $this;
+    }
+
+    /**
+     * Get service_id
+     *
+     * @return \AppBundle\Entity\Service 
+     */
+    public function getServiceId()
+    {
+        return $this->service_id;
+    }
 }
