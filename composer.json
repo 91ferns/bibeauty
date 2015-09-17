@@ -30,7 +30,8 @@
         "stevenmaguire/yelp-php": "~1.4",
         "giggsey/libphonenumber-for-php": "~7.0",
         "react/react": "*",
-        "twilio/sdk": "~4.3"
+        "twilio/sdk": "~4.3",
+        "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
