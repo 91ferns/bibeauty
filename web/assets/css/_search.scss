@@ -33,6 +33,48 @@
 
 #below-map {
   padding-top: 10px;
+
+  hr {
+    width: 100%;
+    margin-bottom: 0px;
+  }
+  .business {
+    .map-icon {
+      text-decoration: underline;
+      padding-left: 20px;
+      color: $brand-primary;
+    }
+    .map-icon:hover {
+      color: $brand-primary;
+    }
+    .address {
+      text-transform: uppercase;
+    }
+    .panel-title {
+      font-size: 1.15em;
+      padding-left: 10px;
+      big {
+        position: relative;
+        bottom: -5px;
+      }
+    }
+    .list-group-item {
+      padding: 5px 5px;
+    }
+    .btn-primary {
+      color: white;
+      padding: 5px 30px;
+    }
+    .save {
+      position: relative;
+      font-size: 0.9em;
+      bottom: -6.5px;
+      padding-right: 25px;
+    }
+    blue {
+      color: $brand-primary;
+    }
+  }
 }
 
 .search-form-sidebar {
@@ -46,6 +88,9 @@
   }
   .form-group {
     padding-bottom: 0px;
+  }
+  .btn-primary {
+    padding: 10px 30px;
   }
 }
 
