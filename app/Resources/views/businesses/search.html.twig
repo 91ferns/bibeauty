@@ -2,6 +2,133 @@
 
 {% block body %}
 
-<div id="results-map-wrapper"></div>
+<div class="componentBody">
+  <section id="top-map" class="nav-pad">
+    <div id="results-map-wrapper"></div>
+  </section>
+  <section id="below-map">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="search-form-sidebar">
+            <form action="{{ path('listings_search_path') }}" method="get">
+              <div class="form-group">
+                <label for="">Availability</label>
+                <div class="input-group">
+                  <input type="text" id="DayField" name="Day" class="form-control" placeholder="Day" />
+                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
+                </div>
+                <div class="input-group">
+                  <input type="text" id="TimeField" name="Time" class="form-control" placeholder="Time" />
+                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
+                </div>
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+
+              <div class="form-group">
+                <label for="">Location</label>
+                <input type="text" id="LocationField" name="Location" class="form-control" placeholder="Enter Zip Code" />
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+
+              <div class="form-group">
+                <label for="">Treatment Type / Category</label>
+                <div class="input-group">
+                  <input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
+                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
+                </div>
+                <div class="input-group">
+                  <input type="text" id="TreatmentField" name="Treatment" class="form-control" placeholder="Treatment" />
+                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
+                </div>
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+
+              <div class="form-group">
+                <label for="">Price Range</label>
+                <div class="range">
+      	           <input type="text" id="amount_left" readOnly styles="" />
+                   <input type="text" id="amount_right" readOnly styles="" />
+                   <div id="slider-range"></div>
+                </div>
+                <!--input type="range" id="weight" min="10" value="10" max="2000" step="100"-->
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+
+              <button class="btn btn-lg btn-primary">Update</button>
+
+              <hr class="fullwidth">
+
+              <p class="text-muted">Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.</p>
+
+              <a class="btn btn-lg btn-primary" href="#">Notify</a>
+
+            </form>
+          </div> <!-- /.search-form-sidebar -->
+
+        </div> <!-- /.col-md-4 -->
+
+        <div class="col-md-8">
+
+          {% if results | length > 0 %}
+            {% for business in results %}
+              <div class="business">
+                <div class="row">
+                  <div class="col-md-3 col-md-push-9">
+                    {% if business.hasHeaderAttachment %}
+                      <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive" alt="{{ business.getName }}">
+                    {% else %}
+
+                    {% endif %}
+                  </div>
+                  <div class="col-md-9 col-md-pull-3">
+                    <h3>{{business.getName}}</h3>
+                    <div class="stars">
+                      {{ business.getAverageRating | rating }}
+                      from Yelp&trade;
+                    </div> <!-- /.stars -->
+                    <div class="address">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</div>
+                    <p class="business-description">{{business.getDescription}}</p>
+                  </div>
+
+
+                </div> <!-- /.row -->
+
+                {% if business.getServiceCategories.count > 0 %}
+                <ul class="list-group">
+                  {% for serviceCategory in business.getServiceCategories %}
+                  <li class="list-group-item">
+                    <h4 class="panel-title clearfix">
+                      <big>{{ serviceCategory.getLabel }}</big>
+                      <a class="btn btn-primary pull-right">
+                        From
+                        <strong>${{ serviceCategory.getLowestPrice | number_format(2) }}</strong>
+                      </a>
+                    </h4>
+                  </li> <!-- .list-item-group -->
+                  {% endfor %}
+
+                </ul> <!-- /.list-group -->
+
+              {% endif %}
+
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>There are no results</p>
+          {% endif %}
+
+        </div> <!-- /.col-md-8 -->
+
+      </div>
+
+    </div> <!-- /.container -->
+  </section> <!-- /#below-map -->
+</div>
 
 {% endblock body %}

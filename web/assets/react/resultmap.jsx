@@ -110,7 +110,6 @@ var ResultMap = React.createClass({
       this.state.map.setOptions({center: newpos});
     },
     render: function() {
-      //          <div className="alert alert-warning">We could not access your location.</div>
       var warning;
       if (this.state.currentLocation === false) {
         warning = <div className="alert alert-warning top-warning">
