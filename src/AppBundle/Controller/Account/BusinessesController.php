@@ -53,7 +53,7 @@ class BusinessesController extends Controller
     }
 
     /**
-     * @Route("/account/businesses")
+     * @Route("/account/businesses/new")
      * @Method("POST")
      */
     public function createAction(Request $request) {
