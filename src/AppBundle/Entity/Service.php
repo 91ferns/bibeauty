@@ -83,10 +83,10 @@ class Service {
     protected $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ServiceCategory")
-     * @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="ServiceType")
+     * @ORM\JoinColumn(name="service_type_id", referencedColumnName="id")
      */
-    protected $serviceCategory;
+    protected $serviceType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Business")
@@ -316,29 +316,6 @@ class Service {
     }
 
     /**
-     * Set serviceCategory
-     *
-     * @param \AppBundle\Entity\ServiceCategory $serviceCategory
-     * @return Service
-     */
-    public function setServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory = null)
-    {
-        $this->serviceCategory = $serviceCategory;
-
-        return $this;
-    }
-
-    /**
-     * Get serviceCategory
-     *
-     * @return \AppBundle\Entity\ServiceCategory
-     */
-    public function getServiceCategory()
-    {
-        return $this->serviceCategory;
-    }
-
-    /**
      * Get time for printing
      *
      * @return String
@@ -431,10 +408,33 @@ class Service {
     /**
      * Get treatmentAvailabilitySets
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTreatmentAvailabilitySets()
     {
         return $this->treatmentAvailabilitySets;
+    }
+
+    /**
+     * Set serviceType
+     *
+     * @param \AppBundle\Entity\ServiceType $serviceType
+     * @return Service
+     */
+    public function setServiceType(\AppBundle\Entity\ServiceType $serviceType = null)
+    {
+        $this->serviceType = $serviceType;
+
+        return $this;
+    }
+
+    /**
+     * Get serviceType
+     *
+     * @return \AppBundle\Entity\ServiceType
+     */
+    public function getServiceType()
+    {
+        return $this->serviceType;
     }
 }

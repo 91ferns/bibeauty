@@ -93,6 +93,7 @@ class BusinessesController extends Controller
                 ->getRepository('AppBundle:TreatmentAvailabilitySet')
                 ->find($id);
        $TxAvailSets = $Service->getTreatmentAvailabilitySets()->getName();
+       return $TxAvailSets;
      }
 
      private function runSearch($data)
