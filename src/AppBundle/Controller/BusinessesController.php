@@ -97,7 +97,6 @@ class BusinessesController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$records = $em->getRepository("AppBundle:Business")->findAll();
-
         return $this->render('businesses/search.html.twig', array(
             'results' => $records
         ));

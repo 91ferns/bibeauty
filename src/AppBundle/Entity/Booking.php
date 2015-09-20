@@ -74,6 +74,18 @@ class Booking {
     // 2 = Declined
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business")
+     * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
+     */
+    protected $businessId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Service")
+     * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+     */
+    protected $serviceId;
+
+    /**
      * @ORM\PrePersist
      */
     public function setAutomaticFields() {
@@ -271,5 +283,51 @@ class Booking {
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set businessId
+     *
+     * @param \AppBundle\Entity\Business $businessId
+     * @return Booking
+     */
+    public function setBusinessId(\AppBundle\Entity\Business $businessId = null)
+    {
+        $this->businessId = $businessId;
+
+        return $this;
+    }
+
+    /**
+     * Get businessId
+     *
+     * @return \AppBundle\Entity\Business
+     */
+    public function getBusinessId()
+    {
+        return $this->businessId;
+    }
+
+    /**
+     * Set serviceId
+     *
+     * @param \AppBundle\Entity\Service $serviceId
+     * @return Booking
+     */
+    public function setServiceId(\AppBundle\Entity\Service $serviceId = null)
+    {
+        $this->serviceId = $serviceId;
+
+        return $this;
+    }
+
+    /**
+     * Get serviceId
+     *
+     * @return \AppBundle\Entity\Service 
+     */
+    public function getServiceId()
+    {
+        return $this->serviceId;
     }
 }

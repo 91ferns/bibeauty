@@ -15,8 +15,8 @@ class BusinessRepository extends EntityRepository
   public function findBusinessByLocation($zip){
     $qb    = $this->createQueryBuilder('b');
     $query = $qb->select(['b','a'])
-       ->from('AppBundle:Business', 'b')
-       ->leftjoin('AppBunndle:Address','a')
+       //->from('AppBundle:Business', 'b')
+       ->leftjoin('AppBundle:Address','a')
        ->where('a.zip = :zip')
        ->setParameter('zip',$zip);
     $result=$query->getQuery()
@@ -27,11 +27,10 @@ class BusinessRepository extends EntityRepository
   public function findBusinessByService($serviceTypeId, $serviceCategoryId = null){
     $qb    = $this->createQueryBuilder('b');
     $query = $qb->select(['b','bk','s','st','sc'])
-       ->from('AppBundle:Business', 'b')
        ->leftJoin('AppBundle:Booking','bk')
        ->leftJoin('AppBundle:Service','s')
-       ->leftJoin('AppBundle:SericeType','st')
-       ->leftjoin('AppBunndle:ServiceCategory','sc')
+       ->leftJoin('AppBundle:ServiceType','st')
+       ->leftjoin('AppBundle:ServiceCategory','sc')
        ->where('st.serviceTypeId = :serviceTypeId')
        ->setParameter('serviceTypeId',$serviceTypeId);
     if($serviceCategoryId !== null){
