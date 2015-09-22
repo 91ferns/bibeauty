@@ -6,7 +6,8 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\ServiceType;
 use AppBundle\Entity\ServiceCategory;
-
+use AppBundle\Entity\Service;
+use AppBundle\Entity\TreatmentAvailabilitySet;
 
 class LoadServiceData implements FixtureInterface
 {
@@ -36,26 +37,26 @@ class LoadServiceData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach($this->services as $serviceType=>$services){
-          $serviceTypeId = $this->getServiceTypeIdByName($serviceType);
+          $serviceType = $this->getServiceTypeIdByName($manager, $serviceType);
           foreach($services as $service){
-              $service = new Service();
-              $service->setLabel($service['label']);
-              $service->setDescription($service['description']);
-              $service->setHours($service['hours']);
-              $service->setMinutes($service['minutes']);
-              $service->setOriginalPrice($service['originalPrice']);
-              $service->setcurrentPrice($service['originalPrice']);
-              $service->setServiceTypeId($serviceTypeId);
-              $txAvailability = $this->getSetTreatmentAvailabilitySets($service['availability'],$manager);
-              $service->setTreatmentAvailabilitySets($txAvailability);
-              $manager->persist($service);
+              $the_service = new Service();
+              $the_service->setLabel($service['label']);
+              $the_service->setDescription($service['description']);
+              $the_service->setHours($service['hours']);
+              $the_service->setMinutes($service['minutes']);
+              $the_service->setOriginalPrice($service['originalPrice']);
+              $the_service->setcurrentPrice($service['originalPrice']);
+              $the_service->setServiceType($serviceType);
+              $txAvailability = $this->getSetTreatmentAvailabilitySets($service['availability'], $manager);
+              $the_service->addTreatmentAvailabilitySet($txAvailability);
+              $manager->persist($the_service);
           }
           $manager->flush();
         }
         $manager->flush();
     }
 
-    public function getSetTreatmentAvailabilitySets($availability,$manager)
+    public function getSetTreatmentAvailabilitySets($availability ,$manager)
     {
       $now = new \DateTime("now");
       $time = new \DateTime($availability['time']);
@@ -63,15 +64,18 @@ class LoadServiceData implements FixtureInterface
       $txAvailability = new TreatmentAvailabilitySet();
       $txAvailability->setDate($now->modify($availability['date']));
       $txAvailability->setTime($time);
-      $txAvailability->setTime($availability['isOpen']);
+      $txAvailability->setIsOpen(1);
       $manager->persist($txAvailability);
       $manager->flush();
       return $txAvailability;
     }
 
-    public function getServiceTypeIdByName($serviceType){
-        $cat = new ServiceType();
-        return $cat->findOneBy(['label'=>$serviceType])->getId();
+    public function getServiceTypeIdByName($em, $serviceType){
+
+    	$records = $em->getRepository("AppBundle:ServiceType");
+        return $records->findOneBy(array('label' => $serviceType));
+
+
     }
     public function getOrder()
     {

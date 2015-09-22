@@ -11,16 +11,16 @@ class LoadServiceCategoryData implements FixtureInterface
 {
 
     private $categories  = [
-      'hair','hair removal','massage',
-      'nails','face','body',
-      'AcceptsCredit','AverageRating'
+      'Hair','Hair Removal','Massage',
+      'Nails','Face','Body',
+      //'AcceptsCredit','AverageRating'
     ];
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->categories as $k=>$category){
+        foreach($this->categories as $category){
           $cat = new ServiceCategory();
           $cat->setLabel($category);
           $manager->flush();

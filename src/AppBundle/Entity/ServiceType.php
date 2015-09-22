@@ -44,11 +44,16 @@ class ServiceType {
      */
     protected $updated;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Service", cascade={"persist"}, mappedBy="service")
+     */
+    protected $serviceCategories;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -71,7 +76,7 @@ class ServiceType {
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -94,7 +99,7 @@ class ServiceType {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -117,7 +122,7 @@ class ServiceType {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -140,7 +145,7 @@ class ServiceType {
     /**
      * Get serviceCategoryId
      *
-     * @return \AppBundle\Entity\ServiceCategory 
+     * @return \AppBundle\Entity\ServiceCategory
      */
     public function getServiceCategoryId()
     {

@@ -71,6 +71,7 @@ class LoadBusinessData implements FixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        return true;
         foreach($this->businesses as $k=>$business){
           list($bus,$s_cat) = $this->buildBusiness($manager,$business,$k);
           //Add Models to Service

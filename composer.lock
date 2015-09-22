@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4e0100dbbb91e95ee919ca1ca2c578a1",
+    "hash": "bc49cea58201252e1c5669daee7544bd",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.3.7",
+            "version": "3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "36c350586a184b5fa1efb961cf690f9bfb4a2059"
+                "reference": "f09d297fd919fadf9b12ac0cbea082a5494e63e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/36c350586a184b5fa1efb961cf690f9bfb4a2059",
-                "reference": "36c350586a184b5fa1efb961cf690f9bfb4a2059",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f09d297fd919fadf9b12ac0cbea082a5494e63e9",
+                "reference": "f09d297fd919fadf9b12ac0cbea082a5494e63e9",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2015-09-16 22:52:44"
+            "time": "2015-09-17 19:59:34"
         },
         {
             "name": "braintree/braintree_php",
@@ -2280,16 +2280,16 @@
         },
         {
             "name": "react/http-client",
-            "version": "v0.4.5",
+            "version": "v0.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/http-client.git",
-                "reference": "dcb69238f6936f581845a8dfc31bf2ccec6acdd9"
+                "reference": "59bef8b3def262dad60d747bd2f5f4181aeb2b89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/http-client/zipball/dcb69238f6936f581845a8dfc31bf2ccec6acdd9",
-                "reference": "dcb69238f6936f581845a8dfc31bf2ccec6acdd9",
+                "url": "https://api.github.com/repos/reactphp/http-client/zipball/59bef8b3def262dad60d747bd2f5f4181aeb2b89",
+                "reference": "59bef8b3def262dad60d747bd2f5f4181aeb2b89",
                 "shasum": ""
             },
             "require": {
@@ -2320,7 +2320,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2015-08-31 10:25:54"
+            "time": "2015-09-20 20:23:02"
         },
         {
             "name": "react/promise",
