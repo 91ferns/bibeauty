@@ -5,9 +5,10 @@ namespace AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\ServiceCategory;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 
 
-class LoadServiceCategoryData implements OrderedFixtureInterface
+class LoadServiceCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     private $categories  = [
@@ -23,6 +24,9 @@ class LoadServiceCategoryData implements OrderedFixtureInterface
         foreach($this->categories as $category){
           $cat = new ServiceCategory();
           $cat->setLabel($category);
+
+          $manager->persist($cat);
+          $this->addReference($category, $cat);
           $manager->flush();
         }
     }

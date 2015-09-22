@@ -6,9 +6,10 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\ServiceType;
 use AppBundle\Entity\ServiceCategory;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 
 
-class LoadServiceTypeData implements OrderedFixtureInterface
+class LoadServiceTypeData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     private $serviceTypes  = array(
@@ -244,11 +245,11 @@ class LoadServiceTypeData implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach($this->serviceTypes as $category => $types){
-          $catid = $this->getCatIdByName($manager, $category);
+          $cat = $this->getCatIdByName($manager, $category);
           foreach($types as $type){
               $serviceType = new ServiceType();
               $serviceType->setLabel($type);
-              $serviceType->setServiceCategoryId($catId);
+              $serviceType->setServiceCategory($cat);
               $manager->persist($serviceType);
           }
           $manager->flush();
@@ -256,13 +257,10 @@ class LoadServiceTypeData implements OrderedFixtureInterface
         $manager->flush();
     }
     public function getCatIdByName($em, $category){
-        $records = $em->getRepository("AppBundle:ServiceCategory");
-        $cat = $records->findOneBy(array('label' => $category));
-        var_dump($cat);
-        return $cat->getId();
+        return $em->merge($this->getReference($category));
     }
     public function getOrder()
     {
-      return 2;
+      return 3;
     }
 }

@@ -8,8 +8,9 @@ use AppBundle\Entity\ServiceType;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\TreatmentAvailabilitySet;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 
-class LoadServiceData implements OrderedFixtureInterface
+class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     private $services  = [
@@ -79,6 +80,6 @@ class LoadServiceData implements OrderedFixtureInterface
     }
     public function getOrder()
     {
-      return 5;
+      return 4;
     }
 }

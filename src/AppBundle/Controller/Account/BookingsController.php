@@ -30,7 +30,7 @@ class BookingsController extends Controller
     }
 
     /**
-     * @Route("/account/bookings/create, name="admin_service_bookings_create")
+     * @Route("/account/bookings/create", name="admin_service_bookings_create")
      * @Method("POST")
      */
     public function createAction(Request $request)

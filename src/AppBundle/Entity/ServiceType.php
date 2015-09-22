@@ -23,9 +23,9 @@ class ServiceType {
 
     /**
      * @ORM\ManyToOne(targetEntity="ServiceCategory")
-     * @ORM\JoinColumn(name="serviceCategoryId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
      */
-    protected $serviceCategoryId;
+    protected $serviceCategory;
 
     /**
      * @Assert\NotBlank()
@@ -130,26 +130,26 @@ class ServiceType {
     }
 
     /**
-     * Set serviceCategoryId
+     * Set serviceCategory
      *
-     * @param \AppBundle\Entity\ServiceCategory $serviceCategoryId
+     * @param \AppBundle\Entity\ServiceCategory $serviceCategory
      * @return ServiceType
      */
-    public function setServiceCategoryId(\AppBundle\Entity\ServiceCategory $serviceCategoryId = null)
+    public function setServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory = null)
     {
-        $this->serviceCategoryId = $serviceCategoryId;
+        $this->serviceCategory = $serviceCategory;
 
         return $this;
     }
 
     /**
-     * Get serviceCategoryId
+     * Get serviceCategory
      *
      * @return \AppBundle\Entity\ServiceCategory
      */
-    public function getServiceCategoryId()
+    public function getServiceCategory()
     {
-        return $this->serviceCategoryId;
+        return $this->serviceCategory;
     }
     /**
      * Constructor
@@ -185,10 +185,28 @@ class ServiceType {
     /**
      * Get serviceCategories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getServiceCategories()
     {
         return $this->serviceCategories;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setAutomaticFields() {
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
+        $this->updated = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updated() {
+        // will NOT be saved in the database
+        $this->updated->modify("now");
     }
 }
