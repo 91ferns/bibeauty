@@ -2,27 +2,44 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\Users;
+use AppBundle\Entity\User;
 
 
-
-class LoadUsersData implements FixtureInterface
+class LoadUsersData implements OrderedFixtureInterface
 {
 
     private $users  = [
       [
-        "email"=>"test@t.com",
-        "password"=>"test",
-        "firstname"=>"Larry",
-        "lastname"=>"Smith",
+        "email"=>"stephen@91ferns.com",
+        "password"=>"password",
+        "firstname"=>"Stephen",
+        "lastname"=>"Parente",
       ],
       [
-        "email"=>"test2@t.com",
-        "password"=>"test",
-        "firstname"=>"John",
-        "lastname"=>"Smith",
+        "email"=>"paul@91ferns.com",
+        "password"=>"password",
+        "firstname"=>"Paul",
+        "lastname"=>"Caciula",
+      ],
+      [
+        "email"=>"joey@91ferns.com",
+        "password"=>"password",
+        "firstname"=>"Joe",
+        "lastname"=>"Ciervo",
+      ],
+      [
+        "email"=>"richard@bibeauty.com",
+        "password"=>"password",
+        "firstname"=>"Richard",
+        "lastname"=>"McBeathe",
+      ],
+      [
+        "email"=>"stuart@bibeauty.com",
+        "password"=>"password",
+        "firstname"=>"Stuart",
+        "lastname"=>"Sharpe",
       ],
     ];
     /**
@@ -31,18 +48,18 @@ class LoadUsersData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach($this->users as $k=>$user){
-              $user = new User();
-              $user->setEmail($user['email']);
-              $user->selectPassword($user['password']);
-              $user->setFirstName($user['firstname']);
-              $user->setlasttName($user['lastname']);
-              $manager->persist($user);
+              $the_user = new User();
+              $the_user->setEmail($user['email']);
+              $the_user->selectPassword($user['password']);
+              $the_user->setFirstName($user['firstname']);
+              $the_user->setlasttName($user['lastname']);
+              $manager->persist($the_user);
         }
         $manager->flush();
     }
 
     public function getOrder()
     {
-      return 3;
+      return 0;
     }
 }

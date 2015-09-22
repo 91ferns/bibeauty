@@ -2,14 +2,14 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\ServiceType;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\TreatmentAvailabilitySet;
 
-class LoadServiceData implements FixtureInterface
+class LoadServiceData implements OrderedFixtureInterface
 {
 
     private $services  = [
@@ -64,7 +64,7 @@ class LoadServiceData implements FixtureInterface
       $txAvailability = new TreatmentAvailabilitySet();
       $txAvailability->setDate($now->modify($availability['date']));
       $txAvailability->setTime($time);
-      $txAvailability->setIsOpen(1);
+      $txAvailability->setIsOpen(true);
       $manager->persist($txAvailability);
       $manager->flush();
       return $txAvailability;

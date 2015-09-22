@@ -151,4 +151,44 @@ class ServiceType {
     {
         return $this->serviceCategoryId;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->serviceCategories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add serviceCategories
+     *
+     * @param \AppBundle\Entity\Service $serviceCategories
+     * @return ServiceType
+     */
+    public function addServiceCategory(\AppBundle\Entity\Service $serviceCategories)
+    {
+        $this->serviceCategories[] = $serviceCategories;
+
+        return $this;
+    }
+
+    /**
+     * Remove serviceCategories
+     *
+     * @param \AppBundle\Entity\Service $serviceCategories
+     */
+    public function removeServiceCategory(\AppBundle\Entity\Service $serviceCategories)
+    {
+        $this->serviceCategories->removeElement($serviceCategories);
+    }
+
+    /**
+     * Get serviceCategories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getServiceCategories()
+    {
+        return $this->serviceCategories;
+    }
 }

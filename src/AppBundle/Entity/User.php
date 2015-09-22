@@ -54,6 +54,12 @@ class User implements AdvancedUserInterface, \Serializable {
     private $password;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     */
+    private $superAdmin = false;
+
+    /**
      * @ORM\Column(type="string", length=120, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email
@@ -312,5 +318,28 @@ class User implements AdvancedUserInterface, \Serializable {
 
     public function getFullname() {
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
+
+    /**
+     * Set superAdmin
+     *
+     * @param boolean $superAdmin
+     * @return User
+     */
+    public function setSuperAdmin($superAdmin = false)
+    {
+        $this->superAdmin = $superAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get superAdmin
+     *
+     * @return boolean
+     */
+    public function getSuperAdmin()
+    {
+        return $this->superAdmin;
     }
 }

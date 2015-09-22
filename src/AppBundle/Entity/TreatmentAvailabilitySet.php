@@ -39,9 +39,9 @@ class TreatmentAvailabilitySet {
     protected $serviceId;
 
    /**
-    * @ORM\Column(type="integer", options={"default": 0})
+    * @ORM\Column(type="boolean")
     */
-   protected $isOpen;
+   protected $isOpen = false;
 
 
     /**
@@ -106,7 +106,7 @@ class TreatmentAvailabilitySet {
      * @param integer $isOpen
      * @return TreatmentAvailabilitySet
      */
-    public function setIsOpen($isOpen)
+    public function setIsOpen($isOpen = false)
     {
         $this->isOpen = $isOpen;
 

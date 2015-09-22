@@ -2,12 +2,12 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\ServiceCategory;
 
 
-class LoadServiceCategoryData implements FixtureInterface
+class LoadServiceCategoryData implements OrderedFixtureInterface
 {
 
     private $categories  = [

@@ -54,6 +54,12 @@ class User implements AdvancedUserInterface, \Serializable {
     private $password;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     */
+    private $superAdmin = false;
+
+    /**
      * @ORM\Column(type="string", length=120, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email
