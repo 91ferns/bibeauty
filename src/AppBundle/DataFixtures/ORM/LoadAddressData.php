@@ -6,6 +6,8 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Users;
 
+use AppBundle\Entity\Address;
+
 
 
 class LoadAddressData implements FixtureInterface
@@ -30,12 +32,18 @@ class LoadAddressData implements FixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->addresses as $k=>$address){
+        foreach($this->addresses as $k=>$addr){
               $address = new Address();
-              $address->setStreet($address['street']);
-              $address->selectLine2($address['line2']);
-              $address->setCity($address['city']);
-              $address->setState($address['state']);
+              $address->setStreet($addr['Street']);
+              $address->setLine2($addr['Line2']);
+              $address->setCity($addr['City']);
+              $address->setState($addr['State']);
+              $address->setZip($addr['Zip']);
+              $address->setPhone($addr['Phone']);
+              $address->setCountry($addr['Country']);
+              $address->setLongitude($addr['Longitude']);
+              $address->setLatitude($addr['Lattitude']);
+
               $manager->persist($address);
         }
         $manager->flush();
