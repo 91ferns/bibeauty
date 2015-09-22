@@ -14,10 +14,9 @@ use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Review;
 use AppBundle\Entity\OperatingSchedule;
 use AppBundle\Entity\Service;
-use AppBundle\Enitity\TreatmentAvailabilitySet;
 
 
-class LoadBusinessData implements FixtureInterface, ContainerAwareInterface
+class LoadBusinessData implements FixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -31,57 +30,14 @@ class LoadBusinessData implements FixtureInterface, ContainerAwareInterface
         'Website'     => 'http://www.google.com',
         'Email'       => 'test@email.com',
         'AcceptsCash' => 1,
-        'AcceptsCredit'=> 1
-        'AverageRating'=> '4'
+        'AcceptsCredit'=> 1,
+        'AverageRating'=> '4',
+        'Owner'        => 'test@test.com',
+        'Address'      => '13 Streetname Way',
       ],
     ]; //RELATIONS = Address,Owner,LogoAttachement,HeaderAttachment,ServiceCategory;
 
-
-    private $addresses = [
-        [
-          'Street'=> '13 Streetname Way',
-          'Line2' => 'Ste. 333',
-          'City'  => 'Norwalk',
-          'State' => 'CT',
-          'Zip'   => '06854',
-          'Phone' => '2035555055',
-          'Country'=> 'US',
-          'Longitude'=> '-73.419839',
-          'Lattitude'=>'41.114789',
-          'Active'=>1
-        ],
-    ];
-
-    private $users = [
-        [
-          'Password'=> '13 Streetname Way',
-          'Email' => 'Ste. 333',
-          'FirstName'  => 'Norwalk',
-          'UserName'   => '06854',
-          'IsActive' => '2035555055',
-        ],
-    ];//RELATIONS = Subscriptions
-
-    private $services = [
-        [
-          'Label'=> 'Haircut',
-          'Description' => 'Get a great haircut',
-          'Hours'  => '1',
-          'Minutes' => '30',
-          'OriginalPrice'   => '100',
-          'CurrentPrice' => '50',
-        ],
-    ];//RELATIONS - Business, TreatmentAvailabilitySet
-
-    private $treatmentAvailabilitySets = [
-      [
-        'Day'=>'',
-        'Time'=>'',
-        'IsOpen'=>1
-      ],
-    ];
-
-    private $attachments1 = [
+    /*private $attachments1 = [
       [
         'Key'=>'',
         'Size'=>'',
@@ -108,15 +64,7 @@ class LoadBusinessData implements FixtureInterface, ContainerAwareInterface
         'Verified'=>1
       ],
     ];//RELATIONS POSTER(User), BUSINESS
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
+*/
 
     /**
      * {@inheritDoc}

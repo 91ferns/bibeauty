@@ -81,7 +81,7 @@ class BusinessesController extends Controller
      private function checkGetPost($req){
        //All possible search fields in format: postkey=>table_abbrev.field_name
        $keys= [
-               'day'=>'day',
+               'day'=>'date',
                'time'=>'starttime',
                'location'=>'location',
                'treatmentType'=>'serviceCategory',
