@@ -38,10 +38,11 @@ class ServiceCategory {
      */
     protected $createdAt;
 
+
     /**
-     * @ORM\OneToMany(targetEntity="Service", cascade={"persist", "remove"}, mappedBy="serviceCategory")
+     * @ORM\OneToMany(targetEntity="ServiceType", cascade={"persist", "remove"}, mappedBy="serviceCategory")
      */
-    protected $services;
+    protected $serviceTypes;
 
     /**
      * @ORM\Column(type="datetime")
@@ -195,41 +196,10 @@ class ServiceCategory {
      */
     public function __construct()
     {
-        $this->services = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->serviceTypes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add services
-     *
-     * @param \AppBundle\Entity\Service $services
-     * @return ServiceCategory
-     */
-    public function addService(\AppBundle\Entity\Service $services)
-    {
-        $this->services[] = $services;
 
-        return $this;
-    }
-
-    /**
-     * Remove services
-     *
-     * @param \AppBundle\Entity\Service $services
-     */
-    public function removeService(\AppBundle\Entity\Service $services)
-    {
-        $this->services->removeElement($services);
-    }
-
-    /**
-     * Get services
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getServices()
-    {
-        return $this->services;
-    }
 
     /**
      * Iterates through all services and returns lowest list price
@@ -253,5 +223,37 @@ class ServiceCategory {
 
         $lowest = min($services);
         return $lowest->getCurrentPrice();
+    }
+
+    /**
+     * Add serviceTypes
+     *
+     * @param \AppBundle\Entity\ServiceType $serviceTypes
+     * @return ServiceCategory
+     */
+    public function addServiceType(\AppBundle\Entity\ServiceType $serviceTypes)
+    {
+        $this->serviceTypes[] = $serviceTypes;
+
+        return $this;
+    }
+    /**
+     * Remove serviceTypes
+     *
+     * @param \AppBundle\Entity\ServiceType $serviceTypes
+     */
+    public function removeServiceType(\AppBundle\Entity\ServiceType $serviceTypes)
+    {
+        $this->serviceTypes->removeElement($serviceTypes);
+    }
+
+    /**
+     * Get serviceTypes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getServiceTypes()
+    {
+        return $this->serviceTypes;
     }
 }

@@ -44,11 +44,6 @@ class ServiceType {
      */
     protected $updated;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Service", cascade={"persist"}, mappedBy="service")
-     */
-    protected $serviceCategories;
-
 
     /**
      * Get id
@@ -156,7 +151,7 @@ class ServiceType {
      */
     public function __construct()
     {
-        $this->serviceCategories = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->serviceCategories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

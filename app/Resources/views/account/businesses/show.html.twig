@@ -11,13 +11,13 @@
     <a href="#" class="admin-btn"><i class="fa fa-pencil-square-o fa-lg"></i><strong>Edit</strong></a>
   </div>
   <div class="panel-body">
-    <h3><a href="{{ path('admin_business_services_path', { slug: business.getSlug, id: business.getId }) }}">Services</a></h3>
+    <h3><a href="{{ path('admin_services_path', { slug: business.getSlug, id: business.getId }) }}">Services</a></h3>
   </div>
   {% if business.getServiceCategories.count > 0 %}
     <ul class="list-group">
     {% for serviceCategory in business.getServiceCategories %}
       <li class="list-group-item">
-        <a href="{{ path('admin_business_services_categories_path', { slug: business.getSlug, id: business.getId, category: serviceCategory.getSlug })}}">{{ serviceCategory.getLabel }}</a>
+        <a href="{{ path('admin_services_categories_path', { slug: business.getSlug, id: business.getId, category: serviceCategory.getSlug })}}">{{ serviceCategory.getLabel }}</a>
       </li>
     {% endfor %}
     </ul>

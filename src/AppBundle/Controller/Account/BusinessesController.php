@@ -25,7 +25,6 @@ class BusinessesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("AppBundle:Business");
-
         $businesses = $repository->findByOwner($this->getUser());
 
         // replace this example code with whatever you need
@@ -42,7 +41,7 @@ class BusinessesController extends Controller
     public function newAction(Request $request)
     {
         $business = new Business();
-        $address = new Address();
+        $address  = new Address();
 
         $form = $this->createForm(new BusinessType(), $business);
         // replace this example code with whatever you need
@@ -135,13 +134,11 @@ class BusinessesController extends Controller
     public function showAction($id, $slug, Request $request)
     {
         $business = $this->businessBySlugAndId($slug, $id);
-
-        $categoryForm = $this->createForm(new ServiceCategoryType(), new ServiceCategory(), array(
-            'action' => $this->generateUrl('admin_business_create_service_category', array(
-                'slug' => $slug,
-                'id' => $id
-            ))
-        ));
+        $categoryForm = $this->createForm(new ServiceCategoryType(), new ServiceCategory(), [
+            'action' => $this->generateUrl('admin_create_service_category', ['slug' => $slug,'id' => (int)$id]),
+            'business'=>$business
+          ]
+        );
 
 
         // replace this example code with whatever you need

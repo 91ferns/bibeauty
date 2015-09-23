@@ -7,9 +7,12 @@ use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use AppBundle\Form\BookingType;
+use AppBundle\Form\ServiceType;
+
 use AppBundle\Entity\Business;
 use AppBundle\Entity\Service;
-use AppBundl\Entity\Booking;
+use AppBundle\Entity\Booking;
 use AppBundle\Entity\TreatmentAvailabilitySet as TxAv;
 
 class BookingsController extends Controller
@@ -18,18 +21,19 @@ class BookingsController extends Controller
      * @Route("/account/bookings", name="admin_bookings_path")
      * @Method("GET")
      */
-    public function indexAction($id, $slug, Request $request)
+    public function indexAction(Request $request)
     {
-        $service = $this->getServiceBySlugAndId($slug, $id);
+        $bookings = $this->getRepo('Booking');
+        $businessId = $this->getCurrentBusiness()->getId();
+        $bookings   = $bookings->findByBusinessId($businessId);
 
-        // replace this example code with whatever you need
         return $this->render('account/bookings/index.html.twig', array(
             'bookings' => $bookings
         ));
     }
 
     /**
-     * @Route("/account/bookings/show/{id}/", name="admin_bookings_path")
+     * @Route("/account/bookings/show/{id}/", name="admin_show_booking_path")
      * @Method("GET")
      */
     public function showAction($id, Request $request)
@@ -50,9 +54,6 @@ class BookingsController extends Controller
      */
     public function createAction() {
        $booking = new Booking();
-       $user     = new User();
-       $business = new Business();
-       $service  = new Service();
 
        $form = $this->createForm(new BookingType(), $booking);
 
@@ -71,8 +72,7 @@ class BookingsController extends Controller
     public function createCheckAction(Request $request) {
 
         $booking = new Booking();
-        $business = new Business();
-        $business->findOneBy(['owner'=>$this->getUser()->getId()]);
+        $business = $this->getCurrentBusiness();
         $booking->setBusinessId($business);
         $form = $this->createForm(new BookingType(), $booking);
         $form->handleRequest($request);
@@ -93,6 +93,15 @@ class BookingsController extends Controller
             ));
         }
 
+    }
+    private function getRepo($name){
+      $em = $this->getDoctrine()->getManager();
+      return $em->getRepository("AppBundle:{$name}");
+    }
+    private function getCurrentBusiness()
+    {
+      $business = $this->getRepo('Business');
+      return $business->findOneBy(['owner'=>$this->getUser()->getId()]);
     }
     /**
      * @Route("/account/bookings/create", name="admin_service_bookings_create")

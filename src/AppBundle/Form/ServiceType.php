@@ -16,7 +16,7 @@ class ServiceType extends AbstractType
     {
 
         $builder
-            ->add('serviceCategory', 'entity', array(
+            /*->add('serviceCategory', 'entity', array(
                 'label' => 'Category',
                 'attr' => array(
                    'placeholder' => 'Category'
@@ -27,6 +27,23 @@ class ServiceType extends AbstractType
                         ->where('c.business = :business')
                         ->setParameter('business', $options['business'])
                         ->orderBy('c.updated', 'DESC');
+                },
+                'choice_label' => 'label',
+                'multiple' => false,
+                'expanded' => false,
+            ))*/
+            ->add('serviceType', 'entity', array(
+                'label' => 'Treatment',
+                'attr' => array(
+                   'placeholder' => 'Treatment'
+                ),
+                'class' => 'AppBundle:ServiceType',
+                'query_builder' => function (EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('st')
+                        ->leftJoin('AppBundle:ServiceCategory', 'sc')
+                        ->where('sc.business = :business')
+                        ->setParameter('business', $options['business'])
+                        ->orderBy('sc.updated', 'DESC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
