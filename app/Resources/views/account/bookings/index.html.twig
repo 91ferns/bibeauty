@@ -1,0 +1,28 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Bookings
+    <a href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Booking</strong></a>
+  </div>
+  <div class="panel-body">
+    {% if boookings | length > 0 %}
+    <ul class="list-group">
+      {% for booking in bookings %}
+      <li class="list-group-item">
+        <a href="{{ path('admin_booking_path', { 'slug': booking.getSlug, 'id': booking.getId}  ) }}">
+          {{ booking.getName }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no bookings</p>
+    {% endif %}
+  </div>
+</div>
+
+
+{% endblock %}

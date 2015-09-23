@@ -18,30 +18,31 @@ class TreatmentAvailabilitySet {
     * @ORM\Id
     * @ORM\GeneratedValue(strategy="AUTO")
     */
-   protected $id;
+   private $id;
 
    /**
     * @ORM\Column(type="date")
     * @Assert\NotBlank()
     */
-   protected $date;
+   private $date;
 
    /**
     * @ORM\Column(type="time", length=255)
     * @Assert\NotBlank()
     */
-   protected $time;
+   private $time;
 
    /**
     * @ORM\ManyToOne(targetEntity="Service", inversedBy="treatmentAvailabilitySets")
     * @ORM\JoinColumn(name="serviceId", referencedColumnName="id")
     */
-    protected $serviceId;
+    private $serviceId;
 
-   /**
-    * @ORM\Column(type="boolean")
-    */
-   protected $isOpen = false;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     */
+    private $isOpen = false;
 
 
     /**

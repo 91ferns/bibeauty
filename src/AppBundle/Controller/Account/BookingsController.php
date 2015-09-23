@@ -15,7 +15,7 @@ use AppBundle\Entity\TreatmentAvailabilitySet as TxAv;
 class BookingsController extends Controller
 {
     /**
-     * @Route("/account/bookings/{id}/{slug}/", name="admin_service_bookings_path")
+     * @Route("/account/bookings", name="admin_bookings_path")
      * @Method("GET")
      */
     public function indexAction($id, $slug, Request $request)
@@ -23,17 +23,82 @@ class BookingsController extends Controller
         $service = $this->getServiceBySlugAndId($slug, $id);
 
         // replace this example code with whatever you need
-        return $this->render('account/services/index.html.twig', array(
-            'business' => $business
+        return $this->render('account/bookings/index.html.twig', array(
+            'bookings' => $bookings
         ));
-
     }
 
+    /**
+     * @Route("/account/bookings/show/{id}/", name="admin_bookings_path")
+     * @Method("GET")
+     */
+    public function showAction($id, Request $request)
+    {
+        $booking = new Booking();
+        $booking->find($id);
+
+        // replace this example code with whatever you need
+        return $this->render('account/bookings/show.html.twig', array(
+            'booking' => $booking
+        ));
+    }
+
+
+    /**
+     * @Route("/account/bookings/new", name="admin_new_booking_path")
+     * @Method({"GET"})
+     */
+    public function createAction() {
+       $booking = new Booking();
+       $user     = new User();
+       $business = new Business();
+       $service  = new Service();
+
+       $form = $this->createForm(new BookingType(), $booking);
+
+       return $this->render(
+          'account/bookings/new.html.twig',
+          array(
+             'form' => $form->createView()
+          )
+       );
+    }
+
+    /**
+     * @Route("/account/bookings/new")
+     * @Method("POST")
+     */
+    public function createCheckAction(Request $request) {
+
+        $booking = new Booking();
+        $business = new Business();
+        $business->findOneBy(['owner'=>$this->getUser()->getId()]);
+        $booking->setBusinessId($business);
+        $form = $this->createForm(new BookingType(), $booking);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $txAv = $booking->getTreatmentAvailabilities();
+            $em->persist($txAv);
+
+            $em->persist($booking);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_bookings_path');
+
+        } else {
+            return $this->render('account/businesses/index.html.twig', array(
+                'form' => $form->createView()
+            ));
+        }
+
+    }
     /**
      * @Route("/account/bookings/create", name="admin_service_bookings_create")
      * @Method("POST")
      */
-    public function createAction(Request $request)
+  /*  public function createAction(Request $request)
     {
         $post = $request->request->all();
         $business = new Business();
@@ -63,5 +128,5 @@ class BookingsController extends Controller
         $booking->flush();
 
         return $this->redirectToRoute('admin_service_bookings_path');
-    }
+    }*/
 }
