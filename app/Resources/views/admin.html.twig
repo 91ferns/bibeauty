@@ -65,14 +65,14 @@
       </li> <!-- /#bookings -->
 
       <li role="presentation" id="services" class="{% if app.request.attributes.get('_route') starts with 'admin_business_services' %}active{% endif %}">
-        <a href="{{path('admin_business_services_path', { id: business.getId, slug: business.getSlug })}}" id="services-link">
+        <a href="{{ path('admin_business_services_path', { id: business.getId, slug: business.getSlug }) }}" id="services-link">
           <i class="fa fa-glass fa-lg"></i>
           My Services
         </a>
       </li> <!-- /#services -->
 
-      <li role="presentation" id="therapists">
-        <a href="#" id="therapists-link">
+      <li role="presentation" id="therapists" class="{% if app.request.attributes.get('_route') starts with 'admin_business_therapists' %}active{% endif %}">
+        <a href="{{ path('admin_business_therapists_path', { id: business.getId, slug: business.getSlug }) }}" id="therapists-link">
           <i class="fa fa-book fa-lg"></i>
           Therapists
         </a>
