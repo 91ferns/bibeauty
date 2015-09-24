@@ -18,17 +18,18 @@ use AppBundle\Entity\TreatmentAvailabilitySet as TxAv;
 class BookingsController extends Controller
 {
     /**
-     * @Route("/account/bookings", name="admin_bookings_path")
+     * @Route("/account/bookings/{id}/{slug}", name="admin_business_bookings_path")
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function indexAction($id, $slug, Request $request)
     {
         $bookings = $this->getRepo('Booking');
-        $businessId = $this->getCurrentBusiness()->getId();
-        $bookings   = $bookings->findByBusinessId($businessId);
+        $business = $this->businessBySlugAndId($slug, $id);
+        $bookings   = $bookings->findByBusiness($business);
 
         return $this->render('account/bookings/index.html.twig', array(
-            'bookings' => $bookings
+            'bookings' => $bookings,
+            'business' => $business,
         ));
     }
 
@@ -43,7 +44,8 @@ class BookingsController extends Controller
 
         // replace this example code with whatever you need
         return $this->render('account/bookings/show.html.twig', array(
-            'booking' => $booking
+            'booking' => $booking,
+            'business' => $booking->getBusiness(),
         ));
     }
 
@@ -114,11 +116,7 @@ class BookingsController extends Controller
       $em->flush();
     }
 
-    private function getRepo($name){
-      $em = $this->getDoctrine()->getManager();
-      return $em->getRepository("AppBundle:{$name}");
-    }
-    private function getCurrentBusiness()
+    private function getCurrentBusiness($id, $slug)
     {
       $business = $this->getRepo('Business');
       return $business->findOneBy(['owner'=>$this->getUser()->getId()]);

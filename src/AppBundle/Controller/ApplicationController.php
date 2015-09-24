@@ -71,4 +71,9 @@ class ApplicationController extends Controller
         return $service;
     }
 
+    protected function getRepo($name){
+      $em = $this->getDoctrine()->getManager();
+      return $em->getRepository("AppBundle:{$name}");
+    }
+
 }

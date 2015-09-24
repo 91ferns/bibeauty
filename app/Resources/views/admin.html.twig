@@ -35,13 +35,52 @@
 
   <nav id="secondary">
     <ul class="nav nav-pills nav-stacked">
-      <li class="header"><a href="#" disabled><i class="fa fa-cutlery fa-lg"></i>Business<i class="fa fa-pencil fa-lg"></i></a></li>
-      <li role="presentation" class="active" id="home"><a href="#" id="home-link"><i class="fa fa-home fa-lg"></i>Home</a></li>
-      <li role="presentation" id="bookings"><a href="{{path('admin_bookings_path')}}" id="bookings-link"><i class="fa fa-book fa-lg"></i>My Bookings</a></li>
-      <li role="presentation" id="services"><a href="{{path('admin_services_path_no_business')}}" id="services-link"><i class="fa fa-glass fa-lg"></i>My Services</a></li>
-      <li role="presentation" id="therapists"><a href="#" id="therapists-link"><i class="fa fa-book fa-lg"></i>Therapists</a></li>
+
+      <li class="header">
+
+          {% if business is defined %}
+          <a href="{{ path('admin_business_path', { id: business.getId, slug: business.getSlug })}}" disabled>
+            {{business.getName}}
+            <i class="fa fa-pencil fa-lg"></i>
+          </a>
+          {% else %}
+          <a href="#" disabled>
+            Choose
+          </a>
+          {% endif %}
+      </a></li>
+
+      <li role="presentation" class="{% if app.request.attributes.get('_route') == 'admin_path' %}active{% endif %}" id="home">
+        <a href="{{ path('admin_path')}}" id="home-link">
+          <i class="fa fa-home fa-lg"></i>
+          Home
+        </a>
+      </li> <!-- /.active -->
+      {% if business is defined %}
+      <li role="presentation" id="bookings" class="{% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}">
+        <a href="{{path('admin_business_bookings_path', { id: business.getId, slug: business.getSlug })}}" id="bookings-link">
+          <i class="fa fa-book fa-lg"></i>
+          My Bookings
+        </a>
+      </li> <!-- /#bookings -->
+
+      <li role="presentation" id="services" class="{% if app.request.attributes.get('_route') starts with 'admin_business_services' %}active{% endif %}">
+        <a href="{{path('admin_business_services_path', { id: business.getId, slug: business.getSlug })}}" id="services-link">
+          <i class="fa fa-glass fa-lg"></i>
+          My Services
+        </a>
+      </li> <!-- /#services -->
+
+      <li role="presentation" id="therapists">
+        <a href="#" id="therapists-link">
+          <i class="fa fa-book fa-lg"></i>
+          Therapists
+        </a>
+      </li> <!-- /#therapists -->
+
       <li role="presentation" id="users"><a href="#" id="users-link"><i class="fa fa-user fa-lg"></i>Users</a></li>
       <li role="presentation" id="statistics"><a href="#" id="statistics-link"><i class="fa fa-line-chart fa-lg"></i>Statistics</a></li>
+      {% endif %}
       <li role="presentation" id="settings"><a href="#" id="settings-link"><i class="fa fa-cogs fa-lg"></i>Settings</a></li>
     </ul>
   </nav>

@@ -18,8 +18,7 @@ use AppBundle\Entity\Service;
 class ServicesController extends Controller
 {
     /**
-     * @Route("/account/services/{id}/{slug}/", name="admin_services_path", defaults={"slug" = null,"id"=null})
-     * @Route("/account/services", name="admin_services_path_no_business")
+     * @Route("/account/services/{id}/{slug}/", name="admin_business_services_path")
      * @Method("GET")
      */
     public function indexAction($id= null,$slug = null, Request $request)
@@ -154,10 +153,6 @@ class ServicesController extends Controller
 
     }
 
-    private function getRepo($name){
-      $em = $this->getDoctrine()->getManager();
-      return $em->getRepository("AppBundle:{$name}");
-    }
     private function getCurrentBusiness()
     {
       $business = $this->getRepo('Business');

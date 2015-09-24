@@ -120,7 +120,7 @@ class BusinessesController extends Controller
             return $this->redirectToRoute('admin_path');
 
         } else {
-            return $this->render('account/businesses/index.html.twig', array(
+            return $this->render('account/businesses/new.html.twig', array(
                 'form' => $form->createView()
             ));
         }
