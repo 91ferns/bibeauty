@@ -121,6 +121,11 @@ class Business {
     protected $services;
 
     /**
+     * @ORM\OneToMany(targetEntity="Therapist", cascade={"persist"}, mappedBy="business")
+     */
+    protected $therapists;
+
+    /**
      * Get id
      *
      * @return integer
@@ -592,7 +597,7 @@ class Business {
      */
     public function addService(\AppBundle\Entity\Service $service)
     {
-        $this->service[] = $service;
+        $this->services[] = $service;
 
         return $this;
     }
@@ -604,7 +609,7 @@ class Business {
      */
     public function removeService(\AppBundle\Entity\ServiceCategory $service)
     {
-        $this->service->removeElement($service);
+        $this->services->removeElement($service);
     }
 
     /**
@@ -615,6 +620,39 @@ class Business {
     public function getServices()
     {
         return $this->services;
+    }
+
+    /**
+     * Add therapist
+     *
+     * @param \AppBundle\Entity\Therapist $therapist
+     * @return Business
+     */
+    public function addTherapist(\AppBundle\Entity\Therapist $therapist)
+    {
+        $this->therapist[] = $therapist;
+
+        return $this;
+    }
+
+    /**
+     * Remove therapist
+     *
+     * @param \AppBundle\Entity\Therapist $therapist
+     */
+    public function removeTherapist(\AppBundle\Entity\Therapist $therapist)
+    {
+        $this->therapists->removeElement($therapist);
+    }
+
+    /**
+     * Get thereapists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTherapists()
+    {
+        return $this->therapists;
     }
 
     public function getServicesAsChoices() {

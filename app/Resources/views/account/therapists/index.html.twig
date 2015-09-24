@@ -1,0 +1,28 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Therapists for {{ business.getName }}
+    <a class="admin-btn" href="{{ path('admin_business_therapists_new_path', { slug: business.getSlug, id: business.getId })}}">
+      <i class="fa fa-plus fa-lg"></i><strong>Add a therapist</strong>
+    </a>
+  </div>
+  <div class="panel-body">
+    {% if therapists.count > 0 %}
+      <ul class="list-group">
+      {% for therapist in therapists %}
+        <li class="list-group-item">
+          <a href="">{{ therapist.getLabel }}</a>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No therapists are added.</p>
+    {% endif %}
+  </div>
+</div>
+
+
+{% endblock %}

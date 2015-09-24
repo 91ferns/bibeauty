@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use AppBundle\Entity\Business;
+use AppBundle\Entity\Therapist;
+
+use AppBundle\Form\TherapistType;
 
 class TherapistsController extends Controller
 {
@@ -33,7 +36,7 @@ class TherapistsController extends Controller
     public function newAction($id, $slug, Request $request) {
 
         $business = $this->businessBySlugAndId($slug, $id);
-        $serviceForm = $this->createForm(new ServiceType(), new Service());
+        $form = $this->createForm(new TherapistType(), new Therapist());
         /*
             'action'   => $this->generateUrl('admin_create_service_category',["slug"=>$slug, "id"=>$id]),
             'business' => $business,
@@ -42,8 +45,49 @@ class TherapistsController extends Controller
 
         return $this->render('account/therapists/new.html.twig', array(
             'business' => $business,
-            'form' => $serviceForm->createView(),
+            'form' => $form->createView(),
         ));
+
+    }
+
+    /**
+     * @Route("/account/therapists/{id}/{slug}", name="admin_business_therapists_create_path")
+     * @Method("POST")
+     */
+    public function createAction($id, $slug, Request $request) {
+
+        $business = $this->businessBySlugAndId($slug, $id);
+
+        $therapist = new Therapist();
+        $form = $this->createForm(new TherapistType(), $therapist);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $therapist->setBusiness($business);
+
+            $em->persist($therapist);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_business_therapists_path', array(
+                'id' => $id,
+                'slug' => $slug,
+            ));
+
+        } else {
+            return $this->render('account/therapists/new.html.twig', array(
+                'business' => $business,
+                'form' => $form->createView(),
+            ));
+        }
+        /*
+            'action'   => $this->generateUrl('admin_create_service_category',["slug"=>$slug, "id"=>$id]),
+            'business' => $business,
+          )
+      );*/
 
     }
 
