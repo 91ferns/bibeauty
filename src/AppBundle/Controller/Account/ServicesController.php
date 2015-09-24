@@ -12,7 +12,6 @@ use AppBundle\Form\ServiceType;
 
 use AppBundle\Entity\Business;
 use AppBundle\Entity\ServiceCategory;
-use AppBundle\Entity\ServiceType as servType;
 use AppBundle\Entity\Service;
 
 class ServicesController extends Controller
@@ -39,7 +38,7 @@ class ServicesController extends Controller
     public function newAction($id, $slug, Request $request) {
 
         $business = $this->businessBySlugAndId($slug, $id);
-        $serviceForm = $this->createForm(new ServiceType, new Service());
+        $serviceForm = $this->createForm(new ServiceType(), new Service());
         /*
             'action'   => $this->generateUrl('admin_create_service_category',["slug"=>$slug, "id"=>$id]),
             'business' => $business,
