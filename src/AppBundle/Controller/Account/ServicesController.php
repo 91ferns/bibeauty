@@ -12,6 +12,7 @@ use AppBundle\Form\ServiceType;
 
 use AppBundle\Entity\Business;
 use AppBundle\Entity\ServiceCategory;
+use AppBundle\Entity\ServiceType as servType;
 use AppBundle\Entity\Service;
 
 class ServicesController extends Controller
@@ -113,7 +114,7 @@ class ServicesController extends Controller
     {
         //$business = $this->businessBySlugAndId($slug, $id);
 
-        $service = new Service();
+        $service = new servType();
 
         $serviceForm = $this->createForm(new ServiceType(), $service, array(
             'business' => $business

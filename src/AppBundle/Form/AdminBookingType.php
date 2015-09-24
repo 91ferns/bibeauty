@@ -12,22 +12,6 @@ class AdminBookingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($options['user']) {
-            $user = $options['user'];
-
-            $user = (object) array(
-                'name' => $user->getFullName(),
-                'email' => $user->getEmail(),
-                'phone' => 'sadas'
-            );
-
-        } else {
-            $user = (object) array(
-                'name' => '',
-                'email' => '',
-                'phone' => ''
-            );
-        }
 
         $builder
             ->add('name', 'text', array(

@@ -94,6 +94,26 @@ class BookingsController extends Controller
         }
 
     }
+    /**
+     * @Route("/account/bookings/newTreatment", name="admin_new_availability_path")
+     * @Method({"POST"})
+     */
+    public function createTreatmentAvailabilitySetAction(Request $request)
+    {
+      $post      = $request->request->all();
+      $date      = $post['Date'];
+      $time      = $post['Time'];
+      $recurring = $post['Recurring'];
+
+      $Availability = new TreatmentAvailabilitySet();
+      $Availability->setDate(new \DateTime($date));
+      $Availability->setTime(new \DateTime($time));
+      $Availability->setRecurrence($recurring);
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($Availability);
+      $em->flush();
+    }
+
     private function getRepo($name){
       $em = $this->getDoctrine()->getManager();
       return $em->getRepository("AppBundle:{$name}");
