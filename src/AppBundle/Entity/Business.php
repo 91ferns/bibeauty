@@ -116,9 +116,9 @@ class Business {
     protected $updated;
 
     /**
-     * @ORM\OneToMany(targetEntity="ServiceCategory", cascade={"persist"}, mappedBy="business")
+     * @ORM\OneToMany(targetEntity="Service", cascade={"persist"}, mappedBy="business")
      */
-    protected $serviceCategories;
+    protected $services;
 
     /**
      * Get id
@@ -585,43 +585,43 @@ class Business {
 
 
     /**
-     * Add serviceCategories
+     * Add service
      *
-     * @param \AppBundle\Entity\ServiceCategory $serviceCategories
+     * @param \AppBundle\Entity\ServiceCategory $services
      * @return Business
      */
-    public function addServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategories)
+    public function addService(\AppBundle\Entity\Service $service)
     {
-        $this->serviceCategories[] = $serviceCategories;
+        $this->service[] = $service;
 
         return $this;
     }
 
     /**
-     * Remove serviceCategories
+     * Remove service
      *
      * @param \AppBundle\Entity\ServiceCategory $serviceCategories
      */
-    public function removeServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategories)
+    public function removeService(\AppBundle\Entity\ServiceCategory $service)
     {
-        $this->serviceCategories->removeElement($serviceCategories);
+        $this->service->removeElement($service);
     }
 
     /**
-     * Get serviceCategories
+     * Get services
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getServiceCategories()
+    public function getServices()
     {
-        return $this->serviceCategories;
+        return $this->services;
     }
 
-    public function getCategoriesAsChoices() {
+    public function getServicesAsChoices() {
         $array = array();
-        foreach ($this->serviceCategories as $category) {
-            $id = $category->getId();
-            $array[$id] = $category->getLabel();
+        foreach ($this->services as $service) {
+            $id = $service->getId();
+            $array[$id] = $service->getLabel();
         }
 
         return $array;

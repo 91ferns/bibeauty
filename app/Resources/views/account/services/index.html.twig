@@ -5,62 +5,24 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     Treatments for {{ business.getName }}
-    <a class="admin-btn" data-toggle="modal" href="#add-service"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong></a>
-    <a href="#add-service-category" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment category</strong></a>
+    <a class="admin-btn" href="{{ path('admin_business_services_new_path', { slug: business.getSlug, id: business.getId })}}">
+      <i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong>
+    </a>
   </div>
-  {% if business.getServiceCategories.count > 0 %}
-    <ul class="list-group">
-    {% for serviceCategory in business.getServiceCategories %}
-      <li class="list-group-item">
-        <a href="{{ path('admin_services_categories_path', { slug: business.getSlug, id: business.getId, category: serviceCategory.getSlug })}}">{{ serviceCategory.getLabel }}</a>
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="add-service-category" tabindex="-1" role="dialog" aria-labelledby="add-service-category-label">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      {{ form_start(categoryForm) }}
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="add-service-category-label">Add Treatment Category</h4>
-        </div>
-        <div class="modal-body">
-          {{ form_widget(categoryForm) }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" value="Create"
-               class="btn btn-primary" />
-        </div>
-      {{ form_end(categoryForm) }} <!-- /. form -->
-    </div>
+  <div class="panel-body">
+    {% if services.count > 0 %}
+      <ul class="list-group">
+      {% for service in services %}
+        <li class="list-group-item">
+          <a href="">{{ service.getLabel }}</a>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No treatments are added.</p>
+    {% endif %}
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="add-service" tabindex="-1" role="dialog" aria-labelledby="add-service-category-label">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      {{ form_start(serviceForm) }}
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="add-service-category-label">Add Treatment</h4>
-        </div>
-        <div class="modal-body">
-          {{ form_widget(serviceForm) }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" value="Create"
-               class="btn btn-primary" />
-        </div>
-      {{ form_end(serviceForm) }} <!-- /. form -->
-    </div>
-  </div>
-</div>
 
 {% endblock %}

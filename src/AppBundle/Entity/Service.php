@@ -92,7 +92,7 @@ class Service {
      * @ORM\ManyToOne(targetEntity="Business")
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      */
-    protected $businessId;
+    protected $business;
 
     /**
      * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="Service")
@@ -360,26 +360,26 @@ class Service {
     }
 
     /**
-     * Set businessId
+     * Set business
      *
-     * @param \AppBundle\Entity\Business $businessId
+     * @param \AppBundle\Entity\Business $business
      * @return Service
      */
-    public function setBusinessId(\AppBundle\Entity\Business $businessId = null)
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
     {
-        $this->businessId = $businessId;
+        $this->business = $business;
 
         return $this;
     }
 
     /**
-     * Get businessId
+     * Get business
      *
      * @return \AppBundle\Entity\Business
      */
-    public function getBusinessId()
+    public function getBusiness()
     {
-        return $this->businessId;
+        return $this->business;
     }
 
     /**
