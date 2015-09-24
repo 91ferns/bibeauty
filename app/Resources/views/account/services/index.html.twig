@@ -52,6 +52,7 @@
         </div>
         <div class="modal-body">
           {{ form_widget(serviceForm) }}
+          {% include "account/availability/form.html.twig" %}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
