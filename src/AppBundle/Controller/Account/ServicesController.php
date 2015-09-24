@@ -52,6 +52,28 @@ class ServicesController extends Controller
 
     }
 
+    /**
+     * @Route("/account/services/{id}/{slug}/new")
+     * @Method("POST")
+     */
+    public function newSubmit($slug, $id, Request $request) {
 
+        $business = $this->businessBySlugAndId($slug, $id);
+        $service = new Service();
+        $service->setBusiness($business);
+        $form = $this->createForm(new ServiceType(), $service);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($service);
+          $em->flush();
+          return $this->redirectToRoute('admin_business_services_path',["slug"=>$slug,"id"=>$id]);
+        } else {
+          return $this->render('account/businesses/new.html.twig', array(
+            'form' => $form->createView()
+          ));
+        }
+    }
 
 }

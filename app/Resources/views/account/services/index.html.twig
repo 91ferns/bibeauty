@@ -14,7 +14,7 @@
       <ul class="list-group">
       {% for service in services %}
         <li class="list-group-item">
-          <a href="">{{ service.getLabel }}</a>
+          <a href="">{{ service.getServiceType.getLabel }}</a>
         </li>
       {% endfor %}
       </ul>
@@ -25,26 +25,26 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="add-service" tabindex="-1" role="dialog" aria-labelledby="add-service-category-label">
+<!--<div class="modal fade" id="add-service" tabindex="-1" role="dialog" aria-labelledby="add-service-category-label">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      {{ form_start(serviceForm) }}
+      {#{ form_start(serviceForm) }#}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="add-service-category-label">Add Treatment</h4>
         </div>
         <div class="modal-body">
-          {{ form_widget(serviceForm) }}
-          {% include "account/availability/form.html.twig" %}
+          {#{ form_widget(serviceForm) }#}
+          {#% include "account/availability/form.html.twig" %#}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <input type="submit" value="Create"
                class="btn btn-primary" />
         </div>
-      {{ form_end(serviceForm) }} <!-- /. form -->
-    </div>
+      {#{ form_end(serviceForm) }#} <!-- /. form -->
+  <!--  </div>
   </div>
-</div>
+</div>-->
 
 {% endblock %}

@@ -109,8 +109,10 @@ class Service {
     }
 
     protected function generateSlug() {
+      /** temorary...todo fix for label **/
+      return 'ss-test-ss';
         $slugify = new Slugify();
-        return $slugify->slugify($this->label); // hello-world
+        return $slugify->slugify($this->getLabel()); // hello-world
     }
 
     /**
@@ -135,29 +137,6 @@ class Service {
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set label
-     *
-     * @param string $label
-     * @return Service
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
     }
 
     /**
