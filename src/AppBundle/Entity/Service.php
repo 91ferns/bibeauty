@@ -23,13 +23,6 @@ class Service {
     protected $id;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min = 3)
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $label;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     protected $slug;

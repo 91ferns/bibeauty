@@ -16,44 +16,22 @@ class ServiceType extends AbstractType
     {
 
         $builder
-            /*->add('serviceCategory', 'entity', array(
-                'label' => 'Category',
-                'attr' => array(
-                   'placeholder' => 'Category'
-                ),
-                'class' => 'AppBundle:ServiceCategory',
-                'query_builder' => function (EntityRepository $er) use ($options) {
-                    return $er->createQueryBuilder('c')
-                        ->where('c.business = :business')
-                        ->setParameter('business', $options['business'])
-                        ->orderBy('c.updated', 'DESC');
-                },
-                'choice_label' => 'label',
-                'multiple' => false,
-                'expanded' => false,
-            ))*/
             ->add('serviceType', 'entity', array(
                 'label' => 'Treatment',
                 'attr' => array(
                    'placeholder' => 'Treatment'
                 ),
                 'class' => 'AppBundle:ServiceType',
+                'group_by' => 'categoryName',
                 'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('st')
                         ->leftJoin('AppBundle:ServiceCategory', 'sc')
-                        ->where('sc.business = :business')
-                        ->setParameter('business', $options['business'])
+                        ->andWhere('st.serviceCategory IS NOT NULL')
                         ->orderBy('sc.updated', 'DESC');
                 },
                 'choice_label' => 'label',
                 'multiple' => false,
                 'expanded' => false,
-            ))
-            ->add('label', 'text', array(
-                 'label' => 'Treatment',
-                 'attr' => array(
-                    'placeholder' => 'Treatment Name'
-                )
             ))
             ->add('description', 'textarea', array(
                  'label' => 'Description',
