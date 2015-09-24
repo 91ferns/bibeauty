@@ -5,13 +5,15 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     {{ business.getName }}
-    <a href="#add-service" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong></a>
-    <a href="#add-service-category" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment category</strong></a>
+    <a href="{{ path('admin_business_services_new_path', { id: business.getId, slug: business.getSlug })}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong></a>
     <a href="#" class="admin-btn"><i class="fa fa-trash-o fa-lg"></i><strong>Delete</strong></a>
-    <a href="#" class="admin-btn"><i class="fa fa-pencil-square-o fa-lg"></i><strong>Edit</strong></a>
   </div>
   <div class="panel-body">
-    <h3><a href="{{ path('admin_services_path', { slug: business.getSlug, id: business.getId }) }}">Services</a></h3>
+    {{ form_start(businessForm) }}
+        {{ form_widget(businessForm) }}
+        <input type="submit" value="Edit Business"
+             class="btn btn-primary" />
+    {{ form_end(businessForm) }} <!-- /. form -->
   </div>
   {% if business.getServiceCategories.count > 0 %}
     <ul class="list-group">
@@ -22,28 +24,6 @@
     {% endfor %}
     </ul>
   {% endif %}
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="add-service-category" tabindex="-1" role="dialog" aria-labelledby="add-service-category-label">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      {{ form_start(categoryForm) }}
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="add-service-category-label">Add Treatment Category</h4>
-        </div>
-        <div class="modal-body">
-          {{ form_widget(categoryForm) }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" value="Create"
-               class="btn btn-primary" />
-        </div>
-      {{ form_end(categoryForm) }} <!-- /. form -->
-    </div>
-  </div>
 </div>
 
 {% endblock %}

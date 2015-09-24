@@ -3,31 +3,22 @@
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">Services for {{ business.getName }}</div>
-  <div class="panel-body">
-
+  <div class="panel-heading">
+    Treatments for {{ business.getName }}
   </div>
-  <table class="table businesses-table">
-    <thread>
-      <tr>
-        <th>ID</th>
-        <th><a href="#" id="check-all-box">All</a></th>
-        <th>Cilent</th>
-        <th>Services</th>
-        <th>Category</th>
-        <th>Treatment</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Price</th>
-        <th>Therapist</th>
-        <th>Status</th>
-      </tr>
-    </thread>
-    <tbody>
-
-    </tbody>
-
-  </table>
+  <div class="panel-body">
+    {% if services.count > 0 %}
+      <ul class="list-group">
+      {% for service in services %}
+        <li class="list-group-item">
+          <a href="">{{ service.getLabel }}</a>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No treatments have been added.</p>
+    {% endif %}
+  </div>
 </div>
 
 

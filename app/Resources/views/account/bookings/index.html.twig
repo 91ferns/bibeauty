@@ -8,6 +8,27 @@
     <a href="{{path('admin_new_booking_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Booking</strong></a>
   </div>
   <div class="panel-body">
+    <table class="table businesses-table">
+      <thread>
+        <tr>
+          <th>ID</th>
+          <th><a href="#" id="check-all-box">All</a></th>
+          <th>Cilent</th>
+          <th>Services</th>
+          <th>Category</th>
+          <th>Treatment</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Price</th>
+          <th>Therapist</th>
+          <th>Status</th>
+        </tr>
+      </thread>
+      <tbody>
+
+      </tbody>
+
+    </table>
     {% if bookings | length > 0 %}
     <ul class="list-group">
       {% for booking in bookings %}

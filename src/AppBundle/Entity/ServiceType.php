@@ -204,4 +204,8 @@ class ServiceType {
         // will NOT be saved in the database
         $this->updated->modify("now");
     }
+
+    public function getCategoryName() {
+        return $this->getServiceCategory() ? $this->getServiceCategory()->getLabel() : null;         
+    }
 }

@@ -120,7 +120,7 @@ class BusinessesController extends Controller
             return $this->redirectToRoute('admin_path');
 
         } else {
-            return $this->render('account/businesses/index.html.twig', array(
+            return $this->render('account/businesses/new.html.twig', array(
                 'form' => $form->createView()
             ));
         }
@@ -134,16 +134,13 @@ class BusinessesController extends Controller
     public function showAction($id, $slug, Request $request)
     {
         $business = $this->businessBySlugAndId($slug, $id);
-        $categoryForm = $this->createForm(new ServiceCategoryType(), new ServiceCategory(), [
-            'action' => $this->generateUrl('admin_create_service_category', ['slug' => $slug,'id' => (int)$id]),
-            'business'=>$business
-          ]
-        );
+        //$form->createView()
+        $form = $this->createForm(new BusinessType(), $business);
 
 
         // replace this example code with whatever you need
         return $this->render('account/businesses/show.html.twig', array(
-            'categoryForm' => $categoryForm->createView(),
+            'businessForm' => $form->createView(),
             'business' => $business
         ));
 

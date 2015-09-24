@@ -77,13 +77,13 @@ class Booking {
      * @ORM\ManyToOne(targetEntity="Business")
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      */
-    protected $businessId;
+    protected $business;
 
     /**
      * @ORM\ManyToOne(targetEntity="Service")
      * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
      */
-    protected $serviceId;
+    protected $service;
 
     /**
      * @ORM\PrePersist
@@ -286,14 +286,14 @@ class Booking {
     }
 
     /**
-     * Set businessId
+     * Set business
      *
-     * @param \AppBundle\Entity\Business $businessId
+     * @param \AppBundle\Entity\Business $business
      * @return Booking
      */
-    public function setBusinessId(\AppBundle\Entity\Business $businessId = null)
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
     {
-        $this->businessId = $businessId;
+        $this->business = $business;
 
         return $this;
     }
@@ -303,20 +303,20 @@ class Booking {
      *
      * @return \AppBundle\Entity\Business
      */
-    public function getBusinessId()
+    public function getBusiness()
     {
-        return $this->businessId;
+        return $this->business;
     }
 
     /**
-     * Set serviceId
+     * Set service
      *
-     * @param \AppBundle\Entity\Service $serviceId
+     * @param \AppBundle\Entity\Service $service
      * @return Booking
      */
-    public function setServiceId(\AppBundle\Entity\Service $serviceId = null)
+    public function setService(\AppBundle\Entity\Service $service = null)
     {
-        $this->serviceId = $serviceId;
+        $this->serviceId = $service;
 
         return $this;
     }
@@ -324,10 +324,10 @@ class Booking {
     /**
      * Get serviceId
      *
-     * @return \AppBundle\Entity\Service 
+     * @return \AppBundle\Entity\Service
      */
-    public function getServiceId()
+    public function getService()
     {
-        return $this->serviceId;
+        return $this->service;
     }
 }
