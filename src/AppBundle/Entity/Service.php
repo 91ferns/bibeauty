@@ -88,7 +88,7 @@ class Service {
     protected $business;
 
     /**
-     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="Service")
+     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="ServiceId")
      */
     protected $treatmentAvailabilitySets;
 

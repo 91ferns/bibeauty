@@ -76,4 +76,44 @@ class ServicesController extends Controller
         }
     }
 
+    /**
+     * @Route("/account/services/{id}/{slug}/show/{serviceid}", name="admin_service_show_path")
+     * @Method("GET")
+     */
+    public function showAction($id, $slug, $serviceid, Request $request)
+    {
+        $business = $this->businessBySlugAndId($slug, $id);
+        $services = $this->getRepo('Service');
+        $service  = $services->findOneBy(['id'=>$serviceid]);
+
+        //$form->createView()
+        //$form = $this->createForm(new BusinessType(), $business);
+        /*$availabilityForm = $this->createForm(new TreatmentAvailabilityType(), new TreatmentAvailabilitySet(), array(
+            'action' => $this->generateUrl('admin_service_availability_new_path',['serviceid'=>$service->getId(),'id'=>$id]),
+            'user' => $this->getUser() ? $this->getUser() : null,
+        ));*/
+
+        // replace this example code with whatever you need
+        return $this->render('account/services/show.html.twig', array(
+            //'businessForm' => $form->createView(),
+            'business' => $business,
+            'service'  => $service,
+            'slug'=>$slug,
+            'id'=>$id
+        ));
+
+    }
+    protected function getRepo($name)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository("AppBundle:{$name}");
+      return $repository;
+    }
+
+    private function getCurrentBusiness($id, $slug)
+    {
+      //$business = $this->getRepo('Business');
+    //return $business->findOneBy(['owner'=>$this->getUser()->getId()]);
+    }
+
 }

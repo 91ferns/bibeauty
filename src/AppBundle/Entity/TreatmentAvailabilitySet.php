@@ -44,6 +44,11 @@ class TreatmentAvailabilitySet {
      */
     private $isOpen = false;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" = false})
+     * @Assert\NotBlank()
+     */
+     private $recurring = false;
 
     /**
      * Get id
@@ -145,5 +150,28 @@ class TreatmentAvailabilitySet {
     public function getServiceId()
     {
         return $this->serviceId;
+    }
+
+    /**
+     * Set recurring
+     *
+     * @param boolean $recurring
+     * @return TreatmentAvailabilitySet
+     */
+    public function setRecurring($recurring)
+    {
+        $this->recurring = $recurring;
+
+        return $this;
+    }
+
+    /**
+     * Get recurring
+     *
+     * @return boolean
+     */
+    public function getRecurring()
+    {
+        return $this->recurring;
     }
 }

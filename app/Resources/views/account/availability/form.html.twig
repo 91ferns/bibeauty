@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <form action="{{ path('admin_new_availability_path') }}" method="post">
+    <form action="{{ path('admin_service_availability_new_path',{slug:slug,id:id,serviceid:service.getId}) }}" method="post">
       <div class="form-group">
         <label for="Day">Date</label>
         <div class="input-group">
@@ -9,7 +9,7 @@
         </div>
         <label for="Time">Time</label>
         <div class="input-group">
-          <input type="text" id="TimeField" name="Time" class="form-control" placeholder="Time" />
+          <input type="time" id="TimeField" name="Time" class="form-control" placeholder="Time" />
           <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
         </div>
         <div class="input-group">
@@ -17,10 +17,10 @@
           <input type="checkbox" name="Recurring" class="form-control" />
         </div>
       </div> <!-- /.form-group -->
-    </form>
   </div>
   <div class="panel-heading" style="height:50px;">
-    <a href="{{path('admin_new_booking_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Treatment</strong></a>
+    <input type="submit" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add an Availability</strong></a>
     <div class="clear"></div>
   </div>
+  </form>
 </div>
