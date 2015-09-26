@@ -13,6 +13,7 @@ use AppBundle\Entity\Business;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\TreatmentAvailabilitySet;
+use AppBundle\Entity\Booking;
 
 class TreatmentAvailabilityController extends Controller
 {
@@ -24,7 +25,7 @@ class TreatmentAvailabilityController extends Controller
     public function newAction($id, $slug, $serviceid, Request $request) {
         $business = $this->businessBySlugAndId($slug, $id);
         $date     = $request->request->get('Day',false);
-        $time     = $request->request->get('Time',false);
+        $time     = $request->request->get('Time',false) . ':00';
         if(!$date || !$time ){return false;}
         $recurring    = $request->request->get('Recurring',false);
         $services     = $this->getRepo('Service');
@@ -34,8 +35,10 @@ class TreatmentAvailabilityController extends Controller
         $booking  = new Booking();
         $booking->setBusiness($business);
         $booking->setService($service);
-        $booking->setTreatmentAvailabilitySet($availability);
-
+        $booking->setAvailabilityId($availability);
+        $em = $this->getEm();
+        $em->persist($booking);
+        $em->flush();
         return $this->redirectToRoute('admin_service_show_path',["slug"=>$slug,"id"=>$id,"serviceid"=>$serviceid]);
     }
 
@@ -45,7 +48,9 @@ class TreatmentAvailabilityController extends Controller
       $availability->setServiceId($service);
       $availability->setRecurring($recurring);
       $availability->setDate(new \DateTime($date));
-      $availability->setDate(new \DateTime($time));
+      //$time = new \DateTime($time);
+      //var_dump($time); exit;
+      $availability->setTime(new \DateTime($time));
 
       $em = $this->getEm();
       $em->persist($availability);

@@ -27,7 +27,7 @@ class TreatmentAvailabilitySet {
    private $date;
 
    /**
-    * @ORM\Column(type="time", length=255)
+    * @ORM\Column(type="time")
     * @Assert\NotBlank()
     */
    private $time;
@@ -91,7 +91,7 @@ class TreatmentAvailabilitySet {
      */
     public function setTime($time)
     {
-        $this->time = $time;
+     $this->time = $time;
 
         return $this;
     }

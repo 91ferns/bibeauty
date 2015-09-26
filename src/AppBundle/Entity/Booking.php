@@ -22,23 +22,20 @@ class Booking {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"default" = null})
      * @Assert\Length(min = 3)
-     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"default" = null})
      * @Assert\Email
-     * @Assert\NotBlank()
      */
     protected $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,  nullable=true, options={"default" = null})
      * @Assert\Length(min = 9)
-     * @Assert\NotBlank()
      */
     protected $phone;
 
