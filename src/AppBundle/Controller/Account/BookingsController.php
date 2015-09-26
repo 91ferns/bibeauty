@@ -24,9 +24,16 @@ class BookingsController extends Controller
     public function indexAction($id, $slug, Request $request)
     {
         $bookings = $this->getRepo('Booking');
-        $business = $this->businessBySlugAndId($slug, $id);
+        $business =  $this->getRepo('Business');
+        $business = $business->find($id);
         $bookings   = $bookings->findByBusiness($business);
+        /*$service   =  $booking->getService();
+        $serviceType = $booking->getServiceType();*/
+        /*foreach($bookings as $booking){
 
+          var_dump( $booking->getAvailabilityId()->getTime());
+        }
+        exit;*/
         return $this->render('account/bookings/index.html.twig', array(
             'bookings' => $bookings,
             'business' => $business,
@@ -46,6 +53,8 @@ class BookingsController extends Controller
         return $this->render('account/bookings/show.html.twig', array(
             'booking' => $booking,
             'business' => $booking->getBusiness(),
+            'service' => $booking->getService(),
+            'serviceType'=> $service->getServiceType(),
         ));
     }
 
@@ -115,7 +124,12 @@ class BookingsController extends Controller
       $em->persist($Availability);
       $em->flush();
     }
-
+    protected function getRepo($name)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository("AppBundle:{$name}");
+      return $repository;
+    }
     private function getCurrentBusiness($id, $slug)
     {
       $business = $this->getRepo('Business');

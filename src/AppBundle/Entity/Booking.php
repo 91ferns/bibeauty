@@ -313,7 +313,7 @@ class Booking {
      */
     public function setService(\AppBundle\Entity\Service $service = null)
     {
-        $this->serviceId = $service;
+        $this->service = $service;
 
         return $this;
     }

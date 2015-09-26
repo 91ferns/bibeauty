@@ -25,23 +25,56 @@
         </tr>
       </thread>
       <tbody>
+        {% if bookings | length > 0 %}
 
+
+          {% for booking in bookings %}
+                  <tr >
+          {% set service     = booking.getService %}
+          {% set serviceType = service.getServiceType %}
+          {% set category = serviceType.getServiceCategory %}
+          {% set availability = booking.getAvailabilityId %}
+          <td >
+              {{ booking.getId }}
+          </td>
+          <td >
+              {{ booking.getId }}
+          </td>
+          <td >
+              {{ booking.getUserId }}
+          </td>
+          <td >
+              {{ serviceType.getLabel }}
+          </td>
+          <td >
+              {{ category.getLabel }}
+          </td>
+          <td >
+              {{ service.getDescription }}
+          </td>
+          <td >
+              {{ availability.getDate|date('m/d/Y') }}
+          </td>
+          <td >
+              {{ availability.getTime|date('H:i') }}
+          </td>
+          <td >
+              ${{ service.getCurrentPrice }}.00
+          </td>
+          <td>{{service.getTherapist}}</td>
+            <td>{{booking.getApproval}}</td>
+                    </tr>
+          {% endfor %}
+
+        <tr>
+        {% else %}
+        <p>You have no bookings</p>
+        {% endif %}
+      </tr>
       </tbody>
 
     </table>
-    {% if bookings | length > 0 %}
-    <ul class="list-group">
-      {% for booking in bookings %}
-      <li class="list-group-item">
-        <a href="{{ path('admin_booking_path', { 'slug': booking.getSlug, 'id': booking.getId}  ) }}">
-          {{ booking.getName }}
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p>You have no bookings</p>
-    {% endif %}
+
   </div>
 </div>
 

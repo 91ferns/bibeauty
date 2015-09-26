@@ -92,10 +92,17 @@ class Service {
      */
     protected $treatmentAvailabilitySets;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Therapist")
+     * @ORM\JoinColumn(name="therapist_id", referencedColumnName="id")
+     */
+    protected $therapist;
+
     public function __construct()
     {
       $this->treatmentAvailabilitySets = new ArrayCollection();
     }
+
 
     /**
      * @ORM\PrePersist
@@ -408,5 +415,28 @@ class Service {
     public function getServiceType()
     {
         return $this->serviceType;
+    }
+
+    /**
+     * Set therapist
+     *
+     * @param \AppBundle\Entity\Therapist $therapist
+     * @return Service
+     */
+    public function setTherapist(\AppBundle\Entity\Therapist $therapist = null)
+    {
+        $this->therapist = $therapist;
+
+        return $this;
+    }
+
+    /**
+     * Get therapist
+     *
+     * @return \AppBundle\Entity\Therapist 
+     */
+    public function getTherapist()
+    {
+        return $this->therapist;
     }
 }

@@ -30,13 +30,14 @@ class TreatmentAvailabilityController extends Controller
         $recurring    = $request->request->get('Recurring',false);
         $services     = $this->getRepo('Service');
         $service      = $services->findOneBy(['id'=>$serviceid]);
+          $em = $this->getEm();
+        $em->persist($service);
         $availability = $this->buildInsertAvailability($service,$recurring,$date,$time);
 
         $booking  = new Booking();
         $booking->setBusiness($business);
         $booking->setService($service);
         $booking->setAvailabilityId($availability);
-        $em = $this->getEm();
         $em->persist($booking);
         $em->flush();
         return $this->redirectToRoute('admin_service_show_path',["slug"=>$slug,"id"=>$id,"serviceid"=>$serviceid]);
