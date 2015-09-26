@@ -34,6 +34,20 @@
           {% set serviceType = service.getServiceType %}
           {% set category = serviceType.getServiceCategory %}
           {% set availability = booking.getAvailabilityId %}
+          {% set status = booking.getApproval %}
+          {% if status == 1 %}
+          {%     set status = 'unapproved' %}
+          {%     set cls = '-warning' %}
+          {% elseif status == 4 %}
+          {%     set status = 'confirmed' %}
+          {%     set cls = '-success' %}
+          {% elseif status == 2 %}
+          {%     set status = 'declined' %}
+          {%     set cls    = '-danger' %}
+          {% else %}
+          {%     set status = 'canceled' %}
+          {%     set cls = '-danger' %}
+          {% endif %}
           <td >
               {{ booking.getId }}
           </td>
@@ -56,13 +70,13 @@
               {{ availability.getDate|date('m/d/Y') }}
           </td>
           <td >
-              {{ availability.getTime|date('H:i') }}
+              {{ availability.getTime|date('h:i A') }}
           </td>
           <td >
-              ${{ service.getCurrentPrice }}.00
+              ${{ service.getOriginalPrice }}.00 / ${{ service.getCurrentPrice }}.00
           </td>
           <td>{{service.getTherapist}}</td>
-            <td>{{booking.getApproval}}</td>
+            <td><a href="#" class="btn btn{{cls}}">{{status}}</a></td>
                     </tr>
           {% endfor %}
 
