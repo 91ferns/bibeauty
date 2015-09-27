@@ -13,8 +13,20 @@
           <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
         </div>
         <div class="input-group">
-          <label for="">Recurring</label>
-          <input type="checkbox" name="Recurring" class="form-control" />
+          <label for="">Recurring</label><br>
+          <!--<input type="checkbox" name="Recurring" class="form-control" />-->
+          <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary active" >
+                      <input type="radio" name="Recurring" checked class="form-control" /> NONE
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="Recurring_Monthly" class="form-control" /> MONTHLY
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="Recurring_Weekly" class="form-control" /> WEEKLY
+                </label>
+            </div>
+
         </div>
       </div> <!-- /.form-group -->
   </div>
@@ -23,4 +35,5 @@
     <div class="clear"></div>
   </div>
   </form>
+  <script>$('[checked="checked"]').parent().addClass("active");</script>
 </div>

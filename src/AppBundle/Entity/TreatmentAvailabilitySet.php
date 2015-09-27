@@ -52,7 +52,7 @@ class TreatmentAvailabilitySet {
      private $recurring = false;
 
      /**
-      * @ORM\OneToMany(targetEntity="RecurringAppointments", mappedBy="AvailabilityId")
+      * @ORM\OneToMany(targetEntity="RecurringAppointments", mappedBy="availabilityId")
       */
       private $recurrences;
 
@@ -212,7 +212,7 @@ class TreatmentAvailabilitySet {
     /**
      * Get recurrences
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRecurrences()
     {

@@ -22,7 +22,8 @@
         </div>
         <div class="input-group">
           <label for="">Recurring</label>
-          <input type="checkbox" name="Recurring" class="form-control" />
+          <input type="radio" name="Recurring_Monthly" class="form-control" />
+          <input type="radio" name="Recurring_Weekly" class="form-control" />
         </div>
       </div> <!-- /.form-group -->
     </form>
@@ -31,4 +32,3 @@
 
 
 {% endblock %}
-jQuery(function($){$("#DayField").datepicker()});

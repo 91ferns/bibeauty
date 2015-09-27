@@ -14,6 +14,7 @@ use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\TreatmentAvailabilitySet;
 use AppBundle\Entity\Booking;
+use AppBundle\Entity\RecurringAppointments;
 
 class TreatmentAvailabilityController extends Controller
 {
@@ -23,6 +24,8 @@ class TreatmentAvailabilityController extends Controller
      * @Method("POST")
      */
     public function newAction($id, $slug, $serviceid, Request $request) {
+        echo '<pre>';
+        $recurring = $this->checkGetRecurrence($request->request);
         $business = $this->businessBySlugAndId($slug, $id);
         $date     = $request->request->get('Day',false);
         $time     = $request->request->get('Time',false) . ':00';
@@ -33,7 +36,10 @@ class TreatmentAvailabilityController extends Controller
           $em = $this->getEm();
         $em->persist($service);
         $availability = $this->buildInsertAvailability($service,$recurring,$date,$time);
-
+        $recurring = $this->checkGetRecurrence($request->request);
+        if($recurring){
+          $this->buildInsertRecurrences($recurring, $availability, $date, new \DateTime($time));
+        }
         $booking  = new Booking();
         $booking->setBusiness($business);
         $booking->setService($service);
@@ -41,6 +47,30 @@ class TreatmentAvailabilityController extends Controller
         $em->persist($booking);
         $em->flush();
         return $this->redirectToRoute('admin_service_show_path',["slug"=>$slug,"id"=>$id,"serviceid"=>$serviceid]);
+    }
+
+    protected function checkGetRecurrence($req){
+      if($req->get('Recurring_Monthly',false)){
+        return 11;
+      }
+      if($req->get('Recurring_Weekly',false)){
+        return 51;
+      }
+      return false;
+    }
+
+    protected function buildInsertRecurrences($recurrences, $availability,$startDate,$startTime){
+      $em = $this->getEm();
+      $intervalUnit = ($recurrences == 11) ? ' month' : ' week';
+      for($i=1; $i<=$recurrences; $i++){
+        $date = new \DateTime($startDate);
+        $appt = new RecurringAppointments();
+        $appt->setDate($date->modify($i.$intervalUnit));
+        $appt->setTime($startTime);
+        $appt->setAvailabilityId($availability);
+        $em->persist($appt);
+      }
+      $em->flush();
     }
 
     protected function buildInsertAvailability($service,$recurring,$date,$time)
