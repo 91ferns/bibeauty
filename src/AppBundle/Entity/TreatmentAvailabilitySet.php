@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity()
@@ -49,6 +50,16 @@ class TreatmentAvailabilitySet {
      * @Assert\NotBlank()
      */
      private $recurring = false;
+
+     /**
+      * @ORM\OneToMany(targetEntity="RecurringAppointments", mappedBy="AvailabilityId")
+      */
+      private $recurrences;
+
+     public function __construct(){
+         $this->recurrences = new ArrayCollection();
+     }
+
 
     /**
      * Get id
@@ -173,5 +184,38 @@ class TreatmentAvailabilitySet {
     public function getRecurring()
     {
         return $this->recurring;
+    }
+
+    /**
+     * Add recurrences
+     *
+     * @param \AppBundle\Entity\RecurringAppointments $recurrences
+     * @return TreatmentAvailabilitySet
+     */
+    public function addRecurrence(\AppBundle\Entity\RecurringAppointments $recurrences)
+    {
+        $this->recurrences[] = $recurrences;
+
+        return $this;
+    }
+
+    /**
+     * Remove recurrences
+     *
+     * @param \AppBundle\Entity\RecurringAppointments $recurrences
+     */
+    public function removeRecurrence(\AppBundle\Entity\RecurringAppointments $recurrences)
+    {
+        $this->recurrences->removeElement($recurrences);
+    }
+
+    /**
+     * Get recurrences
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRecurrences()
+    {
+        return $this->recurrences;
     }
 }
