@@ -605,9 +605,9 @@ class Business {
     /**
      * Remove service
      *
-     * @param \AppBundle\Entity\ServiceCategory $serviceCategories
+     * @param \AppBundle\Entity\Service $service
      */
-    public function removeService(\AppBundle\Entity\ServiceCategory $service)
+    public function removeService(\AppBundle\Entity\Service $service)
     {
         $this->services->removeElement($service);
     }
@@ -664,4 +664,16 @@ class Business {
 
         return $array;
     }
+
+    protected $bookings = array();
+
+    public function getBookings() {
+        return $this->bookings;
+    }
+
+    public function addBooking(\AppBundle\Entity\Booking $booking) {
+        $this->bookings[] = $booking;
+        return $this;
+    }
+
 }

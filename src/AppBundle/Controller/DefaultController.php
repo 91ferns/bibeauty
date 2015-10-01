@@ -24,14 +24,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route(“/contact", name=“contact_path")
+     * @Route("/contact", name="about_path")
      */
+     public function aboutAction(Request $request)
+     {
+        return $this->render('default/contact.html.twig', array());
+     }
 
-   public function contactAction(Request $request)
-   {
-       return $this->render('default/contact.html.twig', array(
-           'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-       ));
-   }
+    /**
+     * @Route("/contact", name="contact_path")
+     */
+     public function contactAction(Request $request)
+     {
+        return $this->render('default/contact.html.twig', array());
+     }
 
 }

@@ -45,7 +45,7 @@ class BookingRepository extends EntityRepository
     }
 
 
-    public function filterBookingsByPrice(&$query,$qb, $price1,$price2){
+    public function filterBookingsByPrice(&$query, $qb, $price1,$price2){
       $query->add('where',
           $qb->expr()->between(
               's.currentPrice',

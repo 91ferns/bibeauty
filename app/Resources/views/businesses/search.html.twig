@@ -103,15 +103,16 @@
 
                 </div> <!-- /.row -->
 
-                {% if business.getServiceCategories.count > 0 %}
+                {% if business.getBookings | length > 0 %}
                 <ul class="list-group">
-                  {% for serviceCategory in business.getServiceCategories %}
+                  {% for booking in business.getBookings %}
                   <li class="list-group-item">
                     <h4 class="panel-title clearfix">
-                      <big>{{ serviceCategory.getLabel }}</big>
+                      {{booking.getService.description}}
+                      <big>{{ booking.name }}</big>
                       <a class="btn btn-primary pull-right">
                         From
-                        <strong>${{ serviceCategory.getLowestPrice | number_format(2) }}</strong>
+                        <strong>${# {booking.getService.getLowestPrice | number_format(2) } #}</strong>
                       </a>
                       <span class="save pull-right">
                         Save <blue>20%</blue>

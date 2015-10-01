@@ -96,9 +96,28 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$records = $em->getRepository("AppBundle:Business")->findAll();
+    	$records = $em->getRepository("AppBundle:Booking")->findAll();
+
+        $results = array();
+
+        // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
+
+        foreach($records as $record) {
+            $b = $record->getBusiness();
+            $id = $b->getId();
+
+            if (array_key_exists($id, $results)) {
+
+            } else {
+                $results[$id] = $b;
+            }
+
+            $results[$id]->addBooking($record);
+        }
+
+
         return $this->render('businesses/search.html.twig', array(
-            'results' => $records
+            'results' => $results
         ));
     }
 }
