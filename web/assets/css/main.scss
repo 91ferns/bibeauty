@@ -603,3 +603,14 @@ main section {
     text-transform: none;
   }
 }
+
+.blue-title {
+  color: $brand-primary;
+  text-transform: uppercase;
+  font-size: 33px;
+  margin-bottom: 30px;
+}
+
+.align-right {
+  text-align: right;
+}

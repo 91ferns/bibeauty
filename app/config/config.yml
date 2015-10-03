@@ -103,11 +103,13 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
+    transport: smtp
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+    port:      587
+    encryption: tls
+    # spool:     { type: memory }
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/migrations"

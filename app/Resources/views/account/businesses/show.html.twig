@@ -19,7 +19,7 @@
     <ul class="list-group">
     {% for serviceCategory in business.getServices %}
       <li class="list-group-item">
-        <a href="{{ path('admin_services_categories_path', { slug: business.getSlug, id: business.getId, category: serviceCategory.getSlug })}}">{{ serviceCategory.getLabel }}</a>
+
       </li>
     {% endfor %}
     </ul>

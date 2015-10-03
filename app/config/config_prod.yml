@@ -1,6 +1,7 @@
 imports:
     - { resource: config.yml }
     - { resource: database.php }
+    - { resource: email.php }
 
 twig:
 #    cache: true

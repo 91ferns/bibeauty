@@ -2,5 +2,69 @@
 
 {% block body %}
 
+<section id="contact" class="nav-pad">
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-7">
+
+        <h1 class="login-title blue-title"><strong>Get in Touch</strong></h1>
+
+        <form action="{{ path('contact_path') }}" method="POST">
+
+          {% if message is defined %}
+            <div class="alert alert-success">
+              {{message}}
+            </div>
+          {% endif %}
+
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" class="input-lg form-control" placeholder="Name" name="name">
+              </div>
+            </div> <!-- /.col -->
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" class="input-lg form-control" placeholder="Email Address" name="email">
+              </div>
+            </div> <!-- /.col -->
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" class="input-lg form-control" placeholder="What's up?" name="subject">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea class="form-control input-lg" placeholder="Tell us more" name="description" rows="7"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7">
+              <p>Alternatively, you can call us on +1 310 693 9076 or email <a href="hello@bibeauty.com">hello@bibeauty.com</a></p>
+            </div>
+            <div class="col-md-5 align-right">
+              <input type="submit" value="Submit"
+                class="btn btn-primary btn-lg" />
+            </div>
+
+        </form>
+
+      </div>
+
+    </div> <!-- /.row -->
+
+
+  </div>
+
+</section>
 
 {% endblock %}

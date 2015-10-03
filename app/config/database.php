@@ -17,8 +17,6 @@ if ($db) {
 
 $container->setParameter('redis_dsn', getenv('REDIS_URL'));
 
-echo 'Using DSN ' . getenv('REDIS_URL');
-
 $redis = parse_url(getenv('REDIS_URL'));
 
 if ($redis) {
