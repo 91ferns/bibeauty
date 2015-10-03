@@ -31,8 +31,24 @@ class DefaultController extends Controller
      */
      public function aboutAction(Request $request)
      {
-        return $this->render('default/contact.html.twig', array());
+        return $this->render('default/about.html.twig', array());
      }
+
+    /**
+     * @Route("/privacy", name="privacy_path")
+     */
+    public function privacyAction(Request $request)
+    {
+        return $this->render('default/privacy.html.twig', array());
+    }
+
+    /**
+     * @Route("/terms", name="terms_path")
+     */
+    public function termsAction(Request $request)
+    {
+        return $this->render('default/terms.html.twig', array());
+    }
 
     /**
      * @Route("/contact", name="contact_path")
@@ -41,11 +57,8 @@ class DefaultController extends Controller
     public function contactAction(Request $request)
     {
 
-        $form = $this->getContactForm();
-
         return $this->render('default/contact.html.twig', array(
-            'message' => "Test",
-            'form' => $form->createView()
+            'form' => $this->getContactForm()->createView()
         ));
     }
 
