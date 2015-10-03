@@ -41,8 +41,11 @@ class DefaultController extends Controller
     public function contactAction(Request $request)
     {
 
+        $form = $this->getContactForm();
+
         return $this->render('default/contact.html.twig', array(
-            'message' => "Test"
+            'message' => "Test",
+            'form' => $form->createView()
         ));
     }
 
@@ -52,34 +55,62 @@ class DefaultController extends Controller
      */
     public function doContactAction(Request $request)
     {
-        $name = $request->request->get('name');
-        $email = $request->request->get('email');
-        $subject = $request->request->get('subject');
-        $description = $request->request->get('description');
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject('New Contact on BiBeauty: ' . $subject)
-            ->setFrom('info@bibeauty.com')
-            ->setReplyTo($email)
-            ->setTo('hello@bibeauty.com') //
-            ->setBody(
-                $this->renderView(
-                    'emails/contact.html.twig',
-                    array(
-                        'name' => $name,
-                        'email' => $email,
-                        'subject' => $subject,
-                        'description' => $description,
-                    )
-                ),
-            'text/html'
-            );
+        $form = $this->getContactForm();
+        $form->handleRequest($request);
 
-        $x = $this->get('mailer')->send($message);
+        if ($form->isValid()) {
 
-        return $this->render('default/contact.html.twig', array(
-            'message' => "Thank you for your submission"
-        ));
+            $data = $form->getData();
+
+            $name = $data['name'];
+            $email = $data['email'];
+            $subject = $data['subject'];
+            $description = $data['description'];
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('New Contact on BiBeauty: ' . $subject)
+                ->setFrom('info@bibeauty.com')
+                ->setReplyTo($email)
+                ->setTo('hello@bibeauty.com') //
+                ->setBody(
+                    $this->renderView(
+                        'emails/contact.html.twig',
+                        array(
+                            'name' => $name,
+                            'email' => $email,
+                            'subject' => $subject,
+                            'description' => $description,
+                        )
+                    ),
+                'text/html'
+                );
+
+            $x = $this->get('mailer')->send($message);
+
+            return $this->render('default/contact.html.twig', array(
+                'message' => "Thank you for your submission"
+            ));
+
+        } else {
+            return $this->render('default/contact.html.twig', array(
+                'message' => "There was an error submitting your data",
+                'form' => $form->createView()
+            ));
+        }
+    }
+
+    private function getContactForm() {
+        $defaultData = array('message' => 'Type your message here');
+        $form = $this->createFormBuilder($defaultData)
+            ->add('name', 'text')
+            ->add('email', 'email')
+            ->add('subject', 'text')
+            ->add('description', 'textarea')
+            ->getForm();
+
+        return $form;
+
     }
 
 }
