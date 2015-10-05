@@ -14,10 +14,11 @@ class BookingRepository extends EntityRepository
 {
     public function findByMulti($search){
       $qb    = $this->createQueryBuilder('bk');
-      $query = $qb->select(['bk','b','tas','s'])
+      $query = $qb->select(['bk','b','tas','s','r'])
                   ->leftJoin('AppBundle:Business','b')
                   ->leftJoin('AppBundle:TreatmentAvailabilitySet','tas')
-                  ->leftJoin('AppBundle:Service','s');
+                  ->leftJoin('AppBundle:Service','s')
+                  ->leftJoin('AppBundle:RecurringAppointments','r');
 
       if($this->isAvailabilitySearch($search)){
         $this->filterBookingsByAvailability($query,$qb, $search);
@@ -73,36 +74,54 @@ class BookingRepository extends EntityRepository
     }
 
     public function filterBookingsByLocation(&$query,$location){
-      $query->add('where','tas.time = :location')
+      $query->add('where','a.zip = :location')
             ->setParameter('location',$location);
     }
 
     public function filterBookingsByAvailability(&$query,$qb,$search){
       if($search['day'] !=null){
-        $query->add('where', 'tas.day = :day')
-              ->setParameter('day',$search['day']);
+        $query->add('where', 'tas.date = :day OR r.date = :day2')
+              ->setParameter([
+                'day' => $search['day'],
+                'day2' => $search['day']
+              ]);
       }
       if($this->isTimeRangeSearch($search)){
-        $query->add('where',
-            $qb->expr()->between(
-                'tas.time',
-                ':starttime',
-                ':endtime'
-            )
+        $where = $this->getTimeWhere();
+
+        $query->add('where',$where
         )->setParameters([
           'starttime' => $search['starttime'],
-          'endtime' => $search['endtime']
+          'endtime' => $search['endtime'],
+          'starttime2' => $search['starttime'],
+          'endtime2' => $search['endtime'],
         ]);
       }else if($this->isTimeSearch($search)){
         $time = ($starttime === null) ? $endtime : $starttime;
-        $query->andWhere('tas.time = :time')
-              ->setParameter('time',$time);
+        $query->andWhere('tas.time = :time || r.time = :time2')
+              ->setParameter([
+                'time'=>$time,
+                'time2'=>$time
+                ]);
       }
       $result=$query->getQuery()
                     ->getResult();
       return $result;
     }
-
+    public function getTimeWhere(){
+      $orX = $qbr->expr()->orX();
+      $orX->add($qb->expr()->between(
+          'tas.time',
+          ':starttime',
+          ':endtime'
+      ));
+      $orX->add($qb->expr()->between(
+          'r.time',
+          ':starttime2',
+          ':endtime2'
+      ));
+      return $orX;
+    }
     public function isPriceSearch($search){
       return ($this->has('price1',$search)
               || ($this->has('price2',$search))
@@ -124,17 +143,20 @@ class BookingRepository extends EntityRepository
               || ($this->has('endtime',$search))
               ) ? true : false;
     }
+
     public function isTimeRangeSearch($search){
         return ($this->has('starttime',$search)
                 &&  ($this->has('endtime',$search))
                 ) ? true : false;
     }
+
     public function isAvailabilitySearch($search){
       foreach(['day','starttime','endtime'] as $field){
           if($this->has('day',$field)) return true;
       }
       return false;
     }
+
     public function has($k,$arr)
     {
       return array_key_exists($key, $search) ? true : false;
