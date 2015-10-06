@@ -676,4 +676,14 @@ class Business {
         return $this;
     }
 
+    private $distanceFrom = 0;
+
+    public function setDistanceFrom($distance) {
+        $this->distanceFrom = $distance;
+    }
+
+    public function getDistanceFrom() {
+        return $this->distanceFrom;
+    }
+
 }

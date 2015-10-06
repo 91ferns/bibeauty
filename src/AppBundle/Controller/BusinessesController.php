@@ -96,7 +96,8 @@ class BusinessesController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$repo = $this->getDoctrine()->getManager()->getRepository("AppBundle:Booking");
+        $em = $this->getDoctrine()->getManager();
+    	$repo = $em->getRepository("AppBundle:Booking");
         $services = $em->getRepository("AppBundle:ServiceType");
         $categories = $em->getRepository("AppBundle:ServiceCategory");
 
@@ -110,9 +111,12 @@ class BusinessesController extends Controller
         $results = array();
 
         // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
-
         foreach($records as $record) {
-            $b = $record->getBusiness();
+            $booking = $record[0];
+            $distance = $record['distance'];
+
+            $b = $booking->getBusiness();
+            $b->setDistanceFrom($distance);
             $id = $b->getId();
 
             if (array_key_exists($id, $results)) {
@@ -121,7 +125,7 @@ class BusinessesController extends Controller
                 $results[$id] = $b;
             }
 
-            $results[$id]->addBooking($record);
+            $results[$id]->addBooking($booking);
         }
 
 

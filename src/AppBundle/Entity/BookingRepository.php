@@ -17,9 +17,10 @@ class BookingRepository extends EntityRepository
       $query = $qb
                 ->from('AppBundle:Booking', 'bk')
                 ->leftJoin('bk.business','b')
+                ->leftJoin('b.address', 'ba')
                 ->leftJoin('bk.availability', 'tas')
-                ->leftJoin('bk.service', 's')
-				->leftJoin('bk.recurring_appointments', 'r');
+                ->leftJoin('bk.service', 's');
+				//->leftJoin('bk.recurring_appointments', 'r');
 
       // lat BETWEEN '$min_lat' AND '$max_lat' AND lon BETWEEN '$min_lon' AND '$max_lon'
 
@@ -32,20 +33,19 @@ class BookingRepository extends EntityRepository
       }
 
       if($this->isServiceSearch($search)){
-        $this->filterBookingsByService($query,$search['serviceType']);
+        //$this->filterBookingsByService($query,$search['serviceType']);
       }
 
       if($this->isCategorySearch($search)){
-          $this->filterBookingsByCategory($query,$search['serviceCategory']);
+          //$this->filterBookingsByCategory($query,$search['serviceCategory']);
       }
 
       if($this->isPriceSearch($search)){
-          $this->filterBookingsByPrice($query,$qb,$search['price1'],$search['price2']);
+          //$this->filterBookingsByPrice($query,$qb,$search['price1'],$search['price2']);
       }
 
 
-      $result=$query->getQuery()
-                    ->getResult();
+      $result = $query->getQuery()->getResult();
       return $result;
     }
 
@@ -78,10 +78,14 @@ class BookingRepository extends EntityRepository
     }
 
     public function filterBookingsByLocation(&$query, $latitude, $longitude){
+        $miles = 3959;
+        $km = 6371;
         $query
             ->setParameter('latitude', $latitude)
             ->setParameter('longitude', $longitude)
-            ->addSelect("(6371 * COS(SIN(RADIANS(latitude)) * SIN(RADIANS(b.latitude)) + COS(RADIANS(latitude)) * COS(RADIANS(b.latitude)) * COS(RADIANS(b.longitude) - RADIANS(longitude)))) as distance")
+            ->setParameter('unit', $miles)
+            //
+            ->addSelect("( :unit * ACOS( COS( radians(:latitude) ) * COS( radians( ba.latitude ) ) * COS( radians( ba.longitude ) - radians(:longitude) ) + SIN( radians(ba.latitude) ) * SIN(radians(:latitude)) ) ) as distance")
             ->orderBy('distance', 'asc');
     }
 
@@ -115,7 +119,7 @@ class BookingRepository extends EntityRepository
                     ->getResult();
       return $result;
   }
-  
+
     public function getTimeWhere(){
       $orX = $qbr->expr()->orX();
       $orX->add($qb->expr()->between(

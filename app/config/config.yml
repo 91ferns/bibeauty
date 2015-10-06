@@ -100,6 +100,27 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            string_functions:
+                radians: DoctrineExtensions\Query\Mysql\Radians
+            numeric_functions:
+                acos: DoctrineExtensions\Query\Mysql\Acos
+                asin: DoctrineExtensions\Query\Mysql\Asin
+                atan2: DoctrineExtensions\Query\Mysql\Atan2
+                atan: DoctrineExtensions\Query\Mysql\Atan
+                ceil: DoctrineExtensions\Query\Mysql\Ceil
+                cos: DoctrineExtensions\Query\Mysql\Cos
+                cot: DoctrineExtensions\Query\Mysql\Cot
+                floor: DoctrineExtensions\Query\Mysql\Floor
+                hour: DoctrineExtensions\Query\Mysql\Hour
+                pi: DoctrineExtensions\Query\Mysql\Pi
+                power: DoctrineExtensions\Query\Mysql\Power
+                quarter: DoctrineExtensions\Query\Mysql\Quarter
+                rand: DoctrineExtensions\Query\Mysql\Rand
+                round: DoctrineExtensions\Query\Mysql\Round
+                sin: DoctrineExtensions\Query\Mysql\Sin
+                std: DoctrineExtensions\Query\Mysql\Std
+                tan: DoctrineExtensions\Query\Mysql\Tan
 
 # Swiftmailer Configuration
 swiftmailer:
