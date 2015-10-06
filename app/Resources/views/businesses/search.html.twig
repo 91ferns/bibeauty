@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+<style>ul.treatmentTypes{list-style-type:none;
+   position: absolute;
+    z-index: 99;
+    left: -10px;
+    top: 40px;
+    background-color: whitesmoke;}</style>
 <div class="componentBody">
   <section id="top-map" class="nav-pad">
     <div id="results-map-wrapper"></div>
@@ -37,9 +42,15 @@
 
               <div class="form-group">
                 <label for="">Treatment Type / Category</label>
-                <div class="input-group">
-                  <input type="text" id="TreatmentTypeField" name="treatmenttype" class="form-control" placeholder="Treatment Type" />
+                <div class="input-group TreatmentTypesGroup">
+                  <input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
+                  <ul style="display:none;" class="treatmentTypes">
+                    {% for service in services %}
+                      <li data-id="{{service.id }}">{{service.label}}</i>
+                    {% endfor %}
+                  </ul>
+                  <input type="hidden" name="TreatmentTypeId" />
                 </div>
                 <div class="input-group">
                   <input type="text" id="TreatmentField" name="treatment" class="form-control" placeholder="Treatment" />
@@ -143,3 +154,31 @@
 </div>
 
 {% endblock body %}
+{% block javascripts %}
+<script>
+  jQuery(document).ready(function(){
+    jQuery('.TreatmentTypesGroup > input, .TreatmentTypesGroup>span ').on('click',function(){
+      var $list = jQuery('ul.treatmentTypes');
+      var $grp  = jQuery(this).parent();
+      var isActive = $grp.hasClass('active');
+
+      if(isActive){
+        $list.hide();
+        $grp.removeClass('active');
+      }else{
+        $list.show();
+        $grp.addClass('active');
+      }
+    });
+    jQuery('ul.treatmentTypes li').on('click',function(){
+      jQuery('.TreatmentTypesGroup > input').val(jQuery(this).text());
+      var $list = jQuery('ul.treatmentTypes');
+      var $grp  = jQuery(this).parent();
+      $list.hide();
+      $grp.removeClass('active');
+      jQuery("[name=TreatmentTypeId]").val(jQuery(this).data('id'));
+    })
+
+  });
+</script>
+{% endblock %}

@@ -97,6 +97,8 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
     	$repo = $this->getDoctrine()->getManager()->getRepository("AppBundle:Booking");
+        $services = $em->getRepository("AppBundle:ServiceType");
+        $categories = $em->getRepository("AppBundle:ServiceCategory");
 
         $form = $this->getSearchForm($request);
         $params = $form->getData();
@@ -126,7 +128,9 @@ class BusinessesController extends Controller
         return $this->render('businesses/search.html.twig', array(
             'results' => $results,
             'params' => $params,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'categories' => $categories->findAll(),
+            'services' => $services->findAll()
         ));
     }
 
