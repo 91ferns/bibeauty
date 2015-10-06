@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use AppBundle\Entity\Business;
+use AppBundle\Entity\Address;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -76,28 +77,6 @@ class BusinessesController extends Controller
                  'status' => 'ok',
                  'data' => json_encode($results),
              ), Response::HTTP_OK);
-     }
-
-     private function checkGetPost($req){
-       //All possible search fields in format: postkey=>table_abbrev.field_name
-       $keys= [
-               'day'=>'date',
-               'time'=>'starttime',
-               'location'=>'location',
-               'treatmentType'=>'serviceCategory',
-               'treatment'=>'serviceType',
-               'amount_left'=>'price1',
-               'amount_right'=>'price2'
-       ];
-       //searched fields and values
-       $data=[];
-       //build data array of fields present in post from search and their values
-       foreach($keys as $key=>$field){
-         if($val = $req->get($key,false) ){
-           $data[$field] = $val;
-         }
-       }
-       return $data;
      }
 
 }

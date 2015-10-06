@@ -424,4 +424,17 @@ class Address {
         );
     }
 
+    public static function geocodeZip($zip) {
+        $curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
+        $geocoder = new \Geocoder\Provider\GoogleMaps($curl);
+
+        try {
+            $result = $geocoder->limit(1)->geocode($zip)->first();
+            return $result;
+
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
 }

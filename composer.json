@@ -34,7 +34,8 @@
         "doctrine/doctrine-fixtures-bundle": "^2.2",
         "predis/predis": "^1.0",
         "doctrine/cache": "^1.4",
-        "snc/redis-bundle": "^1.1"
+        "snc/redis-bundle": "^1.1",
+        "beberlei/DoctrineExtensions": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

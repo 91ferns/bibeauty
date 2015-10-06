@@ -13,18 +13,21 @@ use Doctrine\ORM\EntityRepository;
 class BookingRepository extends EntityRepository
 {
     public function findByMulti($search){
-      $qb    = $this->createQueryBuilder('bk');
-      $query = $qb->select(['bk','b','tas','s'])
-                  ->leftJoin('AppBundle:Business','b')
-                  ->leftJoin('AppBundle:TreatmentAvailabilitySet','tas')
-                  ->leftJoin('AppBundle:Service','s');
+      $qb    = $this->createQueryBuilder('Booking');
+      $query = $qb
+                ->from('AppBundle:Booking', 'bk')
+                ->leftJoin('bk.business','b')
+                ->leftJoin('bk.availability', 'tas')
+                ->leftJoin('bk.service', 's');
+
+      // lat BETWEEN '$min_lat' AND '$max_lat' AND lon BETWEEN '$min_lon' AND '$max_lon'
 
       if($this->isAvailabilitySearch($search)){
         $this->filterBookingsByAvailability($query,$qb, $search);
       }
 
-      if($this->isLocationSearch()){
-        $this->filterBookingsByLocation($query,$search['location']);
+      if($this->isLocationSearch($search)){
+        $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
       }
 
       if($this->isServiceSearch($search)){
@@ -38,6 +41,7 @@ class BookingRepository extends EntityRepository
       if($this->isPriceSearch($search)){
           $this->filterBookingsByPrice($query,$qb,$search['price1'],$search['price2']);
       }
+
 
       $result=$query->getQuery()
                     ->getResult();
@@ -72,9 +76,12 @@ class BookingRepository extends EntityRepository
             ->setParameter('serviceType',$serviceType);
     }
 
-    public function filterBookingsByLocation(&$query,$location){
-      $query->add('where','tas.time = :location')
-            ->setParameter('location',$location);
+    public function filterBookingsByLocation(&$query, $latitude, $longitude){
+        $query
+            ->setParameter('latitude', $latitude)
+            ->setParameter('longitude', $longitude)
+            ->addSelect("(6371 * COS(SIN(RADIANS(latitude)) * SIN(RADIANS(b.latitude)) + COS(RADIANS(latitude)) * COS(RADIANS(b.latitude)) * COS(RADIANS(b.longitude) - RADIANS(longitude)))) as distance")
+            ->orderBy('distance', 'asc');
     }
 
     public function filterBookingsByAvailability(&$query,$qb,$search){
@@ -135,9 +142,45 @@ class BookingRepository extends EntityRepository
       }
       return false;
     }
-    public function has($k,$arr)
+    public function has($key,$search)
     {
-      return array_key_exists($key, $search) ? true : false;
+        if (is_array($search))
+            return array_key_exists($key, $search) ? true : false;
+        else
+            return false;
+    }
+
+    public function strongParams($req) {
+        //All possible search fields in format: postkey=>table_abbrev.field_name
+        $keys= [
+                'day'=>'date',
+                'time'=>'starttime',
+                'location'=>'location',
+                'treatmentType'=>'serviceCategory',
+                'treatment'=>'serviceType',
+                'amount_left'=>'price1',
+                'amount_right'=>'price2'
+        ];
+        //searched fields and values
+        $data=[];
+        //build data array of fields present in post from search and their values
+        foreach($keys as $key=>$field){
+
+          if(array_key_exists($key, $req) && $val = $req[$key] ){
+              if ($field === 'location') {
+                 $geo = Address::geocodeZip($val);
+                 if ($geo) {
+                     $data['latitude'] = $geo->getLatitude();
+                     $data['longitude'] = $geo->getLongitude();
+                     $data['location'] = array($data['latitude'], $data['longitude']);
+                 }
+             } else {
+                $data[$field] = $val;
+            }
+          }
+        }
+
+        return $data;
     }
   //if()andWhere('r.winner IN (:ids)')  ->setParameter('ids', $ids);
 }

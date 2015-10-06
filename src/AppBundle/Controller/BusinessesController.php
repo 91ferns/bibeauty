@@ -9,6 +9,7 @@ use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Business;
+use AppBundle\Entity\Address;
 use AppBundle\Entity\Review;
 
 use AppBundle\Entity\Booking;
@@ -95,8 +96,14 @@ class BusinessesController extends Controller
      */
     public function searchAction(Request $request)
     {
-    	$em = $this->getDoctrine()->getManager();
-    	$records = $em->getRepository("AppBundle:Booking")->findAll();
+    	$repo = $this->getDoctrine()->getManager()->getRepository("AppBundle:Booking");
+
+        $form = $this->getSearchForm($request);
+        $params = $form->getData();
+
+
+        $data = $repo->strongParams($params);
+    	$records = $repo->findByMulti($data);
 
         $results = array();
 
@@ -117,7 +124,37 @@ class BusinessesController extends Controller
 
 
         return $this->render('businesses/search.html.twig', array(
-            'results' => $results
+            'results' => $results,
+            'params' => $params,
+            'form' => $form->createView()
         ));
     }
+
+    protected function getSearchForm($request) {
+        $defaultData = array(
+            'day' => new \DateTime(),
+            'time' => null,
+            'location' => null,
+            'treatmenttype' => '',
+            'treatment' => '',
+            'min' => 0,
+            'max' => 500
+        );
+
+        $form = $this->createFormBuilder($defaultData)
+          ->setMethod('GET')
+          ->add('day', 'date')
+          ->add('time', 'time')
+          ->add('location', 'integer')
+          ->add('treatmenttype', 'text')
+          ->add('treatment', 'text')
+          ->add('min', 'integer')
+          ->add('max', 'integer')
+          ->getForm();
+
+        $form->handleRequest($request);
+        return $form;
+
+    }
+
 }

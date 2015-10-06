@@ -43,7 +43,7 @@ class Booking {
      * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet")
      * @ORM\JoinColumn(name="availability_id", referencedColumnName="id")
      */
-    protected $availability_id;
+    protected $availability;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -91,7 +91,7 @@ class Booking {
         }
         $this->updated = new \DateTime();
     }
-
+    
     /**
      * @ORM\PreUpdate
      */
@@ -237,26 +237,26 @@ class Booking {
     }
 
     /**
-     * Set availability_id
+     * Set availability
      *
-     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availabilityId
+     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availability
      * @return Booking
      */
-    public function setAvailabilityId(\AppBundle\Entity\TreatmentAvailabilitySet $availabilityId = null)
+    public function setAvailability(\AppBundle\Entity\TreatmentAvailabilitySet $availability = null)
     {
-        $this->availability_id = $availabilityId;
+        $this->availability = $availability;
 
         return $this;
     }
 
     /**
-     * Get availability_id
+     * Get availability
      *
      * @return \AppBundle\Entity\TreatmentAvailabilitySet
      */
-    public function getAvailabilityId()
+    public function getAvailability()
     {
-        return $this->availability_id;
+        return $this->availability;
     }
 
     /**

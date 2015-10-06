@@ -12,15 +12,15 @@
 
         <div class="col-md-4">
           <div class="search-form-sidebar">
-            <form action="{{ path('listings_search_path') }}" method="get">
+            {{form_start(form)}}
               <div class="form-group">
                 <label for="">Availability</label>
                 <div class="input-group">
-                  <input type="text" id="DayField" name="Day" class="form-control" placeholder="Day" />
+                  <input type="text" id="DayField" name="day" class="form-control" placeholder="Day" value="{{params['day'] | date("m/d/Y") }}" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
                 </div>
                 <div class="input-group">
-                  <input type="text" id="TimeField" name="Time" class="form-control" placeholder="Time" />
+                  <input type="text" id="TimeField" name="time" class="form-control" placeholder="Time" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
                 </div>
               </div> <!-- /.form-group -->
@@ -28,8 +28,9 @@
               <hr class="fullwidth">
 
               <div class="form-group">
-                <label for="">Location</label>
-                <input type="text" id="LocationField" name="Location" class="form-control" placeholder="Enter Zip Code" />
+                {{ form_label(form.location)}}
+                {{ form_widget(form.location, { placeholder: 'Enter Zip code', id: 'LocationField' })}}
+                {{ form_errors(form.location) }}
               </div> <!-- /.form-group -->
 
               <hr class="fullwidth">
@@ -37,11 +38,11 @@
               <div class="form-group">
                 <label for="">Treatment Type / Category</label>
                 <div class="input-group">
-                  <input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
+                  <input type="text" id="TreatmentTypeField" name="treatmenttype" class="form-control" placeholder="Treatment Type" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
                 </div>
                 <div class="input-group">
-                  <input type="text" id="TreatmentField" name="Treatment" class="form-control" placeholder="Treatment" />
+                  <input type="text" id="TreatmentField" name="treatment" class="form-control" placeholder="Treatment" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
                 </div>
               </div> <!-- /.form-group -->
@@ -51,8 +52,9 @@
               <div class="form-group">
                 <label for="">Price Range</label>
                 <div class="range">
-      	           <input type="text" id="amount_left" readOnly styles="" />
-                   <input type="text" id="amount_right" readOnly styles="" />
+
+      	           <input type="text" id="amount_left" name="min" readonly styles="" value="{{params['min']}}" />
+                   <input type="text" id="amount_right" name="max" readonly styles="" value="{{params['max']}}" />
                    <div id="slider-range"></div>
                 </div>
                 <!--input type="range" id="weight" min="10" value="10" max="2000" step="100"-->
@@ -67,8 +69,9 @@
               <p class="text-muted">Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.</p>
 
               <a class="btn btn-lg btn-primary" href="#">Notify</a>
+              {{ form_widget(form._token) }}
 
-            </form>
+            {{ form_end(form, {'render_rest': false}) }}
           </div> <!-- /.search-form-sidebar -->
 
         </div> <!-- /.col-md-4 -->
