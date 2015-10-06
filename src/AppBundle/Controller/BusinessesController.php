@@ -96,8 +96,15 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$records = $em->getRepository("AppBundle:Booking")->findAll();
-
+    	//$records = $em->getRepository("AppBundle:Booking")->findAll();
+      $params =$request->query->all();
+      if(empty($params)){
+        $records = $em->getRepository("AppBundle:Booking")->findAll();
+      }else{
+        $records = $em->getRepository("AppBundle:Booking")->findByMulti($params);
+      }
+        $services = $em->getRepository("AppBundle:ServiceType");
+        $categories = $em->getRepository("AppBundle:ServiceCategory");
         $results = array();
 
         // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
@@ -117,7 +124,9 @@ class BusinessesController extends Controller
 
 
         return $this->render('businesses/search.html.twig', array(
-            'results' => $results
+            'results' => $results,
+            'categories' => $categories->findAll(),
+            'services' => $services->findAll(),
         ));
     }
 }

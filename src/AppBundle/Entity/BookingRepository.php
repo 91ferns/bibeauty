@@ -13,18 +13,19 @@ use Doctrine\ORM\EntityRepository;
 class BookingRepository extends EntityRepository
 {
     public function findByMulti($search){
+      if(empty($search)){return false;}
       $qb    = $this->createQueryBuilder('bk');
       $query = $qb->select(['bk','b','tas','s','r'])
                   ->leftJoin('AppBundle:Business','b')
-                  ->leftJoin('AppBundle:TreatmentAvailabilitySet','tas')
                   ->leftJoin('AppBundle:Service','s')
+                  ->leftJoin('AppBundle:TreatmentAvailabilitySet','tas')
                   ->leftJoin('AppBundle:RecurringAppointments','r');
 
       if($this->isAvailabilitySearch($search)){
         $this->filterBookingsByAvailability($query,$qb, $search);
       }
 
-      if($this->isLocationSearch()){
+      if($this->isLocationSearch($search)){
         $this->filterBookingsByLocation($query,$search['location']);
       }
 
@@ -41,6 +42,7 @@ class BookingRepository extends EntityRepository
       }
 
       $result=$query->getQuery()
+//               var_dump($query->getQuery()->getSql());
                     ->getResult();
       return $result;
     }
@@ -152,14 +154,14 @@ class BookingRepository extends EntityRepository
 
     public function isAvailabilitySearch($search){
       foreach(['day','starttime','endtime'] as $field){
-          if($this->has('day',$field)) return true;
+          if($this->has($field,$search)) return true;
       }
       return false;
     }
 
     public function has($k,$arr)
     {
-      return array_key_exists($key, $search) ? true : false;
+      return array_key_exists($k, $arr) ? true : false;
     }
   //if()andWhere('r.winner IN (:ids)')  ->setParameter('ids', $ids);
 }
