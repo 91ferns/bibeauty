@@ -30,6 +30,13 @@ class Service {
     /**
      * @Assert\NotBlank()
      * @Assert\Length(min = 3)
+     * @ORM\Column(type="string", length=255, options={"default":"N/A"}))
+     */
+    protected $label;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 3)
      * @ORM\Column(type="string", length=255)
      */
     protected $description;
@@ -117,10 +124,11 @@ class Service {
 
     protected function generateSlug() {
       /** temorary...todo fix for label **/
-      return 'ss-test-ss';
         $slugify = new Slugify();
         return $slugify->slugify($this->getLabel()); // hello-world
     }
+
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -167,6 +175,29 @@ class Service {
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return Service
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**
@@ -433,7 +464,7 @@ class Service {
     /**
      * Get therapist
      *
-     * @return \AppBundle\Entity\Therapist 
+     * @return \AppBundle\Entity\Therapist
      */
     public function getTherapist()
     {
