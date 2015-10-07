@@ -22,7 +22,7 @@ class ServiceType {
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ServiceCategory")
+     * @ORM\ManyToOne(targetEntity="ServiceCategory", inversedBy="serviceTypes")
      * @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
      */
     protected $serviceCategory;
@@ -206,6 +206,6 @@ class ServiceType {
     }
 
     public function getCategoryName() {
-        return $this->getServiceCategory() ? $this->getServiceCategory()->getLabel() : null;         
+        return $this->getServiceCategory() ? $this->getServiceCategory()->getLabel() : null;
     }
 }

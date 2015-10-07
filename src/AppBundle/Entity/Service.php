@@ -23,18 +23,6 @@ class Service {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $slug;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min = 3)
-     * @ORM\Column(type="string", length=255, options={"default":"N/A"}))
-     */
-    protected $label;
-
-    /**
      * @Assert\NotBlank()
      * @Assert\Length(min = 3)
      * @ORM\Column(type="string", length=255)
@@ -56,8 +44,11 @@ class Service {
      * @Assert\GreaterThanOrEqual(
      *     value = 0
      * )
+     * @Assert\LessThan(
+     *     value = 60
+     * )
      */
-    protected $minutes;
+    protected $minutes = 0;
 
     /**
      * @ORM\Column(type="float", length=8)
@@ -89,13 +80,13 @@ class Service {
     protected $serviceType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Business")
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="services")
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      */
     protected $business;
 
     /**
-     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="ServiceId")
+     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="service")
      */
     protected $treatmentAvailabilitySets;
 
@@ -119,16 +110,7 @@ class Service {
             $this->createdAt = new \DateTime();
         }
         $this->updated = new \DateTime();
-        $this->setSlug($this->generateSlug());
     }
-
-    protected function generateSlug() {
-      /** temorary...todo fix for label **/
-        $slugify = new Slugify();
-        return $slugify->slugify($this->getLabel()); // hello-world
-    }
-
-
 
     /**
      * @ORM\Column(type="datetime")
@@ -175,29 +157,6 @@ class Service {
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set label
-     *
-     * @param string $label
-     * @return Service
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
     }
 
     /**
@@ -347,29 +306,6 @@ class Service {
     }
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Service
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
      * Set business
      *
      * @param \AppBundle\Entity\Business $business
@@ -468,6 +404,13 @@ class Service {
      */
     public function getTherapist()
     {
+        if (!$this->therapist) {
+            return 'None';
+        }
         return $this->therapist;
+    }
+
+    public function getLabel() {
+        return $this->getServiceType()->getLabel();
     }
 }

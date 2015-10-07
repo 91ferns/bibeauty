@@ -49,7 +49,7 @@ class Booking {
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user_id;
+    protected $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -91,7 +91,7 @@ class Booking {
         }
         $this->updated = new \DateTime();
     }
-    
+
     /**
      * @ORM\PreUpdate
      */
@@ -260,26 +260,33 @@ class Booking {
     }
 
     /**
-     * Set user_id
+     * Set user
      *
-     * @param \AppBundle\Entity\User $userId
+     * @param \AppBundle\Entity\User $user
      * @return Booking
      */
-    public function setUserId(\AppBundle\Entity\User $userId = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
-        $this->user_id = $userId;
+
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get user_id
+     * Get user
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->user_id;
+
+        if ($this->user) {
+            return $this->user;
+        } else {
+            return 'None';
+        }
+    ;
     }
 
     /**

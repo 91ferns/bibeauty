@@ -134,14 +134,14 @@
                   {% for booking in business.getBookings %}
                   <li class="list-group-item">
                     <h4 class="panel-title clearfix">
-                      {{booking.getService.description}}
+                      {{booking.getService.getLabel}}
                       <big>{{ booking.name }}</big>
                       <a class="btn btn-primary pull-right">
                         From
-                        <strong>${# {booking.getService.getLowestPrice | number_format(2) } #}</strong>
+                        <strong>${{ booking.getService.getCurrentPrice | number_format(2) }}</strong>
                       </a>
                       <span class="save pull-right">
-                        Save <blue>20%</blue>
+                        Save <blue>{{ booking.getService.getPercentageSaved }}%</blue>
                       </span>
                     </h4>
                   </li> <!-- .list-item-group -->

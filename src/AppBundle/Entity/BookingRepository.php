@@ -25,11 +25,11 @@ class BookingRepository extends EntityRepository
       // lat BETWEEN '$min_lat' AND '$max_lat' AND lon BETWEEN '$min_lon' AND '$max_lon'
 
       if($this->isAvailabilitySearch($search)){
-        $this->filterBookingsByAvailability($query,$qb, $search);
+        //$this->filterBookingsByAvailability($query,$qb, $search);
       }
 
       if($this->isLocationSearch($search)){
-        $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
+        //$this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
       }
 
       if($this->isServiceSearch($search)){

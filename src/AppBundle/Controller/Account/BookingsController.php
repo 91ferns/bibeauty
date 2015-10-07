@@ -41,13 +41,13 @@ class BookingsController extends Controller
     }
 
     /**
-     * @Route("/account/bookings/show/{id}/", name="admin_show_booking_path")
+     * @Route("/account/bookings/show/{id}/{slug}/{bookingId}/", name="admin_show_booking_path")
      * @Method("GET")
      */
-    public function showAction($id, Request $request)
+    public function showAction($id, $slug, $bookingId, Request $request)
     {
         $booking = new Booking();
-        $booking->find($id);
+        $booking->find($bookingId);
 
         // replace this example code with whatever you need
         return $this->render('account/bookings/show.html.twig', array(
@@ -60,24 +60,26 @@ class BookingsController extends Controller
 
 
     /**
-     * @Route("/account/bookings/new", name="admin_new_booking_path")
+     * @Route("/account/bookings/{id}/{slug}/new", name="admin_new_booking_path")
      * @Method({"GET"})
      */
-    public function createAction() {
+    public function createAction($id, $slug, Request $request) {
        $booking = new Booking();
 
        $form = $this->createForm(new BookingType(), $booking);
+       $business = $this->businessBySlugAndId($slug, $id);
 
        return $this->render(
           'account/bookings/new.html.twig',
           array(
-             'form' => $form->createView()
+             'form' => $form->createView(),
+             'business' => $business,
           )
        );
     }
 
     /**
-     * @Route("/account/bookings/new")
+     * @Route("/account/bookings/{id}/{slug}/new")
      * @Method("POST")
      */
     public function createCheckAction(Request $request) {
