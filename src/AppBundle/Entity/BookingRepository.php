@@ -22,8 +22,6 @@ class BookingRepository extends EntityRepository
                 ->leftJoin('bk.service', 's');
 				//->leftJoin('bk.recurring_appointments', 'r');
 
-      // lat BETWEEN '$min_lat' AND '$max_lat' AND lon BETWEEN '$min_lon' AND '$max_lon'
-
       if($this->isAvailabilitySearch($search)){
         //$this->filterBookingsByAvailability($query,$qb, $search);
       }

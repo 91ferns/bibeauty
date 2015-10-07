@@ -12,7 +12,7 @@
       <thread>
         <tr>
           <th>ID</th>
-          <th><a href="#" id="check-all-box">All</a></th>
+          <!--<th><a href="#" id="check-all-box">All</a></th>-->
           <th>Client</th>
           <th>Services</th>
           <th>Category</th>
@@ -51,14 +51,14 @@
           <td >
               {{ booking.getId }}
           </td>
-          <td >
+          <!--<td >
               <input type="checkbox" data-id="{{booking.getId}}">
-          </td>
+          </td>-->
           <td >
               {{ booking.getUser }}
           </td>
           <td >
-              {{ serviceType.getLabel }}
+              {{ booking.getService.getLabel }}
           </td>
           <td >
               {{ category.getLabel }}

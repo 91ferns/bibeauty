@@ -251,6 +251,13 @@ class Service {
         return $this->currentPrice;
     }
 
+    public function getPercentageSaved() {
+        $divided = ($this->getOriginalPrice() - $this->getCurrentPrice()) / $this->getOriginalPrice();
+        $divided = $divided * 100;
+
+        return number_format($divided, 0);
+    }
+
     /**
      * Set createdAt
      *
