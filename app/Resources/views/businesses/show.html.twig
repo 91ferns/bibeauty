@@ -21,37 +21,37 @@
 
         <div class="business-services">
           <h4>Services</h4>
-          {% if business.getServiceCategories.count > 0 %}
+          {% if business.hasServiceCategories %}
           <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
 
             {% for serviceCategory in business.getServiceCategories %}
             <div class="panel panel-default">
               <div class="panel-heading" role="tab"
-                id="service-{{ serviceCategory.getSlug }}">
+                id="service-{{ serviceCategory.slug }}">
                 <h4 class="panel-title">
                   <a role="button"
                     data-toggle="collapse"
-                    aria-controls="service-content-{{ serviceCategory.getSlug }}"
+                    aria-controls="service-content-{{ serviceCategory.slug }}"
                     data-parent="#service-accordion"
-                    href="#service-content-{{ serviceCategory.getSlug }}"
+                    href="#service-content-{{ serviceCategory.slug }}"
                     aria-expanded="true">
                       <img src="{{ asset('assets/images/discount-tag.png')}}">
-                      <big>{{ serviceCategory.getLabel }}</big>
-                      {% if serviceCategory.getServices.count > 1 %}
-                      <small>See all {{ serviceCategory.getServices.count }} offers <i class="fa fa-chevron-down"></i></small>
+                      <big>{{ serviceCategory.label }}</big>
+                      {% if serviceCategory.treatments | length > 0 %}
+                      <small>See all {{ serviceCategory.treatments | length }} offers <i class="fa fa-chevron-down"></i></small>
                       {% endif %}
                       <span class="pull-right">
                         from
-                        <strong>${{ serviceCategory.getLowestPrice | number_format(2) }}</strong>
+                        <strong>${{ serviceCategory.lowestPrice | number_format(2) }}</strong>
                       </strong>
                   </a>
                 </h4>
               </div>
-              <div id="service-content-{{ serviceCategory.getSlug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ serviceCategory.getSlug }}">
+              <div id="service-content-{{ serviceCategory.slug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ serviceCategory.slug }}">
                 <div class="panel-body">
                   {# This is where the individual services go, as their own accordions #}
                   <ul class="list-group">
-                  {% for service in serviceCategory.getServices %}
+                  {% for service in serviceCategory.treatments %}
                     <li class="list-group-item clearfix">
                       <span class="service-name">
                         {{ service.getLabel }}

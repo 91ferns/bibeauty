@@ -31,7 +31,7 @@ class BookingsController extends Controller
         $serviceType = $booking->getServiceType();*/
         /*foreach($bookings as $booking){
 
-          var_dump( $booking->getAvailabilityId()->getTime());
+          var_dump( $booking->getAvailability()->getTime());
         }
         exit;*/
         return $this->render('account/bookings/index.html.twig', array(

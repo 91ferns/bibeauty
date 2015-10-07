@@ -686,4 +686,55 @@ class Business {
         return $this->distanceFrom;
     }
 
+
+    private $serviceCategories = array();// Lazy loaded
+
+    public function getServiceCategories() {
+        if (count($this->serviceCategories) > 0) {
+            return $this->serviceCategories;
+        }
+
+        return $this->serviceCategories = $this->loadServiceCategories();
+        // Funky little biznis here
+    }
+
+    public function hasServiceCategories() {
+        $this->getServiceCategories(); // Make sure it has been loaded
+        return count($this->serviceCategories) > 0;
+    }
+
+    protected function loadServiceCategories() {
+        $services = $this->getServices();
+
+        $categories = array();
+
+        foreach($services as $service) {
+            $category = $service->getServiceType();
+            // Parent category name
+            //getCategoryName
+            $id = $category->getCategoryName();
+
+            if (!array_key_exists($id, $categories)) {
+                $slugify = new Slugify();
+
+                $std = new \stdClass();
+                $std->label = $id;
+                $std->slug = $slugify->slugify($id);
+                $std->treatments = array();
+                $std->lowestPrice = false;
+
+                $categories[$id] = $std;
+            }
+
+            $categories[$id]->treatments[] = $service;
+            if ($std->lowestPrice === false || $std->lowestPrice > $service->getCurrentPrice()) {
+                $std->lowestPrice = $service->getCurrentPrice();
+            }
+
+        }
+
+        return $categories;
+
+    }
+
 }

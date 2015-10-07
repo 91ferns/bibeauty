@@ -17,16 +17,6 @@ use AppBundle\Form\BookingType;
 
 class BusinessesController extends Controller
 {
-    /**
-     * @Route("/businesses", name="listings_path")
-     * @Method({"GET"})
-     */
-    public function indexAction(Request $request)
-    {
-        return $this->render('businesses/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ));
-    }
 
     /**
      * @Route("/businesses/{id}/{slug}", name="business_path")
