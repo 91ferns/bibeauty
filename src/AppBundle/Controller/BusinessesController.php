@@ -105,37 +105,50 @@ class BusinessesController extends Controller
         $params = $form->getData();
 
 
-        $data = $repo->strongParams($params);
-    	$records = $repo->findByMulti($data);
+         $data = $repo->strongParams($params);
+    	   $records = $repo->findByMulti($data);
 
         $results = array();
+        if($results){
+          // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
+          foreach($records as $record) {
+              $booking = $record[0];
+              $distance = $record['distance'];
 
-        // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
-        foreach($records as $record) {
-            $booking = $record[0];
-            $distance = $record['distance'];
+              $b = $booking->getBusiness();
+              $b->setDistanceFrom($distance);
+              $id = $b->getId();
 
-            $b = $booking->getBusiness();
-            $b->setDistanceFrom($distance);
-            $id = $b->getId();
+              if (array_key_exists($id, $results)) {
 
-            if (array_key_exists($id, $results)) {
+              } else {
+                  $results[$id] = $b;
+              }
 
-            } else {
-                $results[$id] = $b;
-            }
+              $results[$id]->addBooking($booking);
+          }
 
-            $results[$id]->addBooking($booking);
         }
-
-
         return $this->render('businesses/search.html.twig', array(
             'results' => $results,
             'params' => $params,
             'form' => $form->createView(),
             'categories' => $categories->findAll(),
-            'services' => $services->findAll()
+            'services' => $this->getServicesByCategory($services->findAll())//$services->findAll()
         ));
+    }
+    protected function getServicesByCategory($services)
+    {
+      $list = [];
+      foreach($services as $service){
+        $cat = $service->getserviceCategory();
+        $cat = $cat->getLabel();
+        if(!array_key_exists($cat,$list)){
+          $list[$cat] = [];
+        }
+        $list[$cat][]= $service;
+      }
+      return $list;
     }
 
     protected function getSearchForm($request) {

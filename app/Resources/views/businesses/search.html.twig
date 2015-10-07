@@ -6,7 +6,13 @@
     z-index: 99;
     left: -10px;
     top: 40px;
-    background-color: whitesmoke;}</style>
+    background-color: whitesmoke;}
+    .TreatmentTypesGroup .select2-container--classic .select2-selection--single{    position: relative;z-index: 2;float: left;  width: 100%; margin-bottom: 0;height: 34px;
+    padding: 6px 12;width:354px;border-radius:0;    border: 1px solid #ccc;}
+    .TreatmentTypesGroup .select2-container--classic .select2-selection--single .select2-selection__arrow{top:-1px; width:41px;    height: 34px;}
+    .TreatmentTypesGroup .select2-container--classic .select2-selection--single .select2-selection__arrow .input-group-addon{height:34px;}
+    .select2-container--classic.select2-container--open .select2-dropdown {width:354px!important;}
+    </style>
 <div class="componentBody">
   <section id="top-map" class="nav-pad">
     <div id="results-map-wrapper"></div>
@@ -43,12 +49,18 @@
               <div class="form-group">
                 <label for="">Treatment Type / Category</label>
                 <div class="input-group TreatmentTypesGroup">
-                  <input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
-                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
-                  <ul style="display:none;" class="treatmentTypes">
-                    {% for service in services %}
-                      <li data-id="{{service.id }}">{{service.label}}</i>
+                  <!--<input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
+                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>-->
+                  <select  class="treatmentTypes"><!--style="display:none;"-->
+                    {% for category,data in services %}
+                    <option style="color: #999;">Treatments</option>
+                      <optgroup label="{{category}}">
+                        {% for service in data %}
+                          <option value="{{service.id }}">{{service.label}}</i>
+                        {% endfor %}
+                      </optgroup>
                     {% endfor %}
+                  </select>
                   </ul>
                   <input type="hidden" name="TreatmentTypeId" />
                 </div>
@@ -157,8 +169,8 @@
 {% block javascripts %}
 <script>
   jQuery(document).ready(function(){
-    jQuery('.TreatmentTypesGroup > input, .TreatmentTypesGroup>span ').on('click',function(){
-      var $list = jQuery('ul.treatmentTypes');
+  /*  jQuery('.TreatmentTypesGroup > input, .TreatmentTypesGroup>span ').on('click',function(){
+      var $list = jQuery('.treatmentTypes');
       var $grp  = jQuery(this).parent();
       var isActive = $grp.hasClass('active');
 
@@ -170,15 +182,24 @@
         $grp.addClass('active');
       }
     });
-    jQuery('ul.treatmentTypes li').on('click',function(){
+    jQuery('.treatmentTypes option').on('click',function(){
       jQuery('.TreatmentTypesGroup > input').val(jQuery(this).text());
       var $list = jQuery('ul.treatmentTypes');
       var $grp  = jQuery(this).parent();
       $list.hide();
       $grp.removeClass('active');
       jQuery("[name=TreatmentTypeId]").val(jQuery(this).data('id'));
-    })
+    })*/
+    $(".treatmentTypes").select2({
+      placeholder: "Treatments",
+      //allowClear: true,
+       theme: "classic"
+    });
+    $('b[role="presentation"]').hide();
+    $('.select2-selection__arrow').append('<span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>');
 
   });
 </script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 {% endblock %}
