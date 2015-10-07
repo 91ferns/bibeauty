@@ -35,9 +35,9 @@ class TreatmentAvailabilitySet {
 
    /**
     * @ORM\ManyToOne(targetEntity="Service", inversedBy="treatmentAvailabilitySets")
-    * @ORM\JoinColumn(name="serviceId", referencedColumnName="id")
+    * @ORM\JoinColumn(name="service_id", referencedColumnName="id")
     */
-    private $serviceId;
+    private $service;
 
     /**
      * @ORM\Column(type="boolean")
@@ -143,12 +143,12 @@ class TreatmentAvailabilitySet {
     /**
      * Set service_id
      *
-     * @param \AppBundle\Entity\Service $serviceId
+     * @param \AppBundle\Entity\Service $service
      * @return TreatmentAvailabilitySet
      */
-    public function setServiceId(\AppBundle\Entity\Service $serviceId = null)
+    public function setService(\AppBundle\Entity\Service $service = null)
     {
-        $this->serviceId = $serviceId;
+        $this->service = $service;
 
         return $this;
     }
@@ -158,9 +158,9 @@ class TreatmentAvailabilitySet {
      *
      * @return \AppBundle\Entity\Service
      */
-    public function getServiceId()
+    public function getService()
     {
-        return $this->serviceId;
+        return $this->service;
     }
 
     /**

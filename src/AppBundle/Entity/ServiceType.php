@@ -22,7 +22,7 @@ class ServiceType {
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ServiceCategory")
+     * @ORM\ManyToOne(targetEntity="ServiceCategory", inversedBy="serviceTypes")
      * @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
      */
     protected $serviceCategory;
@@ -160,9 +160,9 @@ class ServiceType {
      * @param \AppBundle\Entity\Service $serviceCategories
      * @return ServiceType
      */
-    public function addServiceCategory(\AppBundle\Entity\Service $serviceCategories)
+    public function addServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory)
     {
-        $this->serviceCategories[] = $serviceCategories;
+        $this->serviceCategories[] = $serviceCategory;
 
         return $this;
     }
@@ -172,9 +172,9 @@ class ServiceType {
      *
      * @param \AppBundle\Entity\Service $serviceCategories
      */
-    public function removeServiceCategory(\AppBundle\Entity\Service $serviceCategories)
+    public function removeServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory)
     {
-        $this->serviceCategories->removeElement($serviceCategories);
+        $this->serviceCategories->removeElement($serviceCategory);
     }
 
     /**
@@ -206,6 +206,35 @@ class ServiceType {
     }
 
     public function getCategoryName() {
-        return $this->getServiceCategory() ? $this->getServiceCategory()->getLabel() : null;         
+        return $this->getServiceCategory() ? $this->getServiceCategory()->getLabel() : null;
     }
+
+    private $services = array(); // Temporary
+
+    public function hasServices() {
+        return count($this->services) > 0;
+    }
+
+    public function addService(\AppBundle\Entity\Service $service) {
+        $this->services[] = $service;
+    }
+
+    public function getServices() {
+        return $this->services;
+    }
+
+    public function getLowestPrice() {
+        $services = $this->getServices();
+        $lowest = false;
+
+        foreach($services as $service) {
+            $price = $service->getCurrentPrice();
+            if ($lowest === false || $price < $lowest) {
+                $lowst = $price;
+            }
+        }
+
+        return $lowest;
+    }
+
 }

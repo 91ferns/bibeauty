@@ -34,9 +34,10 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="add-availability" tabindex="-1" role="dialog" aria-labelledby="add-availability-label">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      {#{ form_start(form) }#}
+    {#{ form_start(form) }#}
+      <form action="{{ path('admin_service_availability_new_path',{slug:slug,id:id,serviceid:service.getId}) }}" method="post">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="add-service-category-label">Add Availability</h4>
@@ -47,9 +48,15 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" value="Create"
-               class="btn btn-primary" />
+          <button type="submit"
+               class="btn btn-primary">
+               <i class="fa fa-plus fa-lg"></i><strong>Add an Availability</strong>
+           </button>
         </div>
+      </form> <!-- /.form -->
+    </div>
+  </div>
+</div>
       {#{ form_end(serviceForm) }#} <!-- /. form -->
   <!--  </div>
   </div>

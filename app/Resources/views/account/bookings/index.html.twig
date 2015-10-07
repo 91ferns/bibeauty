@@ -5,14 +5,14 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     Bookings
-    <a href="{{path('admin_new_booking_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Booking</strong></a>
+    {# <a href="{{path('admin_new_booking_path', { id: business.getId, slug: business.getSlug })}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Booking</strong></a> #}
   </div>
   <div class="panel-body">
     <table class="table businesses-table">
       <thread>
         <tr>
           <th>ID</th>
-          <th><a href="#" id="check-all-box">All</a></th>
+          <!--<th><a href="#" id="check-all-box">All</a></th>-->
           <th>Client</th>
           <th>Services</th>
           <th>Category</th>
@@ -33,7 +33,7 @@
           {% set service     = booking.getService %}
           {% set serviceType = service.getServiceType %}
           {% set category = serviceType.getServiceCategory %}
-          {% set availability = booking.getAvailabilityId %}
+          {% set availability = booking.getAvailability %}
           {% set status = booking.getApproval %}
           {% if status == 1 %}
           {%     set status = 'unapproved' %}
@@ -51,14 +51,14 @@
           <td >
               {{ booking.getId }}
           </td>
-          <td >
+          <!--<td >
               <input type="checkbox" data-id="{{booking.getId}}">
+          </td>-->
+          <td >
+              {{ booking.getUser }}
           </td>
           <td >
-              {{ booking.getUserId }}
-          </td>
-          <td >
-              {{ serviceType.getLabel }}
+              {{ booking.getService.getLabel }}
           </td>
           <td >
               {{ category.getLabel }}

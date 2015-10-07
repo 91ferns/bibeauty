@@ -16,7 +16,6 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
     private $services  = [
       "Pedicure" =>[
           [
-            "label"=>"The Best Pedicure Ever",
             "description"=>"A super excellent Pedicure",
             "hours"=>0,
             "minutes"=>45,
@@ -41,7 +40,6 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
           $serviceType = $this->getServiceTypeIdByName($manager, $serviceType);
           foreach($services as $service){
               $the_service = new Service();
-              $the_service->setLabel($service['label']);
               $the_service->setDescription($service['description']);
               $the_service->setHours($service['hours']);
               $the_service->setMinutes($service['minutes']);

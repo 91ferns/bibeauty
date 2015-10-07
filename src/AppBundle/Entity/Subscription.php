@@ -32,7 +32,7 @@ class Subscription {
     protected $updated;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptions")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -65,7 +65,7 @@ class Subscription {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +88,7 @@ class Subscription {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -98,7 +98,7 @@ class Subscription {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -121,7 +121,7 @@ class Subscription {
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User 
+     * @return \AppBundle\Entity\User
      */
     public function getUser()
     {
@@ -144,7 +144,7 @@ class Subscription {
     /**
      * Get service
      *
-     * @return \AppBundle\Entity\Service 
+     * @return \AppBundle\Entity\Service
      */
     public function getService()
     {

@@ -74,10 +74,6 @@
                   </ul>
                   <input type="hidden" name="TreatmentTypeId" />
                 </div>
-                <div class="input-group">
-                  <input type="text" id="TreatmentField" name="treatment" class="form-control" placeholder="Treatment" />
-                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
-                </div>
               </div> <!-- /.form-group -->
 
               <hr class="fullwidth">
@@ -94,14 +90,14 @@
               </div> <!-- /.form-group -->
 
               <hr class="fullwidth">
-
+              <br>
               <button class="btn btn-lg btn-primary">Update</button>
 
-              <hr class="fullwidth">
+              {# <hr class="fullwidth">
 
               <p class="text-muted">Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.</p>
 
-              <a class="btn btn-lg btn-primary" href="#">Notify</a>
+              <a class="btn btn-lg btn-primary" href="#">Notify</a> #}
               {{ form_widget(form._token) }}
 
             {{ form_end(form, {'render_rest': false}) }}
@@ -117,24 +113,28 @@
               <div class="business">
                 <div class="row">
                   <div class="col-md-7 ">
-                    {% if business.hasHeaderAttachment %}
-                      <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive" alt="{{ business.getName }}">
-                    {% else %}
-
-                    {% endif %}
 
 
-                    <h3>{{business.getName}} <span class="badge">{{business.getDistanceFrom | round(1, 'floor')}} Miles </span></h3>
+                    <h3>{{business.getName}}
+                      {% if business.getDistanceFrom %}
+                      <span class="badge">{{business.getDistanceFrom | round(1, 'floor')}} miles </span>
+                      {% endif %}
+                    </h3>
                     <span class="stars">
                       {{ business.getAverageRating | rating }}
                       from Yelp&trade;
                     </span> <!-- /.stars -->
-                    <a class="map-icon" href="#"><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
+                    <a class="map-icon" target="_blank" href="{{business.getAddress.getGoogleMapsUrl}}"><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
                     <div class="address">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</div>
                     <p class="business-description">{{business.getDescription}}</p>
                   </div>
                   <div class="col-md-5">
-                    <img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right">
+                    {% if business.hasHeaderAttachment %}
+                      <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive pull-right" width="240" alt="{{ business.getName }}">
+                    {% else %}
+                      <img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right">
+                    {% endif %}
+
                   </div>
 
                 </div> <!-- /.row -->
@@ -144,14 +144,14 @@
                   {% for booking in business.getBookings %}
                   <li class="list-group-item">
                     <h4 class="panel-title clearfix">
-                      {{booking.getService.description}}
+                      {{booking.getService.getLabel}}
                       <big>{{ booking.name }}</big>
                       <a class="btn btn-primary pull-right">
                         From
-                        <strong>${# {booking.getService.getLowestPrice | number_format(2) } #}</strong>
+                        <strong>${{ booking.getService.getCurrentPrice | number_format(2) }}</strong>
                       </a>
                       <span class="save pull-right">
-                        Save <blue>20%</blue>
+                        Save <blue>{{ booking.getService.getPercentageSaved }}%</blue>
                       </span>
                     </h4>
                   </li> <!-- .list-item-group -->

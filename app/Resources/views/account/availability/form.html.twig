@@ -1,6 +1,6 @@
+
 <div class="panel panel-default">
   <div class="panel-body">
-    <form action="{{ path('admin_service_availability_new_path',{slug:slug,id:id,serviceid:service.getId}) }}" method="post">
       <div class="form-group">
         <label for="Day">Date</label>
         <div class="input-group">
@@ -30,10 +30,5 @@
         </div>
       </div> <!-- /.form-group -->
   </div>
-  <div class="panel-heading" style="height:50px;">
-    <input type="submit" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add an Availability</strong></a>
-    <div class="clear"></div>
-  </div>
-  </form>
   <script>$('[checked="checked"]').parent().addClass("active");</script>
 </div>

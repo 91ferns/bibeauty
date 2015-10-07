@@ -17,16 +17,6 @@ use AppBundle\Form\BookingType;
 
 class BusinessesController extends Controller
 {
-    /**
-     * @Route("/businesses", name="listings_path")
-     * @Method({"GET"})
-     */
-    public function indexAction(Request $request)
-    {
-        return $this->render('businesses/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ));
-    }
 
     /**
      * @Route("/businesses/{id}/{slug}", name="business_path")
@@ -106,14 +96,20 @@ class BusinessesController extends Controller
 
 
          $data = $repo->strongParams($params);
-    	   $records = $repo->findByMulti($data);
+    	 $records = $repo->findByMulti($data);
 
         $results = array();
-        if($results){
+        if($records){
           // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
           foreach($records as $record) {
-              $booking = $record[0];
-              $distance = $record['distance'];
+              if (is_array($record)) {
+                  // Location was included
+                  $booking = $record[0];
+                  $distance = $record['distance'];
+              } else {
+                  $booking = $record;
+                  $distance = false;
+              }
 
               $b = $booking->getBusiness();
               $b->setDistanceFrom($distance);
