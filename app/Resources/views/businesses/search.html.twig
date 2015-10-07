@@ -114,7 +114,7 @@
                       {{ business.getAverageRating | rating }}
                       from Yelp&trade;
                     </span> <!-- /.stars -->
-                    <a class="map-icon" href="#"><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
+                    <a class="map-icon" target="_blank" href="{{business.getAddress.getGoogleMapsUrl}}"><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
                     <div class="address">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</div>
                     <p class="business-description">{{business.getDescription}}</p>
                   </div>
