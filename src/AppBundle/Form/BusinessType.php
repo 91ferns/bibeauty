@@ -27,14 +27,14 @@ class BusinessType extends AbstractType
                   'label' => 'Business Details'
               ))
               ->add('landline', 'text', array(
-                   'label' => false,
+                   'label' => 'Landline Phone Number',
                    'attr' => array(
                       'placeholder' => 'Landline Phone Number'
                   ),
                   'required' => false
               ))
               ->add('mobile', 'text', array(
-                   'label' => false,
+                   'label' => 'Mobile Phone Number',
                    'attr' => array(
                       'placeholder' => 'Mobile Phone Number'
                   ),

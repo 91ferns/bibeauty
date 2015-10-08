@@ -122,7 +122,7 @@
                         <h4 id="deals-text">lorem ipsum dummy text</h4>
                         <h5 id="deals-text">Dummy heading:</h5>
                         <p id="deals-text">{{ booking.getBusiness.getDescription }}</p>
-                        <p><a href="{{ path('business_book_path', {id: booking.getBusiness.getId, slug: booking.getBusiness.getSlug, treatment: booking.getId }) }}" class="btn btn-primary center-block" role="button">View Deal</a></p>
+                        <p><a href="{{ path('business_path', {id: booking.getBusiness.getId, slug: booking.getBusiness.getSlug }) }}" class="btn btn-primary center-block" role="button">View Deal</a></p>
                     </div>
                 </div>
             </div>

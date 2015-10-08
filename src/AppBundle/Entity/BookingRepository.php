@@ -39,23 +39,23 @@ class BookingRepository extends EntityRepository
 				//->leftJoin('bk.recurring_appointments', 'r');
 
       if($this->isAvailabilitySearch($search)){
-        //$this->filterBookingsByAvailability($query,$qb, $search);
+          $this->filterBookingsByAvailability($query,$qb, $search);
       }
 
       if($this->isLocationSearch($search)){
-        //$this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
+        $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
       }
 
       if($this->isServiceSearch($search)){
-        //$this->filterBookingsByService($query,$search['serviceType']);
+        $this->filterBookingsByService($query,$search['serviceType']);
       }
 
       if($this->isCategorySearch($search)){
-          //$this->filterBookingsByCategory($query,$search['serviceCategory']);
+          $this->filterBookingsByCategory($query,$search['serviceCategory']);
       }
 
       if($this->isPriceSearch($search)){
-          //$this->filterBookingsByPrice($query,$qb,$search['price1'],$search['price2']);
+          $this->filterBookingsByPrice($query,$qb,$search['price1'],$search['price2']);
       }
 
 
