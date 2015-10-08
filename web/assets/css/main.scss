@@ -669,3 +669,17 @@ main section {
     }
   }
 }
+
+.deal-text-current {
+  color: black;
+  font-weight: bold;
+}
+
+.deal-title {
+  .fa-star {
+    color: whitesmoke;
+    &.active {
+      color: #ffc000;
+    }
+  }
+}

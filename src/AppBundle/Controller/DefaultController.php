@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Service;
+use AppBundle\Entity\Review;
 
 
 class DefaultController extends ApplicationController
@@ -23,13 +24,28 @@ class DefaultController extends ApplicationController
         $em = $this->getDoctrine()->getManager();
         $services = $em->getRepository("AppBundle:ServiceType");
         $categories = $em->getRepository("AppBundle:ServiceCategory");
+        $deals = $this->getRecentDeals();
+
+        if (count($deals) > 0) {
+            foreach($deals as $deal) {
+                $business = $deal->getBusiness();
+                if ($business->getYelpId()) {
+                    $yelp = $this->get('yelp.factory');
+                    $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
+
+                    if ($response->rating) {
+                        $business->setAverageRating($response->rating);
+                    }
+                }
+            }
+        }
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
             'categories' => $categories->findAll(),
             'services' => Service::getServicesByCategory($services->findAll()),
-            'deals' => $this->getRecentDeals(),
+            'deals' => $deals,
             'categories' => array()
         ));
     }

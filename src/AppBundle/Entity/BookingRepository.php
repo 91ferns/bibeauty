@@ -16,9 +16,16 @@ class BookingRepository extends EntityRepository
             $qb = $this->createQueryBuilder('Booking');
             $qb
                 ->from('AppBundle:Booking', 'bk')
-                ->setMaxResults(3)
-                ->getQuery()
+                ->leftJoin('bk.business','b')
+                ->leftJoin('b.address', 'ba')
+                ->leftJoin('bk.availability', 'tas')
+                ->leftJoin('bk.service', 's')
+                ->setMaxResults(3);
+
+            $query = $qb->getQuery()
                 ->getResult();
+
+            return $query;
     }
 
     public function findByMulti($search){

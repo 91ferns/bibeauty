@@ -102,25 +102,27 @@
             <h2>Latest Deals</h2>
         </div>
         <div class="row">
-            {% for deal in deals %}
+            {% for booking in deals %}
             <div class="col-lg-offset-0 col-lg-4 col-md-offset-0 col-md-4 col-sm-offset-0 col-sm-4 col-xs-offset-3 col-xs-6 col-xs-offset-3">
                 <div class="thumbnail" id="deals-border">
                     <img src="{{ asset('assets/images/deals/1.png') }}" class="img-responsive" alt="...">
                     <div class="caption">
                       <div class="subcaption">
-                        <strong>30%</strong> OFF HAIR REMOVAL
+                        <strong>{{ booking.getService.getPercentageSaved }}%</strong> OFF {{booking.getService.getLabel}}
                       </div>
                         <div class="deal-title">
                             <div class="row">
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-6"><span class="deals-title">Santa Monica</span></div>
-                                <div class="col-sm-3"><strike id="deals-text"><small>$100</small></strike><big> $80 </big></div>
+                                <div class="col-sm-3">
+                                  {{ booking.getBusiness.getAverageRating | rating }}
+                                </div>
+                                <div class="col-sm-6"><span class="deals-title">{{ booking.getBusiness.getName }}</span></div>
+                                <div class="col-sm-3"><strike id="deals-text"><small>${{ booking.getService.getOriginalPrice | number_format(2) }}</small></strike><big class="deal-text-current"> ${{ booking.getService.getCurrentPrice | number_format(2) }} </big></div>
                             </div>
                         </div>
                         <h4 id="deals-text">lorem ipsum dummy text</h4>
                         <h5 id="deals-text">Dummy heading:</h5>
-                        <p id="deals-text">lorem ipsum dummy<br>text for print & web</p>
-                        <p><a href="#" class="btn btn-primary center-block" role="button">View Deal</a></p>
+                        <p id="deals-text">{{ booking.getBusiness.getDescription }}</p>
+                        <p><a href="{{ path('business_book_path', {id: booking.getBusiness.getId, slug: booking.getBusiness.getSlug, treatment: booking.getId }) }}" class="btn btn-primary center-block" role="button">View Deal</a></p>
                     </div>
                 </div>
             </div>

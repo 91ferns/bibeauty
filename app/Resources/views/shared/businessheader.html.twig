@@ -93,7 +93,9 @@
                     <h3 style="margin: 0px;">We Accept</h3>
                   </div>
                   <div class="col-md-7" style="text-align: left;">
+                    {% if business.getAcceptsCredit %}
                     <img src="{{ asset('assets/images/accepts-credit.png') }}">
+                    {% endif %}
                   </div>
                 </div>
 
