@@ -63,6 +63,16 @@ class Business {
     protected $address;
 
     /**
+      * @ORM\Column(type="string", length=14)
+      */
+    protected $landline;
+
+    /**
+      * @ORM\Column(type="string", length=14)
+      */
+    protected $mobile;
+
+    /**
      * @ORM\OneToMany(targetEntity="Review", cascade={"persist"}, mappedBy="business")
      */
     protected $reviews;
@@ -737,4 +747,50 @@ class Business {
 
     }
 
+
+    /**
+     * Set landline
+     *
+     * @param string $landline
+     * @return Business
+     */
+    public function setLandline($landline)
+    {
+        $this->landline = $landline;
+
+        return $this;
+    }
+
+    /**
+     * Get landline
+     *
+     * @return string 
+     */
+    public function getLandline()
+    {
+        return $this->landline;
+    }
+
+    /**
+     * Set mobile
+     *
+     * @param string $mobile
+     * @return Business
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return string 
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
 }

@@ -420,4 +420,18 @@ class Service {
     public function getLabel() {
         return $this->getServiceType()->getLabel();
     }
+
+    public static function getServicesByCategory($services)
+    {
+      $list = [];
+      foreach($services as $service){
+        $cat = $service->getserviceCategory();
+        $cat = $cat->getLabel();
+        if(!array_key_exists($cat,$list)){
+          $list[$cat] = [];
+        }
+        $list[$cat][]= $service;
+      }
+      return $list;
+    }
 }

@@ -5,11 +5,12 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\Entity\Service;
 
-class DefaultController extends Controller
+
+class DefaultController extends ApplicationController
 {
     /**
      * @Route("/", name="homepage")
@@ -19,10 +20,17 @@ class DefaultController extends Controller
 
         //$twilio = $this->get('twilio.factory');
         //$twilio->sendMessage(9149438239, 'Hi Stuart');
+        $em = $this->getDoctrine()->getManager();
+        $services = $em->getRepository("AppBundle:ServiceType");
+        $categories = $em->getRepository("AppBundle:ServiceCategory");
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'categories' => $categories->findAll(),
+            'services' => Service::getServicesByCategory($services->findAll()),
+            'deals' => $this->getRecentDeals(),
+            'categories' => array()
         ));
     }
 

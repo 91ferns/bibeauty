@@ -32,22 +32,17 @@ class Address {
    /**
      * @ORM\Column(type="string", length=150)
      */
-   protected $city;
+   protected $city = 'Los Angeles';
 
    /**
      * @ORM\Column(type="string", length=4)
      */
-   protected $state;
+   protected $state = 'CA';
 
    /**
      * @ORM\Column(type="string", length=12)
      */
    protected $zip;
-
-   /**
-     * @ORM\Column(type="string", length=14)
-     */
-   protected $phone;
 
    /**
      * @ORM\Column(type="string", length=50)
@@ -234,7 +229,10 @@ class Address {
      */
     public function setCity($city)
     {
-        $this->city = $city;
+        if (!empty($city)) {
+            $this->city = $city;
+        }
+
 
         return $this;
     }
@@ -257,7 +255,8 @@ class Address {
      */
     public function setState($state)
     {
-        $this->state = $state;
+        if (!empty($state))
+            $this->state = $state;
 
         return $this;
     }
@@ -293,29 +292,6 @@ class Address {
     public function getZip()
     {
         return $this->zip;
-    }
-
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     * @return Address
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
     }
 
     /**

@@ -12,6 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class BookingRepository extends EntityRepository
 {
+    public function recentDeals($limit = 3) {
+            $qb = $this->createQueryBuilder('Booking');
+            $qb
+                ->from('AppBundle:Booking', 'bk')
+                ->setMaxResults(3)
+                ->getQuery()
+                ->getResult();
+    }
+
     public function findByMulti($search){
       $qb    = $this->createQueryBuilder('Booking');
       $query = $qb

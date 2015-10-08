@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Business;
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Review;
+use AppBundle\Entity\Service;
 
 use AppBundle\Entity\Booking;
 use AppBundle\Form\BookingType;
@@ -130,26 +131,13 @@ class BusinessesController extends Controller
             'params' => $params,
             'form' => $form->createView(),
             'categories' => $categories->findAll(),
-            'services' => $this->getServicesByCategory($services->findAll())//$services->findAll()
+            'services' => Service::getServicesByCategory($services->findAll())//$services->findAll()
         ));
-    }
-    protected function getServicesByCategory($services)
-    {
-      $list = [];
-      foreach($services as $service){
-        $cat = $service->getserviceCategory();
-        $cat = $cat->getLabel();
-        if(!array_key_exists($cat,$list)){
-          $list[$cat] = [];
-        }
-        $list[$cat][]= $service;
-      }
-      return $list;
     }
 
     protected function getSearchForm($request) {
         $defaultData = array(
-            'day' => new \DateTime(),
+            'day' => null, //new \DateTime()
             'time' => null,
             'location' => null,
             'treatmenttype' => '',
@@ -160,9 +148,14 @@ class BusinessesController extends Controller
 
         $form = $this->createFormBuilder($defaultData)
           ->setMethod('GET')
-          ->add('day', 'date')
+          ->add('day', 'date', array(
+              'placeholder' => 'Day'
+          ))
           ->add('time', 'time')
-          ->add('location', 'integer')
+          ->add('location', 'text', array(
+              'disabled' => true,
+              'data' => 'Los Angeles'
+          ))
           ->add('treatmenttype', 'text')
           ->add('treatment', 'text')
           ->add('min', 'integer')

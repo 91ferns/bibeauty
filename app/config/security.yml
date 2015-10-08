@@ -32,6 +32,7 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login_check
+                default_target_path: admin_path
 
     access_control:
         # require ROLE_ADMIN for /admin*

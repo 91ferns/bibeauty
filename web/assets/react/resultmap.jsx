@@ -72,7 +72,7 @@ var ResultMap = React.createClass({
         markers: this.state.markers.push(loc)
       });
 
-      this.makeInfoWindow(marker.name, loc);
+      this.makeInfoWindow(marker, loc);
     },
     removeMarkers: function(){
       for (var x in this.state.markers) {
@@ -89,8 +89,9 @@ var ResultMap = React.createClass({
         this.resetCenter();
     },
     makeInfoWindow: function(data, marker){
+      console.log(data);
         var iw = new google.maps.InfoWindow({
-            content: "<div className='loc-info'>" + data +"</div>",
+            content: '<div class="loc-info">'+data.name+'</div>',
             maxWidth: 200
         });
         marker.addListener('click', function() {

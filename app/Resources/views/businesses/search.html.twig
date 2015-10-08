@@ -61,7 +61,7 @@
                 <div class="input-group TreatmentTypesGroup">
                   <!--<input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>-->
-                  <select  class="treatmentTypes"><!--style="display:none;"-->
+                  <select class="treatmentTypes" name="treatment"><!--style="display:none;"-->
                     {% for category,data in services %}
                     <option style="color: #999;">Treatments</option>
                       <optgroup label="{{category}}">
