@@ -22,7 +22,6 @@
                         <select class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
                           <option style="color: #999;">Select a Treatment</option>
                           {% for category in categories %}
-                          {{category}}
                           <optgroup label="{{category.getLabel}}">
                           {% for subcategory in category.getChildren %}
                             <option value="{{subcategory.id }}">{{subcategory.getLabel}}</i>
@@ -68,10 +67,10 @@
         </div>
 
         <div class="row">
-            {% for i in 0..5 %}
+            {% for category in categories | slice(0, 6) %}
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 image-wrapper">
                 <a href="#" class="thumbnail" id="image-zoom">
-                  <img src="{{ asset('assets/images/categories/hair.png') }}" class="img-responsive" alt="...">
+                  <img src="{{ asset('assets/images/categories/hair.png') }}" class="img-responsive" alt="{{category.getLabel}}">
                 </a>
             </div>
             {% endfor %}

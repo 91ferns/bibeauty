@@ -13,16 +13,17 @@ use Doctrine\ORM\EntityRepository;
 class TreatmentCategoryRepository extends EntityRepository
 {
     public function getHeirarchy() {
-            $qb = $this->createQueryBuilder('TreatmentCategory');
-            $qb
-                ->from('AppBundle:TreatmentCategory', 'c')
-                ->leftJoin('c.children','children')
-                ->where('children.parent = c');
+        $categories = $this->findAll();
 
-            $query = $qb->getQuery()
-                ->getResult();
+        $cats = array();
+        foreach($categories as $category) {
+            if ($category->getParent() === NULL) {
+                $cats[] = $category;
+            }
+        }
 
-            return $query;
+        return $cats;
+
     }
 
 }
