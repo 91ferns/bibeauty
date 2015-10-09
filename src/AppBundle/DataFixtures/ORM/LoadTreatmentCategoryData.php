@@ -4,15 +4,14 @@ namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\ServiceType;
-use AppBundle\Entity\ServiceCategory;
+use AppBundle\Entity\TreatmentCategory;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 
 
 class LoadServiceTypeData extends AbstractFixture implements OrderedFixtureInterface
 {
 
-    private $serviceTypes  = array(
+    private $treatmentCategories  = array(
         "Hair" => array(
             "Haircuts and Hairdressing ",
             "Blow dry",
@@ -244,20 +243,22 @@ class LoadServiceTypeData extends AbstractFixture implements OrderedFixtureInter
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->serviceTypes as $category => $types){
-          $cat = $this->getCatIdByName($manager, $category);
-          foreach($types as $type){
-              $serviceType = new ServiceType();
-              $serviceType->setLabel($type);
-              $serviceType->setServiceCategory($cat);
-              $manager->persist($serviceType);
-          }
-          $manager->flush();
+        foreach($this->treatmentCategories as $parent => $children){
+            //TreatmentCategory
+            $parentCategory = new TreatmentCategory();
+            $parentCategory->setLabel($parent);
+            $manager->persist($parentCategory);
+
+            foreach($children as $child){
+                $childCategory = new TreatmentCategory();
+                $childCategory->setLabel($child);
+                $childCategory->setParent($parentCategory);
+                $manager->persist($childCategory);
+            }
+            $manager->flush();
         }
+
         $manager->flush();
-    }
-    public function getCatIdByName($em, $category){
-        return $em->merge($this->getReference($category));
     }
     public function getOrder()
     {

@@ -14,7 +14,7 @@ use AppBundle\Entity\Business;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Service;
 
-class ServicesController extends Controller
+class TreatmentsController extends Controller
 {
     /**
      * @Route("/account/services/{id}/{slug}/", name="admin_business_services_path")

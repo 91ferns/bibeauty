@@ -793,4 +793,16 @@ class Business {
     {
         return $this->mobile;
     }
+
+    public function loadRatings($yelp) {
+        if ($this->getYelpId()) {
+            $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
+
+            if ($response->rating) {
+                $this->setAverageRating($response->rating);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -31,7 +31,7 @@ class ApplicationController extends Controller
 
     protected function getRecentDeals() {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("AppBundle:Booking");
+        $repository = $em->getRepository("AppBundle:Offer");
 
         return $repository->recentDeals();
     }

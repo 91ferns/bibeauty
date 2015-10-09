@@ -20,13 +20,14 @@
                       <div class="col-md-3 col-sm-6">
                         <label class="sr-only" for="JumboTreatment">Treatment</label>
                         <select class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
-                          {% for category,data in services %}
                           <option style="color: #999;">Select a Treatment</option>
-                            <optgroup label="{{category}}">
-                              {% for service in data %}
-                                <option value="{{service.id }}">{{service.label}}</i>
-                              {% endfor %}
-                            </optgroup>
+                          {% for category in categories %}
+                          {{category}}
+                          <optgroup label="{{category.getLabel}}">
+                          {% for subcategory in category.getChildren %}
+                            <option value="{{subcategory.id }}">{{subcategory.getLabel}}</i>
+                          {% endfor %}
+                          </optgroup>
                           {% endfor %}
                         </select>
                       </div> <!-- /.col -->

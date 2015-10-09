@@ -19,7 +19,7 @@ class OfferRepository extends EntityRepository
                 ->leftJoin('o.business','b')
                 ->leftJoin('b.address', 'ba')
                 ->leftJoin('o.availability', 'tas')
-                ->leftJoin('o.service', 's')
+                ->leftJoin('o.treatment', 't')
                 ->setMaxResults(3);
 
             $query = $qb->getQuery()

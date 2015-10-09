@@ -391,12 +391,12 @@ class Treatment {
         return $this->getServiceType()->getLabel();
     }
 
-    public static function getTreatmentsByCategory($treatments)
+    public static function getByCategory($treatments)
     {
       $list = [];
-      foreach($treatments as $treatment){
-        $cat = $treatment->getTreatmentCategory();
-        $cat = $cat->getLabel();
+      foreach ($treatments as $treatment) {
+        $children = $treatment->getChildren();
+
         if(!array_key_exists($cat,$list)){
           $list[$cat] = [];
         }
