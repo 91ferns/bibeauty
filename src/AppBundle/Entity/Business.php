@@ -63,9 +63,9 @@ class Business {
     protected $address;
 
     /**
-      * @ORM\Column(type="string", length=14)
+      * @ORM\Column(type="string", length=14, nullable=false)
       */
-    protected $landline;
+    protected $landline  = null;
 
     /**
       * @ORM\Column(type="string", length=14)
@@ -764,7 +764,7 @@ class Business {
     /**
      * Get landline
      *
-     * @return string 
+     * @return string
      */
     public function getLandline()
     {
@@ -787,7 +787,7 @@ class Business {
     /**
      * Get mobile
      *
-     * @return string 
+     * @return string
      */
     public function getMobile()
     {
