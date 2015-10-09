@@ -126,9 +126,9 @@ class Business {
     protected $updated;
 
     /**
-     * @ORM\OneToMany(targetEntity="Service", cascade={"persist"}, mappedBy="business")
+     * @ORM\OneToMany(targetEntity="Treatment", cascade={"persist"}, mappedBy="business")
      */
-    protected $services;
+    protected $treatments;
 
     /**
      * @ORM\OneToMany(targetEntity="Therapist", cascade={"persist"}, mappedBy="business")
@@ -602,12 +602,12 @@ class Business {
     /**
      * Add service
      *
-     * @param \AppBundle\Entity\ServiceCategory $services
-     * @return Business
+     * @param \AppBundle\Entity\ServiceCategory $treatments
+     * @return Treatment
      */
-    public function addService(\AppBundle\Entity\Service $service)
+    public function addTreatment(\AppBundle\Entity\Treatment $treatment)
     {
-        $this->services[] = $service;
+        $this->treatments[] = $treatment;
 
         return $this;
     }
@@ -617,19 +617,19 @@ class Business {
      *
      * @param \AppBundle\Entity\Service $service
      */
-    public function removeService(\AppBundle\Entity\Service $service)
+    public function removeTreatment(\AppBundle\Entity\Treatment $treatment)
     {
-        $this->services->removeElement($service);
+        $this->treatments->removeElement($treatment);
     }
 
     /**
-     * Get services
+     * Get treatments
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getServices()
+    public function getTreatments()
     {
-        return $this->services;
+        return $this->treatments;
     }
 
     /**
@@ -792,5 +792,17 @@ class Business {
     public function getMobile()
     {
         return $this->mobile;
+    }
+
+    public function loadRatings($yelp) {
+        if ($this->getYelpId()) {
+            $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
+
+            if ($response->rating) {
+                $this->setAverageRating($response->rating);
+            }
+        }
+
+        return $this;
     }
 }

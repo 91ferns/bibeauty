@@ -1,6 +1,6 @@
 <?php
 
-// src/AppBundle/Entity/Business.php
+// src/AppBundle/Entity/TreatmentCategory.php
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,11 +9,11 @@ use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="TreatmentCategoryRepository")
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(name="app_service_type")
+ * @ORM\Table(name="app_treatment_categories")
  */
-class ServiceType {
+class TreatmentCategory {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,10 +22,15 @@ class ServiceType {
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ServiceCategory", inversedBy="serviceTypes")
-     * @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="TreatmentCategory", mappedBy="parent")
      */
-    protected $serviceCategory;
+    protected $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TreatmentCategory", inversedBy="child", cascade={"persist"})
+     * @ORM\JoinColumn(name="parent_category_id", referencedColumnName="id")
+     */
+    protected $parent;
 
     /**
      * @Assert\NotBlank()
@@ -125,66 +130,66 @@ class ServiceType {
     }
 
     /**
-     * Set serviceCategory
-     *
-     * @param \AppBundle\Entity\ServiceCategory $serviceCategory
-     * @return ServiceType
-     */
-    public function setServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory = null)
-    {
-        $this->serviceCategory = $serviceCategory;
-
-        return $this;
-    }
-
-    /**
-     * Get serviceCategory
-     *
-     * @return \AppBundle\Entity\ServiceCategory
-     */
-    public function getServiceCategory()
-    {
-        return $this->serviceCategory;
-    }
-    /**
      * Constructor
      */
     public function __construct()
     {
-        //$this->serviceCategories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \AppBundle\Entity\TreatmentCategory $treatmentCategory
+     * @return ServiceType
+     */
+    public function setParent(\AppBundle\Entity\TreatmentCategory $parent = null)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \AppBundle\Entity\TreatmentCategory
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
     /**
      * Add serviceCategories
      *
-     * @param \AppBundle\Entity\Service $serviceCategories
+     * @param \AppBundle\Entity\TreatmentCategory $children
      * @return ServiceType
      */
-    public function addServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory)
+    public function addChild(\AppBundle\Entity\TreatmentCategory $child)
     {
-        $this->serviceCategories[] = $serviceCategory;
+        $this->children[] = $child;
 
         return $this;
     }
 
     /**
-     * Remove serviceCategories
+     * Remove child
      *
-     * @param \AppBundle\Entity\Service $serviceCategories
+     * @param \AppBundle\Entity\TreatmentCategory $treatmentCategory
      */
-    public function removeServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory)
+    public function removeChild(\AppBundle\Entity\TreatmentCategory $child)
     {
-        $this->serviceCategories->removeElement($serviceCategory);
+        $this->children->removeElement($child);
     }
 
     /**
-     * Get serviceCategories
+     * Get children
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getServiceCategories()
+    public function getChildren()
     {
-        return $this->serviceCategories;
+        return $this->children;
     }
 
     /**
@@ -209,26 +214,26 @@ class ServiceType {
         return $this->getServiceCategory() ? $this->getServiceCategory()->getLabel() : null;
     }
 
-    private $services = array(); // Temporary
+    private $treatments = array(); // Temporary
 
-    public function hasServices() {
-        return count($this->services) > 0;
+    public function hasTreatments() {
+        return count($this->treatments) > 0;
     }
 
-    public function addService(\AppBundle\Entity\Service $service) {
-        $this->services[] = $service;
+    public function addTreatment(\AppBundle\Entity\Treatment $treatment) {
+        $this->treatments[] = $treatment;
     }
 
-    public function getServices() {
-        return $this->services;
+    public function getTreatments() {
+        return $this->treatments;
     }
 
     public function getLowestPrice() {
-        $services = $this->getServices();
+        $treatments = $this->getTreatments();
         $lowest = false;
 
-        foreach($services as $service) {
-            $price = $service->getCurrentPrice();
+        foreach($treatments as $treatment) {
+            $price = $treatment->getCurrentPrice();
             if ($lowest === false || $price < $lowest) {
                 $lowst = $price;
             }

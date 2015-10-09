@@ -16,7 +16,6 @@
           <th>Client</th>
           <th>Services</th>
           <th>Category</th>
-          <th>Treatment</th>
           <th>Date</th>
           <th>Time</th>
           <th>Price</th>
@@ -62,9 +61,6 @@
           </td>
           <td >
               {{ category.getLabel }}
-          </td>
-          <td data-serviceid = "{{service.getId}}" >
-              {{ service.getDescription }}
           </td>
           <td data-availabilityid = "{{availability.getId}}">
               {{ availability.getDate|date('m/d/Y') }}

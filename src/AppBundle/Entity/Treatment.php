@@ -1,6 +1,6 @@
 <?php
 
-// src/AppBundle/Entity/Service.php
+// src/AppBundle/Entity/Treatment.php
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,22 +12,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(name="app_services")
+ * @ORM\Table(name="app_treatments")
  */
-class Service {
+class Treatment {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min = 3)
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $description;
 
     /**
      * @ORM\Column(type="integer", length=2)
@@ -74,19 +67,19 @@ class Service {
     protected $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ServiceType")
-     * @ORM\JoinColumn(name="service_type_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="TreatmentCategory")
+     * @ORM\JoinColumn(name="treatment_category_id", referencedColumnName="id")
      */
-    protected $serviceType;
+    protected $treatmentCategory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Business", inversedBy="services")
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="treatments")
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      */
     protected $business;
 
     /**
-     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="service")
+     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="treatment")
      */
     protected $treatmentAvailabilitySets;
 
@@ -134,29 +127,6 @@ class Service {
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Service
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -369,26 +339,26 @@ class Service {
     }
 
     /**
-     * Set serviceType
+     * Set treatmentCategory
      *
-     * @param \AppBundle\Entity\ServiceType $serviceType
+     * @param \AppBundle\Entity\ServiceType $treatmentCategory
      * @return Service
      */
-    public function setServiceType(\AppBundle\Entity\ServiceType $serviceType = null)
+    public function setTreatmentCategory(\AppBundle\Entity\TreatmentCategory $treatmentCategory = null)
     {
-        $this->serviceType = $serviceType;
+        $this->treatmentCategory = $treatmentCategory;
 
         return $this;
     }
 
     /**
-     * Get serviceType
+     * Get treatmentCategory
      *
-     * @return \AppBundle\Entity\ServiceType
+     * @return \AppBundle\Entity\TreatmentCategory
      */
-    public function getServiceType()
+    public function getTreatmentCategory()
     {
-        return $this->serviceType;
+        return $this->treatmentCategory;
     }
 
     /**
@@ -421,16 +391,16 @@ class Service {
         return $this->getServiceType()->getLabel();
     }
 
-    public static function getServicesByCategory($services)
+    public static function getByCategory($treatments)
     {
       $list = [];
-      foreach($services as $service){
-        $cat = $service->getserviceCategory();
-        $cat = $cat->getLabel();
+      foreach ($treatments as $treatment) {
+        $children = $treatment->getChildren();
+
         if(!array_key_exists($cat,$list)){
           $list[$cat] = [];
         }
-        $list[$cat][]= $service;
+        $list[$cat][]= $treatment;
       }
       return $list;
     }

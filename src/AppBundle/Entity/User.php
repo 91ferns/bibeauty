@@ -74,11 +74,6 @@ class User implements AdvancedUserInterface, \Serializable {
     private $firstName;
 
     /**
-     * @ORM\OneToMany(targetEntity="Subscription", cascade={"persist"}, mappedBy="user")
-     */
-    protected $subscriptions;
-
-    /**
      * @ORM\Column(type="string", length=120)
      * @Assert\NotBlank()
      * @Assert\Length(min = 2)
