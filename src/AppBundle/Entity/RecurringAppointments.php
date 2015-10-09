@@ -35,7 +35,7 @@ class RecurringAppointments {
 
    /**
     * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet", inversedBy="recurrences")
-    * @ORM\JoinColumn(name="availabilityId", referencedColumnName="id",nullable=true)
+    * @ORM\JoinColumn(name="availability_id", referencedColumnName="id",nullable=true)
     */
     private $availability;
 

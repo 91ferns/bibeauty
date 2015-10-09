@@ -1,6 +1,6 @@
 <?php
 
-// src/AppBundle/Entity/Business.php
+// src/AppBundle/Entity/TreatmentCategory.php
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -11,9 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(name="app_service_type")
+ * @ORM\Table(name="app_treatment_categories")
  */
-class ServiceType {
+class TreatmentCategory {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,10 +22,15 @@ class ServiceType {
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ServiceCategory", inversedBy="serviceTypes")
-     * @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="TreatmentCategory", mappedBy="child")
      */
-    protected $serviceCategory;
+    protected $parent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TreatmentCategory", inversedBy="child")
+     * @ORM\JoinColumn(name="parent_category_id", referencedColumnName="id")
+     */
+    protected $child;
 
     /**
      * @Assert\NotBlank()

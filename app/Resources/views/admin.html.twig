@@ -57,6 +57,13 @@
         </a>
       </li> <!-- /.active -->
       {% if business is defined %}
+      <li role="presentation" id="bookings" class="{% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}">
+        <a href="{{path('admin_business_offers_path', { id: business.getId, slug: business.getSlug })}}" id="offers-link">
+          <i class="fa fa-book fa-lg"></i>
+          My Offers
+        </a>
+      </li> <!-- /#bookings -->
+
       <li role="presentation" id="bookings" class="{% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}">
         <a href="{{path('admin_business_bookings_path', { id: business.getId, slug: business.getSlug })}}" id="bookings-link">
           <i class="fa fa-book fa-lg"></i>
