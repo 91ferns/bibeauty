@@ -6,12 +6,22 @@
     z-index: 99;
     left: -10px;
     top: 40px;
-    background-color: whitesmoke;}
+    background-color: #fff;
+    box-shadow:none;
+    background-image:none;
+    text-shadow:none;
+  }
+    .select2-container .select2-selection--single .select2-selection__rendered{padding-top:2px;}
     .TreatmentTypesGroup .select2-container--classic .select2-selection--single{    position: relative;z-index: 2;float: left;  width: 100%; margin-bottom: 0;height: 34px;
-    padding: 6px 12;width:354px;border-radius:0;    border: 1px solid #ccc;}
+    padding: 0px 4px 2px;width:354px;border-radius:0;    border: 1px solid #ccc;    background-color: #fff;
+        box-shadow:none;
+        background-image:none;
+        text-shadow:none; }
+        .select2-container--classic .select2-selection--single .select2-selection__rendered{color:#999!important;}
     .TreatmentTypesGroup .select2-container--classic .select2-selection--single .select2-selection__arrow{top:-1px; width:41px;    height: 34px;}
     .TreatmentTypesGroup .select2-container--classic .select2-selection--single .select2-selection__arrow .input-group-addon{height:34px;}
     .select2-container--classic.select2-container--open .select2-dropdown {width:354px!important;}
+    ul.select2-results__options > li:first-child{display:none;}
     </style>
 <div class="componentBody">
   <section id="top-map" class="nav-pad">
@@ -51,7 +61,7 @@
                 <div class="input-group TreatmentTypesGroup">
                   <!--<input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>-->
-                  <select  class="treatmentTypes"><!--style="display:none;"-->
+                  <select class="treatmentTypes" name="treatment"><!--style="display:none;"-->
                     {% for category,data in services %}
                     <option style="color: #999;">Treatments</option>
                       <optgroup label="{{category}}">
@@ -63,10 +73,6 @@
                   </select>
                   </ul>
                   <input type="hidden" name="TreatmentTypeId" />
-                </div>
-                <div class="input-group">
-                  <input type="text" id="TreatmentField" name="treatment" class="form-control" placeholder="Treatment" />
-                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
                 </div>
               </div> <!-- /.form-group -->
 
@@ -84,14 +90,14 @@
               </div> <!-- /.form-group -->
 
               <hr class="fullwidth">
-
+              <br>
               <button class="btn btn-lg btn-primary">Update</button>
 
-              <hr class="fullwidth">
+              {# <hr class="fullwidth">
 
               <p class="text-muted">Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.</p>
 
-              <a class="btn btn-lg btn-primary" href="#">Notify</a>
+              <a class="btn btn-lg btn-primary" href="#">Notify</a> #}
               {{ form_widget(form._token) }}
 
             {{ form_end(form, {'render_rest': false}) }}
@@ -107,24 +113,28 @@
               <div class="business">
                 <div class="row">
                   <div class="col-md-7 ">
-                    {% if business.hasHeaderAttachment %}
-                      <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive" alt="{{ business.getName }}">
-                    {% else %}
-
-                    {% endif %}
 
 
-                    <h3>{{business.getName}} <span class="badge">{{business.getDistanceFrom | round(1, 'floor')}} Miles </span></h3>
+                    <h3>{{business.getName}}
+                      {% if business.getDistanceFrom %}
+                      <span class="badge">{{business.getDistanceFrom | round(1, 'floor')}} miles </span>
+                      {% endif %}
+                    </h3>
                     <span class="stars">
                       {{ business.getAverageRating | rating }}
                       from Yelp&trade;
                     </span> <!-- /.stars -->
-                    <a class="map-icon" href="#"><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
+                    <a class="map-icon" target="_blank" href="{{business.getAddress.getGoogleMapsUrl}}"><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
                     <div class="address">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</div>
                     <p class="business-description">{{business.getDescription}}</p>
                   </div>
                   <div class="col-md-5">
-                    <img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right">
+                    {% if business.hasHeaderAttachment %}
+                      <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive pull-right" width="240" alt="{{ business.getName }}">
+                    {% else %}
+                      <img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right">
+                    {% endif %}
+
                   </div>
 
                 </div> <!-- /.row -->
@@ -134,14 +144,14 @@
                   {% for booking in business.getBookings %}
                   <li class="list-group-item">
                     <h4 class="panel-title clearfix">
-                      {{booking.getService.description}}
+                      {{booking.getService.getLabel}}
                       <big>{{ booking.name }}</big>
-                      <a class="btn btn-primary pull-right">
+                      <a class="btn btn-primary pull-right" href="{{ path('business_book_path', {id: booking.getBusiness.getId, slug: booking.getBusiness.getSlug, treatment: booking.getId }) }}">
                         From
-                        <strong>${# {booking.getService.getLowestPrice | number_format(2) } #}</strong>
+                        <strong>${{ booking.getService.getCurrentPrice | number_format(2) }}</strong>
                       </a>
                       <span class="save pull-right">
-                        Save <blue>20%</blue>
+                        Save <blue>{{ booking.getService.getPercentageSaved }}%</blue>
                       </span>
                     </h4>
                   </li> <!-- .list-item-group -->

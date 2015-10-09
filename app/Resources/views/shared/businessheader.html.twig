@@ -13,9 +13,9 @@
               </div> <!-- /.header-attachment-wrapper -->
             <nav class="business-tab-navigation">
               <ul class="nav nav-pills">
-                <li role="presentation" class="active"><a href="#">Overview</a></li>
-                <li role="presentation"><a href="#">Services</a></li>
-                <li role="presentation"><a href="#">Reviews</a></li>
+                <li role="presentation" class="active"><a href="#overview">Overview</a></li>
+                <li role="presentation"><a href="#services">Services</a></li>
+                <li role="presentation"><a href="#reviews">Reviews</a></li>
               </ul>
             </nav>
           </div> <!-- /.col -->
@@ -59,8 +59,8 @@
                   <li class="active"><a href="{{business.address.getGoogleMapsUrl}}" class="map-show" target="_blank">
                     <i class="fa fa-map-marker"></i>Show on Map
                   </a></li>
-                  <li><a href="tel:{{business.getAddress.getPhone | phone}}" class="phone">
-                    <i class="fa fa-phone"></i>{{business.getAddress.getPhone | phone}}
+                  <li><a href="tel:{{business.getLandline | phone}}" class="phone">
+                    <i class="fa fa-phone"></i>{{business.getLandline | phone}}
                   </a></li>
                   {% if business.getEmail %}
                   <li><a href="mailto:{{business.getEmail}}" class="email-link">
@@ -88,7 +88,17 @@
               <hr> -->
 
               <div class="payment-info">
-                <h3>We Accept</h3>
+                <div class="row">
+                  <div class="col-md-5">
+                    <h3 style="margin: 0px;">We Accept</h3>
+                  </div>
+                  <div class="col-md-7" style="text-align: left;">
+                    {% if business.getAcceptsCredit %}
+                    <img src="{{ asset('assets/images/accepts-credit.png') }}">
+                    {% endif %}
+                  </div>
+                </div>
+
               </div>
 
             </aside>

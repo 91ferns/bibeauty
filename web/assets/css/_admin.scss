@@ -30,6 +30,15 @@ $admin-side-width: 250px;
 
   }
 
+  &.menu-closed {
+    #admin-main {
+      padding-left: 0px;
+    }
+    #secondary {
+      display: none;
+    }
+  }
+
   a.hide-menu {
     font-size: 20px;
     text-decoration: none;

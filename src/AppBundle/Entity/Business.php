@@ -63,6 +63,16 @@ class Business {
     protected $address;
 
     /**
+      * @ORM\Column(type="string", length=14)
+      */
+    protected $landline;
+
+    /**
+      * @ORM\Column(type="string", length=14)
+      */
+    protected $mobile;
+
+    /**
      * @ORM\OneToMany(targetEntity="Review", cascade={"persist"}, mappedBy="business")
      */
     protected $reviews;
@@ -116,9 +126,9 @@ class Business {
     protected $updated;
 
     /**
-     * @ORM\OneToMany(targetEntity="Service", cascade={"persist"}, mappedBy="business")
+     * @ORM\OneToMany(targetEntity="Treatment", cascade={"persist"}, mappedBy="business")
      */
-    protected $services;
+    protected $treatments;
 
     /**
      * @ORM\OneToMany(targetEntity="Therapist", cascade={"persist"}, mappedBy="business")
@@ -592,12 +602,12 @@ class Business {
     /**
      * Add service
      *
-     * @param \AppBundle\Entity\ServiceCategory $services
-     * @return Business
+     * @param \AppBundle\Entity\ServiceCategory $treatments
+     * @return Treatment
      */
-    public function addService(\AppBundle\Entity\Service $service)
+    public function addTreatment(\AppBundle\Entity\Treatment $treatment)
     {
-        $this->services[] = $service;
+        $this->treatments[] = $treatment;
 
         return $this;
     }
@@ -607,19 +617,19 @@ class Business {
      *
      * @param \AppBundle\Entity\Service $service
      */
-    public function removeService(\AppBundle\Entity\Service $service)
+    public function removeTreatment(\AppBundle\Entity\Treatment $treatment)
     {
-        $this->services->removeElement($service);
+        $this->treatments->removeElement($treatment);
     }
 
     /**
-     * Get services
+     * Get treatments
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getServices()
+    public function getTreatments()
     {
-        return $this->services;
+        return $this->treatments;
     }
 
     /**
@@ -686,4 +696,113 @@ class Business {
         return $this->distanceFrom;
     }
 
+
+    private $serviceCategories = array();// Lazy loaded
+
+    public function getServiceCategories() {
+        if (count($this->serviceCategories) > 0) {
+            return $this->serviceCategories;
+        }
+
+        return $this->serviceCategories = $this->loadServiceCategories();
+        // Funky little biznis here
+    }
+
+    public function hasServiceCategories() {
+        $this->getServiceCategories(); // Make sure it has been loaded
+        return count($this->serviceCategories) > 0;
+    }
+
+    protected function loadServiceCategories() {
+        $services = $this->getServices();
+
+        $categories = array();
+
+        foreach($services as $service) {
+            $category = $service->getServiceType();
+            // Parent category name
+            //getCategoryName
+            $id = $category->getCategoryName();
+
+            if (!array_key_exists($id, $categories)) {
+                $slugify = new Slugify();
+
+                $std = new \stdClass();
+                $std->label = $id;
+                $std->slug = $slugify->slugify($id);
+                $std->treatments = array();
+                $std->lowestPrice = false;
+
+                $categories[$id] = $std;
+            }
+
+            $categories[$id]->treatments[] = $service;
+            if ($std->lowestPrice === false || $std->lowestPrice > $service->getCurrentPrice()) {
+                $std->lowestPrice = $service->getCurrentPrice();
+            }
+
+        }
+
+        return $categories;
+
+    }
+
+
+    /**
+     * Set landline
+     *
+     * @param string $landline
+     * @return Business
+     */
+    public function setLandline($landline)
+    {
+        $this->landline = $landline;
+
+        return $this;
+    }
+
+    /**
+     * Get landline
+     *
+     * @return string
+     */
+    public function getLandline()
+    {
+        return $this->landline;
+    }
+
+    /**
+     * Set mobile
+     *
+     * @param string $mobile
+     * @return Business
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return string
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
+
+    public function loadRatings($yelp) {
+        if ($this->getYelpId()) {
+            $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
+
+            if ($response->rating) {
+                $this->setAverageRating($response->rating);
+            }
+        }
+
+        return $this;
+    }
 }

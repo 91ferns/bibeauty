@@ -33,12 +33,6 @@ class ServiceType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
             ))
-            ->add('description', 'textarea', array(
-                 'label' => 'Description',
-                 'attr' => array(
-                    'placeholder' => 'Description'
-                )
-            ))
             ->add('hours', 'integer', array(
                  'label' => 'Hours',
                  'attr' => array(

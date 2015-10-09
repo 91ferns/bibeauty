@@ -316,6 +316,33 @@ main section {
 #popular-categories, #latest-deals {
   .thumbnail {
     padding: 0px;
+    margin: 3px;
+    border-color: #c6c6c6;
+
+    .deals-title {
+      color: black;
+    }
+
+    .caption {
+      position: relative;
+      color: white;
+    }
+
+    .subcaption {
+      position: absolute;
+      top: -45px;
+      text-shadow: 0px 0px 2px rgba(0,0,0,.6);
+      font-size: 30px;
+      font-weight: 100;
+      width: 100%;
+      left: 0px;
+      right: 0px;
+      text-align: center;
+
+      strong {
+        font-weight: bold;
+      }
+    }
   }
 }
 
@@ -374,7 +401,7 @@ main section {
   #deals-text {
     color: $gray-medium;
   }
-  #deals-title {
+  .deals-title {
     font-size: 1.2em;
   }
 
@@ -622,5 +649,37 @@ main section {
   #indent
   {
     padding-left: 50px;
+  }
+}
+
+#top-slider {
+  select.form-control {
+    border-radius: 0px;
+    -webkit-appearance: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .input-group-addon {
+    background: white;
+    border-right: 0px;
+    padding-right: 0px;
+    + .form-control {
+      border-left: 0px;
+    }
+  }
+}
+
+.deal-text-current {
+  color: black;
+  font-weight: bold;
+}
+
+.deal-title {
+  .fa-star {
+    color: whitesmoke;
+    &.active {
+      color: #ffc000;
+    }
   }
 }

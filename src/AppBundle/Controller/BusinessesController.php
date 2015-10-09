@@ -11,22 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Business;
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Review;
+use AppBundle\Entity\Service;
 
 use AppBundle\Entity\Booking;
 use AppBundle\Form\BookingType;
 
 class BusinessesController extends Controller
 {
-    /**
-     * @Route("/businesses", name="listings_path")
-     * @Method({"GET"})
-     */
-    public function indexAction(Request $request)
-    {
-        return $this->render('businesses/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ));
-    }
 
     /**
      * @Route("/businesses/{id}/{slug}", name="business_path")
@@ -106,14 +97,20 @@ class BusinessesController extends Controller
 
 
          $data = $repo->strongParams($params);
-    	   $records = $repo->findByMulti($data);
+    	 $records = $repo->findByMulti($data);
 
         $results = array();
-        if($results){
+        if($records){
           // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
           foreach($records as $record) {
-              $booking = $record[0];
-              $distance = $record['distance'];
+              if (is_array($record)) {
+                  // Location was included
+                  $booking = $record[0];
+                  $distance = $record['distance'];
+              } else {
+                  $booking = $record;
+                  $distance = false;
+              }
 
               $b = $booking->getBusiness();
               $b->setDistanceFrom($distance);
@@ -134,26 +131,13 @@ class BusinessesController extends Controller
             'params' => $params,
             'form' => $form->createView(),
             'categories' => $categories->findAll(),
-            'services' => $this->getServicesByCategory($services->findAll())//$services->findAll()
+            'services' => Service::getServicesByCategory($services->findAll())//$services->findAll()
         ));
-    }
-    protected function getServicesByCategory($services)
-    {
-      $list = [];
-      foreach($services as $service){
-        $cat = $service->getserviceCategory();
-        $cat = $cat->getLabel();
-        if(!array_key_exists($cat,$list)){
-          $list[$cat] = [];
-        }
-        $list[$cat][]= $service;
-      }
-      return $list;
     }
 
     protected function getSearchForm($request) {
         $defaultData = array(
-            'day' => new \DateTime(),
+            'day' => null, //new \DateTime()
             'time' => null,
             'location' => null,
             'treatmenttype' => '',
@@ -164,9 +148,14 @@ class BusinessesController extends Controller
 
         $form = $this->createFormBuilder($defaultData)
           ->setMethod('GET')
-          ->add('day', 'date')
+          ->add('day', 'date', array(
+              'placeholder' => 'Day'
+          ))
           ->add('time', 'time')
-          ->add('location', 'integer')
+          ->add('location', 'text', array(
+              'disabled' => true,
+              'data' => 'Los Angeles'
+          ))
           ->add('treatmenttype', 'text')
           ->add('treatment', 'text')
           ->add('min', 'integer')

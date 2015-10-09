@@ -29,6 +29,13 @@ class ApplicationController extends Controller
         return $business;
     }
 
+    protected function getRecentDeals() {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Offer");
+
+        return $repository->recentDeals();
+    }
+
     protected function categoryInBusiness($slug, $business) {
 
         $em = $this->getDoctrine()->getManager();

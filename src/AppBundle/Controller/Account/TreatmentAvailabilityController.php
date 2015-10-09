@@ -43,7 +43,7 @@ class TreatmentAvailabilityController extends Controller
         $booking  = new Booking();
         $booking->setBusiness($business);
         $booking->setService($service);
-        $booking->setAvailabilityId($availability);
+        $booking->setAvailability($availability);
         $em->persist($booking);
         $em->flush();
         return $this->redirectToRoute('admin_service_show_path',["slug"=>$slug,"id"=>$id,"serviceid"=>$serviceid]);
@@ -67,7 +67,7 @@ class TreatmentAvailabilityController extends Controller
         $appt = new RecurringAppointments();
         $appt->setDate($date->modify($i.$intervalUnit));
         $appt->setTime($startTime);
-        $appt->setAvailabilityId($availability);
+        $appt->setAvailability($availability);
         $em->persist($appt);
       }
       $em->flush();
@@ -76,7 +76,7 @@ class TreatmentAvailabilityController extends Controller
     protected function buildInsertAvailability($service,$recurring,$date,$time)
     {
       $availability = new TreatmentAvailabilitySet();
-      $availability->setServiceId($service);
+      $availability->setService($service);
       $availability->setRecurring($recurring);
       $availability->setDate(new \DateTime($date));
       //$time = new \DateTime($time);

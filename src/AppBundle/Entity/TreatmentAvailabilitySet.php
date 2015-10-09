@@ -34,10 +34,10 @@ class TreatmentAvailabilitySet {
    private $time;
 
    /**
-    * @ORM\ManyToOne(targetEntity="Service", inversedBy="treatmentAvailabilitySets")
-    * @ORM\JoinColumn(name="serviceId", referencedColumnName="id")
+    * @ORM\ManyToOne(targetEntity="Treatment", inversedBy="treatmentAvailabilitySets")
+    * @ORM\JoinColumn(name="treatment_id", referencedColumnName="id")
     */
-    private $serviceId;
+    private $treatment;
 
     /**
      * @ORM\Column(type="boolean")
@@ -52,7 +52,7 @@ class TreatmentAvailabilitySet {
      private $recurring = false;
 
      /**
-      * @ORM\OneToMany(targetEntity="RecurringAppointments", mappedBy="availabilityId")
+      * @ORM\OneToMany(targetEntity="RecurringAppointments", mappedBy="availability")
       */
       private $recurrences;
 
@@ -141,26 +141,26 @@ class TreatmentAvailabilitySet {
     }
 
     /**
-     * Set service_id
+     * Set treatment
      *
-     * @param \AppBundle\Entity\Service $serviceId
+     * @param \AppBundle\Entity\Treatment $treatment
      * @return TreatmentAvailabilitySet
      */
-    public function setServiceId(\AppBundle\Entity\Service $serviceId = null)
+    public function setTreatment(\AppBundle\Entity\Treatment $treatment = null)
     {
-        $this->serviceId = $serviceId;
+        $this->treatment = $treatment;
 
         return $this;
     }
 
     /**
-     * Get service_id
+     * Get treatment
      *
-     * @return \AppBundle\Entity\Service
+     * @return \AppBundle\Entity\Treatment
      */
-    public function getServiceId()
+    public function getTreatment()
     {
-        return $this->serviceId;
+        return $this->treatment;
     }
 
     /**

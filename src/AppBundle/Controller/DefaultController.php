@@ -5,11 +5,13 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use AppBundle\Entity\Treatment;
+use AppBundle\Entity\Review;
 
-class DefaultController extends Controller
+
+class DefaultController extends ApplicationController
 {
     /**
      * @Route("/", name="homepage")
@@ -19,10 +21,23 @@ class DefaultController extends Controller
 
         //$twilio = $this->get('twilio.factory');
         //$twilio->sendMessage(9149438239, 'Hi Stuart');
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository("AppBundle:TreatmentCategory");
+        $deals = $this->getRecentDeals();
+        $heirarchy = $categories->getHeirarchy();
+
+        if (count($deals) > 0) {
+            foreach($deals as $deal) {
+                $business = $deal->getBusiness();
+                $business->loadRatings($this->get('yelp.factory'));
+            }
+        }
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'categories' => $heirarchy,
+            'deals' => $deals,
         ));
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-// src/AppBundle/Entity/Service.php
+// src/AppBundle/Entity/Treatment.php
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,34 +12,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(name="app_services")
+ * @ORM\Table(name="app_treatments")
  */
-class Service {
+class Treatment {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $slug;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min = 3)
-     * @ORM\Column(type="string", length=255, options={"default":"N/A"}))
-     */
-    protected $label;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min = 3)
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $description;
 
     /**
      * @ORM\Column(type="integer", length=2)
@@ -56,8 +37,11 @@ class Service {
      * @Assert\GreaterThanOrEqual(
      *     value = 0
      * )
+     * @Assert\LessThan(
+     *     value = 60
+     * )
      */
-    protected $minutes;
+    protected $minutes = 0;
 
     /**
      * @ORM\Column(type="float", length=8)
@@ -83,19 +67,19 @@ class Service {
     protected $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ServiceType")
-     * @ORM\JoinColumn(name="service_type_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="TreatmentCategory")
+     * @ORM\JoinColumn(name="treatment_category_id", referencedColumnName="id")
      */
-    protected $serviceType;
+    protected $treatmentCategory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Business")
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="treatments")
      * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
      */
     protected $business;
 
     /**
-     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="ServiceId")
+     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="treatment")
      */
     protected $treatmentAvailabilitySets;
 
@@ -119,16 +103,7 @@ class Service {
             $this->createdAt = new \DateTime();
         }
         $this->updated = new \DateTime();
-        $this->setSlug($this->generateSlug());
     }
-
-    protected function generateSlug() {
-      /** temorary...todo fix for label **/
-        $slugify = new Slugify();
-        return $slugify->slugify($this->getLabel()); // hello-world
-    }
-
-
 
     /**
      * @ORM\Column(type="datetime")
@@ -152,52 +127,6 @@ class Service {
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Service
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set label
-     *
-     * @param string $label
-     * @return Service
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
     }
 
     /**
@@ -292,6 +221,13 @@ class Service {
         return $this->currentPrice;
     }
 
+    public function getPercentageSaved() {
+        $divided = ($this->getOriginalPrice() - $this->getCurrentPrice()) / $this->getOriginalPrice();
+        $divided = $divided * 100;
+
+        return number_format($divided, 0);
+    }
+
     /**
      * Set createdAt
      *
@@ -344,29 +280,6 @@ class Service {
         $string .= sprintf('%d min%s', $minutes, $minutes == 1 ? '' : 's');
 
         return $string;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Service
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
     /**
@@ -426,26 +339,26 @@ class Service {
     }
 
     /**
-     * Set serviceType
+     * Set treatmentCategory
      *
-     * @param \AppBundle\Entity\ServiceType $serviceType
+     * @param \AppBundle\Entity\ServiceType $treatmentCategory
      * @return Service
      */
-    public function setServiceType(\AppBundle\Entity\ServiceType $serviceType = null)
+    public function setTreatmentCategory(\AppBundle\Entity\TreatmentCategory $treatmentCategory = null)
     {
-        $this->serviceType = $serviceType;
+        $this->treatmentCategory = $treatmentCategory;
 
         return $this;
     }
 
     /**
-     * Get serviceType
+     * Get treatmentCategory
      *
-     * @return \AppBundle\Entity\ServiceType
+     * @return \AppBundle\Entity\TreatmentCategory
      */
-    public function getServiceType()
+    public function getTreatmentCategory()
     {
-        return $this->serviceType;
+        return $this->treatmentCategory;
     }
 
     /**
@@ -468,6 +381,27 @@ class Service {
      */
     public function getTherapist()
     {
+        if (!$this->therapist) {
+            return 'None';
+        }
         return $this->therapist;
+    }
+
+    public function getLabel() {
+        return $this->getServiceType()->getLabel();
+    }
+
+    public static function getByCategory($treatments)
+    {
+      $list = [];
+      foreach ($treatments as $treatment) {
+        $children = $treatment->getChildren();
+
+        if(!array_key_exists($cat,$list)){
+          $list[$cat] = [];
+        }
+        $list[$cat][]= $treatment;
+      }
+      return $list;
     }
 }

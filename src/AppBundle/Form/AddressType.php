@@ -30,7 +30,9 @@ class AddressType extends AbstractType
                  'label' => false,
                  'attr' => array(
                     'placeholder' => 'City'
-                 )
+                ),
+                'data' => 'Los Angeles',
+                'disabled' => true,
             ))
             ->add('state', 'choice', array(
                  'label' => false,
@@ -38,6 +40,8 @@ class AddressType extends AbstractType
                     'placeholder' => 'State'
                  ),
                  'choices' => Address::getStates(),
+                 'data' => 'CA',
+                 'disabled' => true,
                  'multiple' => false,
                  'expanded' => false,
             ))
@@ -46,13 +50,6 @@ class AddressType extends AbstractType
                  'attr' => array(
                     'placeholder' => 'Zip'
                  )
-            ))
-            ->add('phone', 'text', array(
-                 'label' => false,
-                 'attr' => array(
-                    'placeholder' => 'Phone Number'
-                ),
-                'required' => false
             ))
             ->add('country', 'choice', array(
                  'label' => false,

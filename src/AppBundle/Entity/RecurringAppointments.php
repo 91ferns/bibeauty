@@ -35,9 +35,9 @@ class RecurringAppointments {
 
    /**
     * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet", inversedBy="recurrences")
-    * @ORM\JoinColumn(name="availabilityId", referencedColumnName="id",nullable=true)
+    * @ORM\JoinColumn(name="availability_id", referencedColumnName="id",nullable=true)
     */
-    private $availabilityId;
+    private $availability;
 
 
     /**
@@ -97,25 +97,25 @@ class RecurringAppointments {
     }
 
     /**
-     * Set availabilityId
+     * Set availability
      *
-     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availabilityId
+     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availability
      * @return RecurringAppointments
      */
-    public function setAvailabilityId(\AppBundle\Entity\TreatmentAvailabilitySet $availabilityId = null)
+    public function setAvailability(\AppBundle\Entity\TreatmentAvailabilitySet $availability = null)
     {
-        $this->availabilityId = $availabilityId;
+        $this->availability = $availability;
 
         return $this;
     }
 
     /**
-     * Get availabilityId
+     * Get availability
      *
      * @return \AppBundle\Entity\TreatmentAvailabilitySets
      */
-    public function getAvailabilityId()
+    public function getAvailability()
     {
-        return $this->availabilityId;
+        return $this->availability;
     }
 }

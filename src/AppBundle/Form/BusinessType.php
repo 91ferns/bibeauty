@@ -26,6 +26,20 @@ class BusinessType extends AbstractType
               ->add('address', new AddressType(), array(
                   'label' => 'Business Details'
               ))
+              ->add('landline', 'text', array(
+                   'label' => 'Landline Phone Number',
+                   'attr' => array(
+                      'placeholder' => 'Landline Phone Number'
+                  ),
+                  'required' => false
+              ))
+              ->add('mobile', 'text', array(
+                   'label' => 'Mobile Phone Number',
+                   'attr' => array(
+                      'placeholder' => 'Mobile Phone Number'
+                  ),
+                  'required' => false
+              ))
                ->add('description', 'textarea', array(
                    'label' => 'Business Overview',
                    'attr' => array(
@@ -52,8 +66,16 @@ class BusinessType extends AbstractType
                   ),
                   'required' => false
               ))
-              ->add('operation', new OperatingScheduleType(), array(
+              /*->add('operation', new OperatingScheduleType(), array(
                   'label' => 'Opening Times'
+              ))*/
+              ->add('acceptsCredit', 'checkbox', array(
+                  'label' => 'Accepts credit',
+                  'required' => true
+              ))
+              ->add('acceptsCash', 'checkbox', array(
+                  'label' => 'Accepts cash',
+                  'required' => true
               ))
         ;
     }

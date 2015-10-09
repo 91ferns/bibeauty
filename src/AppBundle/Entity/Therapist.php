@@ -55,7 +55,7 @@ class Therapist {
 
 
    /**
-    * @ORM\ManyToOne(targetEntity="Business")
+    * @ORM\ManyToOne(targetEntity="Business", inversedBy="therapists")
     * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
     */
    protected $business;
@@ -202,7 +202,7 @@ class Therapist {
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
