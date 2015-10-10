@@ -18,7 +18,7 @@ use AppBundle\Entity\TreatmentAvailabilitySet as TxAv;
 class OffersController extends Controller
 {
     /**
-     * @Route("/account/bookings/{id}/{slug}", name="admin_business_offers_path")
+     * @Route("/account/offers/{id}/{slug}", name="admin_business_offers_path")
      * @Method("GET")
      */
     public function indexAction($id, $slug, Request $request)
@@ -34,14 +34,14 @@ class OffersController extends Controller
           var_dump( $booking->getAvailability()->getTime());
         }
         exit;*/
-        return $this->render('account/bookings/index.html.twig', array(
+        return $this->render('account/offers/index.html.twig', array(
             'bookings' => $bookings,
             'business' => $business,
         ));
     }
 
     /**
-     * @Route("/account/bookings/show/{id}/{slug}/{bookingId}/", name="admin_show_booking_path")
+     * @Route("/account/offers/show/{id}/{slug}/{bookingId}/", name="admin_show_booking_path")
      * @Method("GET")
      */
     public function showAction($id, $slug, $bookingId, Request $request)
@@ -50,7 +50,7 @@ class OffersController extends Controller
         $booking->find($bookingId);
 
         // replace this example code with whatever you need
-        return $this->render('account/bookings/show.html.twig', array(
+        return $this->render('account/offers/show.html.twig', array(
             'booking' => $booking,
             'business' => $booking->getBusiness(),
             'service' => $booking->getService(),
@@ -60,7 +60,7 @@ class OffersController extends Controller
 
 
     /**
-     * @Route("/account/bookings/{id}/{slug}/new", name="admin_new_booking_path")
+     * @Route("/account/offers/{id}/{slug}/new", name="admin_new_booking_path")
      * @Method({"GET"})
      */
     public function createAction($id, $slug, Request $request) {
@@ -70,7 +70,7 @@ class OffersController extends Controller
        $business = $this->businessBySlugAndId($slug, $id);
 
        return $this->render(
-          'account/bookings/new.html.twig',
+          'account/offers/new.html.twig',
           array(
              'form' => $form->createView(),
              'business' => $business,
@@ -79,7 +79,7 @@ class OffersController extends Controller
     }
 
     /**
-     * @Route("/account/bookings/{id}/{slug}/new")
+     * @Route("/account/offers/{id}/{slug}/new")
      * @Method("POST")
      */
     public function createCheckAction(Request $request) {
@@ -101,14 +101,14 @@ class OffersController extends Controller
             return $this->redirectToRoute('admin_bookings_path');
 
         } else {
-            return $this->render('account/businesses/index.html.twig', array(
+            return $this->render('account/offers/index.html.twig', array(
                 'form' => $form->createView()
             ));
         }
 
     }
     /**
-     * @Route("/account/bookings/newTreatment", name="admin_new_availability_path")
+     * @Route("/account/offers/newTreatment", name="admin_new_availability_path")
      * @Method({"POST"})
      */
     public function createTreatmentAvailabilitySetAction(Request $request)

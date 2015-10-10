@@ -14,7 +14,7 @@
       <ul class="list-group">
       {% for treatment in treatments %}
         <li class="list-group-item">
-          <a href="{{ path('admin_service_show_path',{
+          <a href="{{ path('admin_treatment_show_path',{
             'id': business.getId,
             'slug': business.getSlug,
             'treatmentId': treatment.getId
