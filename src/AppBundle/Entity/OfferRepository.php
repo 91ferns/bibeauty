@@ -35,7 +35,7 @@ class OfferRepository extends EntityRepository
                 ->leftJoin('o.business','b')
                 ->leftJoin('b.address', 'ba')
                 ->leftJoin('o.availability', 'tas')
-                ->leftJoin('o.service', 's');
+                ->leftJoin('o.treatment', 's');
 				//->leftJoin('bk.recurring_appointments', 'r');
 
       if($this->isAvailabilitySearch($search)){
@@ -79,16 +79,16 @@ class OfferRepository extends EntityRepository
 
     public function filterBookingsByCategory(&$query,$category){
       $query->add('c')
-            ->leftJoin('AppBundle:Category', 'c')
+            ->leftJoin('AppBundle:TreatmentCategory', 'c')
             ->add('where','b.categories = :category')
             ->setParameter('category',$category);
     }
-    public function filterBookingsByService(&$query,$serviceType){
+    public function filterBookingsByService(&$query,$treatmentCategory){
       $query->add('st')
-            ->leftJoin('AppBundle:Service', 's')
-            ->leftJoin('AppBundle:ServiceType','st')
-            ->add('where','st.id = :serviceType')
-            ->setParameter('serviceType',$serviceType);
+            ->leftJoin('AppBundle:Treatment', 's')
+            //->leftJoin('AppBundle:ServiceType','st')
+            ->add('where','c.id = :treatmentCategory')
+            ->setParameter('treatmentCategory',$treatmentCategory   );
     }
 
     public function filterBookingsByLocation(&$query, $latitude, $longitude){

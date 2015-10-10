@@ -88,9 +88,10 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-    	$repo = $em->getRepository("AppBundle:Booking");
-        $services = $em->getRepository("AppBundle:ServiceType");
-        $categories = $em->getRepository("AppBundle:ServiceCategory");
+    	$repo = $em->getRepository("AppBundle:Offer");
+        $categories = $em->getRepository("AppBundle:TreatmentCategory");
+        $heirarchy = $categories->getHeirarchy();//$services = $em->getRepository("AppBundle:ServiceType");
+        //$categories = $em->getRepository("AppBundle:ServiceCategory");
 
         $form = $this->getSearchForm($request);
         $params = $form->getData();
@@ -130,8 +131,8 @@ class BusinessesController extends Controller
             'results' => $results,
             'params' => $params,
             'form' => $form->createView(),
-            'categories' => $categories->findAll(),
-            'services' => Service::getServicesByCategory($services->findAll())//$services->findAll()
+            'categories' => $heirarchy,
+            //'services' => Service::getServicesByCategory($services->findAll())//$services->findAll()
         ));
     }
 
