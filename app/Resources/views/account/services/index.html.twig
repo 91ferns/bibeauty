@@ -10,11 +10,11 @@
     </a>
   </div>
   <div class="panel-body">
-    {% if services.count > 0 %}
+    {% if treatments.count > 0 %}
       <ul class="list-group">
-      {% for service in services %}
+      {% for treatment in treatments %}
         <li class="list-group-item">
-          <a href="{{ path('admin_service_show_path',{'id':business.getId,'slug':business.getSlug,'serviceid': service.getId})}}">{{ service.getLabel }}</a>
+          <a href="{{ path('admin_service_show_path',{'id':business.getId,'slug':business.getSlug,'serviceid': treatment.getId})}}">{{ treatment.getLabel }}</a>
         </li>
       {% endfor %}
       </ul>

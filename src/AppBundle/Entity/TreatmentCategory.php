@@ -27,7 +27,7 @@ class TreatmentCategory {
     protected $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TreatmentCategory", inversedBy="child", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="TreatmentCategory", inversedBy="children", cascade={"persist"})
      * @ORM\JoinColumn(name="parent_category_id", referencedColumnName="id")
      */
     protected $parent;
@@ -211,7 +211,7 @@ class TreatmentCategory {
     }
 
     public function getCategoryName() {
-        return $this->getServiceCategory() ? $this->getServiceCategory()->getLabel() : null;
+        return $this->getParent() ? $this->getParent()->getLabel() : null;
     }
 
     private $treatments = array(); // Temporary

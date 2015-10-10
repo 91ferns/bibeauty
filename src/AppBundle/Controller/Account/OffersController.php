@@ -18,7 +18,7 @@ use AppBundle\Entity\TreatmentAvailabilitySet as TxAv;
 class OffersController extends Controller
 {
     /**
-     * @Route("/account/bookings/{id}/{slug}", name="admin_business_bookings_path")
+     * @Route("/account/bookings/{id}/{slug}", name="admin_business_offers_path")
      * @Method("GET")
      */
     public function indexAction($id, $slug, Request $request)
