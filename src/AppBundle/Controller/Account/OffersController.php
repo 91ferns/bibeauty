@@ -24,7 +24,7 @@ class OffersController extends Controller
     public function indexAction($id, $slug, Request $request)
     {
         $offers = $this->getRepo('Offer');
-        $business = $this->findBusinessBySlugAndId($slug, $id);
+        $business = $this->businessBySlugAndId($slug, $id);
 
         $offers   = $offers->findByBusiness($business);
 

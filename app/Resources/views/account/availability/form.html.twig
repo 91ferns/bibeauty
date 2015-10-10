@@ -36,26 +36,40 @@
         </p>
       </div>
 
-      <div class="form-group">
-        <div class="input-group">
-          <label for="">Repeat</label><br>
-          <!--<input type="checkbox" name="Recurring" class="form-control" />-->
-          <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active" >
-              <input type="radio" name="Recurring" checked class="form-control" /> Never
-            </label>
-            <label class="btn btn-primary" >
-              <input type="radio" name="Recurring_Daily" checked class="form-control" /> Daily
-            </label>
-            <label class="btn btn-primary">
-              <input type="radio" name="Recurring_Monthly" class="form-control" /> Monthly
-            </label>
-            <label class="btn btn-primary">
-              <input type="radio" name="Recurring_Weekly" class="form-control" /> Weekly
-            </label>
-          </div>
+      <div class="checkbox">
 
+        <label class="control-label">
+          <input type="checkbox" id="showRepeat"> Repeat
+        </label>
+      </div>
+
+      <div id="repeat-subform">
+
+        <div class="form-group">
+          Days
         </div>
-      </div> <!-- /.form-group -->
+
+        <div class="form-group">
+          <div class="input-group">
+            <label for="">Recurrence</label><br>
+            <!--<input type="checkbox" name="Recurring" class="form-control" />-->
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-primary active" >
+                <input type="radio" name="Recurring" checked class="form-control" /> Never
+              </label>
+              <label class="btn btn-primary" >
+                <input type="radio" name="Recurring_Daily" checked class="form-control" /> Daily
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="Recurring_Monthly" class="form-control" /> Monthly
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="Recurring_Weekly" class="form-control" /> Weekly
+              </label>
+            </div>
+
+          </div>
+        </div> <!-- /.form-group -->
+      </div>
   </div>
 </div>

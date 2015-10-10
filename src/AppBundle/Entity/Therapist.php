@@ -24,7 +24,7 @@ class Therapist {
    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(min = 60)
+     * @Assert\Length(min = 6, max = 255)
      */
    protected $name;
 

@@ -51,7 +51,7 @@ class TherapistsController extends Controller
     }
 
     /**
-     * @Route("/account/therapists/{id}/{slug}", name="admin_business_therapists_create_path")
+     * @Route("/account/therapists/{id}/{slug}/new", name="admin_business_therapists_create_path")
      * @Method("POST")
      */
     public function createAction($id, $slug, Request $request) {

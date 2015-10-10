@@ -8,7 +8,7 @@
     {# <a href="{{path('admin_new_booking_path', { id: business.getId, slug: business.getSlug })}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Booking</strong></a> #}
   </div>
   <div class="panel-body">
-    {% if bookings | length > 0 %}
+    {% if offers | length > 0 %}
     <table class="table businesses-table">
       <thread>
         <tr>
@@ -27,7 +27,7 @@
       <tbody>
 
 
-          {% for booking in bookings %}
+          {% for booking in offers %}
                   <tr data=bookingid="{{booking.getId}}">
           {% set service     = booking.getService %}
           {% set serviceType = service.getServiceType %}

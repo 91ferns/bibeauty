@@ -14,7 +14,7 @@
       <ul class="list-group">
       {% for therapist in therapists %}
         <li class="list-group-item">
-          <a href="">{{ therapist.getLabel }}</a>
+          <a href="">{{ therapist.getName }} - <small class="text-muted">{{ therapist.getTitle }}</small></a>
         </li>
       {% endfor %}
       </ul>
