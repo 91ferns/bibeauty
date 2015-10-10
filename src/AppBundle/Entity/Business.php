@@ -63,14 +63,14 @@ class Business {
     protected $address;
 
     /**
-      * @ORM\Column(type="string", length=14, nullable=false)
+      * @ORM\Column(type="string", length=14, nullable=true)
       */
     protected $landline  = null;
 
     /**
-      * @ORM\Column(type="string", length=14)
+      * @ORM\Column(type="string", length=14, nullable=true)
       */
-    protected $mobile;
+    protected $mobile = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Review", cascade={"persist"}, mappedBy="business")
