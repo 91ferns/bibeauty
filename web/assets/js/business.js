@@ -10,4 +10,6 @@ jQuery(function($) {
     React.render(React.createElement(AvailabilityForm, {business: business, treatment: treatment}), container);
 
   });
+
+  $('[checked="checked"]').parent().addClass("active");
 });

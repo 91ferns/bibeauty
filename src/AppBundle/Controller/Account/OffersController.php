@@ -23,19 +23,15 @@ class OffersController extends Controller
      */
     public function indexAction($id, $slug, Request $request)
     {
-        $bookings = $this->getRepo('Offer');
-        $business =  $this->getRepo('Business');
-        $business = $business->find($id);
-        $bookings   = $bookings->findByBusiness($business);
-        /*$service   =  $booking->getService();
-        $serviceType = $booking->getServiceType();*/
-        /*foreach($bookings as $booking){
+        $offers = $this->getRepo('Offer');
+        $business = $this->findBusinessBySlugAndId($slug, $id);
 
-          var_dump( $booking->getAvailability()->getTime());
-        }
-        exit;*/
+        $offers   = $offers->findByBusiness($business);
+
+        //print_r($offers);
+
         return $this->render('account/offers/index.html.twig', array(
-            'bookings' => $bookings,
+            'offers' => $offers,
             'business' => $business,
         ));
     }

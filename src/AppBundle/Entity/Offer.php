@@ -71,13 +71,10 @@ class Offer {
     protected $currentPrice;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
      */
-    protected $approval = 1;
-    // 1 = unapproved
-    // 4 = approved
-    // 3 = cancelled
-    // 2 = Declined
+    private $isOpen = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="Business")

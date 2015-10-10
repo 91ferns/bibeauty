@@ -10,8 +10,8 @@
       </div>
       <div class="form-group">
         <label for="Time">Time</label>
-        <select multiple="true" class="form-control">
-        {% for hour in 1..23 %}
+        <select multiple="true" class="form-control" name="Time">
+        {% for hour in 7..21 %}
           {% for minute in 0..3 %}
             {% set formattedMinute = "%02d"|format(minute * 15) %}
             <option value="{{hour}}:{{formattedMinute}}">{{hour | nicehour }}:{{formattedMinute}} {{ hour | meridian }}</option>
@@ -38,11 +38,11 @@
 
       <div class="form-group">
         <div class="input-group">
-          <label for="">Recurring</label><br>
+          <label for="">Repeat</label><br>
           <!--<input type="checkbox" name="Recurring" class="form-control" />-->
           <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-primary active" >
-              <input type="radio" name="Recurring" checked class="form-control" /> None
+              <input type="radio" name="Recurring" checked class="form-control" /> Never
             </label>
             <label class="btn btn-primary" >
               <input type="radio" name="Recurring_Daily" checked class="form-control" /> Daily
@@ -58,5 +58,4 @@
         </div>
       </div> <!-- /.form-group -->
   </div>
-  <script>$('[checked="checked"]').parent().addClass("active");</script>
 </div>

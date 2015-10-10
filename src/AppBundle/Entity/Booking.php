@@ -20,4 +20,13 @@ class Booking {
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $approval = 1;
+    // 1 = unapproved
+    // 4 = approved
+    // 3 = cancelled
+    // 2 = Declined
+
 }

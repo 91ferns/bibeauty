@@ -32,40 +32,54 @@ class TreatmentAvailabilityController extends Controller
         $time     = $request->request->get('Time', false);
 
         if (!$date || !$time ){
-            return $this->redirectToRoot($slug, $id, $treatmentId);
+            return $this->redirectToRoot($slug, $id, $treatmentId, array(
+                'error',
+                'Date and time must be specified.'
+            ));
         }
 
         $recurring = $request->request->get('Recurring', false);
 
         $treatments = $this->getRepo('Treatment');
-        $treatment = $treatment->findOneBy(array( 'id'=>$treatmentId ));
+        $treatment = $treatments->findOneBy(array( 'id'=>$treatmentId ));
 
         if (!$treatment) {
-            return $this->redirectToRoot($slug, $id, $treatmentId);
+            return $this->redirectToRoot($slug, $id, $treatmentId, array(
+                'error',
+                'Treatment not found.'
+            ));
         }
 
         $em = $this->getEm();
         // $em->persist($treatment); // Why?
 
-        $availability = $this->buildInsertAvailability($treatment,$recurring,$date,$time);
-        $recurring = $this->checkGetRecurrence($request->request);
-
-        if($recurring){
-          $this->buildInsertRecurrences($recurring, $availability, $date, new \DateTime($time));
-        }
-
         $offer  = new Offer();
         $offer->setBusiness($business);
         $offer->setTreatment($treatment);
-        $offer->setAvailability($availability);
         $em->persist($offer);
+
+        // Offer is made. We need to make its availability now
+
+        die();
+
+        $availability = $this->buildInsertAvailability($treatment,$recurring,$date,$time);
+        $recurring = $this->checkGetRecurrence($request->request);
+
+        $this->buildInsertRecurrences($recurring, $availability, $date, new \DateTime($time));
 
         $em->flush();
 
         return $this->redirectToRoot($slug, $id, $treatmentId);
     }
 
-    protected function redirectToRoot($slug, $id, $treatmentId) {
+    protected function redirectToRoot($slug, $id, $treatmentId, $flash = false) {
+        if ($flash) {
+            list($type, $message) = $flash;
+            $this->addFlash(
+                $type,
+                $message
+            );
+        }
         return $this->redirectToRoute(
             'admin_treatment_show_path',
             array( "slug"=> $slug,
@@ -116,10 +130,10 @@ class TreatmentAvailabilityController extends Controller
 
     }
 
-    protected function buildInsertAvailability($service,$recurring,$date,$time)
+    protected function buildInsertAvailability($treatment,$recurring,$date,$time)
     {
       $availability = new TreatmentAvailabilitySet();
-      $availability->setService($service);
+      $availability->setTreatment($treatment);
       $availability->setRecurring($recurring);
       $availability->setDate(new \DateTime($date));
       //$time = new \DateTime($time);
