@@ -5,16 +5,20 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     Treatments for {{ business.getName }}
-    <a class="admin-btn" href="{{ path('admin_business_services_new_path', { slug: business.getSlug, id: business.getId })}}">
+    <a class="admin-btn" href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
       <i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong>
     </a>
   </div>
   <div class="panel-body">
-    {% if services.count > 0 %}
+    {% if treatments.count > 0 %}
       <ul class="list-group">
-      {% for service in services %}
+      {% for treatment in treatments %}
         <li class="list-group-item">
-          <a href="{{ path('admin_service_show_path',{'id':business.getId,'slug':business.getSlug,'serviceid': service.getId})}}">{{ service.getLabel }}</a>
+          <a href="{{ path('admin_treatment_show_path',{
+            'id': business.getId,
+            'slug': business.getSlug,
+            'treatmentId': treatment.getId
+            }) }}">{{ treatment.getLabel }}</a>
         </li>
       {% endfor %}
       </ul>

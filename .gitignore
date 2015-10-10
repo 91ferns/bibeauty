@@ -12,5 +12,7 @@ node_modules
 /vendor/
 /web/bundles/
 /web/css/
-
+Gemfile
+Gemfile.lock
+composer.phar
 *.php~

@@ -40,12 +40,6 @@ class TreatmentAvailabilitySet {
     private $treatment;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotBlank()
-     */
-    private $isOpen = false;
-
-    /**
      * @ORM\Column(type="boolean", options={"default" = false})
      * @Assert\NotBlank()
      */
@@ -115,29 +109,6 @@ class TreatmentAvailabilitySet {
     public function getTime()
     {
         return $this->time;
-    }
-
-    /**
-     * Set isOpen
-     *
-     * @param integer $isOpen
-     * @return TreatmentAvailabilitySet
-     */
-    public function setIsOpen($isOpen = false)
-    {
-        $this->isOpen = $isOpen;
-
-        return $this;
-    }
-
-    /**
-     * Get isOpen
-     *
-     * @return integer
-     */
-    public function getIsOpen()
-    {
-        return $this->isOpen;
     }
 
     /**

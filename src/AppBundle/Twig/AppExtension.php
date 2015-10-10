@@ -3,6 +3,7 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\OperatingSchedule;
+use Cocur\Slugify\Slugify;
 
 class AppExtension extends \Twig_Extension
 {
@@ -18,6 +19,9 @@ class AppExtension extends \Twig_Extension
             ),
             new \Twig_SimpleFilter('elapsed', array($this, 'elapsedFilter')),
             new \Twig_SimpleFilter('phone', array($this, 'phoneNumberFilter')),
+            new \Twig_SimpleFilter('slugify', array($this, 'slugFilter')),
+            new \Twig_SimpleFilter('meridian', array($this, 'hourMeridianFilter')),
+            new \Twig_SimpleFilter('nicehour', array($this, 'formatHourFilter')),
         );
     }
 
@@ -34,6 +38,11 @@ class AppExtension extends \Twig_Extension
 
     }
 
+    public function slugFilter( $string ) {
+        $slugify = new Slugify();
+        return $slugify->slugify($string); // hello-world
+    }
+
     public function elapsedFilter( $timestamp ) {
         //type cast, current time, difference in timestamps
         return OperatingSchedule::getElapsedTime($timestamp);
@@ -47,6 +56,22 @@ class AppExtension extends \Twig_Extension
         }
 
         return join('', $stars);
+    }
+
+    public function formatHourFilter( $hour ) {
+        if ($hour === 0 || $hour === 12) {
+            return $hour;
+        }
+        $mod = $hour % 12;
+        return $mod;
+    }
+
+    public function hourMeridianFilter( $hour ) {
+        if ($hour < 12) {
+            return 'AM';
+        }
+
+        return 'PM';
     }
 
     public function phoneNumberFilter( $phone, $country = 'US' ) {

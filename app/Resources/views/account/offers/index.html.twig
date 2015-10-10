@@ -4,10 +4,11 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    Bookings
+    Offers
     {# <a href="{{path('admin_new_booking_path', { id: business.getId, slug: business.getSlug })}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Booking</strong></a> #}
   </div>
   <div class="panel-body">
+    {% if bookings | length > 0 %}
     <table class="table businesses-table">
       <thread>
         <tr>
@@ -24,7 +25,6 @@
         </tr>
       </thread>
       <tbody>
-        {% if bookings | length > 0 %}
 
 
           {% for booking in bookings %}
@@ -81,13 +81,13 @@
           {% endfor %}
 
         <tr>
-        {% else %}
-        <p>You have no bookings</p>
-        {% endif %}
       </tr>
       </tbody>
 
     </table>
+    {% else %}
+    <p>You have no offers</p>
+    {% endif %}
 
   </div>
 </div>

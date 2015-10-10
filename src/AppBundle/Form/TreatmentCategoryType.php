@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
 
 use AppBundle\Entity\Attachment;
 
-class ServiceCategoryType extends AbstractType
+class TreatmentCategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,7 +20,7 @@ class ServiceCategoryType extends AbstractType
                 'attr' => array(
                    'placeholder' => 'Treatment Categories'
                 ),
-                'class' => 'AppBundle:ServiceCategory',
+                'class' => 'AppBundle:TreatmentCategory',
                 'query_builder' => function (EntityRepository $er) use ($options){
                     return $er->createQueryBuilder('sc')
                         ->leftJoin('AppBundle:Business','b')
@@ -44,7 +44,7 @@ class ServiceCategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\ServiceCategory',
+            'data_class' => 'AppBundle\Entity\TreatmentCategory',
             'business'   => '',
         ));
     }
@@ -58,6 +58,6 @@ class ServiceCategoryType extends AbstractType
 
     public function getName()
     {
-        return 'service_category';
+        return 'treatment_category';
     }
 }

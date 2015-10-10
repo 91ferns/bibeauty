@@ -4,32 +4,23 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    {{ service.getServiceType.getLabel }}
-      <a class="admin-btn" data-toggle="modal" href="#add-availability" href="{{ path('admin_business_services_new_path', { slug: business.getSlug, id: business.getId,serviceid:service.getId })}}">
-        <i class="fa fa-plus fa-lg"></i><strong>Add Availability</strong>
+    {{ treatment.getTreatmentCategory.getLabel }}
+      <a class="admin-btn" data-toggle="modal" href="#add-availability">
+        <i class="fa fa-plus fa-sm"></i> <strong>Add Offer</strong>
+      </a>
+
+      <a class="admin-btn" data-toggle="modal" href="#delete">
+        <i class="fa fa-trash fa-sm"></i> <strong>Delete</strong>
       </a>
   </div>
   <div class="panel-body">
-    {% if service %}
-        <div class="form-group">
-          <label class="control-label" for="CurrentPrice" >CurrentPrice</label>
-          <div class="input-group">
-            <span class="input-group-addon">$ </span>
-              <input type="text" class="form-control" name="CurrentPrice" placeholder="0.00" value="{{ service.CurrentPrice }}.00" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="OriginalPrice" >OriginalPrice</label>
-          <div class="input-group">
-            <span class="input-group-addon">$ </span>
-            <input type="text" name="OriginalPrice" class="form-control" placeholder="0.00" value="{{ service.OriginalPrice }}.00"/>
-          </div>
-        </div>
 
-      </ul>
-    {% else %}
-      <p>No treatments have been added.</p>
-    {% endif %}
+    {{ form_start(form) }}
+
+      {{ form_widget(form) }}
+      <input type="submit" value="Edit Treatment"
+           class="btn btn-primary" />
+    {{ form_end(form) }} <!-- /. form -->
   </div>
 </div>
 <!-- Modal -->
@@ -37,7 +28,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
     {#{ form_start(form) }#}
-      <form action="{{ path('admin_service_availability_new_path',{slug:slug,id:id,serviceid:service.getId}) }}" method="post">
+      <form action="{{ path('admin_treatment_availability_new_path',{slug:slug, id:id, treatmentId:treatment.getId }) }}" method="post">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="add-service-category-label">Add Availability</h4>

@@ -23,43 +23,16 @@ class Treatment {
     protected $id;
 
     /**
-     * @ORM\Column(type="integer", length=2)
+     * @ORM\Column(type="integer", length=3)
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(
-     *     value = 0
-     * )
-     */
-    protected $hours = 0;
-
-    /**
-     * @ORM\Column(type="integer", length=2)
-     * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(
-     *     value = 0
+     *     value = 15
      * )
      * @Assert\LessThan(
-     *     value = 60
+     *     value = 520
      * )
      */
-    protected $minutes = 0;
-
-    /**
-     * @ORM\Column(type="float", length=8)
-     * @Assert\NotBlank()
-     * @Assert\GreaterThan(
-     *     value = 0.00
-     * )
-     */
-    protected $originalPrice;
-
-    /**
-     * @ORM\Column(type="float", length=8)
-     * @Assert\NotBlank()
-     * @Assert\GreaterThan(
-     *     value = 0.00
-     * )
-     */
-    protected $currentPrice;
+    protected $duration;
 
     /**
      * @ORM\Column(type="datetime")
@@ -88,6 +61,38 @@ class Treatment {
      * @ORM\JoinColumn(name="therapist_id", referencedColumnName="id")
      */
     protected $therapist;
+
+    /**
+     * @ORM\Column(type="float", length=8)
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(
+     *     value = 0.00
+     * )
+     */
+    protected $originalPrice;
+
+    /**
+     * Set originalPrice
+     *
+     * @param float $originalPrice
+     * @return Service
+     */
+    public function setOriginalPrice($originalPrice)
+    {
+        $this->originalPrice = $originalPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get originalPrice
+     *
+     * @return float
+     */
+    public function getOriginalPrice()
+    {
+        return $this->originalPrice;
+    }
 
     public function __construct()
     {
@@ -153,79 +158,26 @@ class Treatment {
     }
 
     /**
-     * Set minutes
+     * Set duration
      *
-     * @param integer $minutes
-     * @return Service
+     * @param integer $duration
+     * @return integer
      */
-    public function setMinutes($minutes)
+    public function setDuration($duration)
     {
-        $this->minutes = $minutes;
+        $this->duration = $duration;
 
         return $this;
     }
 
     /**
-     * Get minutes
+     * Get duration
      *
      * @return integer
      */
-    public function getMinutes()
+    public function getDuration()
     {
-        return $this->minutes;
-    }
-
-    /**
-     * Set originalPrice
-     *
-     * @param float $originalPrice
-     * @return Service
-     */
-    public function setOriginalPrice($originalPrice)
-    {
-        $this->originalPrice = $originalPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get originalPrice
-     *
-     * @return float
-     */
-    public function getOriginalPrice()
-    {
-        return $this->originalPrice;
-    }
-
-    /**
-     * Set currentPrice
-     *
-     * @param float $currentPrice
-     * @return Service
-     */
-    public function setCurrentPrice($currentPrice)
-    {
-        $this->currentPrice = $currentPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get currentPrice
-     *
-     * @return float
-     */
-    public function getCurrentPrice()
-    {
-        return $this->currentPrice;
-    }
-
-    public function getPercentageSaved() {
-        $divided = ($this->getOriginalPrice() - $this->getCurrentPrice()) / $this->getOriginalPrice();
-        $divided = $divided * 100;
-
-        return number_format($divided, 0);
+        return $this->duration;
     }
 
     /**
@@ -268,8 +220,10 @@ class Treatment {
      */
     public function getTimeForPrint()
     {
-        $hours = $this->getHours();
-        $minutes = $this->getMinutes();
+        $duration = $this->getDuration();
+
+        $minutes = $duration % 60;
+        $hours = floor($duration / 60);
 
         $string = '';
 
@@ -388,7 +342,7 @@ class Treatment {
     }
 
     public function getLabel() {
-        return $this->getServiceType()->getLabel();
+        return $this->getTreatmentCategory()->getLabel();
     }
 
     public static function getByCategory($treatments)

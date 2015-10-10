@@ -260,4 +260,4 @@ class Booking {
     {
         return $this->offer;
     }
-}
+

@@ -62,13 +62,19 @@ class Offer {
     protected $updated;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float", length=8)
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(
+     *     value = 0.00
+     * )
      */
-    protected $approval = 1;
-    // 1 = unapproved
-    // 4 = approved
-    // 3 = cancelled
-    // 2 = Declined
+    protected $currentPrice;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
+     */
+    private $isOpen = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="Business")
@@ -333,5 +339,35 @@ class Offer {
     public function getTreatment()
     {
         return $this->treatment;
+    }
+
+    /**
+     * Set currentPrice
+     *
+     * @param float $currentPrice
+     * @return Service
+     */
+    public function setCurrentPrice($currentPrice)
+    {
+        $this->currentPrice = $currentPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get currentPrice
+     *
+     * @return float
+     */
+    public function getCurrentPrice()
+    {
+        return $this->currentPrice;
+    }
+
+    public function getPercentageSaved() {
+        $divided = ($this->getOriginalPrice() - $this->getCurrentPrice()) / $this->getOriginalPrice();
+        $divided = $divided * 100;
+
+        return number_format($divided, 0);
     }
 }

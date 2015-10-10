@@ -69,8 +69,8 @@
         <div class="row">
             {% for category in categories | slice(0, 6) %}
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 image-wrapper">
-                <a href="#" class="thumbnail" id="image-zoom">
-                  <img src="{{ asset('assets/images/categories/hair.png') }}" class="img-responsive" alt="{{category.getLabel}}">
+                <a href="{{path('listings_search_path')}}?treatment={{ category.getId }}" class="thumbnail" id="image-zoom">
+                  <img src="{{ asset('assets/images/category-thumbnails/') }}{{ category.getLabel | lower | slugify }}.png" class="img-responsive" alt="{{category.getLabel}}">
                 </a>
             </div>
             {% endfor %}
@@ -94,7 +94,8 @@
     </div>
 </section> <!-- /#how-it-works -->
 <hr>
-{% if deals | length > 0 %}
+{% if false %}
+{# if deals | length > 0 #}
 <section id="latest-deals">
     <div class="container">
 
