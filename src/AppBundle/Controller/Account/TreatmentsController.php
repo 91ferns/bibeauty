@@ -68,7 +68,7 @@ class TreatmentsController extends Controller
           $em = $this->getDoctrine()->getManager();
           $em->persist($service);
           $em->flush();
-          return $this->redirectToRoute('admin_business_services_path',["slug"=>$slug,"id"=>$id]);
+          return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
         } else {
           return $this->render('account/businesses/new.html.twig', array(
             'form' => $form->createView()
@@ -77,36 +77,27 @@ class TreatmentsController extends Controller
     }
 
     /**
-     * @Route("/account/treatments/{id}/{slug}/show/{serviceid}", name="admin_service_show_path")
+     * @Route("/account/treatments/{id}/{slug}/show/{treatmentId}", name="admin_treatment_show_path")
      * @Method("GET")
      */
-    public function showAction($id, $slug, $serviceid, Request $request)
+    public function showAction($id, $slug, $treatmentId, Request $request)
     {
         $business = $this->businessBySlugAndId($slug, $id);
-        $services = $this->getRepo('Service');
-        $service  = $services->findOneBy(array('id'=>$serviceid));
+        $treatments = $this->getRepo('Treatment');
+        $treatment  = $treatments->findOneBy(array('id'=>$treatmentId));
+
+        $treatmentType = $this->createForm(new TreatmentType(), $treatment);
 
         // replace this example code with whatever you need
-        return $this->render('account/services/show.html.twig', array(
+        return $this->render('account/treatments/show.html.twig', array(
             //'businessForm' => $form->createView(),
             'business' => $business,
-            'service'  => $service,
-            'slug'=>$slug,
-            'id'=>$id
+            'treatment'  => $treatment,
+            'slug'=> $slug,
+            'id'=> $id,
+            'form' => $treatmentType->createView(),
         ));
 
-    }
-    protected function getRepo($name)
-    {
-      $em = $this->getDoctrine()->getManager();
-      $repository = $em->getRepository("AppBundle:{$name}");
-      return $repository;
-    }
-
-    private function getCurrentBusiness($id, $slug)
-    {
-      //$business = $this->getRepo('Business');
-    //return $business->findOneBy(['owner'=>$this->getUser()->getId()]);
     }
 
 }

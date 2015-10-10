@@ -33,31 +33,18 @@ class TreatmentType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
             ))
-            ->add('hours', 'integer', array(
-                 'label' => 'Hours',
+            ->add('duration', 'integer', array(
+                 'label' => 'Duration (in minutes)',
                  'attr' => array(
-                    'placeholder' => 'Hours'
+                    'placeholder' => 'Duration'
                 )
-            ))
-            ->add('minutes', 'integer', array(
-                 'label' => 'Minutes',
-                 'attr' => array(
-                    'placeholder' => 'Minutes'
-                )
-            ))
-            ->add('currentPrice', 'money', array(
-                 'label' => 'Discounted Price',
-                 'attr' => array(
-                    'placeholder' => '0.00'
-                ),
-                'currency' => 'USD'
             ))
             ->add('originalPrice', 'money', array(
-                 'label' => 'Full Price',
-                 'attr' => array(
-                    'placeholder' => '0.00'
+                'label' => 'Original Price',
+                'attr' => array(
+                    'placeholder' => 'Original Price',
                 ),
-                'currency' => 'USD'
+                'currency' => 'USD',
             ))
         ;
     }

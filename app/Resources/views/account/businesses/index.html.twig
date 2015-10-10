@@ -1,0 +1,28 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Businesses
+    <a href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
+  </div>
+  <div class="panel-body">
+    {% if businesses | length > 0 %}
+    <ul class="list-group">
+      {% for business in businesses %}
+      <li class="list-group-item">
+        <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+          {{ business.getName }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no businesses</p>
+    {% endif %}
+  </div>
+</div>
+
+
+{% endblock %}

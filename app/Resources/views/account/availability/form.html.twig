@@ -7,25 +7,53 @@
           <input type="text" id="DayField" name="Day" class="form-control" placeholder="Day" />
           <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
         </div>
+      </div>
+      <div class="form-group">
         <label for="Time">Time</label>
-        <div class="input-group">
-          <input type="time" id="TimeField" name="Time" class="form-control" placeholder="Time" />
-          <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
-        </div>
+        <select multiple="true" class="form-control">
+        {% for hour in 1..23 %}
+          {% for minute in 0..3 %}
+            {% set formattedMinute = "%02d"|format(minute * 15) %}
+            <option value="{{hour}}:{{formattedMinute}}">{{hour | nicehour }}:{{formattedMinute}} {{ hour | meridian }}</option>
+          {% endfor %}
+        {% endfor %}
+        </select>
+        <p class="help-block">
+          CTRL / CMD + click to select more than one. Shift + Click to select all in between.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Original Price</label>
+        <input class="form-control" name="Discount" type="i" disabled value="{{ treatment.getOriginalPrice | number_format(2) }}">
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Discount Price</label>
+        <input class="form-control" name="Discount">
+        <p class="help-block">
+          Must be less than ${{ treatment.getOriginalPrice | number_format(2) }}
+        </p>
+      </div>
+
+      <div class="form-group">
         <div class="input-group">
           <label for="">Recurring</label><br>
           <!--<input type="checkbox" name="Recurring" class="form-control" />-->
           <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary active" >
-                      <input type="radio" name="Recurring" checked class="form-control" /> NONE
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="Recurring_Monthly" class="form-control" /> MONTHLY
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="Recurring_Weekly" class="form-control" /> WEEKLY
-                </label>
-            </div>
+            <label class="btn btn-primary active" >
+              <input type="radio" name="Recurring" checked class="form-control" /> None
+            </label>
+            <label class="btn btn-primary" >
+              <input type="radio" name="Recurring_Daily" checked class="form-control" /> Daily
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="Recurring_Monthly" class="form-control" /> Monthly
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="Recurring_Weekly" class="form-control" /> Weekly
+            </label>
+          </div>
 
         </div>
       </div> <!-- /.form-group -->

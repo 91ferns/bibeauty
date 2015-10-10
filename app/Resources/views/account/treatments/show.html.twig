@@ -4,17 +4,53 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    {{ business.getName }}
-    <a href="{{ path('admin_business_services_new_path', { id: business.getId, slug: business.getSlug })}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong></a>
-    <a href="#" class="admin-btn"><i class="fa fa-trash-o fa-lg"></i><strong>Delete</strong></a>
+    {{ treatment.getTreatmentCategory.getLabel }}
+      <a class="admin-btn" data-toggle="modal" href="#add-availability">
+        <i class="fa fa-plus fa-sm"></i> <strong>Add Offer</strong>
+      </a>
+
+      <a class="admin-btn" data-toggle="modal" href="#delete">
+        <i class="fa fa-trash fa-sm"></i> <strong>Delete</strong>
+      </a>
   </div>
   <div class="panel-body">
-    {{ form_start(businessForm) }}
-        {{ form_widget(businessForm) }}
-        <input type="submit" value="Edit Business"
-             class="btn btn-primary" />
-    {{ form_end(businessForm) }} <!-- /. form -->
+    {{ form_start(form) }}
+
+      {{ form_widget(form) }}
+      <input type="submit" value="Edit Treatment"
+           class="btn btn-primary" />
+    {{ form_end(form) }} <!-- /. form -->
   </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="add-availability" tabindex="-1" role="dialog" aria-labelledby="add-availability-label">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    {#{ form_start(form) }#}
+      <form action="{{ path('admin_treatment_availability_new_path',{slug:slug, id:id, treatmentId:treatment.getId }) }}" method="post">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="add-service-category-label">Add Availability</h4>
+        </div>
+        <div class="modal-body">
+          {#{ form_widget(serviceForm) }#}
+          {% include "account/availability/form.html.twig" %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit"
+               class="btn btn-primary">
+               <i class="fa fa-plus fa-lg"></i><strong>Add an Availability</strong>
+           </button>
+        </div>
+      </form> <!-- /.form -->
+    </div>
+  </div>
+</div>
+      {#{ form_end(serviceForm) }#} <!-- /. form -->
+  <!--  </div>
+  </div>
+</div>
+
 
 {% endblock %}

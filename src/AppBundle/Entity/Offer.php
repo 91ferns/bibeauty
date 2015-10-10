@@ -62,6 +62,15 @@ class Offer {
     protected $updated;
 
     /**
+     * @ORM\Column(type="float", length=8)
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(
+     *     value = 0.00
+     * )
+     */
+    protected $currentPrice;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $approval = 1;
@@ -333,5 +342,35 @@ class Offer {
     public function getTreatment()
     {
         return $this->treatment;
+    }
+
+    /**
+     * Set currentPrice
+     *
+     * @param float $currentPrice
+     * @return Service
+     */
+    public function setCurrentPrice($currentPrice)
+    {
+        $this->currentPrice = $currentPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get currentPrice
+     *
+     * @return float
+     */
+    public function getCurrentPrice()
+    {
+        return $this->currentPrice;
+    }
+
+    public function getPercentageSaved() {
+        $divided = ($this->getOriginalPrice() - $this->getCurrentPrice()) / $this->getOriginalPrice();
+        $divided = $divided * 100;
+
+        return number_format($divided, 0);
     }
 }

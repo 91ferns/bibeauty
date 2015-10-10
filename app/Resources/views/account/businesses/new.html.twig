@@ -3,16 +3,13 @@
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    Add a Treatment for {{ business.getName }}
-  </div>
+  <div class="panel-heading">Add a business</div>
   <div class="panel-body">
     {{ form_start(form) }}
-
-      {{ form_widget(form) }}
+    {{ form_widget(form) }}
       <input type="submit" value="Create"
-           class="btn btn-primary" />
-    {{ form_end(form) }} <!-- /. form -->
+           class="btn btn-default pull-right" />
+    {{ form_end(form) }}
   </div>
 </div>
 
