@@ -3,6 +3,7 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\OperatingSchedule;
+use Cocur\Slugify\Slugify;
 
 class AppExtension extends \Twig_Extension
 {
@@ -18,6 +19,7 @@ class AppExtension extends \Twig_Extension
             ),
             new \Twig_SimpleFilter('elapsed', array($this, 'elapsedFilter')),
             new \Twig_SimpleFilter('phone', array($this, 'phoneNumberFilter')),
+            new \Twig_SimpleFilter('slugify', array($this, 'slugFilter')),
         );
     }
 
@@ -32,6 +34,11 @@ class AppExtension extends \Twig_Extension
 
         return sprintf('http://%s.%s/%s', $this->bucket, self::AWS_HOST, $key);
 
+    }
+
+    public function slugFilter( $string ) {
+        $slugify = new Slugify();
+        return $slugify->slugify($string); // hello-world
     }
 
     public function elapsedFilter( $timestamp ) {
