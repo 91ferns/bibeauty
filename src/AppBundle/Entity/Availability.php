@@ -28,10 +28,16 @@ class Availability {
    private $date;
 
    /**
-    * @ORM\Column(type="time")
-    * @Assert\NotBlank()
+    * @ORM\ManyToOne(targetEntity="Business")
+    * @ORM\JoinColumn(name="business_id", referencedColumnName="id")
     */
-   private $time;
+   private $business;
+
+   /**
+    * @ORM\ManyToOne(targetEntity="Treatment")
+    * @ORM\JoinColumn(name="treatment_id", referencedColumnName="id")
+    */
+   private $treatment;
 
    /**
     * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet", inversedBy="availabilities")
@@ -40,10 +46,11 @@ class Availability {
     private $availabilitySet;
 
 
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -54,7 +61,7 @@ class Availability {
      * Set date
      *
      * @param \DateTime $date
-     * @return RecurringAppointments
+     * @return Availability
      */
     public function setDate($date)
     {
@@ -66,7 +73,7 @@ class Availability {
     /**
      * Get date
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDate()
     {
@@ -74,48 +81,71 @@ class Availability {
     }
 
     /**
-     * Set time
+     * Set business
      *
-     * @param \DateTime $time
-     * @return RecurringAppointments
+     * @param \AppBundle\Entity\Business $business
+     * @return Availability
      */
-    public function setTime($time)
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
     {
-        $this->time = $time;
+        $this->business = $business;
 
         return $this;
     }
 
     /**
-     * Get time
+     * Get business
      *
-     * @return \DateTime
+     * @return \AppBundle\Entity\Business 
      */
-    public function getTime()
+    public function getBusiness()
     {
-        return $this->time;
+        return $this->business;
     }
 
     /**
-     * Set availability
+     * Set treatment
      *
-     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availability
-     * @return RecurringAppointments
+     * @param \AppBundle\Entity\Treatment $treatment
+     * @return Availability
      */
-    public function setAvailability(\AppBundle\Entity\TreatmentAvailabilitySet $availability = null)
+    public function setTreatment(\AppBundle\Entity\Treatment $treatment = null)
     {
-        $this->availability = $availability;
+        $this->treatment = $treatment;
 
         return $this;
     }
 
     /**
-     * Get availability
+     * Get treatment
      *
-     * @return \AppBundle\Entity\TreatmentAvailabilitySets
+     * @return \AppBundle\Entity\Treatment 
      */
-    public function getAvailability()
+    public function getTreatment()
     {
-        return $this->availability;
+        return $this->treatment;
+    }
+
+    /**
+     * Set availabilitySet
+     *
+     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availabilitySet
+     * @return Availability
+     */
+    public function setAvailabilitySet(\AppBundle\Entity\TreatmentAvailabilitySet $availabilitySet = null)
+    {
+        $this->availabilitySet = $availabilitySet;
+
+        return $this;
+    }
+
+    /**
+     * Get availabilitySet
+     *
+     * @return \AppBundle\Entity\TreatmentAvailabilitySet 
+     */
+    public function getAvailabilitySet()
+    {
+        return $this->availabilitySet;
     }
 }

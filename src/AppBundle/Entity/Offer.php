@@ -40,10 +40,10 @@ class Offer {
     protected $phone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet")
+     * @ORM\ManyToOne(targetEntity="OfferAvailabilitySet")
      * @ORM\JoinColumn(name="availability_id", referencedColumnName="id")
      */
-    protected $availability;
+    protected $availabilitySet;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -245,12 +245,12 @@ class Offer {
     /**
      * Set availability
      *
-     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availability
+     * @param \AppBundle\Entity\OfferAvailabilitySet $availability
      * @return Booking
      */
-    public function setAvailability(\AppBundle\Entity\TreatmentAvailabilitySet $availability = null)
+    public function setAvailabilitySet(\AppBundle\Entity\OfferAvailabilitySet $availabilitySet = null)
     {
-        $this->availability = $availability;
+        $this->availabilitySet = $availabilitySet;
 
         return $this;
     }
@@ -258,11 +258,11 @@ class Offer {
     /**
      * Get availability
      *
-     * @return \AppBundle\Entity\TreatmentAvailabilitySet
+     * @return \AppBundle\Entity\OfferAvailabilitySet
      */
-    public function getAvailability()
+    public function getAvailabilitySet()
     {
-        return $this->availability;
+        return $this->availabilitySet;
     }
 
     /**
@@ -369,5 +369,28 @@ class Offer {
         $divided = $divided * 100;
 
         return number_format($divided, 0);
+    }
+
+    /**
+     * Set isOpen
+     *
+     * @param boolean $isOpen
+     * @return Offer
+     */
+    public function setIsOpen($isOpen)
+    {
+        $this->isOpen = $isOpen;
+
+        return $this;
+    }
+
+    /**
+     * Get isOpen
+     *
+     * @return boolean 
+     */
+    public function getIsOpen()
+    {
+        return $this->isOpen;
     }
 }

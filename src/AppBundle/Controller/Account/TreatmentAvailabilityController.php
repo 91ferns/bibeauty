@@ -12,7 +12,7 @@ use AppBundle\Form\TreatmentAvailabilitySetType;
 use AppBundle\Entity\Business;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Service;
-use AppBundle\Entity\TreatmentAvailabilitySet;
+use AppBundle\Entity\OfferAvailabilitySet;
 use AppBundle\Entity\Offer;
 use AppBundle\Entity\RecurringAppointments;
 
@@ -63,7 +63,8 @@ class TreatmentAvailabilityController extends Controller
 
         // Offer is made. We need to make its availability now
         $matchingDays = $this->getDaysThatMatchRecurrence($date, $times, $recurrenceDOWs, $recurrenceType);
-        print_r($matchingDays);
+        // we now need to create the availability set
+
         die();
 
         $availability = $this->buildInsertAvailability($treatment,$recurring,$date,$time);
@@ -95,13 +96,12 @@ class TreatmentAvailabilityController extends Controller
 
     protected function buildInsertAvailability($treatment,$recurring,$date,$time)
     {
-      $availability = new TreatmentAvailabilitySet();
+      $availability = new OfferAvailabilitySet();
       $availability->setTreatment($treatment);
       $availability->setRecurring($recurring);
       $availability->setDate(new \DateTime($date));
       //$time = new \DateTime($time);
       //var_dump($time); exit;
-      $availability->setTime(new \DateTime($time));
 
       $em = $this->getEm();
       $em->persist($availability);

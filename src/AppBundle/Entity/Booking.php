@@ -36,7 +36,7 @@ class Booking {
      * @ORM\Column(type="datetime")
      */
     protected $updated;
-    
+
 
      /**
      * @ORM\PrePersist
@@ -60,7 +60,7 @@ class Booking {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,7 +83,7 @@ class Booking {
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -106,7 +106,7 @@ class Booking {
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -129,7 +129,7 @@ class Booking {
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -152,7 +152,7 @@ class Booking {
     /**
      * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {
@@ -175,7 +175,7 @@ class Booking {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -185,7 +185,7 @@ class Booking {
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -208,7 +208,7 @@ class Booking {
     /**
      * Get treatment
      *
-     * @return \AppBundle\Entity\Treatment 
+     * @return \AppBundle\Entity\Treatment
      */
     public function getTreatment()
     {
@@ -231,7 +231,7 @@ class Booking {
     /**
      * Get business
      *
-     * @return \AppBundle\Entity\Business 
+     * @return \AppBundle\Entity\Business
      */
     public function getBusiness()
     {
@@ -254,10 +254,11 @@ class Booking {
     /**
      * Get offer
      *
-     * @return \AppBundle\Entity\Offer 
+     * @return \AppBundle\Entity\Offer
      */
     public function getOffer()
     {
         return $this->offer;
     }
 
+}
