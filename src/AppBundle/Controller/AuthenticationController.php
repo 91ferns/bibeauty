@@ -118,5 +118,39 @@ class AuthenticationController extends Controller {
 
 
    }
+    /**
+    * @Route("/forgotpassword", name="forgot_password")
+    * @Route("/forgotpassword{token}", name="forgot_password_token")
+    * @Method({"POST","GET"})
+    */
+   function forgotPassword(Request $request,$token = null){
+        if($token === null){
+            return $this->render(
+                'authentication/forgotpassword.html.twig'
+            );
 
+        }else{
+           
+        }
+
+   }
+   /**
+    * @Route("/forgotpassword", name="forgot_password_email")
+    * @Method({"POST"})
+    */
+    function forgotPasswordEmail(Request $request){
+        $token = bin2hex(random_bytes($length));
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Bibeauty Password Reset')
+            ->setFrom('infofo@bibeauty.com')
+            ->setTo($request->request->get('email'))
+            ->setBody(
+                $this->renderView(
+                    'Emails/passwordreset.html.twig',
+                    array('token' => $token)
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+    }
 }

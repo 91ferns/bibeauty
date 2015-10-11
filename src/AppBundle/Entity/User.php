@@ -85,6 +85,11 @@ class User implements AdvancedUserInterface, \Serializable {
      */
     private $isActive;
 
+    /**
+     * @ORM\Column(name="reset_token", type="string", length=120, nullable=true)
+     */
+    private $resetToken;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -336,5 +341,28 @@ class User implements AdvancedUserInterface, \Serializable {
     public function getSuperAdmin()
     {
         return $this->superAdmin;
+    }
+
+    /**
+     * Set resetToken
+     *
+     * @param string $resetToken
+     * @return User
+     */
+    public function setResetToken($resetToken)
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    /**
+     * Get resetToken
+     *
+     * @return string 
+     */
+    public function getResetToken()
+    {
+        return $this->resetToken;
     }
 }
