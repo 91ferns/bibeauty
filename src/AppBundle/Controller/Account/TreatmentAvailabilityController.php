@@ -17,19 +17,16 @@ use AppBundle\Entity\RecurringAppointments;
 class TreatmentAvailabilityController extends Controller
 {
 
-    const MAX_TIME_FORWARD = 31536000; // 60 * 60 * 24 * 365;
-    const DAY_IN_SECONDS = 86400; // 60 * 60 * 24
-
     /**
      * @Route("/account/availability/{id}/{slug}/{treatmentId}/new", name="admin_treatment_availability_new_path")
      * @Method("POST")
      */
     public function newAction($id, $slug, $treatmentId, Request $request) {
-        ?><pre><?php
+        // this is absolutely something that would be offloaded to the worker
         $business = $this->businessBySlugAndId($slug, $id);
 
-        $date     = $request->request->get('Date', false);
-        $times     = $request->request->get('Times', array());
+        $date = $request->request->get('Date', false);
+        $times = $request->request->get('Times', array());
         $recurrenceType = $request->request->get('RecurrenceType', 'never');
 
         if (!$date || !$times || count($times) < 1 ){
@@ -52,29 +49,47 @@ class TreatmentAvailabilityController extends Controller
             ));
         }
 
-        $em = $this->getEm();
+        $em = $this->getDoctrine()->getManager();
 
         $offer = new Offer();
         $offer->setBusiness($business);
         $offer->setTreatment($treatment);
         $em->persist($offer);
 
+        $startDateTime = new \DateTime($date);
+
         $availabilitySet = new OfferAvailabilitySet();
+        $availabilitySet->setOffer($offer);
+        $availabilitySet->setStartDate($startDateTime);
+        $availabilitySet->setDaysOfTheWeek($recurrenceDOWs);
+        $availabilitySet->setTimes($times);
+        $availabilitySet->setRecurrenceType($recurrenceType);
+
+        $em->persist($availabilitySet);
 
         // Offer is made. We need to make its availability now
-        $matchingDays = $this->getDaysThatMatchRecurrence($date, $times, $recurrenceDOWs, $recurrenceType);
+        $matchingDates = $availabilitySet->datesThatMatchRecurrence($date, $times, $recurrenceDOWs, $recurrenceType);
+        $availabilitySets = $availabilitySet->datesToAvailabilities($matchingDates, $business);
+
+        $batchSize = 20;
+
+        foreach ($availabilitySets as $i => $availabilitySet) {
+            $em->persist($availabilitySet);
+            if (($i % $batchSize) === 0) {
+                $em->flush();
+                $em->clear(); // Detaches all objects from Doctrine!
+            }
+        }
+
+        $em->flush(); //Persist objects that did not make up an entire batch
+        $em->clear();
+
         // we now need to create the availability set
 
-        die();
-
-        $availability = $this->buildInsertAvailability($treatment,$recurring,$date,$time);
-        $recurring = $this->checkGetRecurrence($request->request);
-
-        $this->buildInsertRecurrences($recurring, $availability, $date, new \DateTime($time));
-
-        $em->flush();
-
-        return $this->redirectToRoot($slug, $id, $treatmentId);
+        return $this->redirectToRoot($slug, $id, $treatmentId, array(
+            'notice',
+            'Successfully created ' + count($availabilitySets) . ' availabilities'
+        ));
     }
 
     protected function redirectToRoot($slug, $id, $treatmentId, $flash = false) {
@@ -94,57 +109,5 @@ class TreatmentAvailabilityController extends Controller
         );
     }
 
-    protected function buildInsertAvailability($treatment,$recurring,$date,$time)
-    {
-      $availability = new OfferAvailabilitySet();
-      $availability->setTreatment($treatment);
-      $availability->setRecurring($recurring);
-      $availability->setDate(new \DateTime($date));
-      //$time = new \DateTime($time);
-      //var_dump($time); exit;
-
-      $em = $this->getEm();
-      $em->persist($availability);
-      $em->flush();
-      return $availability;
-    }
-
-    protected function dateAndTime($date, $time, $isString = true) {
-        if (!$isString) {
-            $datestring = strtotime($date);
-        } else {
-            $datestring = $date;
-        }
-        // Let's do time ourselves
-        list($hour, $minute) = explode(':', $time);
-
-        $hourstring = $hour * 60 * 60;
-        $minutestring = $minute * 60;
-
-        return $datestring + $minutestring + $hourstring;
-    }
-
-    protected function buildDateString($month, $day, $year) {
-
-        $string = sprintf('%s-%s-%s', $year, $month, $day);
-        return strtotime($string);
-
-    }
-
-    protected function getRepo($name)
-    {
-      $em = $this->getEm();
-      $repository = $em->getRepository("AppBundle:{$name}");
-      return $repository;
-    }
-    protected function getEm()
-    {
-      return $this->getDoctrine()->getManager();
-    }
-    private function getCurrentBusiness($id, $slug)
-    {
-      $business = $this->getRepo('Business');
-      return $business->findOneBy(['owner'=>$this->getUser()->getId()]);
-    }
 
 }

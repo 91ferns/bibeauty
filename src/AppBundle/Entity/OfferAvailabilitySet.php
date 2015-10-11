@@ -14,6 +14,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class OfferAvailabilitySet {
 
+   const MAX_TIME_FORWARD = 31536000; // 60 * 60 * 24 * 365;
+   const DAY_IN_SECONDS = 86400; // 60 * 60 * 24
+
    /**
     * @ORM\Column(type="integer")
     * @ORM\Id
@@ -232,7 +235,35 @@ class OfferAvailabilitySet {
 
     }
 
-    public function daysThatMatchRecurrence($startDate, $times, $DOWs = array(), $type = false) {
+    protected function dateAndTime($date, $time, $isString = true) {
+        if (!$isString) {
+            $datestring = strtotime($date);
+        } else {
+            $datestring = $date;
+        }
+        // Let's do time ourselves
+        list($hour, $minute) = explode(':', $time);
+
+        $hourstring = $hour * 60 * 60;
+        $minutestring = $minute * 60;
+
+        return $datestring + $minutestring + $hourstring;
+    }
+
+    protected function buildDateString($month, $day, $year) {
+
+        $string = sprintf('%s-%s-%s', $year, $month, $day);
+        return strtotime($string);
+
+    }
+
+    public function datesThatMatchRecurrence() {
+        $startDate = $this->getStartDate();
+        $startDate = $startDate->format('m/d/Y');
+
+        $times = $this->getTimes();
+        $DOWs = $this->getDaysOfTheWeek();
+        $type = $this->getRecurrenceType();
 
         $dates =  array();
 
@@ -347,6 +378,22 @@ class OfferAvailabilitySet {
         return $dates;
     }
 
+    public function datesToAvailabilities( $dates = array(), \AppBundle\Entity\Business $business ) {
+        $availabilities = array();
+
+        foreach($dates as $date) {
+            $x = new \AppBundle\Entity\Availability();
+            $x->setDate($date);
+            $x->setAvailabilitySet($this);
+            $x->setTreatment($this->treatment);
+            $x->setBusiness($business);
+
+            $availabilities[] = $x;
+        }
+
+        return $availabilities;
+    }
+
     /**
      * Set offer
      *
@@ -363,7 +410,7 @@ class OfferAvailabilitySet {
     /**
      * Get offer
      *
-     * @return \AppBundle\Entity\Offer 
+     * @return \AppBundle\Entity\Offer
      */
     public function getOffer()
     {
