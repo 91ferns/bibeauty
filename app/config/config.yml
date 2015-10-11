@@ -51,6 +51,10 @@ assetic:
         head_assets:
             inputs:
                 - 'assets/components/react/react-with-addons.js'
+        vendor_css:
+            inputs:
+                - 'assets/components/select2/dist/css/select2.min.css'
+                - 'assets/components/select2-bootstrap-css/select2-bootstrap.css'
         vendor_assets:
             inputs:
                 - 'assets/components/react/react-with-addons.js'
@@ -59,6 +63,7 @@ assetic:
                 - 'assets/components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
                 - 'assets/components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js'
                 - 'assets/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
+                - 'assets/components/select2/dist/js/select2.full.min.js'
     #java: /usr/bin/java
     filters:
         sass: ~

@@ -1,5 +1,5 @@
 
-<div class="panel panel-default">
+<div class="panel panel-default" id="formAvailabilityPanel">
   <div class="panel-body">
       <div class="form-group">
         <label for="Day">Date</label>
@@ -10,14 +10,16 @@
       </div>
       <div class="form-group">
         <label for="Time">Time</label>
-        <select multiple="true" class="form-control" name="Time">
-        {% for hour in 7..21 %}
-          {% for minute in 0..3 %}
-            {% set formattedMinute = "%02d"|format(minute * 15) %}
-            <option value="{{hour}}:{{formattedMinute}}">{{hour | nicehour }}:{{formattedMinute}} {{ hour | meridian }}</option>
+        <div class="select2-wrapper">
+          <select multiple="true" class="form-control select2" name="Time">
+          {% for hour in 7..21 %}
+            {% for minute in 0..3 %}
+              {% set formattedMinute = "%02d"|format(minute * 15) %}
+              <option value="{{hour}}:{{formattedMinute}}">{{hour | nicehour }}:{{formattedMinute}} {{ hour | meridian }}</option>
+            {% endfor %}
           {% endfor %}
-        {% endfor %}
-        </select>
+          </select>
+        </div>
         <p class="help-block">
           CTRL / CMD + click to select more than one. Shift + Click to select all in between.
         </p>
@@ -46,7 +48,31 @@
       <div id="repeat-subform">
 
         <div class="form-group">
-          Days
+          <label>Days</label>
+
+          <div>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="RecurrenceDates" value="sunday"> Sunday
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="RecurrenceDates" value="monday"> Monday
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="RecurrenceDates" value="tuesday"> Tuesday
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="RecurrenceDates" value="wednesday"> Wednesday
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="RecurrenceDates" value="thursday"> Thursday
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="RecurrenceDates" value="friday"> Friday
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="RecurrenceDates" value="saturday"> Saturday
+            </label>
+          </div>
         </div>
 
         <div class="form-group">
