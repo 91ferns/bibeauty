@@ -7,8 +7,6 @@ use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use AppBundle\Form\TreatmentAvailabilitySetType;
-
 use AppBundle\Entity\Business;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\Service;
@@ -56,10 +54,12 @@ class TreatmentAvailabilityController extends Controller
 
         $em = $this->getEm();
 
-        $offer  = new Offer();
+        $offer = new Offer();
         $offer->setBusiness($business);
         $offer->setTreatment($treatment);
         $em->persist($offer);
+
+        $availabilitySet = new OfferAvailabilitySet();
 
         // Offer is made. We need to make its availability now
         $matchingDays = $this->getDaysThatMatchRecurrence($date, $times, $recurrenceDOWs, $recurrenceType);
@@ -129,121 +129,6 @@ class TreatmentAvailabilityController extends Controller
         $string = sprintf('%s-%s-%s', $year, $month, $day);
         return strtotime($string);
 
-    }
-
-    protected function getDaysThatMatchRecurrence($startDate, $times, $DOWs = array(), $type = false) {
-
-        $dates =  array();
-
-        // First one that matches is always the start date
-        foreach($times as $time) {
-            $string = $this->dateAndTime($startDate, $time, false);
-            if ($string) {
-                $x = new \DateTime();
-                $x->setTimestamp($string);
-                $dates[] = $x;
-            }
-        }
-
-        // Now we have the ones from the start date,
-        // so we need to match the rules for the next days
-        if (!$type) {
-            return $dates; // if there is no recurrence specified, we are done.
-        }
-
-        $starttime = strtotime($startDate);
-
-        if ($type === 'daily') {
-            // If it is daily, we just need to iterate day by day for a year.
-            for ($i = $starttime + self::DAY_IN_SECONDS;
-                 $i < $starttime + self::MAX_TIME_FORWARD;
-                 $i = $i + self::DAY_IN_SECONDS) {
-                // $i is the new "startdate"
-                foreach($times as $time) {
-                    $string = $this->dateAndTime($i, $time);
-
-                    if ($string) {
-                        $x = new \DateTime();
-                        $x->setTimestamp($string);
-                        $dates[] = $x;
-                    }
-                }
-            }
-
-            return $dates;
-        }
-
-        // Now, monthly
-        // This one we need to get the number of days in a given month, or just reformat
-        // our start time so the month increments 12 times
-        if ($type === 'monthly') {
-
-            // let's get the month number
-            $startMonth = date($starttime, 'n');
-            $startDay = date($starttime, 'j');
-            $startYear = date($starttime, 'Y');
-
-            for ($i = 1; $i <= 12; $i++) {
-
-                $rawMonth = $startMonth + $i;
-                $currentYear = $startYear + floor($rawMonth / 12);
-                $currentMonth = $rawMonth % 12;
-                if ($currentMonth === 0) {
-                    $currentMonth = 12;
-                }
-                $daysInMonth = date($this->buildDateString($currentYear, $currentMonth, 1), 't');
-
-                if ($daysInMonth < $startDay) {
-                    continue;
-                }
-
-                $buildDate = $this->buildDateString($currentYear, $currentMonth, $startDay);
-
-                foreach($times as $time) {
-                    $string = $this->dateAndTime($buildDate, $time);
-                    if ($string) {
-                        $x = new \DateTime();
-                        $x->setTimestamp($string);
-                        $dates[] = $x;
-                    }
-                }
-
-            }
-
-            return $dates;
-        }
-
-        if ($type === 'weekly') {
-
-            // By far the hardest one. Need to iterate day by day and check to see if the day of the week matches the allowed DOWs
-            $DOWs = array_map('strtolower', $DOWs);
-
-            for ($i = $starttime + self::DAY_IN_SECONDS;
-                 $i < $starttime + self::MAX_TIME_FORWARD;
-                 $i = $i + self::DAY_IN_SECONDS) {
-                // $i is the new "startdate"
-
-                $dow = strtolower(date($i, 'l'));
-
-                if (!in_array($dow, $DOWs)) {
-                    continue;
-                }
-
-                foreach($times as $time) {
-                    $string = $this->dateAndTime($i, $time);
-                    if ($string) {
-                        $x = new \DateTime();
-                        $x->setTimestamp($string);
-                        $dates[] = $x;
-                    }
-                }
-            }
-
-            return $dates;
-
-        }
-
-        return $dates;
     }
 
     protected function getRepo($name)

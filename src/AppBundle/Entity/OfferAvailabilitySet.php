@@ -39,6 +39,12 @@ class OfferAvailabilitySet {
     */
    private $times = array();
 
+    /**
+     * @ORM\OneToOne(targetEntity="Offer")
+     * @ORM\JoinColumn(name="offer_id", referencedColumnName="id")
+     **/
+    private $offer;
+
    /**
     * @ORM\ManyToOne(targetEntity="Treatment", inversedBy="treatmentAvailabilitySets")
     * @ORM\JoinColumn(name="treatment_id", referencedColumnName="id")
@@ -67,7 +73,7 @@ class OfferAvailabilitySet {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -90,7 +96,7 @@ class OfferAvailabilitySet {
     /**
      * Get startDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartDate()
     {
@@ -113,7 +119,7 @@ class OfferAvailabilitySet {
     /**
      * Get daysOfTheWeek
      *
-     * @return array 
+     * @return array
      */
     public function getDaysOfTheWeek()
     {
@@ -136,7 +142,7 @@ class OfferAvailabilitySet {
     /**
      * Get times
      *
-     * @return array 
+     * @return array
      */
     public function getTimes()
     {
@@ -159,7 +165,7 @@ class OfferAvailabilitySet {
     /**
      * Get recurrenceType
      *
-     * @return string 
+     * @return string
      */
     public function getRecurrenceType()
     {
@@ -182,7 +188,7 @@ class OfferAvailabilitySet {
     /**
      * Get treatment
      *
-     * @return \AppBundle\Entity\Treatment 
+     * @return \AppBundle\Entity\Treatment
      */
     public function getTreatment()
     {
@@ -215,10 +221,152 @@ class OfferAvailabilitySet {
     /**
      * Get availabilities
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAvailabilities()
     {
         return $this->availabilities;
+    }
+
+    public function createAvailability($date) {
+
+    }
+
+    public function daysThatMatchRecurrence($startDate, $times, $DOWs = array(), $type = false) {
+
+        $dates =  array();
+
+        // First one that matches is always the start date
+        foreach($times as $time) {
+            $string = $this->dateAndTime($startDate, $time, false);
+            if ($string) {
+                $x = new \DateTime();
+                $x->setTimestamp($string);
+                $dates[] = $x;
+            }
+        }
+
+        // Now we have the ones from the start date,
+        // so we need to match the rules for the next days
+        if (!$type) {
+            return $dates; // if there is no recurrence specified, we are done.
+        }
+
+        $starttime = strtotime($startDate);
+
+        if ($type === 'daily') {
+            // If it is daily, we just need to iterate day by day for a year.
+            for ($i = $starttime + self::DAY_IN_SECONDS;
+                 $i < $starttime + self::MAX_TIME_FORWARD;
+                 $i = $i + self::DAY_IN_SECONDS) {
+                // $i is the new "startdate"
+                foreach($times as $time) {
+                    $string = $this->dateAndTime($i, $time);
+
+                    if ($string) {
+                        $x = new \DateTime();
+                        $x->setTimestamp($string);
+                        $dates[] = $x;
+                    }
+                }
+            }
+
+            return $dates;
+        }
+
+        // Now, monthly
+        // This one we need to get the number of days in a given month, or just reformat
+        // our start time so the month increments 12 times
+        if ($type === 'monthly') {
+
+            // let's get the month number
+            $startMonth = date($starttime, 'n');
+            $startDay = date($starttime, 'j');
+            $startYear = date($starttime, 'Y');
+
+            for ($i = 1; $i <= 12; $i++) {
+
+                $rawMonth = $startMonth + $i;
+                $currentYear = $startYear + floor($rawMonth / 12);
+                $currentMonth = $rawMonth % 12;
+                if ($currentMonth === 0) {
+                    $currentMonth = 12;
+                }
+                $daysInMonth = date($this->buildDateString($currentYear, $currentMonth, 1), 't');
+
+                if ($daysInMonth < $startDay) {
+                    continue;
+                }
+
+                $buildDate = $this->buildDateString($currentYear, $currentMonth, $startDay);
+
+                foreach($times as $time) {
+                    $string = $this->dateAndTime($buildDate, $time);
+                    if ($string) {
+                        $x = new \DateTime();
+                        $x->setTimestamp($string);
+                        $dates[] = $x;
+                    }
+                }
+
+            }
+
+            return $dates;
+        }
+
+        if ($type === 'weekly') {
+
+            // By far the hardest one. Need to iterate day by day and check to see if the day of the week matches the allowed DOWs
+            $DOWs = array_map('strtolower', $DOWs);
+
+            for ($i = $starttime + self::DAY_IN_SECONDS;
+                 $i < $starttime + self::MAX_TIME_FORWARD;
+                 $i = $i + self::DAY_IN_SECONDS) {
+                // $i is the new "startdate"
+
+                $dow = strtolower(date($i, 'l'));
+
+                if (!in_array($dow, $DOWs)) {
+                    continue;
+                }
+
+                foreach($times as $time) {
+                    $string = $this->dateAndTime($i, $time);
+                    if ($string) {
+                        $x = new \DateTime();
+                        $x->setTimestamp($string);
+                        $dates[] = $x;
+                    }
+                }
+            }
+
+            return $dates;
+
+        }
+
+        return $dates;
+    }
+
+    /**
+     * Set offer
+     *
+     * @param \AppBundle\Entity\Offer $offer
+     * @return OfferAvailabilitySet
+     */
+    public function setOffer(\AppBundle\Entity\Offer $offer = null)
+    {
+        $this->offer = $offer;
+
+        return $this;
+    }
+
+    /**
+     * Get offer
+     *
+     * @return \AppBundle\Entity\Offer 
+     */
+    public function getOffer()
+    {
+        return $this->offer;
     }
 }

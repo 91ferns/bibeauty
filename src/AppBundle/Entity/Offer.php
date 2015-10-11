@@ -40,7 +40,7 @@ class Offer {
     protected $phone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OfferAvailabilitySet")
+     * @ORM\OneToOne(targetEntity="OfferAvailabilitySet")
      * @ORM\JoinColumn(name="availability_id", referencedColumnName="id")
      */
     protected $availabilitySet;
@@ -387,7 +387,7 @@ class Offer {
     /**
      * Get isOpen
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsOpen()
     {

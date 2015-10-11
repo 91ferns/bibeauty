@@ -40,7 +40,7 @@ class Availability {
    private $treatment;
 
    /**
-    * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet", inversedBy="availabilities")
+    * @ORM\ManyToOne(targetEntity="OfferAvailabilitySet", inversedBy="availabilities")
     * @ORM\JoinColumn(name="availability_set_id", referencedColumnName="id")
     */
     private $availabilitySet;
@@ -50,7 +50,7 @@ class Availability {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,7 +73,7 @@ class Availability {
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -96,7 +96,7 @@ class Availability {
     /**
      * Get business
      *
-     * @return \AppBundle\Entity\Business 
+     * @return \AppBundle\Entity\Business
      */
     public function getBusiness()
     {
@@ -119,7 +119,7 @@ class Availability {
     /**
      * Get treatment
      *
-     * @return \AppBundle\Entity\Treatment 
+     * @return \AppBundle\Entity\Treatment
      */
     public function getTreatment()
     {
@@ -129,10 +129,10 @@ class Availability {
     /**
      * Set availabilitySet
      *
-     * @param \AppBundle\Entity\TreatmentAvailabilitySet $availabilitySet
+     * @param \AppBundle\Entity\OfferAvailabilitySet $availabilitySet
      * @return Availability
      */
-    public function setAvailabilitySet(\AppBundle\Entity\TreatmentAvailabilitySet $availabilitySet = null)
+    public function setAvailabilitySet(\AppBundle\Entity\OfferAvailabilitySet $availabilitySet = null)
     {
         $this->availabilitySet = $availabilitySet;
 
@@ -142,7 +142,7 @@ class Availability {
     /**
      * Get availabilitySet
      *
-     * @return \AppBundle\Entity\TreatmentAvailabilitySet 
+     * @return \AppBundle\Entity\OfferAvailabilitySet
      */
     public function getAvailabilitySet()
     {

@@ -52,11 +52,6 @@ class Treatment {
     protected $business;
 
     /**
-     * @ORM\OneToMany(targetEntity="TreatmentAvailabilitySet", mappedBy="treatment")
-     */
-    protected $treatmentAvailabilitySets;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Therapist")
      * @ORM\JoinColumn(name="therapist_id", referencedColumnName="id")
      */
@@ -96,7 +91,7 @@ class Treatment {
 
     public function __construct()
     {
-      $this->treatmentAvailabilitySets = new ArrayCollection();
+
     }
 
 
@@ -257,39 +252,6 @@ class Treatment {
     public function getBusiness()
     {
         return $this->business;
-    }
-
-    /**
-     * Add treatmentAvailabilitySets
-     *
-     * @param \AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets
-     * @return Service
-     */
-    public function addTreatmentAvailabilitySet(\AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets)
-    {
-        $this->treatmentAvailabilitySets[] = $treatmentAvailabilitySets;
-
-        return $this;
-    }
-
-    /**
-     * Remove treatmentAvailabilitySets
-     *
-     * @param \AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets
-     */
-    public function removeTreatmentAvailabilitySet(\AppBundle\Entity\TreatmentAvailabilitySet $treatmentAvailabilitySets)
-    {
-        $this->treatmentAvailabilitySets->removeElement($treatmentAvailabilitySets);
-    }
-
-    /**
-     * Get treatmentAvailabilitySets
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTreatmentAvailabilitySets()
-    {
-        return $this->treatmentAvailabilitySets;
     }
 
     /**
