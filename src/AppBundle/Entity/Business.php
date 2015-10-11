@@ -696,30 +696,18 @@ class Business {
         return $this->distanceFrom;
     }
 
-
-    private $serviceCategories = array();// Lazy loaded
-
-    public function getServiceCategories() {
-        if (count($this->serviceCategories) > 0) {
-            return $this->serviceCategories;
-        }
-
-        return $this->serviceCategories = $this->loadServiceCategories();
-        // Funky little biznis here
+    public function hasTreatments() {
+        $treatments = $this->getTreatments();
+        return count($treatments) > 0;
     }
 
-    public function hasServiceCategories() {
-        $this->getServiceCategories(); // Make sure it has been loaded
-        return count($this->serviceCategories) > 0;
-    }
-
-    protected function loadServiceCategories() {
-        $services = $this->getServices();
+    public function getTreatmentHierarchy() {
+        $treatments = $this->getTreatments();
 
         $categories = array();
 
-        foreach($services as $service) {
-            $category = $service->getServiceType();
+        foreach($treatments as $treatment) {
+            $category = $treatment->getTreatmentCategory();
             // Parent category name
             //getCategoryName
             $id = $category->getCategoryName();
@@ -736,9 +724,9 @@ class Business {
                 $categories[$id] = $std;
             }
 
-            $categories[$id]->treatments[] = $service;
-            if ($std->lowestPrice === false || $std->lowestPrice > $service->getCurrentPrice()) {
-                $std->lowestPrice = $service->getCurrentPrice();
+            $categories[$id]->treatments[] = $treatment;
+            if ($std->lowestPrice === false || $std->lowestPrice > $treatment->getOriginalPrice()) {
+                $std->lowestPrice = $treatment->getOriginalPrice();
             }
 
         }
