@@ -33,6 +33,7 @@ class TreatmentAvailabilitySet {
     */
    private $time;
 
+
    /**
     * @ORM\ManyToOne(targetEntity="Treatment", inversedBy="treatmentAvailabilitySets")
     * @ORM\JoinColumn(name="treatment_id", referencedColumnName="id")
@@ -40,15 +41,15 @@ class TreatmentAvailabilitySet {
     private $treatment;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" = false})
+     * @ORM\Column(type="string", options={"default"="never"})
      * @Assert\NotBlank()
      */
-     private $recurring = false;
+    private $rec = false;
 
-     /**
-      * @ORM\OneToMany(targetEntity="RecurringAppointments", mappedBy="availability")
-      */
-      private $recurrences;
+    /**
+     * @ORM\OneToMany(targetEntity="Availability", mappedBy="availability")
+     */
+    private $availabilities;
 
      public function __construct(){
          $this->recurrences = new ArrayCollection();

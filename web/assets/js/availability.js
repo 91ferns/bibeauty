@@ -4,16 +4,16 @@ jQuery(function($) {
   $('#repeat-subform').hide();
 
   if (availabilityPanel) {
-    $('#showRepeat').click(function() {
-      var elem = $(this);
-      if (elem.is(':checked')) {
+    $('input[name="RecurrenceType"]').change(function() {
+      var val = $('input[name="RecurrenceType"]:checked').val();
+      if (val === 'weekly') {
         $('#repeat-subform').show();
       } else {
         $('#repeat-subform').hide();
       }
     });
 
-    $('select[name="Time"]').select2({
+    $('.select2').select2({
       closeOnSelect: false
     });
   }

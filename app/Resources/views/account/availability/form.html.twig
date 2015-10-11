@@ -4,14 +4,14 @@
       <div class="form-group">
         <label for="Day">Date</label>
         <div class="input-group">
-          <input type="text" id="DayField" name="Day" class="form-control" placeholder="Day" />
+          <input type="text" id="DayField" name="Date" class="form-control" placeholder="Day" />
           <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
         </div>
       </div>
       <div class="form-group">
         <label for="Time">Time</label>
         <div class="select2-wrapper">
-          <select multiple="true" class="form-control select2" name="Time">
+          <select multiple="true" class="form-control select2" name="Times[]">
           {% for hour in 7..21 %}
             {% for minute in 0..3 %}
               {% set formattedMinute = "%02d"|format(minute * 15) %}
@@ -38,12 +38,27 @@
         </p>
       </div>
 
-      <div class="checkbox">
+      <div class="form-group">
+        <div class="input-group">
+          <label for="">Recurrence</label><br>
+          <!--<input type="checkbox" name="Recurring" class="form-control" />-->
+          <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active" >
+              <input type="radio" name="RecurrenceType" checked value="never" class="form-control" /> Never
+            </label>
+            <label class="btn btn-primary" >
+              <input type="radio" name="RecurrenceType" value="daily" class="form-control" /> Daily
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="RecurrenceType" value="monthly" class="form-control" /> Monthly
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="RecurrenceType" value="weekly" class="form-control" /> Weekly
+            </label>
+          </div>
 
-        <label class="control-label">
-          <input type="checkbox" id="showRepeat"> Repeat
-        </label>
-      </div>
+        </div>
+      </div> <!-- /.form-group -->
 
       <div id="repeat-subform">
 
@@ -52,50 +67,29 @@
 
           <div>
             <label class="checkbox-inline">
-              <input type="checkbox" name="RecurrenceDates" value="sunday"> Sunday
+              <input type="checkbox" name="RecurrenceDates[]" value="sunday"> Sunday
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="RecurrenceDates" value="monday"> Monday
+              <input type="checkbox" name="RecurrenceDates[]" value="monday"> Monday
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="RecurrenceDates" value="tuesday"> Tuesday
+              <input type="checkbox" name="RecurrenceDates[]" value="tuesday"> Tuesday
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="RecurrenceDates" value="wednesday"> Wednesday
+              <input type="checkbox" name="RecurrenceDates[]" value="wednesday"> Wednesday
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="RecurrenceDates" value="thursday"> Thursday
+              <input type="checkbox" name="RecurrenceDates[]" value="thursday"> Thursday
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="RecurrenceDates" value="friday"> Friday
+              <input type="checkbox" name="RecurrenceDates[]" value="friday"> Friday
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" name="RecurrenceDates" value="saturday"> Saturday
+              <input type="checkbox" name="RecurrenceDates[]" value="saturday"> Saturday
             </label>
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="input-group">
-            <label for="">Recurrence</label><br>
-            <!--<input type="checkbox" name="Recurring" class="form-control" />-->
-            <div class="btn-group" data-toggle="buttons">
-              <label class="btn btn-primary active" >
-                <input type="radio" name="Recurring" checked class="form-control" /> Never
-              </label>
-              <label class="btn btn-primary" >
-                <input type="radio" name="Recurring_Daily" checked class="form-control" /> Daily
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="Recurring_Monthly" class="form-control" /> Monthly
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="Recurring_Weekly" class="form-control" /> Weekly
-              </label>
-            </div>
-
-          </div>
-        </div> <!-- /.form-group -->
       </div>
   </div>
 </div>

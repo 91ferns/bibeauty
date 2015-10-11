@@ -19,26 +19,30 @@ use AppBundle\Entity\RecurringAppointments;
 class TreatmentAvailabilityController extends Controller
 {
 
+    const MAX_TIME_FORWARD = 31536000; // 60 * 60 * 24 * 365;
+    const DAY_IN_SECONDS = 86400; // 60 * 60 * 24
+
     /**
      * @Route("/account/availability/{id}/{slug}/{treatmentId}/new", name="admin_treatment_availability_new_path")
      * @Method("POST")
      */
     public function newAction($id, $slug, $treatmentId, Request $request) {
-        echo '<pre>';
-        $recurring = $this->checkGetRecurrence($request->request);
+        ?><pre><?php
         $business = $this->businessBySlugAndId($slug, $id);
 
-        $date     = $request->request->get('Day', false);
-        $time     = $request->request->get('Time', false);
+        $date     = $request->request->get('Date', false);
+        $times     = $request->request->get('Times', array());
+        $recurrenceType = $request->request->get('RecurrenceType', 'never');
 
-        if (!$date || !$time ){
+        if (!$date || !$times || count($times) < 1 ){
             return $this->redirectToRoot($slug, $id, $treatmentId, array(
                 'error',
                 'Date and time must be specified.'
             ));
         }
 
-        $recurring = $request->request->get('Recurring', false);
+        $recurrenceDOWs = $request->request->get('RecurrenceDates', array());
+        $recurrenceDOWs = array_unique($recurrenceDOWs);
 
         $treatments = $this->getRepo('Treatment');
         $treatment = $treatments->findOneBy(array( 'id'=>$treatmentId ));
@@ -51,7 +55,6 @@ class TreatmentAvailabilityController extends Controller
         }
 
         $em = $this->getEm();
-        // $em->persist($treatment); // Why?
 
         $offer  = new Offer();
         $offer->setBusiness($business);
@@ -59,7 +62,8 @@ class TreatmentAvailabilityController extends Controller
         $em->persist($offer);
 
         // Offer is made. We need to make its availability now
-
+        $matchingDays = $this->getDaysThatMatchRecurrence($date, $times, $recurrenceDOWs, $recurrenceType);
+        print_r($matchingDays);
         die();
 
         $availability = $this->buildInsertAvailability($treatment,$recurring,$date,$time);
@@ -89,47 +93,6 @@ class TreatmentAvailabilityController extends Controller
         );
     }
 
-    protected function checkGetRecurrence($req){
-      if ($req->get('Recurring_Monthly',false)){
-        return 11;
-      }
-      if ($req->get('Recurring_Weekly',false)){
-        return 51;
-      }
-      if ($req->get('Recurring_Daily',false)){
-        return 364;
-      }
-      return false;
-    }
-
-    protected function buildInsertRecurrences($recurrences, $availability, $startDate, $startTime){
-        $em = $this->getEm();
-
-        switch ($recurrences) {
-            case 11:
-                $intervalUnit = 'month';
-                break;
-            case 51:
-                $intervalUnit = 'week';
-                break;
-            case 364:
-                $intervalUnit = 'day';
-                break;
-            default:
-                $intervalUnit = 'N/A';
-        }
-        for ($i=1; $i<=$recurrences; $i++){
-            $date = new \DateTime($startDate);
-            $appt = new RecurringAppointments();
-            $appt->setDate($date->modify($i.$intervalUnit));
-            $appt->setTime($startTime);
-            $appt->setAvailability($availability);
-            $em->persist($appt);
-        }
-        $em->flush();
-
-    }
-
     protected function buildInsertAvailability($treatment,$recurring,$date,$time)
     {
       $availability = new TreatmentAvailabilitySet();
@@ -145,6 +108,144 @@ class TreatmentAvailabilityController extends Controller
       $em->flush();
       return $availability;
     }
+
+    protected function dateAndTime($date, $time, $isString = true) {
+        if (!$isString) {
+            $datestring = strtotime($date);
+        } else {
+            $datestring = $date;
+        }
+        // Let's do time ourselves
+        list($hour, $minute) = explode(':', $time);
+
+        $hourstring = $hour * 60 * 60;
+        $minutestring = $minute * 60;
+
+        return $datestring + $minutestring + $hourstring;
+    }
+
+    protected function buildDateString($month, $day, $year) {
+
+        $string = sprintf('%s-%s-%s', $year, $month, $day);
+        return strtotime($string);
+
+    }
+
+    protected function getDaysThatMatchRecurrence($startDate, $times, $DOWs = array(), $type = false) {
+
+        $dates =  array();
+
+        // First one that matches is always the start date
+        foreach($times as $time) {
+            $string = $this->dateAndTime($startDate, $time, false);
+            if ($string) {
+                $x = new \DateTime();
+                $x->setTimestamp($string);
+                $dates[] = $x;
+            }
+        }
+
+        // Now we have the ones from the start date,
+        // so we need to match the rules for the next days
+        if (!$type) {
+            return $dates; // if there is no recurrence specified, we are done.
+        }
+
+        $starttime = strtotime($startDate);
+
+        if ($type === 'daily') {
+            // If it is daily, we just need to iterate day by day for a year.
+            for ($i = $starttime + self::DAY_IN_SECONDS;
+                 $i < $starttime + self::MAX_TIME_FORWARD;
+                 $i = $i + self::DAY_IN_SECONDS) {
+                // $i is the new "startdate"
+                foreach($times as $time) {
+                    $string = $this->dateAndTime($i, $time);
+
+                    if ($string) {
+                        $x = new \DateTime();
+                        $x->setTimestamp($string);
+                        $dates[] = $x;
+                    }
+                }
+            }
+
+            return $dates;
+        }
+
+        // Now, monthly
+        // This one we need to get the number of days in a given month, or just reformat
+        // our start time so the month increments 12 times
+        if ($type === 'monthly') {
+
+            // let's get the month number
+            $startMonth = date($starttime, 'n');
+            $startDay = date($starttime, 'j');
+            $startYear = date($starttime, 'Y');
+
+            for ($i = 1; $i <= 12; $i++) {
+
+                $rawMonth = $startMonth + $i;
+                $currentYear = $startYear + floor($rawMonth / 12);
+                $currentMonth = $rawMonth % 12;
+                if ($currentMonth === 0) {
+                    $currentMonth = 12;
+                }
+                $daysInMonth = date($this->buildDateString($currentYear, $currentMonth, 1), 't');
+
+                if ($daysInMonth < $startDay) {
+                    continue;
+                }
+
+                $buildDate = $this->buildDateString($currentYear, $currentMonth, $startDay);
+
+                foreach($times as $time) {
+                    $string = $this->dateAndTime($buildDate, $time);
+                    if ($string) {
+                        $x = new \DateTime();
+                        $x->setTimestamp($string);
+                        $dates[] = $x;
+                    }
+                }
+
+            }
+
+            return $dates;
+        }
+
+        if ($type === 'weekly') {
+
+            // By far the hardest one. Need to iterate day by day and check to see if the day of the week matches the allowed DOWs
+            $DOWs = array_map('strtolower', $DOWs);
+
+            for ($i = $starttime + self::DAY_IN_SECONDS;
+                 $i < $starttime + self::MAX_TIME_FORWARD;
+                 $i = $i + self::DAY_IN_SECONDS) {
+                // $i is the new "startdate"
+
+                $dow = strtolower(date($i, 'l'));
+
+                if (!in_array($dow, $DOWs)) {
+                    continue;
+                }
+
+                foreach($times as $time) {
+                    $string = $this->dateAndTime($i, $time);
+                    if ($string) {
+                        $x = new \DateTime();
+                        $x->setTimestamp($string);
+                        $dates[] = $x;
+                    }
+                }
+            }
+
+            return $dates;
+
+        }
+
+        return $dates;
+    }
+
     protected function getRepo($name)
     {
       $em = $this->getEm();

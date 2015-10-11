@@ -10,9 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Table(name="app_recurring_appointments")
+ * @ORM\Table(name="app_availabilities")
  */
-class RecurringAppointments {
+class Availability {
 
    /**
     * @ORM\Column(type="integer")
@@ -34,10 +34,10 @@ class RecurringAppointments {
    private $time;
 
    /**
-    * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet", inversedBy="recurrences")
-    * @ORM\JoinColumn(name="availability_id", referencedColumnName="id",nullable=true)
+    * @ORM\ManyToOne(targetEntity="TreatmentAvailabilitySet", inversedBy="availabilities")
+    * @ORM\JoinColumn(name="availability_set_id", referencedColumnName="id")
     */
-    private $availability;
+    private $availabilitySet;
 
 
     /**
