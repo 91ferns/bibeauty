@@ -64,7 +64,7 @@
                           ${{ treatment.getOriginalPrice | number_format(2) }}
                         </button>
                         <a class="btn btn-primary" data-toggle="modal" href="#treatmentModal" data-whatever="@getbootstrap" data-treatment-id="{{ treatment.getId }}" data-business-id="{{ business.getId }}">
-                          ${{ treatment.getOriginalPrice | number_format(2) }}
+                          ${{ treatment.getCheapestDiscountPrice | number_format(2) }}
                         </a>
                       </div>
                     </li>

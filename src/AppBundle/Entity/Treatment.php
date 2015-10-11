@@ -80,6 +80,11 @@ class Treatment {
     }
 
     /**
+     * @ORM\OneToMany(targetEntity="Offer", cascade={"persist"}, mappedBy="treatment")
+     */
+    protected $offers;
+
+    /**
      * Get originalPrice
      *
      * @return float
@@ -319,5 +324,66 @@ class Treatment {
         $list[$cat][]= $treatment;
       }
       return $list;
+    }
+
+    /**
+     * Add offers
+     *
+     * @param \AppBundle\Entity\Offer $offers
+     * @return Treatment
+     */
+    public function addOffer(\AppBundle\Entity\Offer $offers)
+    {
+        $this->offers[] = $offers;
+
+        return $this;
+    }
+
+    /**
+     * Remove offers
+     *
+     * @param \AppBundle\Entity\Offer $offers
+     */
+    public function removeOffer(\AppBundle\Entity\Offer $offers)
+    {
+        $this->offers->removeElement($offers);
+    }
+
+    /**
+     * Get offers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOffers()
+    {
+        return $this->offers;
+    }
+
+    public function getCheapestOffer() {
+        $offers = $this->getOffers();
+
+        $cheapestOffer = false;
+
+        foreach($offers as $offer) {
+            if ($cheapestOffer === false) {
+                $cheapestOffer = $offer;
+            } elseif ($cheapestOffer->getCurrentPrice() > $offer->getCurrentPrice()) {
+                $cheapestOffer = $offer;
+            }
+        }
+
+
+        return $cheapestOffer;
+    }
+
+    public function getCheapestDiscountPrice() {
+        $cheapestOffer = $this->getCheapestOffer();
+
+        if (!$cheapestOffer) {
+            return $this->getOriginalPrice();
+        } else {
+            return $cheapestOffer->getCurrentPrice();
+        }
+
     }
 }

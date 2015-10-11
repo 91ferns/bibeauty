@@ -701,7 +701,14 @@ class Business {
         return count($treatments) > 0;
     }
 
+    private $treatmentHierarchy = null;
+
     public function getTreatmentHierarchy() {
+
+        if ($this->treatmentHierarchy) {
+            return $this->treatmentHierarchy;
+        }
+
         $treatments = $this->getTreatments();
 
         $categories = array();
@@ -725,12 +732,13 @@ class Business {
             }
 
             $categories[$id]->treatments[] = $treatment;
-            if ($std->lowestPrice === false || $std->lowestPrice > $treatment->getOriginalPrice()) {
-                $std->lowestPrice = $treatment->getOriginalPrice();
+            if ($std->lowestPrice === false || $std->lowestPrice > $treatment->getCheapestDiscountPrice()) {
+                $std->lowestPrice = $treatment->getCheapestDiscountPrice();
             }
 
         }
 
+        $this->treatmentHeirarchy = $categories;
         return $categories;
 
     }
