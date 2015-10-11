@@ -94,8 +94,8 @@
     </div>
 </section> <!-- /#how-it-works -->
 <hr>
-{% if false %}
-{# if deals | length > 0 #}
+
+{% if deals | length > 0 %}
 <section id="latest-deals">
     <div class="container">
 
@@ -103,27 +103,29 @@
             <h2>Latest Deals</h2>
         </div>
         <div class="row">
-            {% for booking in deals %}
+            {% for offer in deals %}
+            {% set business = offer.getBusiness %}
             <div class="col-lg-offset-0 col-lg-4 col-md-offset-0 col-md-4 col-sm-offset-0 col-sm-4 col-xs-offset-3 col-xs-6 col-xs-offset-3">
                 <div class="thumbnail" id="deals-border">
                     <img src="{{ asset('assets/images/deals/1.png') }}" class="img-responsive" alt="...">
                     <div class="caption">
                       <div class="subcaption">
-                        <strong>{{ booking.getService.getPercentageSaved }}%</strong> OFF {{booking.getService.getLabel}}
+                        <div class="subcaption-inner">
+                          <strong>{{ offer.getDiscountPercentage }}%</strong> OFF {{offer.getTreatment.getLabel}}
+                        </div>
                       </div>
                         <div class="deal-title">
                             <div class="row">
-                                <div class="col-sm-3">
-                                  {{ booking.getBusiness.getAverageRating | rating }}
+                                <div class="col-sm-9">
+                                  <span class="deals-title">{{ business.getName }}</span>
+                                  <span class="stars">
+                                    {{ business.getAverageRating | rating }}
+                                  </span>
                                 </div>
-                                <div class="col-sm-6"><span class="deals-title">{{ booking.getBusiness.getName }}</span></div>
-                                <div class="col-sm-3"><strike id="deals-text"><small>${{ booking.getService.getOriginalPrice | number_format(2) }}</small></strike><big class="deal-text-current"> ${{ booking.getService.getCurrentPrice | number_format(2) }} </big></div>
+                                <div class="col-sm-3"><strike id="deals-text"><small>${{ offer.getTreatment.getOriginalPrice | number_format(2) }}</small></strike><big class="deal-text-current"> ${{ offer.getCurrentPrice | number_format(2) }} </big></div>
                             </div>
                         </div>
-                        <h4 id="deals-text">lorem ipsum dummy text</h4>
-                        <h5 id="deals-text">Dummy heading:</h5>
-                        <p id="deals-text">{{ booking.getBusiness.getDescription }}</p>
-                        <p><a href="{{ path('business_path', {id: booking.getBusiness.getId, slug: booking.getBusiness.getSlug }) }}" class="btn btn-primary center-block" role="button">View Deal</a></p>
+                        <p><a href="{{ path('business_path', {id: business.getId, slug: business.getSlug }) }}" class="btn btn-primary center-block" role="button">View Deal</a></p>
                     </div>
                 </div>
             </div>

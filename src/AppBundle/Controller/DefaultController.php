@@ -23,7 +23,7 @@ class DefaultController extends ApplicationController
         //$twilio->sendMessage(9149438239, 'Hi Stuart');
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository("AppBundle:TreatmentCategory");
-        //$deals = $this->getRecentDeals();
+        $deals = $this->getRecentDeals();
         $heirarchy = $categories->getHeirarchy();
 
         if (false && count($deals) > 0) {
@@ -37,7 +37,7 @@ class DefaultController extends ApplicationController
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
             'categories' => $heirarchy,
-            //'deals' => $deals,
+            'deals' => $deals,
         ));
     }
 
