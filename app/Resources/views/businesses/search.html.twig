@@ -40,9 +40,15 @@
                   <input type="text" id="DayField" name="day" class="form-control" placeholder="Day" value="{{params['day'] | date("m/d/Y") }}" />
                   <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
                 </div>
-                <div class="input-group">
-                  <input type="text" id="TimeField" name="time" class="form-control" placeholder="Time" />
-                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
+                <div class="select2-wrapper">
+                  <select multiple="true" class="form-control select2" name="Times[]">
+                  {% for hour in 7..21 %}
+                    {% for minute in 0..3 %}
+                      {% set formattedMinute = "%02d"|format(minute * 15) %}
+                      <option value="{{hour}}:{{formattedMinute}}">{{hour | nicehour }}:{{formattedMinute}} {{ hour | meridian }}</option>
+                    {% endfor %}
+                  {% endfor %}
+                  </select>
                 </div>
               </div> <!-- /.form-group -->
 
@@ -59,16 +65,14 @@
               <div class="form-group">
                 <label for="">Treatment Type / Category</label>
                 <div class="input-group TreatmentTypesGroup">
-                  <!--<input type="text" id="TreatmentTypeField" name="TreatmentType" class="form-control" placeholder="Treatment Type" />
-                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>-->
-                  <select class="treatmentTypes" name="treatment"><!--style="display:none;"-->
-                    {% for category,data in services %}
-                    <option style="color: #999;">Treatments</option>
-                      <optgroup label="{{category}}">
-                        {% for service in data %}
-                          <option value="{{service.id }}">{{service.label}}</i>
-                        {% endfor %}
-                      </optgroup>
+                  <select class="treatmentTypes" name="treatment">
+                    <option style="color: #999;">Select a Treatment</option>
+                    {% for category in categories %}
+                    <optgroup label="{{category.getLabel}}">
+                    {% for subcategory in category.getChildren %}
+                      <option value="{{subcategory.id }}">{{subcategory.getLabel}}</i>
+                    {% endfor %}
+                    </optgroup>
                     {% endfor %}
                   </select>
                   </ul>

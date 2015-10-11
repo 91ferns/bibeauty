@@ -22,10 +22,10 @@ class Booking {
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Offer", cascade={"remove"}, orphanRemoval=true, fetch="EAGER")
-     * @ORM\JoinColumn(name="offer_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Availability", cascade={"remove"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\JoinColumn(name="availability_id", referencedColumnName="id")
      */
-    protected $offer;
+    protected $availability;
 
     /**
      * @ORM\Column(type="datetime")
@@ -36,6 +36,27 @@ class Booking {
      * @ORM\Column(type="datetime")
      */
     protected $updated;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", orphanRemoval=true, fetch="EAGER", nullable=true)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
 
 
      /**

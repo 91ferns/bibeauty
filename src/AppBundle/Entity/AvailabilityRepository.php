@@ -18,10 +18,10 @@ class AvailabilityRepository extends EntityRepository
                 ->from('AppBundle:Availability', 'a')
                 ->leftJoin('a.business','b')
                 ->leftJoin('b.address', 'ba')
-                ->leftJoin('a.availability', 'tas')
+                ->leftJoin('a.availabilitySet', 'oas')
                 ->leftJoin('a.treatment', 's')
-                ->leftJoin('tas.offer', 'o')
-                ->where('o.isOpen', true);
+                ->innerJoin('oas.offer', 'o')
+                ->where('o.isOpen = true');
                 //->leftJoin('bk.recurring_appointments', 'r');
 
       if($this->isAvailabilitySearch($search)){
@@ -91,7 +91,7 @@ class AvailabilityRepository extends EntityRepository
 
     public function filterBookingsByAvailability(&$query,$qb,$search){
       if($search['day'] !=null){
-        $query->add('where', 'tas.date = :day OR r.date = :day2')
+        $query->add('where', 'oas.date = :day OR r.date = :day2')
               ->setParameter([
                 'day' => $search['day'],
                 'day2' => $search['day']
@@ -109,7 +109,7 @@ class AvailabilityRepository extends EntityRepository
         ]);
       }else if($this->isTimeSearch($search)){
         $time = ($starttime === null) ? $endtime : $starttime;
-        $query->andWhere('tas.time = :time || r.time = :time2')
+        $query->andWhere('oas.time = :time || r.time = :time2')
               ->setParameter([
                 'time'=>$time,
                 'time2'=>$time
@@ -123,7 +123,7 @@ class AvailabilityRepository extends EntityRepository
     public function getTimeWhere(){
       $orX = $qbr->expr()->orX();
       $orX->add($qb->expr()->between(
-          'tas.time',
+          'oas.time',
           ':starttime',
           ':endtime'
       ));
