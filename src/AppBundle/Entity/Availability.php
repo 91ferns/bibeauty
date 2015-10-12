@@ -22,7 +22,7 @@ class Availability {
    private $id;
 
    /**
-    * @ORM\Column(type="date")
+    * @ORM\Column(type="datetime")
     * @Assert\NotBlank()
     */
    private $date;
@@ -46,6 +46,9 @@ class Availability {
     private $availabilitySet;
 
 
+    public function __toString() {
+        return (string) $this->getId();
+    }
 
     /**
      * Get id

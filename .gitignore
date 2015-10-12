@@ -12,7 +12,6 @@ node_modules
 /vendor/
 /web/bundles/
 /web/css/
-Gemfile
-Gemfile.lock
+/web/js
 composer.phar
 *.php~

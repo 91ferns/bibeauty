@@ -42,13 +42,13 @@ class OfferAvailabilitySet {
    private $times = array();
 
     /**
-     * @ORM\OneToOne(targetEntity="Offer")
+     * @ORM\OneToOne(targetEntity="Offer", inversedBy="availabilitySet")
      * @ORM\JoinColumn(name="offer_id", referencedColumnName="id")
      **/
     private $offer;
 
    /**
-    * @ORM\ManyToOne(targetEntity="Treatment", inversedBy="treatmentAvailabilitySets")
+    * @ORM\ManyToOne(targetEntity="Treatment")
     * @ORM\JoinColumn(name="treatment_id", referencedColumnName="id")
     */
     private $treatment;
@@ -60,7 +60,7 @@ class OfferAvailabilitySet {
     private $recurrenceType = 'never';
 
     /**
-     * @ORM\OneToMany(targetEntity="Availability", mappedBy="availability")
+     * @ORM\OneToMany(targetEntity="Availability", mappedBy="availabilitySet", fetch="EXTRA_LAZY")
      */
     private $availabilities;
 

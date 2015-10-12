@@ -1,6 +1,25 @@
 
 <div class="panel panel-default" id="formAvailabilityPanel">
   <div class="panel-body">
+
+      {% if treatment is defined %}{% else %}
+        <div class="form-group">
+          <label for="Day">Treatment</label>
+          <div class="select2-wrapper">
+            <select class="select2 form-control" name="Treatment">
+              <option selected>Select a treatment</option>
+              {% for treatmentGroup in business.getTreatmentHierarchy %}
+                <optgroup label="{{treatmentGroup.label}}">
+                  {% for treatment in treatmentGroup.treatments %}
+                  <option value="{{treatment.getId}}">{{treatment.getLabel}}</option>
+                  {% endfor %}
+                </optgroup>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
       <div class="form-group">
         <label for="Day">Date</label>
         <div class="input-group">
@@ -8,10 +27,13 @@
           <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
         </div>
       </div>
+
       <div class="form-group">
         <label for="Time">Time</label>
+
         <div class="select2-wrapper">
           <select multiple="true" class="form-control select2" name="Times[]">
+            <option value="ALL">All Times</option>
           {% for hour in 7..21 %}
             {% for minute in 0..3 %}
               {% set formattedMinute = "%02d"|format(minute * 15) %}
@@ -20,27 +42,28 @@
           {% endfor %}
           </select>
         </div>
-        <p class="help-block">
-          CTRL / CMD + click to select more than one. Shift + Click to select all in between.
-        </p>
       </div>
 
+      {% if treatment is defined %}
       <div class="form-group">
         <label class="control-label">Original Price</label>
         <input class="form-control" name="Discount" type="i" disabled value="{{ treatment.getOriginalPrice | number_format(2) }}">
       </div>
+      {% endif %}
 
       <div class="form-group">
         <label class="control-label">Discount Price</label>
         <input class="form-control" name="Discount">
+        {% if treatment is defined %}
         <p class="help-block">
           Must be less than ${{ treatment.getOriginalPrice | number_format(2) }}
         </p>
+        {% endif %}
       </div>
 
       <div class="form-group">
         <div class="input-group">
-          <label for="">Recurrence</label><br>
+          <label for="">Repeat</label><br>
           <!--<input type="checkbox" name="Recurring" class="form-control" />-->
           <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-primary active" >
@@ -50,10 +73,10 @@
               <input type="radio" name="RecurrenceType" value="daily" class="form-control" /> Daily
             </label>
             <label class="btn btn-primary">
-              <input type="radio" name="RecurrenceType" value="monthly" class="form-control" /> Monthly
+              <input type="radio" name="RecurrenceType" value="weekly" class="form-control" /> Weekly
             </label>
             <label class="btn btn-primary">
-              <input type="radio" name="RecurrenceType" value="weekly" class="form-control" /> Weekly
+              <input type="radio" name="RecurrenceType" value="monthly" class="form-control" /> Monthly
             </label>
           </div>
 
@@ -91,5 +114,15 @@
         </div>
 
       </div>
+
+      <hr>
+
+      <p class="help-block">
+        <strong>Never:</strong> Offer appears only on the selected date and times and is then removed.<br>
+        <strong>Daily:</strong> Offer appears on the selected times every day of the week that you are open<br>
+        <strong>Weekly:</strong> Offer appears on the same day each week and those you select.<br>
+        <strong>Monthly:</strong> Offer appears on the same date scheduled each month.
+      </p>
+
   </div>
 </div>

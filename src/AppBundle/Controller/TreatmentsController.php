@@ -110,7 +110,11 @@ class TreatmentsController extends Controller
         $av = $availabilityRepo->findOneBy(array('id' => $availability));
 
         $bookingForm = $this->createForm(new BookingType(), new Booking(), array(
-            'action' => $this->generateUrl('listings_search_path', array()),
+            'action' => $this->generateUrl('do_book_treatment_path', array(
+                'availability' => $av->getId(),
+                'id' => $business->getId(),
+                'slug' => $business->getSlug(),
+            )),
             'user' => $this->getUser() ? $this->getUser() : null,
         ));
 
@@ -118,6 +122,71 @@ class TreatmentsController extends Controller
             'business' => $business,
             'availability' => $av,
             'form' => $bookingForm->createView(),
+        ));
+
+    }
+
+    /**
+     * @Route("/businesses/{id}/{slug}/availability/{availability}", name="do_book_treatment_path")
+     * @Method({"POST"})
+     */
+    public function doBookAction($id, $slug, $availability, Request $request) {
+
+        $business = $this->businessBySlugAndId($slug, $id);
+        $em = $this->getDoctrine()->getManager();
+    	$availabilityRepo = $em->getRepository("AppBundle:Availability");
+
+        $av = $availabilityRepo->findOneById($availability);
+
+        $booking = new Booking();
+
+        $form = $this->createForm(new BookingType(), $booking);
+        $form->handleRequest($request);
+
+        $booking->setAvailability($av);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            if ($this->getUser()) {
+                $booking->setUser($this->getUser());
+            }
+
+            $em->persist($booking);
+            $em->flush();
+
+            return $this->redirectToRoute('do_book_confirm_path', array(
+                'id' => $id,
+                'slug' => $slug,
+                'booking' => $av->getId(),
+            ));
+
+        } else {
+            return $this->render('treatments/book.html.twig', array(
+                'business' => $business,
+                'availability' => $av,
+                'form' => $form->createView(),
+            ));
+        }
+
+    }
+
+    /**
+     * @Route("/businesses/{id}/{slug}/availability/{booking}/confirm", name="do_book_confirm_path")
+     * @Method({"GET"})
+     */
+    public function confirmBookPath($id, $slug, $booking, Request $request) {
+
+        $business = $this->businessBySlugAndId($slug, $id);
+        $em = $this->getDoctrine()->getManager();
+    	$bookingRepo = $em->getRepository("AppBundle:Booking");
+
+        $booking = $bookingRepo->findOneById($booking);
+
+        return $this->render('treatments/confirm.html.twig', array(
+            'business' => $business,
+            'booking' => $booking,
         ));
 
     }

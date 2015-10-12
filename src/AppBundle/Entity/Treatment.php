@@ -40,7 +40,7 @@ class Treatment {
     protected $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TreatmentCategory")
+     * @ORM\ManyToOne(targetEntity="TreatmentCategory", fetch="EAGER")
      * @ORM\JoinColumn(name="treatment_category_id", referencedColumnName="id")
      */
     protected $treatmentCategory;

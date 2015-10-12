@@ -11,11 +11,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class BookingsController extends Controller
 {
     /**
-     * @Route("/account/businesses/{id}/{slug}/offers", name="admin_business_bookings_path")
+     * @Route("/account/businesses/{id}/{slug}/bookings", name="admin_business_bookings_path")
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function indexAction($id, $slug, Request $request)
     {
+
+        $business = $this->businessBySlugAndId($slug, $id);
+
+        $em = $this->getDoctrine()->getManager();
+    	$repo = $em->getRepository("AppBundle:Booking");
+
+        $bookings = $repo->findByBusiness($business);
+
+        return $this->render('account/bookings/index.html.twig', array(
+            'business' => $business,
+            'bookings' => $bookings
+        ));
 
     }
 }

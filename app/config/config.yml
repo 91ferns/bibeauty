@@ -48,13 +48,9 @@ assetic:
         react_components:
             inputs:
                 - 'assets/react/*'
-        head_assets:
-            inputs:
-                - 'assets/components/react/react-with-addons.js'
         vendor_css:
             inputs:
                 - 'assets/components/select2/dist/css/select2.min.css'
-                - 'assets/components/select2-bootstrap-css/select2-bootstrap.css'
         vendor_assets:
             inputs:
                 - 'assets/components/react/react-with-addons.js'

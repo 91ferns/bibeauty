@@ -14,8 +14,8 @@ class AttachmentType extends AbstractType
     {
         $builder
             ->add('attachment', 'file', array(
-                 'label' => false,
-                 'attr' => array(
+                'label' => false,
+                'attr' => array(
                     'placeholder' => 'Attachment'
                 )
             ));
