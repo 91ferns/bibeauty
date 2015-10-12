@@ -120,37 +120,73 @@ class AuthenticationController extends Controller {
    }
     /**
     * @Route("/forgotpassword", name="forgot_password")
-    * @Route("/forgotpassword{token}", name="forgot_password_token")
-    * @Method({"POST","GET"})
+    * @Method({"GET"})
     */
-   function forgotPassword(Request $request,$token = null){
-        if($token === null){
+   function forgotPassword(Request $request){
             return $this->render(
                 'authentication/forgotpassword.html.twig'
             );
 
-        }else{
-           
-        }
-
    }
+
+    /**
+    * @Route("/forgotpassword/{token}", name="forgot_password_token")
+    * @Method({"GET"})
+    */
+    function forgotPasswordToken($token,Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository("AppBundle:User")->findBy(['resetToken'=>$token]);
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($user);
+        $form = $this->createForm(new PasswordResetType(), $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $user->setPassword($password);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($user);
+            $em->flush();
+
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->get('security.token_storage')->setToken($token);
+
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render(
+                'authentication/resetpassword.html.twig',
+                array(
+                    'form' => $form->createView()
+                )
+        );
+
+    }
+
    /**
     * @Route("/forgotpassword", name="forgot_password_email")
     * @Method({"POST"})
     */
     function forgotPasswordEmail(Request $request){
-        $token = bin2hex(random_bytes($length));
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Bibeauty Password Reset')
-            ->setFrom('infofo@bibeauty.com')
-            ->setTo($request->request->get('email'))
-            ->setBody(
-                $this->renderView(
-                    'Emails/passwordreset.html.twig',
+        $email = $request->request->get('email');
+        $token = sha1(uniqid($email, true));
+         $message = \Swift_Message::newInstance()
+                ->setSubject('Bibeauty Password Reset')
+                ->setFrom('infofo@bibeauty.com')
+                ->setTo($email)
+                ->setBody(
+                    $this->renderView(
+                    'emails/passwordreset.html.twig',
                     array('token' => $token)
                 ),
                 'text/html'
-            );
-        $this->get('mailer')->send($message);
+        );
+
+        $x = $this->get('mailer')->send($message);    
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository("AppBundle:User")->findBy(['email'=>$email]);
+        $user->setResetToken($token);
+        $em->flush();
     }
 }
