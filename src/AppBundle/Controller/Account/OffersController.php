@@ -107,7 +107,9 @@ class OffersController extends Controller
         $date = $request->request->get('Date', false);
         $times = $request->request->get('Times', array());
         $recurrenceType = $request->request->get('RecurrenceType', 'never');
-
+        if($times[0] == 'ALL'){
+          $times = $this->buildAllTimes();
+        }
         if (!$date || !$times || count($times) < 1 ){
             return $this->redirectToRoot($slug, $id, $treatmentId, array(
                 'error',
@@ -187,6 +189,18 @@ class OffersController extends Controller
             'notice',
             'Successfully created ' + count($availabilitySets) . ' availabilities'
         ));
+    }
+    protected function buildAllTimes()
+    {
+      $times = [];
+        for($i=7;$i<=21;$i++){
+          for($j=0;$j<=3;$j++){
+            $min = $j*15;
+            if($min == 0) $min = '00';
+            $times[] = $i . ':' . $min;
+          }
+        }
+        return $times;
     }
 
     protected function redirectToRoot($slug, $id, $treatmentId, $flash = false) {

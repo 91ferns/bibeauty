@@ -265,7 +265,9 @@ class OfferAvailabilitySet {
         $type = $this->getRecurrenceType();
 
         $dates =  array();
-
+        if($times[0] == 'ALL'){
+          //for
+        }
         // First one that matches is always the start date
         foreach($times as $time) {
             $string = $this->dateAndTime($startDate, $time, false);
