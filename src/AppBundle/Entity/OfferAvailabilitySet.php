@@ -384,7 +384,7 @@ class OfferAvailabilitySet {
             $x = new \AppBundle\Entity\Availability();
             $x->setDate($date);
             $x->setAvailabilitySet($this);
-            $x->setTreatment($this->treatment);
+            $x->setTreatment($this->getTreatment());
             $x->setBusiness($business);
 
             $availabilities[] = $x;

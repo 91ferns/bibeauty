@@ -168,6 +168,7 @@ class OffersController extends Controller
         $availabilitySet->setStartDate($startDateTime);
         $availabilitySet->setDaysOfTheWeek($recurrenceDOWs);
         $availabilitySet->setTimes($times);
+        $availabilitySet->setTreatment($treatment);
         $availabilitySet->setRecurrenceType($recurrenceType);
 
         $em->persist($availabilitySet);

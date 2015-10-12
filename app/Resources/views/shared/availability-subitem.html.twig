@@ -1,0 +1,28 @@
+<li class="list-group-item availability-list-item">
+  {% set offer = availability.getAvailabilitySet.getOffer %}
+  <div class="row gutterless">
+
+    <div class="col-xs-4">
+      <label class="control-label">
+        <input name="Availability" value="{{availability.id}}" type="radio">
+        {{availability.getDate | date('g:i A') }}
+      </label>
+    </div>
+
+    <div class="col-xs-3">
+      <select class="form-control" disabled name="Quantity">
+        <option value="1">1</option>
+      </select>
+    </div>
+
+    <div class="col-xs-2">
+      ${{ treatment.getOriginalPrice | localizedcurrency }}
+    </div>
+
+    <div class="col-xs-3">
+      <strong><big>${{ offer.getCurrentPrice | localizedcurrency }}</big></strong>
+    </div>
+
+  </div>
+
+</li>

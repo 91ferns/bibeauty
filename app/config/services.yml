@@ -35,6 +35,14 @@ services:
     twilio.factory:
         class: AppBundle\Services\TwilioFactory
         arguments: ["%twilio%", @logger]
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
     app.twig_extension:
         class: AppBundle\Twig\AppExtension
         public: false
