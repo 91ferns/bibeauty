@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use AppBundle\Form\PasswordResetType;
 
 class AuthenticationController extends Controller {
 
@@ -126,26 +127,30 @@ class AuthenticationController extends Controller {
             return $this->render(
                 'authentication/forgotpassword.html.twig'
             );
-
    }
 
     /**
-    * @Route("/forgotpassword/{token}", name="forgot_password_token")
-    * @Method({"GET"})
+    * @Route("/forgotpasswordreset/{token}", name="forgot_password_token")
+    * @Method({"GET","POST"})
     */
-    function forgotPasswordToken($token,Request $request){
+    function forgotPasswordToken(Request $request,$token =null){
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository("AppBundle:User")->findBy(['resetToken'=>$token]);
+        //var_dump($user); exit;
+        $form = $this->createForm(new PasswordResetType(),null,['token'=>$token]);//,$user
         $factory = $this->get('security.encoder_factory');
-        $encoder = $factory->getEncoder($user);
-        $form = $this->createForm(new PasswordResetType(), $user);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $user = $em->getRepository("AppBundle:User")->findOneBy(['resetToken'=>$token]);   
+                //var_dump($user); exit;
+        $encoder = $factory->getEncoder($user); 
+
+            $password = $encoder->encodePassword($request->request->get('password'), $user->getSalt());
+            //$user->updatePassword($user,$password);
             $user->setPassword($password);
 
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
 
             $em->persist($user);
             $em->flush();
@@ -158,8 +163,8 @@ class AuthenticationController extends Controller {
         return $this->render(
                 'authentication/resetpassword.html.twig',
                 array(
-                    'form' => $form->createView()
-                )
+                    'form' => $form->createView(),
+                    'error'=> false,                )
         );
 
     }

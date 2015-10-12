@@ -12,4 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    function updatePassword($User, $newpass){
+        $encoder = $this->getEncoder($User);
+        $user->setPassword($encoder->encodePassword($newpass, $user->getSalt()));
+ 
+    }
 }

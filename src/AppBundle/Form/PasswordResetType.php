@@ -4,9 +4,12 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Router;
 
-class UserType extends AbstractType
+class PasswordResetType extends AbstractType
 {
+ 
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -26,13 +29,19 @@ class UserType extends AbstractType
                    )
                 ),
              ))
+             ->add('save', 'submit', array(
+                    'attr' => array('class' => 'save btn btn-primary'),
+            ))
+            //->setAction('/forgotpasswordtoken/'.$options['token'])
+         
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\User'
+            'data_class' => null,//'AppBundle\Entity\User'
+            'token' => false
         ));
     }
 
