@@ -57,16 +57,16 @@
                   </div>
                   <div class="row bottom-area">
                     <p class="treatment">
-                      {{ availability.getTreatment }}
+                      {{ availability.getTreatment.getLabel }}
                     </p>
                     <p class="price">
-                      $100
+                      ${{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency}}
                     </p>
                     <p class="old-price">
-                      $100
+                      ${{ availability.getTreatment.getOriginalPrice | localizedcurrency}}
                     </p>
                     <p class="duration">
-                      15 mins
+                      {{ availability.getTreatment.getDuration | duration }}
                     </p>
                     <p class="footer">
                       All payments are made directly with the salon upon your visit. BiBeauty does not accept payments for bookings.
@@ -119,6 +119,8 @@
       <center>
         <button type="submit" class="btn btn-primary btn-lg">Reserve</button>
       </center>
+
+      <input type="hidden" name="Avaialbility" value="{{availability.getId}}">
     {{ form_end(form) }}
 
   </div>

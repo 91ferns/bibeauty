@@ -283,39 +283,6 @@ class User implements AdvancedUserInterface, \Serializable {
         return sprintf($format, $emailHash, $s, $d, $r);;
     }
 
-    /**
-     * Add subscriptions
-     *
-     * @param \AppBundle\Entity\Subscription $subscriptions
-     * @return User
-     */
-    public function addSubscription(\AppBundle\Entity\Subscription $subscriptions)
-    {
-        $this->subscriptions[] = $subscriptions;
-
-        return $this;
-    }
-
-    /**
-     * Remove subscriptions
-     *
-     * @param \AppBundle\Entity\Subscription $subscriptions
-     */
-    public function removeSubscription(\AppBundle\Entity\Subscription $subscriptions)
-    {
-        $this->subscriptions->removeElement($subscriptions);
-    }
-
-    /**
-     * Get subscriptions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSubscriptions()
-    {
-        return $this->subscriptions;
-    }
-
     public function getFullname() {
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
@@ -359,7 +326,7 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Get resetToken
      *
-     * @return string 
+     * @return string
      */
     public function getResetToken()
     {

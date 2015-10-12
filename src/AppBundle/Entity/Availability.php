@@ -46,6 +46,9 @@ class Availability {
     private $availabilitySet;
 
 
+    public function __toString() {
+        return (string) $this->getId();
+    }
 
     /**
      * Get id

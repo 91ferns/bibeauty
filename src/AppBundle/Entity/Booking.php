@@ -22,7 +22,7 @@ class Booking {
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Availability", cascade={"remove"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="Availability", cascade={"remove"}, fetch="EAGER")
      * @ORM\JoinColumn(name="availability_id", referencedColumnName="id")
      */
     protected $availability;
@@ -53,8 +53,8 @@ class Booking {
     protected $phone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", orphanRemoval=true, fetch="EAGER", nullable=true)
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", fetch="EAGER")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
 
@@ -282,4 +282,50 @@ class Booking {
         return $this->offer;
     }
 
+
+    /**
+     * Set availability
+     *
+     * @param \AppBundle\Entity\Availability $availability
+     * @return Booking
+     */
+    public function setAvailability(\AppBundle\Entity\Availability $availability = null)
+    {
+        $this->availability = $availability;
+
+        return $this;
+    }
+
+    /**
+     * Get availability
+     *
+     * @return \AppBundle\Entity\Availability 
+     */
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return Booking
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

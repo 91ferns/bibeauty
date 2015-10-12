@@ -82,7 +82,7 @@ class Offer {
     protected $business;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Treatment")
+     * @ORM\ManyToOne(targetEntity="Treatment", inversedBy="offers")
      * @ORM\JoinColumn(name="treatment_id", referencedColumnName="id")
      */
     protected $treatment;

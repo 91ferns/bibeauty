@@ -70,7 +70,8 @@ class BookingType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Booking',
-            'user' => null
+            'user' => null,
+            'availability' => true,
         ));
     }
 
