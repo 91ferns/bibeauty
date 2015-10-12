@@ -22,6 +22,7 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('slugify', array($this, 'slugFilter')),
             new \Twig_SimpleFilter('meridian', array($this, 'hourMeridianFilter')),
             new \Twig_SimpleFilter('nicehour', array($this, 'formatHourFilter')),
+            new \Twig_SimpleFilter('duration', array($this, 'formatMinutesFilter'))
         );
     }
 
@@ -46,6 +47,36 @@ class AppExtension extends \Twig_Extension
     public function elapsedFilter( $timestamp ) {
         //type cast, current time, difference in timestamps
         return OperatingSchedule::getElapsedTime($timestamp);
+    }
+
+    public function formatMinutesFilter( $originalMinutes ) {
+
+        if ($originalMinutes < 60) {
+            $minutes = $originalMinutes;
+            $hours = 0;
+        } else {
+            $hours = floor($originalMinutes / 60);
+            $minutes = $originalMinutes % 60;
+        }
+
+        $text = '';
+        if ($hours > 0) {
+            $text .= $hours . ' hour';
+            if ($hours > 1) {
+                $text .= 's';
+            }
+            $text .= ' ';
+        }
+
+        if ($minutes > 0) {
+            $text .= $minutes . ' minute';
+            if ($minutes > 1) {
+                $text .= 's';
+            }
+        }
+
+        return $text;
+
     }
 
     public function ratingStarsFilter( $number ) {

@@ -124,6 +124,15 @@ class OffersController extends Controller
             ));
         }
 
+        $discount = $request->request->get('Discount', false);
+
+        if (!$discount) {
+            return $this->redirectToRoot($slug, $id, $treatmentId, array(
+                'error',
+                'You must specify a discount.'
+            ));
+        }
+
         $recurrenceDOWs = $request->request->get('RecurrenceDates', array());
         $recurrenceDOWs = array_unique($recurrenceDOWs);
 
@@ -137,11 +146,19 @@ class OffersController extends Controller
             ));
         }
 
+        if ((float) $discount >= (float) $treatment->getOriginalPrice()) {
+            return $this->redirectToRoot($slug, $id, $treatmentId, array(
+                'error',
+                'Discount must be cheaper than the original price.'
+            ));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $offer = new Offer();
         $offer->setBusiness($business);
         $offer->setTreatment($treatment);
+        $offer->setCurrentPrice($discount);
         $em->persist($offer);
 
         $startDateTime = new \DateTime($date);
@@ -151,9 +168,11 @@ class OffersController extends Controller
         $availabilitySet->setStartDate($startDateTime);
         $availabilitySet->setDaysOfTheWeek($recurrenceDOWs);
         $availabilitySet->setTimes($times);
+        $availabilitySet->setTreatment($treatment);
         $availabilitySet->setRecurrenceType($recurrenceType);
 
         $em->persist($availabilitySet);
+        $em->flush();
 
         // Offer is made. We need to make its availability now
         $matchingDates = $availabilitySet->datesThatMatchRecurrence($date, $times, $recurrenceDOWs, $recurrenceType);
@@ -165,7 +184,6 @@ class OffersController extends Controller
             $em->persist($availabilitySet);
             if (($i % $batchSize) === 0) {
                 $em->flush();
-                $em->clear(); // Detaches all objects from Doctrine!
             }
         }
 

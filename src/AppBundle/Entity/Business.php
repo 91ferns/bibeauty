@@ -675,14 +675,14 @@ class Business {
         return $array;
     }
 
-    protected $bookings = array();
+    protected $availabilities = array();
 
-    public function getBookings() {
-        return $this->bookings;
+    public function getAvailabilities() {
+        return $this->availabilities;
     }
 
-    public function addBooking(\AppBundle\Entity\Booking $booking) {
-        $this->bookings[] = $booking;
+    public function addAvailability(\AppBundle\Entity\Availability $availability) {
+        $this->availabilities[] = $availability;
         return $this;
     }
 
@@ -696,30 +696,25 @@ class Business {
         return $this->distanceFrom;
     }
 
+    public function hasTreatments() {
+        $treatments = $this->getTreatments();
+        return count($treatments) > 0;
+    }
 
-    private $serviceCategories = array();// Lazy loaded
+    private $treatmentHierarchy = null;
 
-    public function getServiceCategories() {
-        if (count($this->serviceCategories) > 0) {
-            return $this->serviceCategories;
+    public function getTreatmentHierarchy() {
+
+        if ($this->treatmentHierarchy) {
+            return $this->treatmentHierarchy;
         }
 
-        return $this->serviceCategories = $this->loadServiceCategories();
-        // Funky little biznis here
-    }
-
-    public function hasServiceCategories() {
-        $this->getServiceCategories(); // Make sure it has been loaded
-        return count($this->serviceCategories) > 0;
-    }
-
-    protected function loadServiceCategories() {
-        $services = $this->getServices();
+        $treatments = $this->getTreatments();
 
         $categories = array();
 
-        foreach($services as $service) {
-            $category = $service->getServiceType();
+        foreach($treatments as $treatment) {
+            $category = $treatment->getTreatmentCategory();
             // Parent category name
             //getCategoryName
             $id = $category->getCategoryName();
@@ -736,13 +731,14 @@ class Business {
                 $categories[$id] = $std;
             }
 
-            $categories[$id]->treatments[] = $service;
-            if ($std->lowestPrice === false || $std->lowestPrice > $service->getCurrentPrice()) {
-                $std->lowestPrice = $service->getCurrentPrice();
+            $categories[$id]->treatments[] = $treatment;
+            if ($std->lowestPrice === false || $std->lowestPrice > $treatment->getCheapestDiscountPrice()) {
+                $std->lowestPrice = $treatment->getCheapestDiscountPrice();
             }
 
         }
 
+        $this->treatmentHeirarchy = $categories;
         return $categories;
 
     }

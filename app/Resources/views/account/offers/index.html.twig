@@ -14,79 +14,55 @@
         <tr>
           <th>ID</th>
           <!--<th><a href="#" id="check-all-box">All</a></th>-->
-          <th>Client</th>
           <th>Services</th>
-          <th>Category</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Price</th>
-          <th>Therapist</th>
-          <th>Status</th>
+          <th>Treatment</th>
+          <th>Start Date</th>
+          <th>Times</th>
+          <th>Discount</th>
+          <th>Re-occurring</th>
+          <th>Enabled</th>
         </tr>
       </thread>
       <tbody>
-
-
-          {% for booking in offers %}
-                  <tr data=bookingid="{{booking.getId}}">
-          {% set service     = booking.getService %}
-          {% set serviceType = service.getServiceType %}
-          {% set category = serviceType.getServiceCategory %}
-          {% set availability = booking.getAvailability %}
-          {% set status = booking.getApproval %}
-          {% if status == 1 %}
-          {%     set status = 'unapproved' %}
-          {%     set cls = '-warning' %}
-          {% elseif status == 4 %}
-          {%     set status = 'confirmed' %}
-          {%     set cls = '-success' %}
-          {% elseif status == 2 %}
-          {%     set status = 'declined' %}
-          {%     set cls    = '-danger' %}
-          {% else %}
-          {%     set status = 'canceled' %}
-          {%     set cls = '-danger' %}
-          {% endif %}
-          <td >
-              {{ booking.getId }}
-          </td>
-          <!--<td >
-              <input type="checkbox" data-id="{{booking.getId}}">
-          </td>-->
-          <td >
-              {{ booking.getUser }}
-          </td>
-          <td >
-              {{ booking.getService.getLabel }}
-          </td>
-          <td >
-              {{ category.getLabel }}
-          </td>
-          <td data-availabilityid = "{{availability.getId}}">
-              {{ availability.getDate|date('m/d/Y') }}
-          </td>
-          <td data-availabilityid = "{{availability.getId}}">
-              {{ availability.getTime|date('h:i A') }}
-          </td>
-          <td data-serviceid = "{{service.getId}}">
-              ${{ service.getOriginalPrice }}.00 / ${{ service.getCurrentPrice }}.00
-          </td>
-          <td data-serviceid = "{{service.getId}}">
-            {{service.getTherapist}}
-          </td>
-            <td><a href="#" class="btn btn{{cls}}">
-            {{status}}</a>
-          </td>
-                    </tr>
-          {% endfor %}
-
+        {% for offer in offers %}
+        {% set av = offer.getAvailabilitySet %}
         <tr>
-      </tr>
+          <td><span class="offer-id">{{ offer.getId }}</span></td>
+          <td><span class="treatment-name">{{offer.getTreatment.getTreatmentCategory.getCategoryName}}</span></td>
+          <td><span class="treatment-name">{{offer.getTreatment.getLabel}}</span></td>
+          <td><span class="offer-start">{{av.getStartDate | date('d-m-Y')}}</span></td>
+          <td><span class="offer-times">
+            {{av.getTimes() | join(', ')}}
+          </span></td>
+          <td><span class="discount">
+            {{ offer.getDiscountPercentage }}% /
+            <span class="strikethrough">${{ offer.getTreatment.getOriginalPrice }}</span>
+            ${{ offer.getCurrentPrice }}
+          </span></td>
+          <td><span class="recurring">
+            {% if av.getRecurrenceType == 'never' %}
+              <input type="checkbox" disabled="disabled">
+            {% else %}
+              <input type="checkbox" disabled="disabled" checked="checked">
+            {% endif %}
+          </span></td>
+          <td><span class="enabled">
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" {% if offer.getIsOpen %}checked{% endif %}>
+              <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+
+          </span></td>
+        </tr>
+        {% endfor %}
       </tbody>
 
     </table>
     {% else %}
-    <p>You have no offers</p>
+      <p>You have no offers</p>
     {% endif %}
 
   </div>

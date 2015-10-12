@@ -21,50 +21,50 @@
 
         <div class="business-services">
           <h4>Services</h4>
-          {% if business.hasServiceCategories %}
+          {% if business.hasTreatments %}
           <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
 
-            {% for serviceCategory in business.getServiceCategories %}
+            {% for treatmentGroup in business.getTreatmentHierarchy %}
             <div class="panel panel-default">
               <div class="panel-heading" role="tab"
-                id="service-{{ serviceCategory.slug }}">
+                id="service-{{ treatmentGroup.slug }}">
                 <h4 class="panel-title">
                   <a role="button"
                     data-toggle="collapse"
-                    aria-controls="service-content-{{ serviceCategory.slug }}"
+                    aria-controls="service-content-{{ treatmentGroup.slug }}"
                     data-parent="#service-accordion"
-                    href="#service-content-{{ serviceCategory.slug }}"
+                    href="#service-content-{{ treatmentGroup.slug }}"
                     aria-expanded="true">
                       <img src="{{ asset('assets/images/discount-tag.png')}}">
-                      <big>{{ serviceCategory.label }}</big>
-                      {% if serviceCategory.treatments | length > 0 %}
-                      <small>See all {{ serviceCategory.treatments | length }} offers <i class="fa fa-chevron-down"></i></small>
+                      <big>{{ treatmentGroup.label }}</big>
+                      {% if treatmentGroup.treatments | length > 0 %}
+                      <small>See all {{ treatmentGroup.treatments | length }} offers <i class="fa fa-chevron-down"></i></small>
                       {% endif %}
                       <span class="pull-right">
                         from
-                        <strong>${{ serviceCategory.lowestPrice | number_format(2) }}</strong>
+                        <strong>${{ treatmentGroup.lowestPrice | number_format(2) }}</strong>
                       </strong>
                   </a>
                 </h4>
               </div>
-              <div id="service-content-{{ serviceCategory.slug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ serviceCategory.slug }}">
+              <div id="service-content-{{ treatmentGroup.slug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ treatmentGroup.slug }}">
                 <div class="panel-body">
                   {# This is where the individual services go, as their own accordions #}
                   <ul class="list-group">
-                  {% for service in serviceCategory.treatments %}
+                  {% for treatment in treatmentGroup.treatments %}
                     <li class="list-group-item clearfix">
                       <span class="service-name">
-                        {{ service.getLabel }}
+                        {{ treatment.getLabel }}
                       </span>
                       <span class="service-time">
-                        {{ service.getTimeForPrint }}
+                        {{ treatment.getTimeForPrint }}
                       </span>
                       <div class="pull-right">
                         <button class="btn btn-default service-old-price" disabled>
-                          ${{ service.getOriginalPrice | number_format(2) }}
+                          ${{ treatment.getOriginalPrice | number_format(2) }}
                         </button>
-                        <a class="btn btn-primary" data-toggle="modal" href="#treatmentModal" data-whatever="@getbootstrap" data-treatment-id="{{ service.getId }}" data-business-id="{{ business.getId }}">
-                          ${{ service.getCurrentPrice | number_format(2) }}
+                        <a class="btn btn-primary" data-toggle="modal" href="#treatmentModal" data-whatever="@getbootstrap" data-treatment-id="{{ treatment.getId }}" data-business-id="{{ business.getId }}">
+                          ${{ treatment.getCheapestDiscountPrice | number_format(2) }}
                         </a>
                       </div>
                     </li>

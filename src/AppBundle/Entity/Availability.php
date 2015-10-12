@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AvailabilityRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="app_availabilities")
  */
@@ -124,6 +124,14 @@ class Availability {
     public function getTreatment()
     {
         return $this->treatment;
+    }
+
+    public function getLabel() {
+        $treatment = $this->getTreatment();
+        if ($treatment) {
+            return $treatment->getLabel();
+        }
+        return 'N/A';
     }
 
     /**

@@ -31,8 +31,7 @@ class OfferAvailabilitySet {
    private $startDate;
 
    /**
-    * @ORM\Column(type="simple_array")
-    * @Assert\NotBlank()
+    * @ORM\Column(type="simple_array", nullable=true)
     */
    private $daysOfTheWeek = array();
 
@@ -311,9 +310,9 @@ class OfferAvailabilitySet {
         if ($type === 'monthly') {
 
             // let's get the month number
-            $startMonth = date($starttime, 'n');
-            $startDay = date($starttime, 'j');
-            $startYear = date($starttime, 'Y');
+            $startMonth = date('n', $starttime);
+            $startDay = date('j', $starttime);
+            $startYear = date('Y', $starttime);
 
             for ($i = 1; $i <= 12; $i++) {
 
@@ -323,7 +322,7 @@ class OfferAvailabilitySet {
                 if ($currentMonth === 0) {
                     $currentMonth = 12;
                 }
-                $daysInMonth = date($this->buildDateString($currentYear, $currentMonth, 1), 't');
+                $daysInMonth = date('t', $this->buildDateString($currentYear, $currentMonth, 1));
 
                 if ($daysInMonth < $startDay) {
                     continue;
@@ -355,7 +354,7 @@ class OfferAvailabilitySet {
                  $i = $i + self::DAY_IN_SECONDS) {
                 // $i is the new "startdate"
 
-                $dow = strtolower(date($i, 'l'));
+                $dow = strtolower(date('l', $i));
 
                 if (!in_array($dow, $DOWs)) {
                     continue;
@@ -385,7 +384,7 @@ class OfferAvailabilitySet {
             $x = new \AppBundle\Entity\Availability();
             $x->setDate($date);
             $x->setAvailabilitySet($this);
-            $x->setTreatment($this->treatment);
+            $x->setTreatment($this->getTreatment());
             $x->setBusiness($business);
 
             $availabilities[] = $x;

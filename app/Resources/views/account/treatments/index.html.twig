@@ -11,17 +11,42 @@
   </div>
   <div class="panel-body">
     {% if treatments.count > 0 %}
-      <ul class="list-group">
-      {% for treatment in treatments %}
-        <li class="list-group-item">
-          <a href="{{ path('admin_treatment_show_path',{
-            'id': business.getId,
-            'slug': business.getSlug,
-            'treatmentId': treatment.getId
-            }) }}">{{ treatment.getLabel }}</a>
-        </li>
-      {% endfor %}
-      </ul>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Service</th>
+            <th>Category</th>
+            <th>Full Price</th>
+            <th>Duration</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for treatment in treatments %}
+          <tr>
+            <td>
+              <a href="{{ path('admin_treatment_show_path',{
+                'id': business.getId,
+                'slug': business.getSlug,
+                'treatmentId': treatment.getId
+                }) }}">{{ treatment.id }}</a>
+            </td>
+            <td>{{ treatment.getTreatmentCategory.getCategoryName }}
+            <td>{{ treatment.getLabel }}</td>
+            <td>${{ treatment.getOriginalPrice }}</td>
+            <td>{{treatment.getDuration | duration }}</td>
+            <td>
+              <a href="{{ path('admin_treatment_show_path',{
+                'id': business.getId,
+                'slug': business.getSlug,
+                'treatmentId': treatment.getId
+                }) }}">Edit</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     {% else %}
       <p>No treatments are added.</p>
     {% endif %}

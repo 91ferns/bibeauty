@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<section id="business-information" class="nav-pad" style="padding-bottom: 20px;">
+
+  <div class="jumbotron no-margin">
+      <div class="container">
+
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="pull-right">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</h2>
+              <h1>{{business.getName}}</h1>
+              <div class="stars">
+                {{ business.getAverageRating | rating }}
+                from Yelp&trade;
+              </div> <!-- /.stars -->
+              <p></p>
+            </div>
+          </div> <!-- /.row -->
+          <div class="row">
+            <div class="col-md-8">
+              {% if business.hasHeaderAttachment %}
+                <div class="header-attachment-wrapper" style="background-image: url({{ business.getHeaderAttachment.getKey | s3 }})">
+              {% else %}
+                <div class="header-attachment-wrapper" style="">
+              {% endif %}
+              </div> <!-- /.header-attachment-wrapper -->
+            </div> <!-- /.col -->
+
+            <div class="col-md-4">
+
+                <aside class="business-aside">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <p class="time">
+                        {{ availability.getDate | date('h:s A') }}
+                      </p>
+                    </div>
+                    <div class="col-sm-4">
+                      <p class="booked-date">
+                        {{ availability.getDate | date('d M D') }}
+                      </p>
+                    </div>
+                    <div class="col-sm-3">
+                      <p class="date">
+                        Today
+                      </p>
+                    </div>
+                  </div>
+                  <div class='row'>
+                    <hr class="top">
+                    <span class="title">
+                      {{ availability.getBusiness.getName }}
+                    </span>
+                    <hr class="bottom">
+                  </div>
+                  <div class="row bottom-area">
+                    <p class="treatment">
+                      {{ availability.getTreatment }}
+                    </p>
+                    <p class="price">
+                      $100
+                    </p>
+                    <p class="old-price">
+                      $100
+                    </p>
+                    <p class="duration">
+                      15 mins
+                    </p>
+                    <p class="footer">
+                      All payments are made directly with the salon upon your visit. BiBeauty does not accept payments for bookings.
+                    </p>
+                  </div>
+                </div>
+              </aside>
+
+            </div>
+          </div> <!-- /.row -->
+
+      </div>
+  </div> <!-- /.jumbotron -->
+
+  {% include 'shared/quicklogin.html.twig' %}
+
+</section>
+
+<section class="no-account booking-info">
+
+  <div class="container">
+    <hr class="fullwidth">
+    <p class="text-muted">Don’t have an account with us ? Simply just fill out the below to reserve your appointment</p>
+
+    {{ form_start(form) }}
+      <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        {{ form_errors(form.name) }}
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+          </div>
+        </div> <!-- /.col -->
+
+        <div class="col-md-6">
+          <div class="form-group">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone) }}
+            {{ form_errors(form.phone) }}
+          </div>
+        </div> <!-- /.col -->
+
+      </div>
+      <center>
+        <button type="submit" class="btn btn-primary btn-lg">Reserve</button>
+      </center>
+    {{ form_end(form) }}
+
+  </div>
+
+</section>
+
+{% endblock %}

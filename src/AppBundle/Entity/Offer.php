@@ -40,8 +40,7 @@ class Offer {
     protected $phone;
 
     /**
-     * @ORM\OneToOne(targetEntity="OfferAvailabilitySet")
-     * @ORM\JoinColumn(name="availability_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="OfferAvailabilitySet", mappedBy="offer")
      */
     protected $availabilitySet;
 
@@ -74,7 +73,7 @@ class Offer {
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
      */
-    private $isOpen = false;
+    private $isOpen = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="Business")
@@ -392,5 +391,13 @@ class Offer {
     public function getIsOpen()
     {
         return $this->isOpen;
+    }
+
+    public function getDiscountPercentage() {
+        $originalPrice = $this->getTreatment()->getOriginalPrice();
+        $newPrice = $this->getCurrentPrice();
+
+        return sprintf('%d', (($originalPrice - $newPrice) / $originalPrice) * 100);
+
     }
 }

@@ -88,10 +88,10 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-    	$repo = $em->getRepository("AppBundle:Offer");
+    	$repo = $em->getRepository("AppBundle:Availability");
+
         $categories = $em->getRepository("AppBundle:TreatmentCategory");
-        $heirarchy = $categories->getHeirarchy();//$services = $em->getRepository("AppBundle:ServiceType");
-        //$categories = $em->getRepository("AppBundle:ServiceCategory");
+        $heirarchy = $categories->getHeirarchy();
 
         $form = $this->getSearchForm($request);
         $params = $form->getData();
@@ -123,10 +123,11 @@ class BusinessesController extends Controller
                   $results[$id] = $b;
               }
 
-              $results[$id]->addBooking($booking);
+              $results[$id]->addAvailability($booking);
           }
 
         }
+
         return $this->render('businesses/search.html.twig', array(
             'results' => $results,
             'params' => $params,
