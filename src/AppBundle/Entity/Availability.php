@@ -126,6 +126,14 @@ class Availability {
         return $this->treatment;
     }
 
+    public function getLabel() {
+        $treatment = $this->getTreatment();
+        if ($treatment) {
+            return $treatment->getLabel();
+        }
+        return 'N/A';
+    }
+
     /**
      * Set availabilitySet
      *

@@ -386,4 +386,18 @@ class Treatment {
         }
 
     }
+
+    public function getCheapestDiscountPercentage() {
+        $cheapestOffer = $this->getCheapestOffer();
+
+        if (!$cheapestOffer) {
+            return 100;
+        } else {
+            $current = $cheapestOffer->getCurrentPrice();
+            $original = $this->getOriginalPrice();
+
+            return ( ($original - $current) / $original ) * 100;
+        }
+
+    }
 }

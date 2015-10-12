@@ -73,7 +73,7 @@ class Offer {
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
      */
-    private $isOpen = false;
+    private $isOpen = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="Business")

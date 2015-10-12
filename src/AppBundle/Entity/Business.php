@@ -675,14 +675,14 @@ class Business {
         return $array;
     }
 
-    protected $bookings = array();
+    protected $availabilities = array();
 
-    public function getBookings() {
-        return $this->bookings;
+    public function getAvailabilities() {
+        return $this->availabilities;
     }
 
-    public function addBooking(\AppBundle\Entity\Booking $booking) {
-        $this->bookings[] = $booking;
+    public function addAvailability(\AppBundle\Entity\Availability $availability) {
+        $this->availabilities[] = $availability;
         return $this;
     }
 

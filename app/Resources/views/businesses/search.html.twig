@@ -143,19 +143,23 @@
 
                 </div> <!-- /.row -->
 
-                {% if business.getBookings | length > 0 %}
+                {% if business.getTreatments | length > 0 %}
                 <ul class="list-group">
-                  {% for booking in business.getBookings %}
+                  {% for treatment in business.getTreatments %}
                   <li class="list-group-item">
                     <h4 class="panel-title clearfix">
-                      {{booking.getService.getLabel}}
-                      <big>{{ booking.name }}</big>
-                      <a class="btn btn-primary pull-right" href="{{ path('business_book_path', {id: booking.getBusiness.getId, slug: booking.getBusiness.getSlug, treatment: booking.getId }) }}">
+                      <big>{{ treatment.getLabel }}</big>
+                      <a class="btn btn-primary pull-right"
+                      href="{{ path('business_book_path', {
+                        id: business.getId,
+                        slug: business.getSlug,
+                        treatment: treatment.getId })
+                      }}">
                         From
-                        <strong>${{ booking.getService.getCurrentPrice | number_format(2) }}</strong>
+                        <strong>${{ treatment.getCheapestDiscountPrice | number_format(2) }}</strong>
                       </a>
                       <span class="save pull-right">
-                        Save <blue>{{ booking.getService.getPercentageSaved }}%</blue>
+                        Save <blue>{{ treatment.getCheapestDiscountPercentage }}%</blue>
                       </span>
                     </h4>
                   </li> <!-- .list-item-group -->

@@ -123,10 +123,11 @@ class BusinessesController extends Controller
                   $results[$id] = $b;
               }
 
-              $results[$id]->addBooking($booking);
+              $results[$id]->addAvailability($booking);
           }
 
         }
+
         return $this->render('businesses/search.html.twig', array(
             'results' => $results,
             'params' => $params,
