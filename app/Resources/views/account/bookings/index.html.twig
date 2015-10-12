@@ -1,0 +1,72 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Bookings for {{business.getName}}
+
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Category</th>
+          <th>Treatment</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Price</th>
+          <th>Therapist</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        {% if bookings | length > 0 %}
+          {% for booking in bookings %}
+          {% set availability = booking.getAvailability %}
+          {% set treatment = availability.getTreatment %}
+          <tr>
+            <td>{{ booking.getId }}</th>
+            <td>{{ booking.getName }}</td>
+            <td>{{ treatment.getTreatmentCategory.getCategoryName }}</td>
+            <td>{{ treatment.getTreatmentCategory.getLabel }}</td>
+            <td>{{ availability.getDate | date('d-m-Y') }}</td>
+            <td>{{ availability.getDate | date('m:s A') }}</td>
+            <td>{{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency('USD') }}</td>
+            <td>
+              {% if business.getTherapists | length > 0 %}
+              <select>
+                {% for therapist in business.getTherapists %}
+                <option value="{{therapist.id}}">{{therapist.getName}}</option>
+                {% endfor %}
+              </select>
+              {% else %}
+              <span>None available</span>
+              {% endif %}
+            </td>
+            <td>Unapproved</td>
+          </tr>
+
+          {% endfor %}
+
+        {% else %}
+          <tr>
+            <td colspan="9">
+              There are no bookings yet.
+            </td>
+          </tr>
+        {% endif %}
+
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+
+{% endblock %}
