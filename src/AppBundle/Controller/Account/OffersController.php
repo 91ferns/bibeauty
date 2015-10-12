@@ -5,6 +5,8 @@ namespace AppBundle\Controller\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use AppBundle\Form\BookingType;
@@ -15,6 +17,7 @@ use AppBundle\Entity\Service;
 
 use AppBundle\Entity\OfferAvailabilitySet;
 use AppBundle\Entity\Offer;
+
 
 class OffersController extends Controller
 {
@@ -219,7 +222,24 @@ class OffersController extends Controller
       $em->flush();
       return $this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
     }
-
+    /**
+     * @Route("/account/offers/{id}/{slug}/remove", name="admin_delete_offer")
+     * @Method("POST")
+     */
+    public function deleteOffer($id,$slug,Request $request)
+    {
+      $req    = $request->request;
+      $offers = $req->get('offers',false);
+      foreach($offers as $offerid){
+        $em = $this->getDoctrine()->getManager();
+        $offer    = $em->getRepository("AppBundle:Offer")->findOneBy(['id'=>$offerid]);
+        $em->persist($offer);
+        $em->remove($offer);
+      }
+      $em->flush();
+      //return true;//$this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
+      return new Response();
+ }
     protected function redirectToRoot($slug, $id, $treatmentId, $flash = false) {
         if ($flash) {
             list($type, $message) = $flash;

@@ -60,7 +60,7 @@ class OfferAvailabilitySet {
     private $recurrenceType = 'never';
 
     /**
-     * @ORM\OneToMany(targetEntity="Availability", mappedBy="availabilitySet", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Availability", mappedBy="availabilitySet", fetch="EXTRA_LAZY",cascade={"remove"})
      */
     private $availabilities;
 

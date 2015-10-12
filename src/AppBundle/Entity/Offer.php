@@ -40,7 +40,7 @@ class Offer {
     protected $phone;
 
     /**
-     * @ORM\OneToOne(targetEntity="OfferAvailabilitySet", mappedBy="offer")
+     * @ORM\OneToOne(targetEntity="OfferAvailabilitySet", mappedBy="offer",cascade={"remove"})
      */
     protected $availabilitySet;
 

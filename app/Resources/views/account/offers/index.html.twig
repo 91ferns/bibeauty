@@ -109,5 +109,26 @@
 jQuery('.onoffswitch > form input[type="checkbox"]').on('change',function(){
   jQuery(this).parents('form').submit();
 })
+
+jQuery('a#deleteSelectedOffersButton').on('click',function(e){
+  e.preventDefault();
+  var $offers = jQuery(".table.businesses-table .btn-group > input:checkbox:checked")
+  var offers = $offers.map(function(){
+      return $(this).val();
+    }).get();
+    $.post( "{{ path('admin_delete_offer',{'id':app.request.get('id'),'slug':app.request.get('slug')} ) }}", { offers: offers }, function( data ) {
+      console.log(data);
+      $offers.each(function(i,el){
+        console.log(jQuery(el));
+        jQuery(el).remove();//.remove();
+      });
+    }, "json")
+    .done(function(){
+      $offers.each(function(i,el){
+        jQuery(el).remove();//.remove();
+      });
+    });
+
+});
 </script>
 {% endblock %}
