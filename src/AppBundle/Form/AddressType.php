@@ -22,7 +22,7 @@ class AddressType extends AbstractType
             ->add('line2', 'text', array(
                  'label' => false,
                  'attr' => array(
-                    'placeholder' => 'Apartment Number'
+                    'placeholder' => 'Building Number'
                 ),
                 'required' => false
             ))

@@ -5,7 +5,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     Offers
-    {# <a href="{{path('admin_new_booking_path', { id: business.getId, slug: business.getSlug })}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a Booking</strong></a> #}
+    <a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offer</strong></a>
+    <a id="deleteSelectedOffersButton" class="admin-btn"><i class="fa fa-trash fa-lg"></i> <strong>Delete Offer(s)</strong></a>
   </div>
   <div class="panel-body">
     {% if offers | length > 0 %}
@@ -14,7 +15,8 @@
         <tr>
           <th>ID</th>
           <!--<th><a href="#" id="check-all-box">All</a></th>-->
-          <th>Services</th>
+          <th><input name="Offers[]" class="offer-check" type="checkbox" value="all"></th>
+          <th>Category</th>
           <th>Treatment</th>
           <th>Start Date</th>
           <th>Times</th>
@@ -27,7 +29,12 @@
         {% for offer in offers %}
         {% set av = offer.getAvailabilitySet %}
         <tr>
-          <td><span class="offer-id">{{ offer.getId }}</span></td>
+          <td><span class="offer-id">
+          {{ offer.getId }}
+          </span></td>
+          <td><span class="btns">
+            <div class="btn-group"><input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}"></div>
+          </span></td>
           <td><span class="treatment-name">{{offer.getTreatment.getTreatmentCategory.getCategoryName}}</span></td>
           <td><span class="treatment-name">{{offer.getTreatment.getLabel}}</span></td>
           <td><span class="offer-start">{{av.getStartDate | date('d-m-Y')}}</span></td>
@@ -43,7 +50,7 @@
             {% if av.getRecurrenceType == 'never' %}
               <input type="checkbox" disabled="disabled">
             {% else %}
-              <input type="checkbox" disabled="disabled" checked="checked">
+              <input type="checkbox" disabled="disabled" checked="checked"> {{ av.getRecurrenceType}}
             {% endif %}
           </span></td>
           <td><span class="enabled">
@@ -65,6 +72,30 @@
       <p>You have no offers</p>
     {% endif %}
 
+  </div>
+</div>
+
+<div class="modal fade" id="add-offer-modal" tabindex="-1" role="dialog" aria-labelledby="add-availability-label">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    {#{ form_start(form) }#}
+      <form action="{{ path('admin_offer_new_path',{ slug: business.getSlug, id: business.getId }) }}" method="post">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="add-service-category-label">Add an Offer</h4>
+        </div>
+        <div class="modal-body">
+          {% include "account/availability/form.html.twig" %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit"
+               class="btn btn-primary">
+               <strong>Add Offer</strong> <i class="fa fa-plus fa-lg"></i>
+           </button>
+        </div>
+      </form> <!-- /.form -->
+    </div>
   </div>
 </div>
 

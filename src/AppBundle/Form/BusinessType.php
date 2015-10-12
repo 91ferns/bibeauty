@@ -46,7 +46,7 @@ class BusinessType extends AbstractType
                       'placeholder' => 'Tell customers a little about what your business does and what makes it stand out :)'
                    )
                 ))
-                ->add('yelpLink', 'text', array(
+                ->add('yelpLink', 'url', array(
                     'label' => false,
                     'attr' => array(
                         'placeholder' => 'Yelp Link'
@@ -59,7 +59,7 @@ class BusinessType extends AbstractType
                       'placeholder' => 'Email Address'
                   )
               ))
-              ->add('website', 'text', array(
+              ->add('website', 'url', array(
                   'label' => false,
                   'attr' => array(
                       'placeholder' => 'Website'

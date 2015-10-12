@@ -76,32 +76,23 @@ class OffersController extends Controller
     }
 
     /**
-     * @Route("/account/offers/{id}/{slug}/new")
+     * @Route("/account/offers/{id}/{slug}/new", name="admin_offer_new_path")
      * @Method("POST")
      */
     public function createCheckAction($id, $slug, Request $request) {
 
-        $booking = new Booking();
-        $business = $this->businessBySlugAndId($slug, $id);
-        $booking->setBusinessId($business);
-        $form = $this->createForm(new BookingType(), $booking);
-        $form->handleRequest($request);
+        // Treatment ID comes from request then we just return the checkCreate
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $txAv = $booking->getTreatmentAvailabilities();
-            $em->persist($txAv);
+        $treatmentId = $request->request->get('Treatment', false);
 
-            $em->persist($booking);
-            $em->flush();
-
-            return $this->redirectToRoute('admin_bookings_path');
-
-        } else {
-            return $this->render('account/offers/index.html.twig', array(
-                'form' => $form->createView()
+        if (!$treatmentId) {
+            return $this->redirectToRoute('admin_business_offers_path', array(
+                'id' => $id,
+                'slug' => $slug
             ));
         }
+
+        return $this->checkCreateAvailabilityAction($id, $slug, $treatmentId, $request);
 
     }
 

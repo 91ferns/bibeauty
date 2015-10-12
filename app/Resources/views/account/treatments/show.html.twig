@@ -31,7 +31,7 @@
       <form action="{{ path('admin_treatment_availability_new_path',{slug:slug, id:id, treatmentId:treatment.getId }) }}" method="post">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="add-service-category-label">Add Availability</h4>
+          <h4 class="modal-title" id="add-service-category-label">Add an Offer</h4>
         </div>
         <div class="modal-body">
           {#{ form_widget(serviceForm) }#}
@@ -41,7 +41,7 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit"
                class="btn btn-primary">
-               <i class="fa fa-plus fa-lg"></i><strong>Add an Availability</strong>
+               <strong>Add Offer</strong> <i class="fa fa-plus fa-lg"></i>
            </button>
         </div>
       </form> <!-- /.form -->

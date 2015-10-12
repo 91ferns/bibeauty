@@ -9,7 +9,42 @@
     <a href="#" class="admin-btn"><i class="fa fa-trash-o fa-lg"></i><strong>Delete</strong></a>
   </div>
   <div class="panel-body">
-    {{ form_start(businessForm) }}
+    {{ form_start(businessForm, {'attr': { 'novalidate': 'true' }}) }}
+
+        <div class="form-group">
+
+          {{ form_label(businessForm.headerAttachment) }}
+          {{ form_widget(businessForm.headerAttachment) }}
+
+          {% if business is defined %}
+            {% if business.getHeaderAttachment %}
+            <figure class="">
+              <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive" width="180">
+            </figure>
+            {% endif %}
+          {% endif %}
+
+          {{ form_errors(businessForm.headerAttachment) }}
+
+        </div>
+
+        <div class="form-group">
+
+          {{ form_label(businessForm.logoAttachment) }}
+          {{ form_widget(businessForm.logoAttachment) }}
+
+          {% if business is defined %}
+            {% if business.getLogoAttachment %}
+            <figure class="">
+              <img src="{{ business.getLogoAttachment.getKey | s3 }}" class="img-responsive" width="100">
+            </figure>
+            {% endif %}
+          {% endif %}
+
+          {{ form_errors(businessForm.logoAttachment) }}
+
+        </div>
+
         {{ form_widget(businessForm) }}
         <input type="submit" value="Edit Business"
              class="btn btn-primary" />

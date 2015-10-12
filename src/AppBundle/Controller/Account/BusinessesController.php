@@ -117,7 +117,10 @@ class BusinessesController extends Controller
             $em->persist($business);
             $em->flush();
 
-            return $this->redirectToRoute('admin_path');
+            return $this->redirectToRoute('admin_business_path', array(
+                'id' => $business->getId(),
+                'slug' => $business->getSlug()
+            ));
 
         } else {
             return $this->render('account/businesses/new.html.twig', array(
@@ -143,6 +146,85 @@ class BusinessesController extends Controller
             'businessForm' => $form->createView(),
             'business' => $business
         ));
+
+    }
+
+    /**
+     * @Route("/account/businesses/{id}/{slug}", name="admin_business_edit_path")
+     * @Method("POST")
+     */
+    public function editAction($id, $slug, Request $request)
+    {
+        $business = $this->businessBySlugAndId($slug, $id);
+
+        $form = $this->createForm(new BusinessType(), $business);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $headerAttachment = $business->getHeaderAttachment();
+            $logoAttachment = $business->getLogoAttachment();
+            $address = $business->getAddress();
+
+            try {
+
+                if ($headerAttachment && $headerAttachment->attachment) {
+
+                    $upload = $this->get('aws.factory')->upload(
+                        $headerAttachment->attachment->getRealPath(),
+                        $headerAttachment->attachment->getClientOriginalName()
+                    );
+
+                    if ($upload instanceof Exception) {
+                        throw $upload;
+                    }
+
+                    $headerAttachment->setUploadState($upload);
+                    $headerAttachment->setOwner($this->getUser());
+
+                    $em->persist($headerAttachment);
+
+                }
+
+                if ($logoAttachment && $logoAttachment->attachment) {
+
+                    $upload = $this->get('aws.factory')->upload(
+                        $logoAttachment->attachment->getRealPath(),
+                        $logoAttachment->attachment->getClientOriginalName()
+                    );
+
+                    if ($upload instanceof Exception) {
+                        throw $upload;
+                    }
+
+                    $logoAttachment->setUploadState($upload);
+                    $logoAttachment->setOwner($this->getUser());
+
+                    $em->persist($logoAttachment);
+
+                }
+
+            } catch (Exception $e) {
+
+            }
+
+
+            $em->persist($business);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_business_path', array(
+                'id' => $business->getId(),
+                'slug' => $business->getSlug()
+            ));
+
+        } else {
+            return $this->redirectToRoute('admin_business_path', array(
+                'id' => $business->getId(),
+                'slug' => $business->getSlug()
+            ));
+        }
 
     }
 

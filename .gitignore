@@ -13,7 +13,5 @@ node_modules
 /web/bundles/
 /web/css/
 /web/js
-Gemfile
-Gemfile.lock
 composer.phar
 *.php~
