@@ -55,11 +55,14 @@
           </span></td>
           <td><span class="enabled">
             <div class="onoffswitch">
-              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" {% if offer.getIsOpen %}checked{% endif %}>
-              <label class="onoffswitch-label" for="myonoffswitch">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-              </label>
+              <form id="offerStatus{{offer.getId}}" action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" {% if offer.getIsOpen %}checked{% endif %}>
+                <input type="hidden"  name="offerId" value="{{offer.getId}}" />
+                <label class="onoffswitch-label" for="myonoffswitch">
+                  <span class="onoffswitch-inner"></span>
+                  <span class="onoffswitch-switch"></span>
+                </label>
+              </form>
             </div>
 
           </span></td>
@@ -100,4 +103,11 @@
 </div>
 
 
+{% endblock %}
+{% block javascripts %}
+<script>
+jQuery('.onoffswitch > form input[type="checkbox"]').on('change',function(){
+  jQuery(this).parents('form').submit();
+})
+</script>
 {% endblock %}

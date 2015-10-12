@@ -203,6 +203,23 @@ class OffersController extends Controller
         return $times;
     }
 
+    /**
+     * @Route("/account/offers/{id}/{slug}/toggleEnabled", name="admin_treatment_toggle_is_open")
+     * @Method("POST")
+     */
+    public function updateOfferStatusAction($id,$slug,Request $request)
+    {
+      $req       = $request->request;
+      $offerid   = $req->get('offerId',false);
+      $isOpen    = $req->get('onoffswitch',false);
+      $isOpen    = ($isOpen == 'on') ? true : $isOpen;
+      $em = $this->getDoctrine()->getManager();
+      $offer    = $em->getRepository("AppBundle:Offer")->findOneBy(['id'=>$offerid]);
+      $offer->setIsOpen($isOpen);
+      $em->flush();
+      return $this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
+    }
+
     protected function redirectToRoot($slug, $id, $treatmentId, $flash = false) {
         if ($flash) {
             list($type, $message) = $flash;
