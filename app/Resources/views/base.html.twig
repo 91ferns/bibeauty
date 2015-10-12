@@ -150,7 +150,6 @@
     </div>
 
 </footer>
-
 <!-- footer -->
 {% javascripts
     '@vendor_assets'
@@ -158,7 +157,7 @@
     'assets/js/*'
     filter='reactjsx'
     filter='?uglifyjs2'
-    output='vendor.js' %}
+    output='vendor.js' output='js/client.js' %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
 <script src="https://maps.googleapis.com/maps/api/js?sensor=true&callback=initMap"></script>

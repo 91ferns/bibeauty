@@ -12,6 +12,7 @@ node_modules
 /vendor/
 /web/bundles/
 /web/css/
+/web/js
 Gemfile
 Gemfile.lock
 composer.phar

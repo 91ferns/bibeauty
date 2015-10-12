@@ -128,7 +128,7 @@
 {% javascripts
     '@vendor_assets'
     'assets/js/*'
-    filter='uglifyjs2' %}
+    filter='uglifyjs2' output='js/application.js' %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
 {% block javascripts %}{% endblock %}
