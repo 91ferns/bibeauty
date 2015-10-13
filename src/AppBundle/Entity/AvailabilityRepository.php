@@ -108,7 +108,7 @@ class AvailabilityRepository extends EntityRepository
             }
         }
 
-        return array('today' => $todayArray, 'tomorrow' => $tomorrowArray, 'all' => $result);
+        return array('today' => $todayArray, 'tomorrow' => $tomorrowArray, 'all' => $results);
     }
 
 
