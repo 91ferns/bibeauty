@@ -18,6 +18,7 @@ use AppBundle\Entity\Service;
 use AppBundle\Entity\OfferAvailabilitySet;
 use AppBundle\Entity\Offer;
 
+use Symfony\Component\Process\Process;
 
 class OffersController extends Controller
 {
@@ -149,6 +150,7 @@ class OffersController extends Controller
             ));
         }
 
+
         $em = $this->getDoctrine()->getManager();
 
         $offer = new Offer();
@@ -170,21 +172,10 @@ class OffersController extends Controller
         $em->persist($availabilitySet);
         $em->flush();
 
-        // Offer is made. We need to make its availability now
-        $matchingDates = $availabilitySet->datesThatMatchRecurrence($date, $times, $recurrenceDOWs, $recurrenceType);
-        $availabilitySets = $availabilitySet->datesToAvailabilities($matchingDates, $business);
+        $processText = sprintf('php app/console bibeauty:generate:availabilities %d', $availabilitySet->getId());
 
-        $batchSize = 20;
-
-        foreach ($availabilitySets as $i => $availabilitySet) {
-            $em->persist($availabilitySet);
-            if (($i % $batchSize) === 0) {
-                $em->flush();
-            }
-        }
-
-        $em->flush(); //Persist objects that did not make up an entire batch
-        $em->clear();
+        $process = new Process($processText);
+        $process->start();
 
         // we now need to create the availability set
 
@@ -230,7 +221,7 @@ class OffersController extends Controller
     {
       $req    = $request->request;
       $offers = $req->get('offers',false);
-      foreach($offers as $offerid){
+      foreach ($offers as $offerid){
         $em = $this->getDoctrine()->getManager();
         $offer    = $em->getRepository("AppBundle:Offer")->findOneBy(['id'=>$offerid]);
         $em->persist($offer);

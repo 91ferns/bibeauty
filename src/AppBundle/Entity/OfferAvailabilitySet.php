@@ -60,6 +60,12 @@ class OfferAvailabilitySet {
     private $recurrenceType = 'never';
 
     /**
+     * @ORM\Column(type="boolean", nullable)
+     * @Assert\NotBlank()
+     */
+    private $processed = false;
+
+    /**
      * @ORM\OneToMany(targetEntity="Availability", mappedBy="availabilitySet", fetch="EXTRA_LAZY",cascade={"remove"})
      */
     private $availabilities;
@@ -172,6 +178,29 @@ class OfferAvailabilitySet {
     public function getRecurrenceType()
     {
         return $this->recurrenceType;
+    }
+
+    /**
+     * Set processed
+     *
+     * @param boolean $processed
+     * @return OfferAvailabilitySet
+     */
+    public function setProcessed($processed)
+    {
+        $this->processed = $processed;
+
+        return $this;
+    }
+
+    /**
+     * Get processed state
+     *
+     * @return boolean
+     */
+    public function getProcessed()
+    {
+        return $this->processed;
     }
 
     /**
