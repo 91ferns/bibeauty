@@ -1,4 +1,14 @@
 {% extends 'admin.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />
+<style>
+.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{background-color:#5cb85c;}
+.bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default{background-color:#757575;color:white;}
+table th.times-heading,
+table tr>td{max-width:260px!important;}
+</style>
+{% endblock %}
 
 {% block body %}
 
@@ -11,20 +21,20 @@
   <div class="panel-body">
     {% if offers | length > 0 %}
     <table class="table businesses-table">
-      <thread>
+      <thead>
         <tr>
           <th>ID</th>
           <!--<th><a href="#" id="check-all-box">All</a></th>-->
-          <th><input name="Offers[]" class="offer-check" type="checkbox" value="all"></th>
+          <th><input name="Offers[]" class="offer-check" type="checkbox" value="all" /></th>
           <th>Category</th>
           <th>Treatment</th>
           <th>Start Date</th>
-          <th>Times</th>
+          <th class="times-heading">Times</th>
           <th>Discount</th>
           <th>Re-occurring</th>
           <th>Enabled</th>
         </tr>
-      </thread>
+      </thead>
       <tbody>
         {% for offer in offers %}
         {% set av = offer.getAvailabilitySet %}
@@ -105,8 +115,22 @@
 
 {% endblock %}
 {% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 <script>
-jQuery('.onoffswitch > form input[type="checkbox"]').on('change',function(){
+jQuery(document).ready(function(){
+  jQuery('.onoffswitch > form input[type="checkbox"]').bootstrapSwitch({
+    onText:'&#10004;',
+    offText:'&times;',
+    onColor:'success',
+    offColor:'default',
+    handleWidth:'4px',
+    lableWidth:'4px',
+    size:'large'
+  });
+});
+
+
+jQuery('.onoffswitch > form input[type="checkbox"]').on('switchChange.bootstrapSwitch',function(){
   jQuery(this).parents('form').submit();
 })
 
