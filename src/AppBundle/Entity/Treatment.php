@@ -35,6 +35,18 @@ class Treatment {
     protected $duration;
 
     /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank()
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    protected $description;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
@@ -399,5 +411,51 @@ class Treatment {
             return ( ($original - $current) / $original ) * 100;
         }
 
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Treatment
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Treatment
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

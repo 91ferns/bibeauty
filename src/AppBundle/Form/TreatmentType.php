@@ -33,6 +33,18 @@ class TreatmentType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
             ))
+            ->add('name', 'text', array(
+                 'label' => 'In a few words, what is the treatment?',
+                 'attr' => array(
+                    'placeholder' => 'Name'
+                )
+            ))
+            ->add('description', 'textarea', array(
+                 'label' => 'Tell your customers the details of what they would be purchasing',
+                 'attr' => array(
+                    'placeholder' => 'Description'
+                )
+            ))
             ->add('duration', 'integer', array(
                  'label' => 'Duration (in minutes)',
                  'attr' => array(

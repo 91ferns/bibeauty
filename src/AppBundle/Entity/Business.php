@@ -98,6 +98,17 @@ class Business {
     protected $description;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0
+     * )
+     * @Assert\LessThanOrEqual(
+     *     value = 5
+     * )
+     */
+    protected $averageRating = 0;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
@@ -199,7 +210,7 @@ class Business {
      */
     public function getYelpId()
     {
-        $regex = '/https?:\/\/(www.)?yelp.com\/biz\/(?P<id>[^\/])+/';
+        $regex = '/https?:\/\/(www.)?yelp.com\/biz\/(?P<id>[^\/]+)/';
 
         if (preg_match($regex, $this->yelpLink, $matches)) {
             return $matches['id'];
@@ -563,8 +574,6 @@ class Business {
     {
         return $this->reviews;
     }
-
-    protected $averageRating = false;
 
     public function getAverageRating() {
         return $this->averageRating;

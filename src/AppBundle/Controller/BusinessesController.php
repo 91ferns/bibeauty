@@ -30,11 +30,7 @@ class BusinessesController extends Controller
 
         if ($business->getYelpId()) {
             $yelp = $this->get('yelp.factory');
-            $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
-
-            if ($response->rating) {
-                $business->setAverageRating($response->rating);
-            }
+            $response = $yelp->getBusiness($business->getYelpId());
 
             foreach($response->reviews as $review) {
                 $theReview = Review::fromYelp($review);

@@ -17,6 +17,7 @@
             <th>ID</th>
             <th>Category</th>
             <th>Treatment</th>
+            <th>Name</th>
             <th>Full Price</th>
             <th>Duration</th>
             <th>Edit</th>
@@ -34,6 +35,7 @@
             </td>
             <td>{{ treatment.getTreatmentCategory.getCategoryName }}
             <td>{{ treatment.getLabel }}</td>
+            <td>{{ treatment.getName }}</td>
             <td>${{ treatment.getOriginalPrice }}</td>
             <td>{{treatment.getDuration | duration }}</td>
             <td>
