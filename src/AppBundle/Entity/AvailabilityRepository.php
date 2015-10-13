@@ -18,7 +18,7 @@ class AvailabilityRepository extends EntityRepository
                 ->from('AppBundle:Availability', 'a')
                 ->leftJoin('a.business','b')
                 ->leftJoin('b.address', 'ba')
-                ->leftJoin('a.availabilitySet', 'oas')
+                ->innerJoin('a.availabilitySet', 'oas')
                 ->leftJoin('a.treatment', 's')
                 ->innerJoin('oas.offer', 'o')
                 ->where('o.isOpen = true');

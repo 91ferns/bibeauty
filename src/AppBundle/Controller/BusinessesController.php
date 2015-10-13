@@ -93,8 +93,8 @@ class BusinessesController extends Controller
         $params = $form->getData();
 
 
-         $data = $repo->strongParams($params);
-    	 $records = $repo->findByMulti($data);
+        $data = $repo->strongParams($params);
+    	$records = $repo->findByMulti($data);
 
         $results = array();
         if($records){

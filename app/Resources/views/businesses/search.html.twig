@@ -36,20 +36,24 @@
             {{form_start(form)}}
               <div class="form-group">
                 <label for="">Availability</label>
-                <div class="input-group">
-                  <input type="text" id="DayField" name="day" class="form-control" placeholder="Day" value="{{params['day'] | date("m/d/Y") }}" />
-                  <span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>
-                </div>
-                <div class="select2-wrapper">
-                  <select multiple="true" class="form-control select2" name="Times[]">
-                  {% for hour in 7..21 %}
-                    {% for minute in 0..3 %}
-                      {% set formattedMinute = "%02d"|format(minute * 15) %}
-                      <option value="{{hour}}:{{formattedMinute}}">{{hour | nicehour }}:{{formattedMinute}} {{ hour | meridian }}</option>
-                    {% endfor %}
-                  {% endfor %}
+
+                <p>
+                  <select class="form-control" name="Date">
+                    <option value="all">Tomorrow &amp; Today</option>
+                    <option value="today">Today</option>
+                    <option value="tomorrow">Tomorrow</option>
                   </select>
-                </div>
+                </p>
+
+                <p>
+                  <select class="form-control" value="Time">
+                    <option value="all">Anytime</option>
+                    <option value="morning">Morning (until 12pm)</option>
+                    <option value="afternoon">Afternoon (12-5pm)</option>
+                    <option value="evening">Evening (5pm-12am)</option>
+                  </select>
+                </p>
+
               </div> <!-- /.form-group -->
 
               <hr class="fullwidth">
@@ -68,11 +72,10 @@
                   <select class="treatmentTypes" name="treatment">
                     <option style="color: #999;">Select a Treatment</option>
                     {% for category in categories %}
-                    <optgroup label="{{category.getLabel}}">
+                    <option value="{{category.getId}}">{{category.getLabel}}</option>
                     {% for subcategory in category.getChildren %}
-                      <option value="{{subcategory.id }}">{{subcategory.getLabel}}</i>
+                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</i>
                     {% endfor %}
-                    </optgroup>
                     {% endfor %}
                   </select>
                   </ul>
@@ -88,7 +91,7 @@
 
       	           <input type="text" id="amount_left" name="min" readonly styles="" value="{{params['min']}}" />
                    <input type="text" id="amount_right" name="max" readonly styles="" value="{{params['max']}}" />
-                   <div id="slider-range"></div>
+                   <div id="slider-range" data-min="{{params['min']}}" data-max="{{params['max']}}"></div>
                 </div>
                 <!--input type="range" id="weight" min="10" value="10" max="2000" step="100"-->
               </div> <!-- /.form-group -->
@@ -187,37 +190,14 @@
 {% block javascripts %}
 <script>
   jQuery(document).ready(function(){
-  /*  jQuery('.TreatmentTypesGroup > input, .TreatmentTypesGroup>span ').on('click',function(){
-      var $list = jQuery('.treatmentTypes');
-      var $grp  = jQuery(this).parent();
-      var isActive = $grp.hasClass('active');
-
-      if(isActive){
-        $list.hide();
-        $grp.removeClass('active');
-      }else{
-        $list.show();
-        $grp.addClass('active');
-      }
-    });
-    jQuery('.treatmentTypes option').on('click',function(){
-      jQuery('.TreatmentTypesGroup > input').val(jQuery(this).text());
-      var $list = jQuery('ul.treatmentTypes');
-      var $grp  = jQuery(this).parent();
-      $list.hide();
-      $grp.removeClass('active');
-      jQuery("[name=TreatmentTypeId]").val(jQuery(this).data('id'));
-    })*/
     $(".treatmentTypes").select2({
       placeholder: "Treatments",
       //allowClear: true,
-       theme: "classic"
+      theme: "classic"
     });
     $('b[role="presentation"]').hide();
     $('.select2-selection__arrow').append('<span class="input-group-addon"><i class="fa fa-chevron-circle-down fa-lg"></i></span>');
 
   });
 </script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 {% endblock %}

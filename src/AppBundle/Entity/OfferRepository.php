@@ -16,9 +16,9 @@ class OfferRepository extends EntityRepository
             $qb = $this->createQueryBuilder('Offer');
             $qb
                 ->from('AppBundle:Offer', 'o')
-                ->leftJoin('o.business','b')
+                ->innerJoin('o.business','b')
                 ->leftJoin('b.address', 'ba')
-                ->leftJoin('o.treatment', 't')
+                ->innerJoin('o.treatment', 't')
                 ->setMaxResults(3);
 
             $query = $qb->getQuery();
