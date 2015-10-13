@@ -60,7 +60,7 @@ class OfferAvailabilitySet {
     private $recurrenceType = 'never';
 
     /**
-     * @ORM\Column(type="boolean", nullable)
+     * @ORM\Column(type="boolean", nullable=true)
      * @Assert\NotBlank()
      */
     private $processed = false;

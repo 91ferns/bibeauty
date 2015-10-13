@@ -181,7 +181,7 @@ class OffersController extends Controller
 
         return $this->redirectToRoot($slug, $id, $treatmentId, array(
             'notice',
-            'Successfully created ' + count($availabilitySets) . ' availabilities'
+            'Queued the creation of your availabilities.'
         ));
     }
     protected function buildAllTimes()
