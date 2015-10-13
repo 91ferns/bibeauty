@@ -57,10 +57,18 @@ class Booking {
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
+    /**
+     * @ORM\Column(type="integer",options={"default" = 0})
+     */
+    protected $status = 1;
+    /**
+     * STATUSES
+     * unconfirmed = 1
+     * confirmed   = 2
+     * canceled    = 3
+     */
 
-
-     /**
-     * @ORM\PrePersist
+     /* @ORM\PrePersist
      */
     public function setAutomaticFields() {
         if (!$this->createdAt) {
@@ -214,52 +222,6 @@ class Booking {
     }
 
     /**
-     * Set treatment
-     *
-     * @param \AppBundle\Entity\Treatment $treatment
-     * @return Booking
-     */
-    public function setTreatment(\AppBundle\Entity\Treatment $treatment = null)
-    {
-        $this->treatment = $treatment;
-
-        return $this;
-    }
-
-    /**
-     * Get treatment
-     *
-     * @return \AppBundle\Entity\Treatment
-     */
-    public function getTreatment()
-    {
-        return $this->treatment;
-    }
-
-    /**
-     * Set business
-     *
-     * @param \AppBundle\Entity\Business $business
-     * @return Booking
-     */
-    public function setBusiness(\AppBundle\Entity\Business $business = null)
-    {
-        $this->business = $business;
-
-        return $this;
-    }
-
-    /**
-     * Get business
-     *
-     * @return \AppBundle\Entity\Business
-     */
-    public function getBusiness()
-    {
-        return $this->business;
-    }
-
-    /**
      * Set offer
      *
      * @param \AppBundle\Entity\Offer $offer
@@ -280,30 +242,6 @@ class Booking {
     public function getOffer()
     {
         return $this->offer;
-    }
-
-
-    /**
-     * Set availability
-     *
-     * @param \AppBundle\Entity\Availability $availability
-     * @return Booking
-     */
-    public function setAvailability(\AppBundle\Entity\Availability $availability = null)
-    {
-        $this->availability = $availability;
-
-        return $this;
-    }
-
-    /**
-     * Get availability
-     *
-     * @return \AppBundle\Entity\Availability
-     */
-    public function getAvailability()
-    {
-        return $this->availability;
     }
 
     /**
@@ -327,5 +265,28 @@ class Booking {
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set availability
+     *
+     * @param \AppBundle\Entity\Availability $availability
+     * @return Booking
+     */
+    public function setAvailability(\AppBundle\Entity\Availability $availability = null)
+    {
+        $this->availability = $availability;
+
+        return $this;
+    }
+
+    /**
+     * Get availability
+     *
+     * @return \AppBundle\Entity\Availability
+     */
+    public function getAvailability()
+    {
+        return $this->availability;
     }
 }

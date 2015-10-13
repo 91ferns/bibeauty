@@ -49,7 +49,16 @@
               <span>None available</span>
               {% endif %}
             </td>
-            <td>Unapproved</td>
+            <td>
+              <form class="bookingstatus" method="post" action="{{ path('admin_business_bookings_status',{'id':app.request.get('id'),'slug':app.request.get('slug')}) }}" >
+                <select name="bookingstatus" id="status{{booking.getId}}">
+                  {% for id,status in statuses %}
+                    <option value="{{id}}" {{ id == booking.getStatus ? 'selected' }}>{{status}}</option>
+                  {% endfor %}
+                </select>
+                <input type="hidden" name="bookingid" value="{{booking.getId}}" />
+              </form>
+            </td>
           </tr>
 
           {% endfor %}
@@ -69,4 +78,11 @@
 </div>
 
 
+{% endblock %}
+{% block javascripts %}
+<script>
+  jQuery('form.bookingstatus > select[name="bookingstatus"').on('change',function(){
+    jQuery(this).parent().submit();
+  })
+</script>
 {% endblock %}
