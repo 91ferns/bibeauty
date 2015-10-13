@@ -73,6 +73,13 @@ class BusinessesController extends Controller
 
             try {
 
+                $yelp = $this->get('yelp.factory');
+                $response = $yelp->getBusiness($business->getYelpId());
+
+                if ($response->rating) {
+                    $business->setAverageRating($response->rating);
+                }
+
                 if ($headerAttachment) {
 
                     $upload = $this->get('aws.factory')->upload(
@@ -110,7 +117,7 @@ class BusinessesController extends Controller
                 }
 
             } catch (Exception $e) {
-
+                
             }
 
 
