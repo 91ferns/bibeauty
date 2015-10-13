@@ -21,7 +21,6 @@ class BookingRepository extends EntityRepository
             ->innerJoin('a.business', 'b')
             ->where('b = :business')
             ->setParameter('business', $business);
-
       $result = $query->getQuery()->getResult();
       return $result;
     }
