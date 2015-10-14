@@ -1,6 +1,7 @@
 /app/bootstrap.php.cache
 *.csr
 *.key
+*.crt
 .sass-cache
 node_modules
 /app/cache/*
