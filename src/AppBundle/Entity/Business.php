@@ -210,7 +210,7 @@ class Business {
      */
     public function getYelpId()
     {
-        $regex = '/https?:\/\/(www.)?yelp.com\/biz\/(?P<id>[^\/]+)/';
+        $regex = '/https?:\/\/(www.)?yelp.com\/biz\/(?P<id>[^\/?]+)/';
 
         if (preg_match($regex, $this->yelpLink, $matches)) {
             return $matches['id'];
