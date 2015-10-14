@@ -51,6 +51,10 @@ DirectoryIndex app.php
 
     # Force SSL
     RewriteCond %{HTTPS} !=on
+
+    #Heroku way
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    
     RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
 
     # If the requested filename exists, simply serve it.
