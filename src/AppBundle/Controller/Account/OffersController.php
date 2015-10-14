@@ -172,10 +172,17 @@ class OffersController extends Controller
         $em->persist($availabilitySet);
         $em->flush();
 
-        $processText = sprintf('php app/console bibeauty:generate:availabilities %d', $availabilitySet->getId());
+        $root = $this->get('kernel')->getRootDir();
+        $env = $this->get('kernel')->getEnvironment();
+
+        $processText = sprintf('php %s/console bibeauty:generate:availabilities %d --env=%s',
+            $root,
+            $availabilitySet->getId(),
+            $env
+        );
 
         $process = new Process($processText);
-        $process->start();
+        $process->run();
 
         // we now need to create the availability set
 

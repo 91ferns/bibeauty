@@ -15,8 +15,6 @@ var RESULTS_MAP = (function(){
         },
         init    = function(g,resultsmarkers){
            //to do make opts, center, mapId updatable in constructor
-           console.log('Initing');
-           console.trace();
            initCenter();
            createTheMap();
            if(typeof resultsmarkers !== "undefined"){

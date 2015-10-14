@@ -67,11 +67,7 @@ table tr>td{max-width:260px!important;}
             <div class="onoffswitch">
               <form id="offerStatus{{offer.getId}}" action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
                 <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" {% if offer.getIsOpen %}checked{% endif %}>
-                <input type="hidden"  name="offerId" value="{{offer.getId}}" />
-                <label class="onoffswitch-label" for="myonoffswitch">
-                  <span class="onoffswitch-inner"></span>
-                  <span class="onoffswitch-switch"></span>
-                </label>
+                <input type="hidden" name="offerId" value="{{offer.getId}}" />
               </form>
             </div>
 
@@ -119,7 +115,7 @@ table tr>td{max-width:260px!important;}
 <script>
 jQuery(document).ready(function(){
   jQuery('.onoffswitch > form input[type="checkbox"]').bootstrapSwitch({
-    onText:'&#10004;',
+    onText:'&dash;',
     offText:'&times;',
     onColor:'success',
     offColor:'default',

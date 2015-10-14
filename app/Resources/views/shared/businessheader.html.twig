@@ -36,7 +36,9 @@
                     </div>
                   </div>
                     <div class="stars col-lg-8">
-                      <img src="{{ asset('assets/images/yelp-logo.jpg') }}" class="yelp-logo" height="28px" width="62.8px">
+                      <a href=" {{ business.getYelpLink }}" target="_blank">
+                        <img src="{{ asset('assets/images/yelp-logo.jpg') }}" class="yelp-logo" height="28px" width="62.8px">
+                      </a>
                       <div class="row">
                       {{ business.getAverageRating | rating }}
                       </div>

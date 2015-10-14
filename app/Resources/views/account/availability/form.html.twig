@@ -6,12 +6,12 @@
         <div class="form-group">
           <label for="Day">Treatment</label>
           <div class="select2-wrapper">
-            <select class="select2 form-control" name="Treatment">
+            <select class="select2 form-control" name="Treatment" style="width: 100%;">
               <option selected>Select a treatment</option>
               {% for treatmentGroup in business.getTreatmentHierarchy %}
                 <optgroup label="{{treatmentGroup.label}}">
                   {% for treatment in treatmentGroup.treatments %}
-                  <option value="{{treatment.getId}}">{{treatment.getLabel}}</option>
+                  <option value="{{treatment.getId}}">{{treatment.getName}}</option>
                   {% endfor %}
                 </optgroup>
               {% endfor %}
@@ -32,7 +32,7 @@
         <label for="Time">Time</label>
 
         <div class="select2-wrapper">
-          <select multiple="true" class="form-control select2" name="Times[]">
+          <select multiple="true" class="form-control select2" name="Times[]" style="width: 100%;">
             <option value="ALL">All Times</option>
           {% for hour in 7..21 %}
             {% for minute in 0..3 %}

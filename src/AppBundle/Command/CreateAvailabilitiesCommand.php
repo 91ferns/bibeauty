@@ -25,6 +25,13 @@ class CreateAvailabilitiesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
+        /*$pid = pcntl_fork();
+
+        if ($pid === -1) {
+            throw new \RuntimeException('Could not fork the process');
+        }*/
+
         $this->getContainer()->get('profiler')->disable();
         $availabilitySetId = $input->getArgument('id');
 
