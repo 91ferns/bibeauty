@@ -66,7 +66,8 @@ class OfferRepository extends EntityRepository
         ->setFirstResult($pageSize * ($currentPage-1)) // set the offset
         ->setMaxResults($pageSize); // set the limit
 
-      return $result;
+
+      return $result->getResult();
     }
 
     public function findTodayAndTomorrowForTreatment($treatment) {

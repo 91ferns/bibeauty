@@ -102,14 +102,14 @@ class BusinessesController extends Controller
           foreach($records as $record) {
               if (is_array($record)) {
                   // Location was included
-                  $booking = $record[0];
+                  $offer = $record[0];
                   $distance = $record['distance'];
               } else {
-                  $booking = $record;
+                  $offer = $record;
                   $distance = false;
               }
 
-              $b = $booking->getBusiness();
+              $b = $offer->getBusiness();
               $b->setDistanceFrom($distance);
               $id = $b->getId();
 
@@ -119,7 +119,7 @@ class BusinessesController extends Controller
                   $results[$id] = $b;
               }
 
-              $results[$id]->addAvailability($booking);
+              $results[$id]->addOffer($offer);
           }
 
         }

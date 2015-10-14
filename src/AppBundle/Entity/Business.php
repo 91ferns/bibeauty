@@ -684,14 +684,14 @@ class Business {
         return $array;
     }
 
-    protected $availabilities = array();
+    protected $offers = array();
 
-    public function getAvailabilities() {
-        return $this->availabilities;
+    public function getOffers() {
+        return $this->offers;
     }
 
-    public function addAvailability(\AppBundle\Entity\Availability $availability) {
-        $this->availabilities[] = $availability;
+    public function addOffer(\AppBundle\Entity\Offer $offer) {
+        $this->offers[] = $offer;
         return $this;
     }
 

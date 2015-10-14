@@ -40,6 +40,10 @@ doctrine:
 #        query_cache_driver: redis
 #       result_cache_driver: redis
 
+security:
+    access_control:
+        - { path: ^/.*, roles: ROLE_ADMIN, requires_channel: https }
+
 monolog:
     handlers:
         main:
