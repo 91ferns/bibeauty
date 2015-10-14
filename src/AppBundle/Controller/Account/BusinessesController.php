@@ -15,6 +15,8 @@ use AppBundle\Entity\Business;
 use AppBundle\Entity\Address;
 use AppBundle\Entity\ServiceCategory;
 
+use Stevenmaguire\Yelp\Exception as YelpException;
+
 class BusinessesController extends Controller
 {
     /**
@@ -115,9 +117,10 @@ class BusinessesController extends Controller
                     $em->persist($logoAttachment);
 
                 }
-
+            } catch (YelpException $e) {
+                $business->setAverageRating(null);
             } catch (Exception $e) {
-                
+
             }
 
 
@@ -177,6 +180,13 @@ class BusinessesController extends Controller
 
             try {
 
+                $yelp = $this->get('yelp.factory');
+                $response = $yelp->getBusiness($business->getYelpId());
+
+                if ($response->rating) {
+                    $business->setAverageRating($response->rating);
+                }
+
                 if ($headerAttachment && $headerAttachment->attachment) {
 
                     $upload = $this->get('aws.factory')->upload(
@@ -212,7 +222,8 @@ class BusinessesController extends Controller
                     $em->persist($logoAttachment);
 
                 }
-
+            } catch (YelpException $e) {
+                $business->setAverageRating(null);
             } catch (Exception $e) {
 
             }

@@ -5,7 +5,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">Add a business</div>
   <div class="panel-body">
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': { 'novalidate': 'true' }} ) }}
     {{ form_widget(form) }}
       <input type="submit" value="Create"
            class="btn btn-default pull-right" />

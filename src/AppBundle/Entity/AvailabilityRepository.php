@@ -19,6 +19,7 @@ class AvailabilityRepository extends EntityRepository
                 ->leftJoin('a.business','b')
                 ->leftJoin('b.address', 'ba')
                 ->innerJoin('a.availabilitySet', 'oas')
+                //->innerJoin('oas.availabilities', 'av')
                 ->leftJoin('a.treatment', 's')
                 ->innerJoin('oas.offer', 'o')
                 ->where('o.isOpen = true');
