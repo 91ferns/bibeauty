@@ -84,7 +84,7 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-    	$repo = $em->getRepository("AppBundle:Availability");
+    	$repo = $em->getRepository("AppBundle:Offer");
 
         $categories = $em->getRepository("AppBundle:TreatmentCategory");
         $heirarchy = $categories->getHeirarchy();

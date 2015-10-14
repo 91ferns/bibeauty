@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * BookingRepository
@@ -25,6 +26,269 @@ class OfferRepository extends EntityRepository
             $results = $query->getResult();
 
             return $results;
+    }
+
+    public function findByMulti($search, $pageSize = 20, $currentPage = 1){
+      $qb    = $this->createQueryBuilder('Offer');
+      $query = $qb
+                ->from('AppBundle:Offer', 'o')
+                ->innerJoin('o.availabilitySet', 'oas')
+                ->leftJoin('o.business','b')
+                ->leftJoin('b.address', 'ba')
+                ->leftJoin('o.treatment', 's')
+                ->innerJoin('oas.availabilities', 'a')
+                ->where('o.isOpen = true');
+                //->leftJoin('bk.recurring_appointments', 'r');
+
+      if($this->isAvailabilitySearch($search)){
+          $this->filterBookingsByAvailability($query,$qb, $search);
+      }
+
+      if($this->isLocationSearch($search)){
+        $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
+      }
+
+      if($this->isServiceSearch($search)){
+        $this->filterBookingsByService($query,$search['serviceType']);
+      }
+
+      if($this->isCategorySearch($search)){
+          $this->filterBookingsByCategory($query,$search['serviceCategory']);
+      }
+
+      if($this->isPriceSearch($search)){
+          $this->filterBookingsByPrice($query,$qb,$search['price1'],$search['price2']);
+      }
+
+      $paginator = new Paginator($query, $fetchJoin = true);
+      $result = $paginator
+        ->getQuery()
+        ->setFirstResult($pageSize * ($currentPage-1)) // set the offset
+        ->setMaxResults($pageSize); // set the limit
+
+      return $result;
+    }
+
+    public function findTodayAndTomorrowForTreatment($treatment) {
+
+        $today = new \DateTime();
+        $td_month = $today->format('m');
+        $td_year = $today->format('Y');
+        $td_day = $today->format('d');
+
+        $tomorrow = new \DateTime('tomorrow');
+        $tm_month = $tomorrow->format('m');
+        $tm_year = $tomorrow->format('Y');
+        $tm_day = $tomorrow->format('d');
+
+        // Build the date
+        $string = sprintf('%s-%s-%d 11:59PM', $tm_year, $tm_month, $tm_day);
+        $timestring = strtotime($string);
+
+        $tomorrowend = new \DateTime();
+        $tomorrowend->setTimestamp($timestring);
+
+        $qb = $this->createQueryBuilder('Availability');
+        $query = $qb
+                  ->from('AppBundle:Availability', 'a')
+                  ->leftJoin('a.availabilitySet', 'oas')
+                  ->innerJoin('oas.offer', 'o')
+                  ->where('o.isOpen = true')
+                  ->where('a.treatment = :treatment')
+                  ->setParameter('treatment', $treatment);
+
+        $query->add('where',
+          $qb->expr()->between(
+              'a.date',
+              ':todaystart',
+              ':tomorrowend'
+          )
+        )->setParameters(array(
+            'todaystart' => $today,
+            'tomorrowend' => $tomorrowend
+        ));
+
+        $results = $query->getQuery()->getResult();
+
+        // We have the results. We need to filter them to see if they are today or tomorrow
+
+        $todayArray = array();
+        $tomorrowArray = array();
+
+        $cmpFormat = 'Y-m-d';
+
+        foreach($results as $result) {
+            $date = $result->getDate();
+
+            $f = $date->format($cmpFormat);
+            if ($f == $today->format($cmpFormat)) {
+                $todayArray[] = $result;
+            } elseif ($f ===$tomorrow->format($cmpFormat)) {
+                $tomorrowArray[] = $result;
+            }
+        }
+
+        return array('today' => $todayArray, 'tomorrow' => $tomorrowArray, 'all' => $results);
+    }
+
+
+    public function filterBookingsByPrice(&$query, $qb, $price1,$price2){
+      $query->add('where',
+          $qb->expr()->between(
+              's.currentPrice',
+              ':price1',
+              ':price2'
+          )
+      )->setParameters([
+        'price1' => $price1,
+        'price2' => $price2
+      ]);
+    }
+
+    public function filterBookingsByCategory(&$query,$category){
+      $query->add('c')
+            ->leftJoin('AppBundle:TreatmentCategory', 'c')
+            ->add('where','b.categories = :category')
+            ->setParameter('category',$category);
+    }
+    public function filterBookingsByService(&$query,$treatmentCategory){
+      $query->add('st')
+            ->leftJoin('AppBundle:Treatment', 's')
+            //->leftJoin('AppBundle:ServiceType','st')
+            ->add('where','c.id = :treatmentCategory')
+            ->setParameter('treatmentCategory',$treatmentCategory   );
+    }
+
+    public function filterBookingsByLocation(&$query, $latitude, $longitude){
+        $miles = 3959;
+        $km = 6371;
+        $query
+            ->setParameter('latitude', $latitude)
+            ->setParameter('longitude', $longitude)
+            ->setParameter('unit', $miles)
+            //
+            ->addSelect("( :unit * ACOS( COS( radians(:latitude) ) * COS( radians( ba.latitude ) ) * COS( radians( ba.longitude ) - radians(:longitude) ) + SIN( radians(ba.latitude) ) * SIN(radians(:latitude)) ) ) as distance")
+            ->orderBy('distance', 'asc');
+    }
+
+    public function filterBookingsByAvailability(&$query,$qb,$search){
+      if($search['day'] !=null){
+        $query->add('where', 'oas.date = :day OR r.date = :day2')
+              ->setParameter([
+                'day' => $search['day'],
+                'day2' => $search['day']
+              ]);
+      }
+      if($this->isTimeRangeSearch($search)){
+        $where = $this->getTimeWhere();
+
+        $query->add('where',$where
+        )->setParameters([
+          'starttime' => $search['starttime'],
+          'endtime' => $search['endtime'],
+          'starttime2' => $search['starttime'],
+          'endtime2' => $search['endtime'],
+        ]);
+      }else if($this->isTimeSearch($search)){
+        $time = ($starttime === null) ? $endtime : $starttime;
+        $query->andWhere('oas.time = :time || r.time = :time2')
+              ->setParameter([
+                'time'=>$time,
+                'time2'=>$time
+                ]);
+      }
+      $result=$query->getQuery()
+                    ->getResult();
+      return $result;
+    }
+
+    public function getTimeWhere(){
+      $orX = $qbr->expr()->orX();
+      $orX->add($qb->expr()->between(
+          'oas.time',
+          ':starttime',
+          ':endtime'
+      ));
+      $orX->add($qb->expr()->between(
+          'r.time',
+          ':starttime2',
+          ':endtime2'
+      ));
+      return $orX;
+    }
+    public function isPriceSearch($search){
+      return ($this->has('price1',$search)
+              || ($this->has('price2',$search))
+              ) ? true : false;
+    }
+
+    public function isServiceSearch($search) {
+      return $this->has('serviceType',$search);
+    }
+    public function isCategorySearch($search){
+      return $this->has('serviceCategory',$search);
+    }
+    public function isLocationSearch($search){
+      return $this->has('location',$search);
+    }
+
+    public function isTimeSearch($search){
+      return ($this->has('starttime',$search)
+              || ($this->has('endtime',$search))
+              ) ? true : false;
+    }
+
+    public function isTimeRangeSearch($search){
+        return ($this->has('starttime',$search)
+                &&  ($this->has('endtime',$search))
+                ) ? true : false;
+    }
+
+    public function isAvailabilitySearch($search){
+      foreach(['day','starttime','endtime'] as $field){
+          if($this->has($field,$search)) return true;
+      }
+      return false;
+    }
+    public function has($key,$search)
+    {
+        if (is_array($search))
+            return array_key_exists($key, $search) ? true : false;
+        else
+            return false;
+    }
+
+    public function strongParams($req) {
+        //All possible search fields in format: postkey=>table_abbrev.field_name
+        $keys= [
+                'day'=>'date',
+                'time'=>'starttime',
+                'location'=>'location',
+                'treatmentType'=>'serviceCategory',
+                'treatment'=>'serviceType',
+                'amount_left'=>'price1',
+                'amount_right'=>'price2'
+        ];
+        //searched fields and values
+        $data=[];
+        //build data array of fields present in post from search and their values
+        foreach($keys as $key=>$field){
+
+          if(array_key_exists($key, $req) && $val = $req[$key] ){
+              if ($field === 'location') {
+                 $geo = Address::geocodeZip($val);
+                 if ($geo) {
+                     $data['latitude'] = $geo->getLatitude();
+                     $data['longitude'] = $geo->getLongitude();
+                     $data['location'] = array($data['latitude'], $data['longitude']);
+                 }
+             } else {
+                $data[$field] = $val;
+            }
+          }
+        }
+
+        return $data;
     }
 
   //if()andWhere('r.winner IN (:ids)')  ->setParameter('ids', $ids);
