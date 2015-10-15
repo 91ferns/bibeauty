@@ -102,7 +102,7 @@
                   <div class="col-md-7 ">
 
 
-                    <h3>{{business.getName}}
+                    <h3><a style="color: rgb(51, 51, 51);text-decoration:none;" href="{{path('business_path',{id:business.getId,slug:business.getSlug})}}">{{business.getName}}</a>
                       {% if business.getDistanceFrom %}
                       <span class="badge">{{business.getDistanceFrom | round(1, 'floor')}} miles </span>
                       {% endif %}
@@ -117,9 +117,9 @@
                   </div>
                   <div class="col-md-5">
                     {% if business.hasHeaderAttachment %}
-                      <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive pull-right" width="240" alt="{{ business.getName }}">
+                      <a href="{{ path('business_path',{id:business.getId,slug:business.getSlug}) }}"><img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive pull-right" width="240" alt="{{ business.getName }}"></a>
                     {% else %}
-                      <img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right">
+                      <a href="{{path('business_path',{id:business.getId,slug:business.getSlug})}}"><img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right"></a>
                     {% endif %}
 
                   </div>
