@@ -131,7 +131,7 @@
                   {% for treatment in business.getTreatments %}
                   <li class="list-group-item">
                     <h4 class="panel-title clearfix">
-                      <big>{{ treatment.getLabel }}</big>
+                      <big>{{ treatment.getName }}</big>
                       <a class="btn btn-primary pull-right"
                       href="{{ path('treatments_path', {
                         id: business.getId,
