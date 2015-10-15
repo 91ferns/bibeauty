@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+             new Gregwar\ImageBundle\GregwarImageBundle(),
             new AppBundle\AppBundle(),
         );
 
