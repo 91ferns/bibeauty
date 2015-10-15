@@ -12,5 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class AvailabilityRepository extends EntityRepository
 {
-    
+    public function findTodayAndTomorrowForTreatment($treatment){
+      
+    }
 }

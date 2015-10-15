@@ -42,8 +42,8 @@ class TreatmentsController extends Controller
 
         $availabilityRepo = $em->getRepository('AppBundle:Availability');
 
-        $availabilities = $availabilityRepo->findTodayAndTomorrowForTreatment($treatment);
-
+        //$availabilities = $availabilityRepo->findTodayAndTomorrowForTreatment($treatment);
+$availabilities = $availabilityRepo->findAll();
 
         if ($business->getYelpId()) {
             $yelp = $this->get('yelp.factory');
@@ -62,8 +62,8 @@ class TreatmentsController extends Controller
         return $this->render('treatments/select.html.twig', array(
             'business' => $business,
             'treatment' => $treatment,
-            'today' => $availabilities['today'],
-            'tomorrow' => $availabilities['tomorrow']
+            'today' => $availabilities,//['today'],
+            'tomorrow' => $availabilities,//['tomorrow']
         ));
     }
 

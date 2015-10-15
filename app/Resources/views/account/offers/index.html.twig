@@ -123,6 +123,14 @@ jQuery(document).ready(function(){
     lableWidth:'4px',
     size:'large'
   });
+  jQuery(document).on("change",".select2",function(e){
+    var $el  = jQuery(e.target);
+    var val  = $el.val();
+    var $opt = jQuery('select.select2 option').filter(function(){
+      return $(this).val() == val;
+    });
+    jQuery('input[name="Price"]').val($opt.data('price').toFixed(2));
+  });
 });
 
 

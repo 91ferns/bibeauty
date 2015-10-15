@@ -11,7 +11,7 @@
               {% for treatmentGroup in business.getTreatmentHierarchy %}
                 <optgroup label="{{treatmentGroup.label}}">
                   {% for treatment in treatmentGroup.treatments %}
-                  <option value="{{treatment.getId}}">{{treatment.getName}}</option>
+                  <option value="{{treatment.getId}}" data-price="{{treatment.getOriginalPrice}}">{{treatment.getName}}</option>
                   {% endfor %}
                 </optgroup>
               {% endfor %}
@@ -48,6 +48,11 @@
       <div class="form-group">
         <label class="control-label">Original Price</label>
         <input class="form-control" name="Discount" type="i" disabled value="{{ treatment.getOriginalPrice | number_format(2) }}">
+      </div>
+      {% else %}
+      <div class="form-group">
+        <label class="control-label">Original Price</label>
+        <input class="form-control" name="Price" type="i" disabled value="">
       </div>
       {% endif %}
 

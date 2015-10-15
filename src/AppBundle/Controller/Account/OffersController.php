@@ -28,7 +28,7 @@ class OffersController extends Controller
      */
     public function indexAction($id, $slug, Request $request)
     {
-        $offers = $this->getRepo('Offer');
+        $offers   = $this->getRepo('Offer');
         $business = $this->businessBySlugAndId($slug, $id);
 
         $offers   = $offers->findByBusiness($business);
@@ -250,7 +250,7 @@ class OffersController extends Controller
             );
         }
         return $this->redirectToRoute(
-            'admin_treatment_show_path',
+            'admin_business_offers_path',
             array( "slug"=> $slug,
                    "id"=> $id,
                    "treatmentId"=> $treatmentId
