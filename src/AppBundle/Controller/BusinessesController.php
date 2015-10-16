@@ -147,13 +147,42 @@ class BusinessesController extends Controller
             'evening' => 'evening',
         );
 
+        $date = $request->query->get('date', $allowedDays['all']);
+        $time = $request->query->get('time', $allowedTimes['all']);
+        $treatment = $request->query->get('treatment', null);
+        $min = intval($request->query->get('min', 0));
+        $max = intval($request->query->get('max', 500));
+
+        if ($min > 500) {
+            $min = 500;
+        }
+
+        if ($max < 1) {
+            $max = 1;
+        }
+
+        if (!in_array($date, $allowedDays)) {
+            $date = $allowedDays[0];
+        }
+
+        if (!in_array($time, $allowedTimes)) {
+            $time = $allowedTimes[0];
+        }
+
+        if ($treatment !== null && !is_integer($treatment)) {
+            $treatment = null;
+        }
+
+
+
+
         $defaultData = array(
-            'day' => $request->query->get('date', 'all'), //new \DateTime()
-            'time' => $request->query->get('time', 'all'), //new \DateTime()
+            'day' => $date, //new \DateTime()
+            'time' => $time, //new \DateTime()
             'location' => $request->query->get('location', null),
-            'treatment' => $request->query->get('treatment', null),
-            'min' => $request->query->get('min', 0),
-            'max' => $request->query->get('max', 500)
+            'treatment' => $treatment,
+            'min' => $min,
+            'max' => $max
         );
 
         $form = $this->createFormBuilder($defaultData)

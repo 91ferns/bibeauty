@@ -165,6 +165,8 @@ class OfferRepository extends EntityRepository
 
     public function filterBookingsByAvailability(&$query, $qb, $search){
 
+        return;
+        
         $timeQ = $search['time'];
         $dayQ = $search['day'];
 
@@ -222,13 +224,16 @@ class OfferRepository extends EntityRepository
         }
 
         // Now we have the boundaries for the given days. We need to add them to the query
+        if (count($dates) < 1) return;
+
+        $query
+            ->innerJoin('oas.availabilities', 'av');
 
         foreach($dates as $dateSet) {
 
             list($min, $max) = $dateSet;
 
             $query
-                ->innerJoin('oas.availabilities', 'av')
                 ->add('where',
                     $qb->expr()->between(
                         'av.date',

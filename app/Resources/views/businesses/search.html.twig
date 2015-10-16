@@ -116,12 +116,15 @@
                     <p class="business-description">{{business.getDescription}}</p>
                   </div>
                   <div class="col-md-5">
-                    {% if business.hasHeaderAttachment %}
-                      <a href="{{ path('business_path',{id:business.getId,slug:business.getSlug}) }}"><img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive pull-right" width="240" alt="{{ business.getName }}"></a>
+                    <a href="{{ path('business_path',{id:business.getId,slug:business.getSlug}) }}" class="business-logo-search pull-right"
+                    style="{% if business.hasHeaderAttachment %}
+                      background-image: url('{{ business.getHeaderAttachment.getKey | s3 }}');
                     {% else %}
-                      <a href="{{path('business_path',{id:business.getId,slug:business.getSlug})}}"><img src="{{ asset('assets/images/placeholder-image1.png') }}" width="240" height="135" class="pull-right"></a>
-                    {% endif %}
-
+                      background-image: url('{{ asset('assets/images/placeholder-image1.png') }}');
+                    {% endif %}')"
+                    >
+                      <span class="sr-only">{{ business.getName }}</span>
+                    </a>
                   </div>
 
                 </div> <!-- /.row -->

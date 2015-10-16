@@ -6,9 +6,9 @@
         <div class="row">
           <div class="col-md-8">
               {% if business.hasHeaderAttachment %}
-                <div class="header-attachment-wrapper" style="background-image: url({{ business.getHeaderAttachment.getKey | s3 }})">
+                <div class="header-attachment-wrapper" style="background-image: url('{{ business.getHeaderAttachment.getKey | s3 }})'">
               {% else %}
-                <div class="header-attachment-wrapper" style="">
+                <div class="header-attachment-wrapper" style="background-image: url('{{ asset('assets/images/placeholder-image1.png') }}');">
               {% endif %}
               </div> <!-- /.header-attachment-wrapper -->
             <nav class="business-tab-navigation">

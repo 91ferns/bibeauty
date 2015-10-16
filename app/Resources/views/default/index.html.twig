@@ -20,7 +20,7 @@
                       <div class="col-md-3 col-sm-6">
                         <label class="sr-only" for="JumboTreatment">Treatment</label>
                         <select class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
-                          <option style="color: #999;">Select a Treatment</option>
+                          <option style="color: #999;" value="">Select a Treatment</option>
                           {% for category in categories %}
                           <optgroup label="{{category.getLabel}}">
                           {% for subcategory in category.getChildren %}

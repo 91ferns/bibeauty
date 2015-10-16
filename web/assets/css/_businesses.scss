@@ -1,3 +1,14 @@
+.business-logo-search {
+  width: 230px;
+  height: 135px;
+  float: right;
+  display: block;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat:no-repeat;
+}
+
 #business-information {
 
   padding-top: 0px;
@@ -140,7 +151,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background: rgba(255,255,255,0.3);
+    background-color: rgba(255,255,255,0.3);
     margin-bottom: 15px;
   }
 
