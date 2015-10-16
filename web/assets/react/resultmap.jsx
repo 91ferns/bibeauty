@@ -10,7 +10,7 @@ var ResultMap = React.createClass({
           zoom: 13,
           scrollwheel: false,
           navigationControl: false,
-          center: new google.maps.LatLng(41.110079,-73.421902),
+          center: new google.maps.LatLng(34.0500,-118.2500),
           MapTypeId: google.maps.MapTypeId.ROADMAP,
         }
       };
@@ -107,9 +107,11 @@ var ResultMap = React.createClass({
         return bounds.getCenter();
     },
     resetCenter: function(newpos){
-      newpos = (!!newpos) ? newpos : this.getCurrentCenter();
-      this.state.options.center = newpos;
-      this.state.map.setOptions({center: newpos});
+      newpos = (!!newpos) ? newpos : false;
+      if (newpos) {
+        this.state.options.center = newpos;
+        this.state.map.setOptions({center: newpos});
+      }
     },
     render: function() {
       var warning;
