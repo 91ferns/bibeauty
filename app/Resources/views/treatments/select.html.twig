@@ -14,7 +14,7 @@
                 <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
                 <p class="business-description">{{business.getDescription}}</p>
                 <hr>
-              </div> <!-- /.business-description -->
+            </div> <!-- /.business-description -->
 
           </div> <!-- /.row -->
         </div>  <!-- /.business-description -->
@@ -23,11 +23,17 @@
           <div class="business-services">
             <h4>Select the Start Time for your visit</h4>
             <div class="panel-group">
-
               <div class="row">
-
                 <div class="col-md-4">
-                  <div class="btn-group btn-group-justified" role="tablist">
+                  <div class="btn-group" >
+                    <p class="btn btn-default">{{ "now"|date("m/d/Y") }}</p>
+                    <p class="btn btn-default">{{ "now"|date_modify("+1 day")|date("m/d/Y") }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="btn-group " role="tablist">
                     <a href="#today" aria-controls="home" role="tab" data-toggle="tab" class="btn btn-default">Today</a>
                     <a href="#tomorrow" aria-controls="home" role="tab" data-toggle="tab" class="btn btn-default">Tomorrow</a>
                   </div>
@@ -61,15 +67,24 @@
                   </div>
 
                 </div>
+                <div class="col-md-8" style="margin-top:-7px;">
+                  <div class="row">
+                  <p class="col-md-4"><strong>{{treatment.name}}</strong></p>
+                  </div>
+                  <div class="row">
+                      <p class="col-md-3">{{treatment.duration}} min</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="col-md-offset-9 col-md-3 reserve-booking">
 
-                <div class="col-md-8">
+                  <div class="col-md-12"><strong>Total:</strong> <span class="total"></span></div>
 
-                  {{ treatment.getLabel }}
-
-                  <button type="submit" class="btn btn-primary">Continue to Reserve</button>
+                  <div class="col-md-12"><button type="submit" class="btn btn-primary">Continue to Reserve</button></div>
 
                 </div>
-
+              </div>
               </div>
 
             </div> <!-- /.panel-group -->
@@ -81,4 +96,15 @@
     </div>
 </section>
 
+{% endblock %}
+{% block javascripts %}
+  <script>
+    jQuery(document).ready(function(){
+      jQuery('input[name="Availability"]').on('change',function(){
+        var row   = jQuery(this).parents('li');
+        var price = row.find('strong big').text();
+        jQuery('span.total').text(price);
+      })
+    });
+  </script>
 {% endblock %}

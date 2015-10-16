@@ -691,3 +691,41 @@ main section {
     }
   }
 }
+$drk:#1d93b1;
+$lgt:#52c8e6;
+.business-services .btn-group {
+  height:44px;
+  width:100%;
+  &[role='tablist']{
+    margin-bottom:10px;
+    height:50px;
+  }
+  >p.btn{cursor:auto;}
+  > a, p{
+    width:46%;height:40px;    padding-top: 10px;
+    &:first-child{margin-right:8%;}
+
+  }
+  > a{
+    &:first-child{background-color:$drk;}
+    background-color:$lgt;
+    color:#fff;
+    border:none;
+    height:40px;
+  }
+}
+.business-services > h4:first-Child{text-align: center; margin-bottom:20px;}
+.reserve-booking{margin-top:-100px;
+>.col-md-12{margin-bottom:10px;text-align:right;}
+button{width:100%;}}
+li.list-group-item .row.gutterless :last-child{
+   padding-top:3px;
+ }
+
+.row.gutterless {
+
+  .col-xs-2{
+    padding-top:6px;
+  }
+  .col-xs-4 .control-label{margin-bottom:0;padding-top: 5px;}
+}

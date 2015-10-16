@@ -49,7 +49,7 @@ class TreatmentsController extends Controller
             'business' => $business,
             'treatment' => $treatment,
             'today' => $availabilities['today'],
-            'tomorrow' => $availabilities['tomorrow']
+            'tomorrow' => $availabilities['tomorrow'],
         ));
     }
 
