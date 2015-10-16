@@ -116,7 +116,8 @@ class DefaultController extends ApplicationController
             $x = $this->get('mailer')->send($message);
 
             return $this->render('default/contact.html.twig', array(
-                'message' => "Thank you for your submission"
+                'message' => "Thank you for your submission",
+                'form' => $form->createView()
             ));
 
         } else {
