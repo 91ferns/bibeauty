@@ -66,68 +66,6 @@ class OfferRepository extends EntityRepository
       return $result->getResult();
     }
 
-    public function findTodayAndTomorrowForTreatment($treatment) {
-
-        $today = new \DateTime();
-        $td_month = $today->format('m');
-        $td_year = $today->format('Y');
-        $td_day = $today->format('d');
-
-        $tomorrow = new \DateTime('tomorrow');
-        $tm_month = $tomorrow->format('m');
-        $tm_year = $tomorrow->format('Y');
-        $tm_day = $tomorrow->format('d');
-
-        // Build the date
-        $string = sprintf('%s-%s-%d 11:59PM', $tm_year, $tm_month, $tm_day);
-        $timestring = strtotime($string);
-
-        $tomorrowend = new \DateTime();
-        $tomorrowend->setTimestamp($timestring);
-
-        $qb = $this->createQueryBuilder('Availability');
-        $query = $qb
-                  ->from('AppBundle:Availability', 'a')
-                  ->leftJoin('a.availabilitySet', 'oas')
-                  ->innerJoin('oas.offer', 'o')
-                  ->where('o.isOpen = true')
-                  ->where('a.treatment = :treatment')
-                  ->setParameter('treatment', $treatment);
-
-        $query->add('where',
-          $qb->expr()->between(
-              'a.date',
-              ':todaystart',
-              ':tomorrowend'
-          )
-        )->setParameters(array(
-            'todaystart' => $today,
-            'tomorrowend' => $tomorrowend
-        ));
-
-        $results = $query->getQuery()->getResult();
-
-        // We have the results. We need to filter them to see if they are today or tomorrow
-
-        $todayArray = array();
-        $tomorrowArray = array();
-
-        $cmpFormat = 'Y-m-d';
-
-        foreach($results as $result) {
-            $date = $result->getDate();
-
-            $f = $date->format($cmpFormat);
-            if ($f == $today->format($cmpFormat)) {
-                $todayArray[] = $result;
-            } elseif ($f ===$tomorrow->format($cmpFormat)) {
-                $tomorrowArray[] = $result;
-            }
-        }
-
-        return array('today' => $todayArray, 'tomorrow' => $tomorrowArray, 'all' => $results);
-    }
-
 
     public function filterBookingsByPrice(&$query, $qb, $price1, $price2){
       $query->add('where',
@@ -165,8 +103,6 @@ class OfferRepository extends EntityRepository
 
     public function filterBookingsByAvailability(&$query, $qb, $search){
 
-        return;
-        
         $timeQ = $search['time'];
         $dayQ = $search['day'];
 
