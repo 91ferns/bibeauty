@@ -129,34 +129,32 @@ class OfferRepository extends EntityRepository
 
         // Need to create the boundaries now
 
-        if ($timeQ === 'all') {
-            foreach($days as $day) {
+        foreach($days as $day) {
+            $min = clone $day;
+            $max = clone $day;
+
+            if ($timeQ === 'all') {
                 $dates[] = array(
-                    $day->setTime('23', '59', '59'),
-                    $day->setTime('23', '59', '59')
+                    $min->setTime('0', '0', '0'),
+                    $max->setTime('23', '59', '59')
+                );
+            } elseif ($timeQ === 'morning') {
+                $dates[] = array(
+                    $min->setTime('5', '0', '0'),
+                    $max->setTime('11', '59', '59')
+                );
+            } elseif ($timeQ === 'afternoon') {
+                $dates[] = array(
+                    $min->setTime('12', '0', '0'),
+                    $max->setTime('16', '59', '59')
+                );
+            } elseif ($timeQ === 'afternoon') {
+                $dates[] = array(
+                    $min->setTime('17', '0', '0'),
+                    $max->setTime('23', '59', '59')
                 );
             }
-        } elseif ($timeQ === 'morning') {
-            foreach($days as $day) {
-                $dates[] = array(
-                    $day->setTime('5', '0', '0'),
-                    $day->setTime('11', '59', '59')
-                );
-            }
-        } elseif ($timeQ === 'afternoon') {
-            foreach($days as $day) {
-                $dates[] = array(
-                    $day->setTime('12', '0', '0'),
-                    $day->setTime('16', '59', '59')
-                );
-            }
-        } elseif ($timeQ === 'afternoon') {
-            foreach($days as $day) {
-                $dates[] = array(
-                    $day->setTime('17', '0', '0'),
-                    $day->setTime('23', '59', '59')
-                );
-            }
+
         }
 
         // Now we have the boundaries for the given days. We need to add them to the query

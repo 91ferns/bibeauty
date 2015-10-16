@@ -170,11 +170,11 @@ class BusinessesController extends Controller
         }
 
         if ($treatment !== null && !is_integer($treatment)) {
-            $treatment = null;
+            $treatment = intval($treatment);
+            if (!$treatment) {
+                $treatment = null;
+            }
         }
-
-
-
 
         $defaultData = array(
             'day' => $date, //new \DateTime()
