@@ -92,7 +92,6 @@ class BusinessesController extends Controller
         $form = $this->getSearchForm($request);
         $params = $form->getData();
 
-
         $data = $repo->strongParams($params);
     	$records = $repo->findByMulti($data);
 
@@ -134,33 +133,47 @@ class BusinessesController extends Controller
     }
 
     protected function getSearchForm($request) {
+
+        $allowedDays = array(
+            'all' => 'all',
+            'today' => 'today',
+            'tomorrow' => 'tomorrow',
+        );
+
+        $allowedTimes = array(
+            'all' => 'all',
+            'morning' => 'morning',
+            'afternoon' => 'afternoon',
+            'evening' => 'evening',
+        );
+
         $defaultData = array(
-            'day' => null, //new \DateTime()
-            'time' => null,
-            'location' => null,
-            'treatmenttype' => '',
-            'treatment' => '',
-            'min' => 0,
-            'max' => 500
+            'day' => $request->query->get('date', 'all'), //new \DateTime()
+            'time' => $request->query->get('time', 'all'), //new \DateTime()
+            'location' => $request->query->get('location', null),
+            'treatment' => $request->query->get('treatment', null),
+            'min' => $request->query->get('min', 0),
+            'max' => $request->query->get('max', 500)
         );
 
         $form = $this->createFormBuilder($defaultData)
           ->setMethod('GET')
-          ->add('day', 'date', array(
-              'placeholder' => 'Day'
+          ->add('day', 'choice', array(
+              'choices' => $allowedDays
           ))
-          ->add('time', 'time')
+          ->add('time', 'choice', array(
+              'choices' => $allowedTimes
+          ))
           ->add('location', 'text', array(
               'disabled' => true,
               'data' => 'Los Angeles'
           ))
-          ->add('treatmenttype', 'text')
-          ->add('treatment', 'text')
+          ->add('treatment', 'integer')
           ->add('min', 'integer')
           ->add('max', 'integer')
           ->getForm();
 
-        $form->handleRequest($request);
+        // $form->handleRequest($request); // Handled above
         return $form;
 
     }

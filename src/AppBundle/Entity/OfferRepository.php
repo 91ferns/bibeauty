@@ -35,7 +35,7 @@ class OfferRepository extends EntityRepository
                 ->innerJoin('o.availabilitySet', 'oas')
                 ->leftJoin('o.business','b')
                 ->leftJoin('b.address', 'ba')
-                ->leftJoin('o.treatment', 's')
+                ->leftJoin('o.treatment', 't')
                 ->innerJoin('oas.availabilities', 'a')
                 ->where('o.isOpen = true');
                 //->leftJoin('bk.recurring_appointments', 'r');
@@ -48,12 +48,8 @@ class OfferRepository extends EntityRepository
         $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
       }
 
-      if($this->isServiceSearch($search)){
-        $this->filterBookingsByService($query,$search['serviceType']);
-      }
-
-      if($this->isCategorySearch($search)){
-          $this->filterBookingsByCategory($query,$search['serviceCategory']);
+      if($this->isTreatmentCategorySearch($search)){
+        $this->filterOffersByTreatmentCategory($query, $qb, $search['treatment']);
       }
 
       if($this->isPriceSearch($search)){
@@ -133,7 +129,7 @@ class OfferRepository extends EntityRepository
     }
 
 
-    public function filterBookingsByPrice(&$query, $qb, $price1,$price2){
+    public function filterBookingsByPrice(&$query, $qb, $price1, $price2){
       $query->add('where',
           $qb->expr()->between(
               's.currentPrice',
@@ -146,18 +142,13 @@ class OfferRepository extends EntityRepository
       ]);
     }
 
-    public function filterBookingsByCategory(&$query,$category){
-      $query->add('c')
-            ->leftJoin('AppBundle:TreatmentCategory', 'c')
-            ->add('where','b.categories = :category')
-            ->setParameter('category',$category);
-    }
-    public function filterBookingsByService(&$query,$treatmentCategory){
-      $query->add('st')
-            ->leftJoin('AppBundle:Treatment', 's')
-            //->leftJoin('AppBundle:ServiceType','st')
-            ->add('where','c.id = :treatmentCategory')
-            ->setParameter('treatmentCategory',$treatmentCategory   );
+    public function filterOffersByTreatmentCategory(&$query, $qb, $treatmentCategory){
+      $query
+        ->innerJoin('t.treatmentCategory', 'tc')
+            ->andWhere('tc = :treatmentCategory OR tc.parent = :treatmentCategory')
+            ->setParameter('treatmentCategory', $treatmentCategory);
+
+            return $query;
     }
 
     public function filterBookingsByLocation(&$query, $latitude, $longitude){
@@ -172,62 +163,96 @@ class OfferRepository extends EntityRepository
             ->orderBy('distance', 'asc');
     }
 
-    public function filterBookingsByAvailability(&$query,$qb,$search){
-      if($search['day'] !=null){
-        $query->add('where', 'oas.date = :day OR r.date = :day2')
-              ->setParameter([
-                'day' => $search['day'],
-                'day2' => $search['day']
-              ]);
-      }
-      if($this->isTimeRangeSearch($search)){
-        $where = $this->getTimeWhere();
+    public function filterBookingsByAvailability(&$query, $qb, $search){
 
-        $query->add('where',$where
-        )->setParameters([
-          'starttime' => $search['starttime'],
-          'endtime' => $search['endtime'],
-          'starttime2' => $search['starttime'],
-          'endtime2' => $search['endtime'],
-        ]);
-      }else if($this->isTimeSearch($search)){
-        $time = ($starttime === null) ? $endtime : $starttime;
-        $query->andWhere('oas.time = :time || r.time = :time2')
-              ->setParameter([
-                'time'=>$time,
-                'time2'=>$time
-                ]);
-      }
-      $result=$query->getQuery()
-                    ->getResult();
-      return $result;
+        $timeQ = $search['time'];
+        $dayQ = $search['day'];
+
+        $days = array();
+        $dates = array();
+
+        $tomorrow = new \DateTime('tomorrow');
+        $today = new \DateTime('today');
+
+        if ($dayQ === 'tomorrow') {
+            $days[] = $today;
+        } elseif ($dayQ === 'today') {
+            $days[] = $tomorrow;
+        } elseif ($dayQ === 'all') {
+            $days[] = $today;
+            $days[] = $tomorrow;
+            // Want to make sure these dates are entered in
+        }
+
+        // all - Anytime
+        // morning - 5 am - 12 pm
+        // afternoon - 12 pm - 5 pm
+        // evening - 5 pm to 12 am
+
+        // Need to create the boundaries now
+
+        if ($timeQ === 'all') {
+            foreach($days as $day) {
+                $dates[] = array(
+                    $day->setTime('23', '59', '59'),
+                    $day->setTime('23', '59', '59')
+                );
+            }
+        } elseif ($timeQ === 'morning') {
+            foreach($days as $day) {
+                $dates[] = array(
+                    $day->setTime('5', '0', '0'),
+                    $day->setTime('11', '59', '59')
+                );
+            }
+        } elseif ($timeQ === 'afternoon') {
+            foreach($days as $day) {
+                $dates[] = array(
+                    $day->setTime('12', '0', '0'),
+                    $day->setTime('16', '59', '59')
+                );
+            }
+        } elseif ($timeQ === 'afternoon') {
+            foreach($days as $day) {
+                $dates[] = array(
+                    $day->setTime('17', '0', '0'),
+                    $day->setTime('23', '59', '59')
+                );
+            }
+        }
+
+        // Now we have the boundaries for the given days. We need to add them to the query
+
+        foreach($dates as $dateSet) {
+
+            list($min, $max) = $dateSet;
+
+            $query
+                ->innerJoin('oas.availabilities', 'av')
+                ->add('where',
+                    $qb->expr()->between(
+                        'av.date',
+                        ':min',
+                        ':max'
+                    )
+                )->setParameters(array(
+                  'min' => $min,
+                  'max' => $max
+                ));
+        }
+
+        return $query;
+
     }
 
-    public function getTimeWhere(){
-      $orX = $qbr->expr()->orX();
-      $orX->add($qb->expr()->between(
-          'oas.time',
-          ':starttime',
-          ':endtime'
-      ));
-      $orX->add($qb->expr()->between(
-          'r.time',
-          ':starttime2',
-          ':endtime2'
-      ));
-      return $orX;
-    }
     public function isPriceSearch($search){
       return ($this->has('price1',$search)
               || ($this->has('price2',$search))
               ) ? true : false;
     }
 
-    public function isServiceSearch($search) {
-      return $this->has('serviceType',$search);
-    }
-    public function isCategorySearch($search){
-      return $this->has('serviceCategory',$search);
+    public function isTreatmentCategorySearch($search) {
+      return $this->has('treatment', $search);
     }
     public function isLocationSearch($search){
       return $this->has('location',$search);
@@ -262,13 +287,12 @@ class OfferRepository extends EntityRepository
     public function strongParams($req) {
         //All possible search fields in format: postkey=>table_abbrev.field_name
         $keys= [
-                'day'=>'date',
-                'time'=>'starttime',
+                'day'=>'day',
+                'time'=>'time',
                 'location'=>'location',
-                'treatmentType'=>'serviceCategory',
-                'treatment'=>'serviceType',
-                'amount_left'=>'price1',
-                'amount_right'=>'price2'
+                'treatment'=>'treatment',
+                'amount_left'=>'price_min',
+                'amount_right'=>'price_max'
         ];
         //searched fields and values
         $data=[];

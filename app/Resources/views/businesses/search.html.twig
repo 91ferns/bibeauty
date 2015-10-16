@@ -18,19 +18,19 @@
                 <label for="">Availability</label>
 
                 <p>
-                  <select class="form-control" name="Date">
-                    <option value="all">Tomorrow &amp; Today</option>
-                    <option value="today">Today</option>
-                    <option value="tomorrow">Tomorrow</option>
+                  <select class="form-control" name="date">
+                    <option value="all" {% if params['day'] == 'all' %}selected="selected"{% endif %}>Tomorrow &amp; Today</option>
+                    <option value="today" {% if params['day'] == 'today' %}selected="selected"{% endif %}>Today</option>
+                    <option value="tomorrow" {% if params['day'] == 'tomorrow' %}selected="selected"{% endif %}>Tomorrow</option>
                   </select>
                 </p>
 
                 <p>
-                  <select class="form-control" value="Time">
-                    <option value="all">Anytime</option>
-                    <option value="morning">Morning (until 12pm)</option>
-                    <option value="afternoon">Afternoon (12-5pm)</option>
-                    <option value="evening">Evening (5pm-12am)</option>
+                  <select class="form-control" name="time">
+                    <option value="all" {% if params['time'] == 'all' %}selected="selected"{% endif %}>Anytime</option>
+                    <option value="morning" {% if params['time'] == 'morning' %}selected="selected"{% endif %}>Morning (until 12pm)</option>
+                    <option value="afternoon" {% if params['time'] == 'afternoon' %}selected="selected"{% endif %}>Afternoon (12-5pm)</option>
+                    <option value="evening" {% if params['time'] == 'evening' %}selected="selected"{% endif %}>Evening (5pm-12am)</option>
                   </select>
                 </p>
 
@@ -49,12 +49,12 @@
               <div class="form-group">
                 <label for="">Treatment Type / Category</label>
                 <div class="input-group TreatmentTypesGroup">
-                  <select class="treatmentTypes" name="treatment">
+                  <select class="form-control" name="treatment">
                     <option style="color: #999;">Select a Treatment</option>
                     {% for category in categories %}
-                    <option value="{{category.getId}}">{{category.getLabel}}</option>
+                    <option value="{{category.getId}}" {% if params['treatment'] == category.getId %}selected="selected"{% endif %}>{{category.getLabel}}</option>
                     {% for subcategory in category.getChildren %}
-                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</i>
+                      <option value="{{subcategory.id }}" {% if params['treatment'] == subcategory.id %}selected="selected"{% endif %}>- {{subcategory.getLabel}}</i>
                     {% endfor %}
                     {% endfor %}
                   </select>
