@@ -25,6 +25,7 @@ class AvailabilityRepository extends EntityRepository
             ->innerJoin('a.treatment','t')
             ->innerJoin('a.availabilitySet', 'oas')
             ->innerJoin('oas.offer', 'o')
+            ->where('o.isOpen = true')
             ->andWhere('t = :treatment')
             ->setParameter('treatment', $treatment)
             ->add('where',
