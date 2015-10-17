@@ -14,9 +14,8 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class OfferRepository extends EntityRepository
 {
     public function recentDeals($limit = 3) {
-            $qb = $this->createQueryBuilder('Offer');
+            $qb = $this->createQueryBuilder('o');
             $qb
-                ->from('AppBundle:Offer', 'o')
                 ->innerJoin('o.business','b')
                 ->leftJoin('b.address', 'ba')
                 ->innerJoin('o.treatment', 't')
@@ -29,16 +28,15 @@ class OfferRepository extends EntityRepository
     }
 
     public function findByMulti($search, $pageSize = 20, $currentPage = 1){
-      $qb    = $this->createQueryBuilder('Offer');
+      $qb    = $this->createQueryBuilder('o');
       $query = $qb
-                ->from('AppBundle:Offer', 'o')
                 ->innerJoin('o.availabilitySet', 'oas')
                 ->leftJoin('o.business','b')
                 ->leftJoin('b.address', 'ba')
                 ->leftJoin('o.treatment', 't')
                 ->innerJoin('oas.availabilities', 'a')
-                ->where('o.isOpen = true');
-                //->leftJoin('bk.recurring_appointments', 'r');
+                ->where('o.isOpen = true')
+                ->addOrderBy('o.currentPrice', 'ASC');
 
       if($this->isAvailabilitySearch($search)){
           $this->filterBookingsByAvailability($query,$qb, $search);
@@ -52,8 +50,9 @@ class OfferRepository extends EntityRepository
         $this->filterOffersByTreatmentCategory($query, $qb, $search['treatment']);
       }
 
-      if($this->isPriceSearch($search)){
-          $this->filterBookingsByPrice($query,$qb,$search['price1'],$search['price2']);
+      if ($price = $this->isPriceSearch($search)){
+          list($min, $max) = $price;
+          $this->filterOffersByPrice($query, $qb, $min, $max);
       }
 
       $paginator = new Paginator($query, $fetchJoin = true);
@@ -67,16 +66,17 @@ class OfferRepository extends EntityRepository
     }
 
 
-    public function filterBookingsByPrice(&$query, $qb, $price1, $price2){
+    public function filterOffersByPrice(&$query, $qb, $price1, $price2){
+        // $price1 = number_format($price1, 2);
       $query->add('where',
           $qb->expr()->between(
-              's.currentPrice',
-              ':price1',
-              ':price2'
+              'o.currentPrice',
+              ':min',
+              ':max'
           )
       )->setParameters([
-        'price1' => $price1,
-        'price2' => $price2
+        'min' => $price1,
+        'max' => $price2
       ]);
     }
 
@@ -185,9 +185,15 @@ class OfferRepository extends EntityRepository
     }
 
     public function isPriceSearch($search){
-      return ($this->has('price1',$search)
-              || ($this->has('price2',$search))
-              ) ? true : false;
+        if ($this->has('price_min',$search) || ($this->has('price_max', $search))) {
+
+            $min = isset($search['price_min']) ? $search['price_min'] : 0;
+            $max = isset($search['price_max']) ? $search['price_max'] : 500;;
+
+            return array($min, $max);
+        } else {
+            return false;
+        }
     }
 
     public function isTreatmentCategorySearch($search) {
@@ -230,8 +236,8 @@ class OfferRepository extends EntityRepository
                 'time'=>'time',
                 'location'=>'location',
                 'treatment'=>'treatment',
-                'amount_left'=>'price_min',
-                'amount_right'=>'price_max'
+                'min'=>'price_min',
+                'max'=>'price_max'
         ];
         //searched fields and values
         $data=[];

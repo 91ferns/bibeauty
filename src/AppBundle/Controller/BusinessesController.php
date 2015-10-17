@@ -44,7 +44,7 @@ class BusinessesController extends Controller
             }
 
         } catch (YelpException $e) {
-            
+
         }
 
         return $this->render('businesses/show.html.twig', array(
@@ -59,20 +59,6 @@ class BusinessesController extends Controller
     public function bookAction($id, $slug, $treatment, Request $request)
     {
         $business = $this->businessBySlugAndId($slug, $id);
-
-        if ($business->getYelpId()) {
-            $yelp = $this->get('yelp.factory');
-            $response = $yelp->getBusiness('soundview-service-center-mamaroneck');
-
-            if ($response->rating) {
-                $business->setAverageRating($response->rating);
-            }
-
-            foreach($response->reviews as $review) {
-                $theReview = Review::fromYelp($review);
-                $business->addReview($theReview);
-            }
-        }
 
         $bookingForm = $this->createForm(new BookingType(), new Booking(), array(
             'action' => $this->generateUrl('listings_search_path', array()),
@@ -126,6 +112,8 @@ class BusinessesController extends Controller
               } else {
                   $results[$id] = $b;
               }
+
+              echo 'adding offer';
 
               $results[$id]->addOffer($offer);
           }

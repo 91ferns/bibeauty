@@ -695,6 +695,27 @@ class Business {
         return $this;
     }
 
+    public function getOffersTreatmentHierarchy() {
+        // Group these things by their treatment
+        $treatments = array();
+
+        foreach ($this->getOffers() as $offer) {
+
+            $treatment = $offer->getTreatment();
+            $tId = $treatment->getId();
+
+            if (array_key_exists($tId, $treatments)) {
+            } else {
+                $treatments[$tId] = $treatment;
+            }
+
+            $treatments[$tId]->addOffer($offer);
+
+        }
+
+        return $treatments;
+    }
+
     private $distanceFrom = 0;
 
     public function setDistanceFrom($distance) {

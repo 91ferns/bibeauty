@@ -129,9 +129,9 @@
 
                 </div> <!-- /.row -->
 
-                {% if business.getTreatments | length > 0 %}
+                {% if business.getOffersTreatmentHierarchy | length > 0 %}
                 <ul class="list-group">
-                  {% for treatment in business.getTreatments %}
+                  {% for treatment in business.getOffersTreatmentHierarchy %}
                   <li class="list-group-item">
                     <h4 class="panel-title clearfix">
                       <big>{{ treatment.getName }}</big>
@@ -145,7 +145,7 @@
                         <strong>${{ treatment.getCheapestDiscountPrice | number_format(2) }}</strong>
                       </a>
                       <span class="save pull-right">
-                        Save <blue>{{ treatment.getCheapestDiscountPercentage }}%</blue>
+                        Save <span class="blue">{{ treatment.getCheapestDiscountPercentage }}%</span>
                       </span>
                     </h4>
                   </li> <!-- .list-item-group -->
