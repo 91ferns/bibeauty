@@ -40,11 +40,11 @@ class OfferRepository extends EntityRepository
                 ->addOrderBy('o.currentPrice', 'ASC');
 
       if($this->isAvailabilitySearch($search)){
-          $this->filterBookingsByAvailability($query,$qb, $search);
+          $this->filterOffersByAvailability($query, $qb, $search);
       }
 
       if($this->isLocationSearch($search)){
-        $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
+         $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
       }
 
       if($this->isTreatmentCategorySearch($search)){
@@ -99,7 +99,7 @@ class OfferRepository extends EntityRepository
             ->orderBy('distance', 'asc');
     }
 
-    public function filterBookingsByAvailability(&$query, $qb, $search){
+    public function filterOffersByAvailability(&$query, $qb, $search){
 
         $timeQ = $search['time'];
         $dayQ = $search['day'];
@@ -111,9 +111,9 @@ class OfferRepository extends EntityRepository
         $today = new \DateTime('today');
 
         if ($dayQ === 'tomorrow') {
-            $days[] = $today;
-        } elseif ($dayQ === 'today') {
             $days[] = $tomorrow;
+        } elseif ($dayQ === 'today') {
+            $days[] = $today;
         } elseif ($dayQ === 'all') {
             $days[] = $today;
             $days[] = $tomorrow;

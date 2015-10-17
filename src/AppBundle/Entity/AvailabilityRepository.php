@@ -24,15 +24,14 @@ class AvailabilityRepository extends EntityRepository
             ->innerJoin('a.treatment','t')
             ->innerJoin('a.availabilitySet', 'oas')
             ->innerJoin('oas.offer', 'o')
-            ->add('where',
-              $qb->expr()->between(
-                  'a.date',
-                  ':todaystart',
-                  ':tomorrowend'
-              ))
-             ->setParameters(array(
-                 'todaystart' => $today,
-                 'tomorrowend' => $tomorrow
+            ->andWhere($qb->expr()->between(
+                'a.date',
+                ':todaystart',
+                ':tomorrowend'
+            ))
+            ->setParameters(array(
+                'todaystart' => $today,
+                'tomorrowend' => $tomorrow
             ))
             ->andWhere('o.isOpen = true')
             ->andWhere('a.active = true')
@@ -55,13 +54,25 @@ class AvailabilityRepository extends EntityRepository
         foreach($results as $result) {
             $date = $result->getDate();
 
+            $timestamp = $date->getTimestamp();
+
             $f = $date->format($cmpFormat);
             if ($f == $today->format($cmpFormat)) {
-                $todayArray[] = $result;
+                if (array_key_exists($timestamp, $todayArray)) {
+
+                } else {
+                    $todayArray[$timestamp] = $result;
+                }
             } elseif ($f === $tomorrow->format($cmpFormat)) {
-                $tomorrowArray[] = $result;
+                if (array_key_exists($timestamp, $todayArray)) {
+
+                } else {
+                    $tomorrowArray[$timestamp] = $result;
+                }
             }
         }
+
+        // Filter each of these arrays
 
         return array('today' => $todayArray, 'tomorrow' => $tomorrowArray);
 
