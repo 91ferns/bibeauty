@@ -36,7 +36,7 @@ class OfferRepository extends EntityRepository
                 ->innerJoin('o.treatment', 't')
                 ->innerJoin('oas.availabilities', 'a')
                 ->andWhere('o.isOpen = true')
-                ->andWhere('a.active = true')
+                // ->andWhere('a.active = true')
                 ->addOrderBy('o.currentPrice', 'ASC');
 
       if($this->isAvailabilitySearch($search)){
@@ -158,22 +158,24 @@ class OfferRepository extends EntityRepository
         // Now we have the boundaries for the given days. We need to add them to the query
         if (count($dates) < 1) return;
 
-        $query
-            ->innerJoin('oas.availabilities', 'av');
+        $expression = $qb->expr()->orX();
 
         foreach($dates as $k => $dateSet) {
 
             list($min, $max) = $dateSet;
 
+            $expression->add($qb->expr()->between(
+                    'a.date',
+                    ':mindate' . $k,
+                    ':maxdate' . $k
+            ));
+
             $query
-                ->andWhere($qb->expr()->between(
-                        'av.date',
-                        ':mindate' . $k,
-                        ':maxdate' . $k
-                ))
                 ->setParameter('mindate' . $k, $min)
                 ->setParameter('maxdate' . $k, $max);
         }
+
+        $query->andWhere($expression);
 
         return $query;
 
