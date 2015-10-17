@@ -19,13 +19,13 @@ class AvailabilityRepository extends EntityRepository
 
         $tomorrow->setTime(11, 59, 59);
 
-        $qb = $this->createQueryBuilder('Availabilities');
+        $qb = $this->createQueryBuilder('a');
         $qb
-            ->from('AppBundle:Availability', 'a')
             ->innerJoin('a.treatment','t')
             ->innerJoin('a.availabilitySet', 'oas')
             ->innerJoin('oas.offer', 'o')
             ->where('o.isOpen = true')
+            ->andWhere('a.active = true')
             ->andWhere('t = :treatment')
             ->setParameter('treatment', $treatment)
             ->add('where',

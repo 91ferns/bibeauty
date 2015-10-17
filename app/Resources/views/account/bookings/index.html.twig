@@ -36,7 +36,7 @@
             <td>{{ treatment.getTreatmentCategory.getCategoryName }}</td>
             <td>{{ treatment.getTreatmentCategory.getLabel }}</td>
             <td>{{ availability.getDate | date('d-m-Y') }}</td>
-            <td>{{ availability.getDate | date('m:s A') }}</td>
+            <td>{{ availability.getDate | date('g:i A') }}</td>
             <td>{{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency('USD') }}</td>
             <td>
               {% if business.getTherapists | length > 0 %}

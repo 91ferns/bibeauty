@@ -82,8 +82,12 @@ class AppExtension extends \Twig_Extension
     public function ratingStarsFilter( $number ) {
         $stars = array();
         for ($i = 1; $i <= 5; $i++) {
-            $active = ($i <= $number) ? 'active' : '';
-            $stars[] = sprintf('<i class="fa fa-star %s"></i>', $active);
+            if ($i - 1 < $number && $i > $number) {
+                $stars[] = '<i class="fa fa-star-half active"></i>';
+            } else {
+                $active = ($i <= $number) ? 'active' : '';
+                $stars[] = sprintf('<i class="fa fa-star %s"></i>', $active);
+            }
         }
 
         return join('', $stars);

@@ -45,6 +45,11 @@ class Availability {
     */
     private $availabilitySet;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" = true})
+     */
+    private $active = true;
+
 
     public function __toString() {
         return (string) $this->getId();

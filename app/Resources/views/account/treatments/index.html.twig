@@ -27,7 +27,7 @@
           {% for treatment in treatments %}
           <tr>
             <td>
-              <a href="{{ path('admin_treatment_show_path',{
+              <a href="{{ path('admin_business_treatments_show_path',{
                 'id': business.getId,
                 'slug': business.getSlug,
                 'treatmentId': treatment.getId
@@ -39,7 +39,7 @@
             <td>${{ treatment.getOriginalPrice }}</td>
             <td>{{treatment.getDuration | duration }}</td>
             <td>
-              <a href="{{ path('admin_treatment_show_path',{
+              <a href="{{ path('admin_business_treatments_show_path',{
                 'id': business.getId,
                 'slug': business.getSlug,
                 'treatmentId': treatment.getId

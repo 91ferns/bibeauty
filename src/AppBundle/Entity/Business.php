@@ -326,6 +326,11 @@ class Business {
         return false;
     }
 
+    public function hasLogoAttachment() {
+        if ($this->logoAttachment) return true;
+        return false;
+    }
+
     /**
      * Set headerAttachment
      *

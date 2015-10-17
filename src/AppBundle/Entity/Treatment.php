@@ -403,7 +403,7 @@ class Treatment {
         $cheapestOffer = $this->getCheapestOffer();
 
         if (!$cheapestOffer) {
-            return 100;
+            return 0;
         } else {
             $current = $cheapestOffer->getCurrentPrice();
             $original = $this->getOriginalPrice();

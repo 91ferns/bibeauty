@@ -68,8 +68,9 @@ class Booking {
      * canceled    = 3
      */
 
-     /* @ORM\PrePersist
-     */
+     /**
+      * @ORM\PrePersist
+      */
     public function setAutomaticFields() {
         if (!$this->createdAt) {
             $this->createdAt = new \DateTime();

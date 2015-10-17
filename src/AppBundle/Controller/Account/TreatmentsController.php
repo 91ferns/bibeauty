@@ -77,7 +77,7 @@ class TreatmentsController extends Controller
     }
 
     /**
-     * @Route("/account/treatments/{id}/{slug}/show/{treatmentId}", name="admin_treatment_show_path")
+     * @Route("/account/treatments/{id}/{slug}/show/{treatmentId}", name="admin_business_treatments_show_path")
      * @Method("GET")
      */
     public function showAction($id, $slug, $treatmentId, Request $request)
