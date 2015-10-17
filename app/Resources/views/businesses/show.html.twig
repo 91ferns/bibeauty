@@ -63,7 +63,11 @@
                         <button class="btn btn-default service-old-price" disabled>
                           ${{ treatment.getOriginalPrice | number_format(2) }}
                         </button>
-                        <a class="btn btn-primary" data-toggle="modal" href="#treatmentModal" data-whatever="@getbootstrap" data-treatment-id="{{ treatment.getId }}" data-business-id="{{ business.getId }}">
+                        <a class="btn btn-primary" data-treatment-id="{{ treatment.getId }}" href="{{ path('treatments_path', {
+                          id: business.getId,
+                          slug: business.getSlug,
+                          treatment: treatment.getId })
+                        }}">
                           ${{ treatment.getCheapestDiscountPrice | number_format(2) }}
                         </a>
                       </div>

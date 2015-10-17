@@ -106,17 +106,17 @@
             {% set business = offer.getBusiness %}
             <div class="col-lg-offset-0 col-lg-4 col-md-offset-0 col-md-4 col-sm-offset-0 col-sm-4 col-xs-offset-3 col-xs-6 col-xs-offset-3">
                 <div class="thumbnail" id="deals-border">
-                    <img src="{{ asset('assets/images/deals/1.png') }}" class="img-responsive" alt="...">
+                    <img src="{{ asset('assets/images/category-thumbnails/') }}{{ offer.getTopicalCategory | lower | slugify }}.png" class="img-responsive" alt="...">
                     <div class="caption">
                       <div class="subcaption">
                         <div class="subcaption-inner">
-                          <strong>{{ offer.getDiscountPercentage }}%</strong> OFF {{offer.getTreatment.getLabel}}
+                          <strong>{{ offer.getDiscountPercentage }}%</strong> OFF {{offer.getTreatment.getName | upper }}
                         </div>
                       </div>
                         <div class="deal-title">
                             <div class="row">
                                 <div class="col-sm-9">
-                                  <span class="deals-title">{{ business.getName }}</span>
+                                  <span class="deals-title">{{ business.getName }}</span><br>
                                   <span class="stars">
                                     {{ business.getAverageRating | rating }}
                                   </span>

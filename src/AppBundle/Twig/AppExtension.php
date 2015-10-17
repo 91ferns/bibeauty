@@ -83,10 +83,10 @@ class AppExtension extends \Twig_Extension
         $stars = array();
         for ($i = 1; $i <= 5; $i++) {
             if ($i - 1 < $number && $i > $number) {
-                $stars[] = '<i class="fa fa-star-half active"></i>';
+                $stars[] = '<i class="fa fa-star-half-o active"></i>';
             } else {
-                $active = ($i <= $number) ? 'active' : '';
-                $stars[] = sprintf('<i class="fa fa-star %s"></i>', $active);
+                $active = ($i <= $number) ? ' active' : '-o';
+                $stars[] = sprintf('<i class="fa fa-star%s"></i>', $active);
             }
         }
 

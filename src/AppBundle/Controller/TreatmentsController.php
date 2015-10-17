@@ -124,6 +124,15 @@ class TreatmentsController extends Controller
 
         $av = $availabilityRepo->findOneById($availability);
 
+        if ($av->getActive() === false) {
+            return $this->render('treatments/book.html.twig', array(
+                'business' => $business,
+                'availability' => $av,
+                'form' => $form->createView(),
+                'error' => 'Someone has taken that booking already'
+            ));
+        }
+
         $booking = new Booking();
 
         $form = $this->createForm(new BookingType(), $booking);
@@ -140,6 +149,9 @@ class TreatmentsController extends Controller
             }
 
             $em->persist($booking);
+
+            $av->setActive(false);
+
             $em->flush();
 
             return $this->redirectToRoute('do_book_confirm_path', array(

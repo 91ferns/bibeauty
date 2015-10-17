@@ -164,4 +164,27 @@ class Availability {
     {
         return $this->availabilitySet;
     }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Availability
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
 }

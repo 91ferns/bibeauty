@@ -31,11 +31,11 @@ class OfferRepository extends EntityRepository
       $qb    = $this->createQueryBuilder('o');
       $query = $qb
                 ->innerJoin('o.availabilitySet', 'oas')
-                ->leftJoin('o.business','b')
-                ->leftJoin('b.address', 'ba')
-                ->leftJoin('o.treatment', 't')
+                ->innerJoin('o.business','b')
+                ->innerJoin('b.address', 'ba')
+                ->innerJoin('o.treatment', 't')
                 ->innerJoin('oas.availabilities', 'a')
-                ->where('o.isOpen = true')
+                ->andWhere('o.isOpen = true')
                 ->andWhere('a.active = true')
                 ->addOrderBy('o.currentPrice', 'ASC');
 
@@ -69,16 +69,13 @@ class OfferRepository extends EntityRepository
 
     public function filterOffersByPrice(&$query, $qb, $price1, $price2){
         // $price1 = number_format($price1, 2);
-      $query->add('where',
-          $qb->expr()->between(
-              'o.currentPrice',
-              ':min',
-              ':max'
-          )
-      )->setParameters([
-        'min' => $price1,
-        'max' => $price2
-      ]);
+        $query->andWhere($qb->expr()->between(
+            'o.currentPrice',
+            ':min',
+            ':max'
+        ))
+        ->setParameter('min', $price1)
+        ->setParameter('max', $price2);
     }
 
     public function filterOffersByTreatmentCategory(&$query, $qb, $treatmentCategory){
@@ -164,21 +161,18 @@ class OfferRepository extends EntityRepository
         $query
             ->innerJoin('oas.availabilities', 'av');
 
-        foreach($dates as $dateSet) {
+        foreach($dates as $k => $dateSet) {
 
             list($min, $max) = $dateSet;
 
             $query
-                ->add('where',
-                    $qb->expr()->between(
+                ->andWhere($qb->expr()->between(
                         'av.date',
-                        ':min',
-                        ':max'
-                    )
-                )->setParameters(array(
-                  'min' => $min,
-                  'max' => $max
-                ));
+                        ':mindate' . $k,
+                        ':maxdate' . $k
+                ))
+                ->setParameter('mindate' . $k, $min)
+                ->setParameter('maxdate' . $k, $max);
         }
 
         return $query;

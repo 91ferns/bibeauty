@@ -24,10 +24,6 @@ class AvailabilityRepository extends EntityRepository
             ->innerJoin('a.treatment','t')
             ->innerJoin('a.availabilitySet', 'oas')
             ->innerJoin('oas.offer', 'o')
-            ->where('o.isOpen = true')
-            ->andWhere('a.active = true')
-            ->andWhere('t = :treatment')
-            ->setParameter('treatment', $treatment)
             ->add('where',
               $qb->expr()->between(
                   'a.date',
@@ -38,6 +34,10 @@ class AvailabilityRepository extends EntityRepository
                  'todaystart' => $today,
                  'tomorrowend' => $tomorrow
             ))
+            ->andWhere('o.isOpen = true')
+            ->andWhere('a.active = true')
+            ->andWhere('t = :treatment')
+            ->setParameter('treatment', $treatment)
             ->addOrderBy('a.date', 'ASC')
             ->addOrderBy('o.currentPrice',  'ASC')
             ;

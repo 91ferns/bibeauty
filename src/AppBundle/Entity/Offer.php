@@ -400,4 +400,8 @@ class Offer {
         return sprintf('%d', (($originalPrice - $newPrice) / $originalPrice) * 100);
 
     }
+
+    public function getTopicalCategory() {
+        return $this->getTreatment()->getTreatmentCategory()->getCategoryName();
+    }
 }
