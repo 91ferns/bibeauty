@@ -113,8 +113,6 @@ class BusinessesController extends Controller
                   $results[$id] = $b;
               }
 
-              echo 'adding offer';
-
               $results[$id]->addOffer($offer);
           }
 
