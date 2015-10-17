@@ -408,7 +408,7 @@ class Treatment {
             $current = $cheapestOffer->getCurrentPrice();
             $original = $this->getOriginalPrice();
 
-            return ( ($original - $current) / $original ) * 100;
+            return sprintf('%d', ( ($original - $current) / $original ) * 100 );
         }
 
     }
@@ -429,7 +429,7 @@ class Treatment {
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -452,7 +452,7 @@ class Treatment {
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

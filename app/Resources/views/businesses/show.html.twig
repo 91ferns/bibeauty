@@ -8,7 +8,7 @@
 
     <div class="business-main-content">
       <div class="container">
-        <div class="business-description">
+        <div class="business-description" id="overview">
           <div class="row">
             <div class="col-md-8">
                 <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
@@ -19,7 +19,7 @@
           </div> <!-- /.row -->
         </div>  <!-- /.business-description -->
 
-        <div class="business-services">
+        <div class="business-services" id="services">
           <h4>Services</h4>
           {% if business.hasTreatments %}
           <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
@@ -94,7 +94,7 @@
 
         <hr>
 
-        <div class="business-reviews">
+        <div class="business-reviews" id="reviews">
           <h4>Ratings <small><em>(written by customers after their visit)</em></small></h4>
           <div class="panel panel-default ratings-panel">
             <div class="panel-heading">

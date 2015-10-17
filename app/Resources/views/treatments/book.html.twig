@@ -34,12 +34,13 @@
                   <div class="row">
                     <div class="col-sm-5">
                       <p class="time">
-                        {{ availability.getDate | date('h:s A') }}
+                        {{availability.getDate | date('g:i A') }}
                       </p>
                     </div>
                     <div class="col-sm-4">
                       <p class="booked-date">
-                        {{ availability.getDate | date('d M D') }}
+                        {{ availability.getDate | date('d M') }}<br>
+                        {{ availability.getDate | date('D') }}
                       </p>
                     </div>
                     <div class="col-sm-3">
@@ -69,6 +70,7 @@
                       {{ availability.getTreatment.getDuration | duration }}
                     </p>
                     <p class="footer">
+                      {{ availability.getId }}
                       All payments are made directly with the salon upon your visit. BiBeauty does not accept payments for bookings.
                     </p>
                   </div>

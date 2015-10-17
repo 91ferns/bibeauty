@@ -16,6 +16,9 @@ use AppBundle\Entity\Service;
 use AppBundle\Entity\Booking;
 use AppBundle\Form\BookingType;
 
+use Stevenmaguire\Yelp\Exception as YelpException;
+
+
 class BusinessesController extends Controller
 {
 
@@ -28,14 +31,20 @@ class BusinessesController extends Controller
 
         $business = $this->businessBySlugAndId($slug, $id);
 
-        if ($business->getYelpId()) {
-            $yelp = $this->get('yelp.factory');
-            $response = $yelp->getBusiness($business->getYelpId());
+        try {
 
-            foreach($response->reviews as $review) {
-                $theReview = Review::fromYelp($review);
-                $business->addReview($theReview);
+            if ($business->getYelpId()) {
+                $yelp = $this->get('yelp.factory');
+                $response = $yelp->getBusiness($business->getYelpId());
+
+                foreach($response->reviews as $review) {
+                    $theReview = Review::fromYelp($review);
+                    $business->addReview($theReview);
+                }
             }
+
+        } catch (YelpException $e) {
+            
         }
 
         return $this->render('businesses/show.html.twig', array(

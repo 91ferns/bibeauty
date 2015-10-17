@@ -2,7 +2,10 @@
     <div class="container">
         <h1>{{business.getName}}</h1>
         <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</h2>
-
+        {% set p = path('business_path', {
+          id: business.getId,
+          slug: business.getSlug
+        }) %}
         <div class="row">
           <div class="col-md-8">
               {% if business.hasHeaderAttachment %}
@@ -13,9 +16,9 @@
               </div> <!-- /.header-attachment-wrapper -->
             <nav class="business-tab-navigation">
               <ul class="nav nav-pills">
-                <li role="presentation" class="active"><a href="#overview">Overview</a></li>
-                <li role="presentation"><a href="#services">Services</a></li>
-                <li role="presentation"><a href="#reviews">Reviews</a></li>
+                <li role="presentation" class="active"><a href="{{ p }}#overview">Overview</a></li>
+                <li role="presentation"><a href="{{p}}#services">Services</a></li>
+                <li role="presentation"><a href="{{p}}#reviews">Reviews</a></li>
               </ul>
             </nav>
           </div> <!-- /.col -->
@@ -45,7 +48,7 @@
                     </div> <!-- /.stars -->
                 </div>
 
-                <a class="btn btn-primary btn-fullwidth btn-lg">
+                <a class="btn btn-primary btn-fullwidth btn-lg" href="{{p}}#services">
                   Reserve Now
                 </a>
 
