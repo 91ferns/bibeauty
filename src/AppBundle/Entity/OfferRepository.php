@@ -36,7 +36,7 @@ class OfferRepository extends EntityRepository
                 ->innerJoin('o.treatment', 't')
                 ->innerJoin('oas.availabilities', 'a')
                 ->andWhere('o.isOpen = true')
-                // ->andWhere('a.active = true')
+                ->andWhere('a.active = true')
                 ->addOrderBy('o.currentPrice', 'ASC');
 
       if($this->isAvailabilitySearch($search)){
