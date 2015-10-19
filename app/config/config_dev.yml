@@ -49,6 +49,17 @@ assetic:
     sass: ~
     compass: ~
   use_controller: true
+# windows only assetic config
+#  ruby: C:\Ruby22\bin\ruby.exe
+#  sass: C:\Ruby22\bin\sass.bat
+#  filters:
+#    cssrewrite: ~
+#    sass:
+#      bin: %sass.bin%
+#      apply_to: "\.scss$"
+#    compass:
+#      bin: %compass.bin%
+#  use_controller: false
 
 #swiftmailer:
 #    delivery_address: me@example.com

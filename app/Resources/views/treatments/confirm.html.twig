@@ -20,7 +20,7 @@
           </div> <!-- /.row -->
           <div class="row">
             <div class="col-md-8">
-              <div class="header-attachment-wrapper" style="">
+              <div class="confirmation header-attachment-wrapper" style="">
                 <h2>THANK YOU FOR YOUR BOOKING</h2>
                 <p><strong>Here is your order summary </strong></p>
                 <hr>
@@ -34,7 +34,7 @@
 
             <div class="col-md-4">
 
-                <aside class="business-aside">
+                <aside class="business-aside confirm">
 
                   <h4>YOUR BOOKING IS COMPLETE</h4>
 
@@ -69,8 +69,43 @@
   <div class="container">
 
     <h3>Appointment Details</h3>
+    <div class="col-md-3 card">
+      <div class="row">
+        <div class="col-md-8 appt-time">
+          {{availability.getDate|date("h:i A")}}
+        </div>
+        <div class="col-md-4 appt-date">
+          {{availability.getDate|date("d M")}}<br>
+          {{availability.getDate|date("l")}}
+        </div>
+      </div>
+      <div class="row business-name">
+        <strong>{{business.name}}</strong>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6 duration">
+          {{availability.getTreatment.getDuration}} minutes
+        </div>
+        <div class="col-md-6 pull-right price">
+        <strong>${{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency}}</strong>
+        </div>
+      </div>
 
-
+    </div>
+    <div class="col-md-5 card card-second">
+      <p><strong>Address</strong></p>
+      <ul class="col-md-7 address list-unstyled">
+        <li>{{business.getAddress.getCity}},{{business.getAddress.getState}} </li>
+        <li>{{business.getAddress.getCountry}}</li>
+        <li>Phone Number: {{business.getLandline}}</li>
+        <li>Email: {{business.getEmail}}</li>
+      </ul>
+      <div class="col-md-5">
+        <img class="map" src="http://maps.googleapis.com/maps/api/staticmap?center={{business.getAddress.getLatitude}},{{business.getAddress.getLongitude}}&zoom=13&scale=false&size=180x180&maptype=roadmap&format=png&visual_refresh=true" >
+      </div>
+    </div>
+    </div>
   </div>
 
 </section>

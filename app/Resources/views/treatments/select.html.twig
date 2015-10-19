@@ -18,7 +18,7 @@
 
           </div> <!-- /.row -->
         </div>  <!-- /.business-description -->
-
+        <a class="back-to-business" href="{{ path('business_path',{id:business.getId,slug:business.getSlug})}}">See all salon offers</a>
         <form method="POST" action="{{ path('availabilities_redirect_path') }}">
           <div class="business-services">
             <h4>Select the Start Time for your visit</h4>

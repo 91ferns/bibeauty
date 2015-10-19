@@ -178,13 +178,12 @@ class TreatmentsController extends Controller
 
         $business = $this->businessBySlugAndId($slug, $id);
         $em = $this->getDoctrine()->getManager();
-    	$bookingRepo = $em->getRepository("AppBundle:Booking");
-
-        $booking = $bookingRepo->findOneById($booking);
-
+    	$availabilityRepo = $em->getRepository("AppBundle:Availability");
+                $avail = $availabilityRepo->findOneById($booking);
         return $this->render('treatments/confirm.html.twig', array(
             'business' => $business,
-            'booking' => $booking,
+            //'booking' => $booking,
+            'availability' => $avail,
         ));
 
     }
