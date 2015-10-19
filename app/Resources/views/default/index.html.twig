@@ -1,7 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+<style>
+.select2-selection.select2-selection--single{
+  height: 46px;
+font-size: 18px;
+padding-top: 5px;
+border-radius: 0;
+color:#000;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder{color:#000;}
+.select2-container--default .select2-selection--single .select2-selection__arrow{top:10px;}
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #000 transparent;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #000 transparent transparent transparent;
+}
+</style>
 <section id="top-slider">
     <div class="jumbotron">
         <div class="container">
@@ -19,7 +35,7 @@
                       </div> <!-- /.col -->
                       <div class="col-md-3 col-sm-6">
                         <label class="sr-only" for="JumboTreatment">Treatment</label>
-                        <select class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
+                        <select data-minimumResultsForSearch="1" data-placeholder="Select a Treatment" class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
                           <option style="color: #999;" value="">Select a Treatment</option>
                           {% for category in categories %}
                             <option value="{{category.id }}">{{category.getLabel}}</option>
@@ -156,5 +172,12 @@
   </div> <!-- /.container -->
 
 </section>
+{% endblock %}
 
+{% block javascripts %}
+<script>
+  jQuery(document).ready(function(){
+      jQuery('select[name="treatment"]').select2();
+  });
+</script>
 {% endblock %}
