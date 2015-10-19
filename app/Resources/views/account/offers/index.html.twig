@@ -2,9 +2,21 @@
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />
 <style>
-.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{background-color:#5cb85c;}
-.bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default{background-color:#757575;color:white;}
+/*.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{background-color:#5cb85c;}*/
+
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default{background-color:#bec3c7;color:white;}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
+  background-color:#6acba2;
+}
+.bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label,.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{
+  background-color:#757575; font-weight:bold;
+}
+.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-on, .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off,
+ .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-label {
+   padding-left:12px;
+ }
+ .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off{font-weight:bold;}
 table th.times-heading,
 table tr>td{max-width:260px!important;}
 </style>
@@ -115,7 +127,7 @@ table tr>td{max-width:260px!important;}
 <script>
 jQuery(document).ready(function(){
   jQuery('.onoffswitch > form input[type="checkbox"]').bootstrapSwitch({
-    onText:'&dash;',
+    onText:'&#10004;',
     offText:'&times;',
     onColor:'success',
     offColor:'default',

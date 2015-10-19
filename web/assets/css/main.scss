@@ -780,3 +780,14 @@ li.list-group-item .row.gutterless :last-child{
   .pull-right.price{text-align:right;}
 }
 .business-services .panel-group#service-accordion li{padding-bottom:10px;}
+/**OFFERS SWITCH**/
+$green:#6acba2;
+$greylgt:#bec3c7;
+$greydrk:#7f8d9a;
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
+  background-color:#6acba2;
+}
+.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{
+  color:#bec3c7;
+}

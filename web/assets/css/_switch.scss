@@ -43,3 +43,10 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
+$green:#6acba2;
+$greylgt:#bec3c7;
+$greydrk:#7f8d9a;
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
+  background-color:$green;
+}
