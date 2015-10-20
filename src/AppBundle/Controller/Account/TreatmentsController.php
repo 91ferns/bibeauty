@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Account;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Router;
 use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -78,7 +79,7 @@ class TreatmentsController extends Controller
 
     /**
      * @Route("/account/treatments/{id}/{slug}/show/{treatmentId}", name="admin_business_treatments_show_path")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
     public function showAction($id, $slug, $treatmentId, Request $request)
     {
@@ -87,6 +88,15 @@ class TreatmentsController extends Controller
         $treatment  = $treatments->findOneBy(array('id'=>$treatmentId));
 
         $treatmentType = $this->createForm(new TreatmentType(), $treatment);
+        $treatmentType->handleRequest($request);
+
+        if ($treatmentType->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($treatment);
+          $em->flush();
+          $this->get('session')->getFlashBag()->add('notice','Treatment successfully updated.');
+          return $this->redirectToRoute('admin_business_treatments_show_path',["slug"=>$slug,"id"=>$id,"treatmentId"=>$treatmentId]);
+        }
 
         // replace this example code with whatever you need
         return $this->render('account/treatments/show.html.twig', array(
@@ -99,5 +109,4 @@ class TreatmentsController extends Controller
         ));
 
     }
-
 }

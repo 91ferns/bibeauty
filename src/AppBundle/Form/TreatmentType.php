@@ -5,13 +5,18 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Routing\Router;
 use Doctrine\ORM\EntityRepository;
 
 use AppBundle\Entity\Attachment;
 
 class TreatmentType extends AbstractType
 {
+    /*function __construct(Router $router)
+    {
+        $this->router = $router;
+    }*/
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -58,6 +63,7 @@ class TreatmentType extends AbstractType
                 ),
                 'currency' => 'USD',
             ))
+            //->setAction($this->router->generate('admin_business_treatments_edit_path'))
         ;
     }
 
