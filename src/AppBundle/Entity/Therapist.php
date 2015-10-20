@@ -29,7 +29,7 @@ class Therapist {
    protected $name;
 
    /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=65)
      * @Assert\NotBlank()
      * @Assert\Length(min = 2)
      */

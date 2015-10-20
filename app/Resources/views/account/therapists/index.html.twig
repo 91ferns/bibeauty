@@ -14,7 +14,7 @@
       <ul class="list-group">
       {% for therapist in therapists %}
         <li class="list-group-item">
-          <a href="">{{ therapist.getName }} - <small class="text-muted">{{ therapist.getTitle }}</small></a>
+          <a href="{{ path('admin_business_therapists_edit_path', { slug: business.getSlug, id: business.getId, therapistId:therapist.getId })}}">{{ therapist.getName }} - <small class="text-muted">{{ therapist.getTitle }}</small></a>
         </li>
       {% endfor %}
       </ul>
