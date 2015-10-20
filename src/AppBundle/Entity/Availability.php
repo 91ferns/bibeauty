@@ -34,13 +34,13 @@ class Availability {
    private $business;
 
    /**
-    * @ORM\ManyToOne(targetEntity="Treatment")
+    * @ORM\ManyToOne(targetEntity="Treatment",cascade={"persist","remove"})
     * @ORM\JoinColumn(name="treatment_id", referencedColumnName="id")
     */
    private $treatment;
 
    /**
-    * @ORM\ManyToOne(targetEntity="OfferAvailabilitySet", inversedBy="availabilities")
+    * @ORM\ManyToOne(targetEntity="OfferAvailabilitySet", inversedBy="availabilities",cascade={"persist","remove"})
     * @ORM\JoinColumn(name="availability_set_id", referencedColumnName="id")
     */
     private $availabilitySet;

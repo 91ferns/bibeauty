@@ -42,7 +42,7 @@ class OfferAvailabilitySet {
    private $times = array();
 
     /**
-     * @ORM\OneToOne(targetEntity="Offer", inversedBy="availabilitySet")
+     * @ORM\OneToOne(targetEntity="Offer", inversedBy="availabilitySet",cascade={"persist","remove"})
      * @ORM\JoinColumn(name="offer_id", referencedColumnName="id")
      **/
     private $offer;

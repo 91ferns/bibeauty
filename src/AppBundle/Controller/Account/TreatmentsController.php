@@ -109,4 +109,26 @@ class TreatmentsController extends Controller
         ));
 
     }
+
+    /**
+     * @Route("/account/treatments/{id}/{slug}/remove/{treatmentId}", name="admin_delete_treatment")
+     * @Method("GET")
+     */
+    public function deleteOffer($id,$slug,$treatmentId,Request $request)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $tx = $em->getRepository("AppBundle:Treatment")->findOneBy(['id'=>$treatmentId]);
+      $bookings = $em->getRepository("AppBundle:Booking")->findOneBy(['id'=>$treatmentId]);
+      $em->persist($tx);
+      /*foreach($bookings as $booking){
+        $em->persist($booking);
+        $em->remove($booking);
+      }
+      $em->flush();*/
+      $em->remove($tx);
+      $em->flush();
+      //return true;//$this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
+      $this->get('session')->getFlashBag()->add('notice','Treatment successfully removed.');
+      return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
+ }
 }

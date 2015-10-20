@@ -22,8 +22,8 @@ class Booking {
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Availability", cascade={"remove"}, fetch="EAGER")
-     * @ORM\JoinColumn(name="availability_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Availability", cascade={"persist","remove"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="availability_id", referencedColumnName="id",onDelete="CASCADE")
      */
     protected $availability;
 
