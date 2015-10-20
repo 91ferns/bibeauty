@@ -23,3 +23,11 @@
 .booking-info {
   padding-top: 0px;
 }
+.tab-pane#today,
+.tab-pane#tomorrow{
+  max-height:260px;
+  overflow-y:auto;
+  ul.list-group{
+    margin-bottom:0;
+  }
+}
