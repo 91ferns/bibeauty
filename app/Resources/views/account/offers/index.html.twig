@@ -145,6 +145,7 @@ jQuery(document).ready(function(){
       return $(this).val() == val;
     });
     jQuery('input[name="Price"]').val($opt.data('price').toFixed(2));
+    $(this).select2("close");
   });
 
   jQuery(document).on("change",".select2",function(e){

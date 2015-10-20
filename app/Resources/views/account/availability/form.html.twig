@@ -6,7 +6,7 @@
         <div class="form-group">
           <label for="Day">Treatment</label>
           <div class="select2-wrapper">
-            <select class="select2 form-control" name="Treatment" style="width: 100%;">
+            <select class="select2 form-control" closeOnSelect="true" name="Treatment" style="width: 100%;">
               <option selected>Select a treatment</option>
               {% for treatmentGroup in business.getTreatmentHierarchy %}
                 <optgroup label="{{treatmentGroup.label}}">
