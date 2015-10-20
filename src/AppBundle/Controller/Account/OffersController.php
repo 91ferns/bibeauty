@@ -5,7 +5,7 @@ namespace AppBundle\Controller\Account;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -318,5 +318,22 @@ class OffersController extends Controller
         return count($i);
 
     }
+
+    /**
+     * @Route("/account/offers/{id}/{slug}/edit", name="admin_edit_offer")
+     * @Method("POST")
+     */
+     function editOfferAction($id, $slug, Request $request)
+     {
+       $req    = $request->request;
+       $id     = $req->get('pk',false);
+       $price  = str_replace('$','',$req->get('value',false));
+       $em = $this->getDoctrine()->getManager();
+       $offers = $em->getRepository("AppBundle:Offer");
+       $offer  = $offers->findOneBy(['id'=>$id]);
+       $offer->setCurrentPrice($price);
+       $em->flush();
+       return new JsonResponse(array('success' => true));
+     }
 
 }

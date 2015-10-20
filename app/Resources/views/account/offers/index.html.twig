@@ -1,6 +1,7 @@
 {% extends 'admin.html.twig' %}
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 <style>
 /*.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{background-color:#5cb85c;}*/
 
@@ -19,6 +20,7 @@
  .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off{font-weight:bold;}
 table th.times-heading,
 table tr>td{max-width:260px!important;}
+span.strikethrough{text-decoration: line-through;}
 </style>
 {% endblock %}
 
@@ -64,9 +66,10 @@ table tr>td{max-width:260px!important;}
             {{av.getTimes() | join(', ')}}
           </span></td>
           <td><span class="discount">
-            {{ offer.getDiscountPercentage }}% /
+
+            <span class="percent">{{ offer.getDiscountPercentage }}</span>% /
             <span class="strikethrough">${{ offer.getTreatment.getOriginalPrice }}</span>
-            ${{ offer.getCurrentPrice }}
+              <a href="#" id="currentPrice{{offer.getId}}" class="price-editable" data-type="text" data-pk="{{ offer.getId }}" data-url="{{ path('admin_edit_offer',{id:offer.getId,slug:business.getSlug}) }}" >${{ offer.getCurrentPrice }}</a>
           </span></td>
           <td><span class="recurring">
             {% if av.getRecurrenceType == 'never' %}
@@ -143,6 +146,20 @@ jQuery(document).ready(function(){
     });
     jQuery('input[name="Price"]').val($opt.data('price').toFixed(2));
   });
+
+  $('.price-editable').editable({
+    success: function(response, newValue) {
+      console.log();
+      var $row        = $(this).parents('td');
+      var oPrice      = $row.find('span.strikethrough').text().replace('$','');
+      var $percentage = $row.find('span.discount > span.percent');
+      var cPrice      = newValue.replace('$','');
+      var percent     = Math.round(((oPrice-cPrice)/oPrice)*100);
+      $percentage.text(percent);
+      $(this).text(newValue);
+
+    }
+  });
 });
 
 
@@ -158,9 +175,7 @@ jQuery('a#deleteSelectedOffersButton').on('click',function(e){
       return $(this).val();
     }).get();
     $.post( "{{ path('admin_delete_offer',{'id':app.request.get('id'),'slug':app.request.get('slug')} ) }}", { offers: offers }, function( data ) {
-      console.log(data);
       $offers.each(function(i,el){
-        console.log(jQuery(el));
         jQuery(el).remove();//.remove();
       });
     }, "json")
@@ -172,4 +187,5 @@ jQuery('a#deleteSelectedOffersButton').on('click',function(e){
     location.reload();
 });
 </script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 {% endblock %}
