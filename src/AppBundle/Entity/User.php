@@ -55,7 +55,6 @@ class User implements AdvancedUserInterface, \Serializable {
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotBlank()
      */
     private $superAdmin = false;
 

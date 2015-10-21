@@ -239,7 +239,7 @@ class OfferRepository extends EntityRepository
         //searched fields and values
         $data=[];
         //build data array of fields present in post from search and their values
-        foreach($keys as $key=>$field){
+        foreach ($keys as $key=>$field) {
 
           if(array_key_exists($key, $req) && $val = $req[$key] ){
               if ($field === 'location') {
