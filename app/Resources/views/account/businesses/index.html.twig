@@ -9,42 +9,44 @@
   </div>
   <div class="panel-body">
     {% if businesses | length > 0 %}
-    <table class="table table-striped">
+    <div class="table-responsive">
+      <table class="table table-striped">
 
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Bookings</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Bookings</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        {% for business in businesses %}
-        <tr>
-          <td>{{ business.getId }}</td>
-          <td>{{ business.getName }}</td>
-          <td>{{ business.getAddress.getFullAddressString}}
-          <td>
-            <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-              View Bookings
-            </a>
-          </td>
-          <td>
-            <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-              Edit
-            </a>
-          </td>
+        <tbody>
+          {% for business in businesses %}
+          <tr>
+            <td>{{ business.getId }}</td>
+            <td>{{ business.getName }}</td>
+            <td>{{ business.getAddress.getFullAddressString}}
+            <td>
+              <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                View Bookings
+              </a>
+            </td>
+            <td>
+              <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                Edit
+              </a>
+            </td>
 
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
 
 
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
     {% else %}
     <p>You have no businesses</p>
     {% endif %}
