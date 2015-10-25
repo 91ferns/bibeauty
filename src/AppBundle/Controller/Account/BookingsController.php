@@ -44,6 +44,17 @@ class BookingsController extends Controller
       $em        = $this->getDoctrine()->getManager();
       $booking   = $em->getRepository("AppBundle:Booking")->findOneBy(['id'=>$bookingid]);
       $booking->setStatus($status);
+
+      $twilio = $this->get('twilio.factory');
+
+      if ($status === 3) {
+          // Cancelled
+          $twilio->bookingCancelledNotification($booking);
+      } elseif ($status === 2) {
+          // Booking confirmed
+          $twilio->bookingConfirmedNotification($booking);
+      }
+
       $em->flush();
       return $this->redirectToRoute('admin_business_bookings_path',['id'=>$id,'slug'=>$slug]);
       //return new Response();

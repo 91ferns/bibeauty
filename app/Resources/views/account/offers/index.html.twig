@@ -60,7 +60,7 @@ span.strikethrough{text-decoration: line-through;}
             <div class="btn-group"><input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}"></div>
           </span></td>
           <td><span class="treatment-name">{{offer.getTreatment.getTreatmentCategory.getCategoryName}}</span></td>
-          <td><span class="treatment-name">{{offer.getTreatment.getLabel}}</span></td>
+          <td><span class="treatment-name">{{offer.getTreatment.getName}}</span></td>
           <td><span class="offer-start">{{av.getStartDate | date('d-m-Y')}}</span></td>
           <td><span class="offer-times">
             {{av.getTimes() | join(', ')}}

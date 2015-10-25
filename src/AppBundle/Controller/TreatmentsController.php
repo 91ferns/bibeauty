@@ -149,10 +149,12 @@ class TreatmentsController extends Controller
             }
 
             $em->persist($booking);
-
             $av->setActive(false);
 
             $em->flush();
+
+            $twilio = $this->get('twilio.factory');
+            $twilio->bookingNotification($booking);
 
             return $this->redirectToRoute('do_book_confirm_path', array(
                 'id' => $id,

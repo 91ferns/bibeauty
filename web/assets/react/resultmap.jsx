@@ -16,7 +16,18 @@ var ResultMap = React.createClass({
       };
 
     },//Map(document.getElementById(mapId), opts);
+
     componentDidMount: function() {
+      var _this = this;
+
+      $.getJSON('/api/businesses', function(response) {
+        if (response.status !== 'ok') {
+          alert('Something went wrong with our system. Try refreshing');
+          return;
+        }
+        _this.setState({ mapResults: response.data });
+      });
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
 
@@ -42,10 +53,30 @@ var ResultMap = React.createClass({
       this.setState({
         map: map
       }, function() {
-        this.updateResults(this.props.mapResults);
+        this.updateResults(this.state.mapResults);
       }.bind(this));
 
     },
+
+    focusBusiness: function(id) {
+      var markers = this.state.markers;
+      var theMarker = null;
+      for (var x in markers) {
+        var marker = markers[x];
+
+        if (marker.id === id) {
+          theMarker = marker;
+        }
+      }
+
+      if (!theMarker) {
+        return false;
+      }
+
+      marker.click();
+
+    },
+
     checkParseMarkers: function(markers) {
       try{
         markers = JSON.parse(markers);
@@ -68,6 +99,8 @@ var ResultMap = React.createClass({
         animation: google.maps.Animation.DROP,
         icon: '/assets/images/map/pin.png',
       });
+      loc.meta = { id: marker.id };
+
       this.setState({
         markers: this.state.markers.push(loc)
       });
@@ -89,7 +122,6 @@ var ResultMap = React.createClass({
         this.resetCenter();
     },
     makeInfoWindow: function(data, marker){
-      console.log(data);
         var iw = new google.maps.InfoWindow({
             content: '<div class="loc-info">'+data.name+'</div>',
             maxWidth: 200

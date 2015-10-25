@@ -5,21 +5,18 @@ function initMap() {
   	var wrapper = document.getElementById('results-map-wrapper');
   	if (wrapper) {
 
-      $.getJSON('/api/businesses', function(response) {
-        if (response.status !== 'ok') {
-          alert('Something went wrong with our system. Try refreshing');
-          return;
+      var result = React.render(
+  			React.createElement(ResultMap),
+  			wrapper
+  		);
+
+      $('.map-link').attr('href', '#').click(function() {
+        var businessId = $(this).data('business-id');
+        var exists = result.focusBusiness(businessId);
+        if (!exists) {
+          alert('Could not find the map window');
         }
-
-        React.render(
-    			React.createElement(ResultMap,
-    				{
-    				  mapResults : response.data,
-    				}
-    			),
-    			wrapper
-    		);
-
+        return false;
       });
 
   	} // wrapper
