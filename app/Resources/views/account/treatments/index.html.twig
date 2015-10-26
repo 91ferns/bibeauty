@@ -11,6 +11,7 @@
   </div>
   <div class="panel-body">
     {% if treatments.count > 0 %}
+    <div class="table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -49,6 +50,7 @@
           {% endfor %}
         </tbody>
       </table>
+    </div>
     {% else %}
       <p>No treatments are added.</p>
     {% endif %}

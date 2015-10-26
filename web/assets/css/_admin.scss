@@ -3,6 +3,8 @@ $admin-side-width: 250px;
 
 .admin {
 
+
+
   background: #f5f4f0;
 
   #primary-nav {
@@ -131,9 +133,11 @@ $admin-side-width: 250px;
     }
   }
 
-  .admin-main-inner {
-    padding-left: 15px;
-    padding-right: 15px;
+  @media (min-width: $screen-md-min) {
+    .admin-main-inner {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
   }
 
   @media (max-width: $screen-sm-max) {
@@ -196,4 +200,8 @@ $admin-side-width: 250px;
   #check-all-box:hover{
     color:black;
   }
+}
+
+.client-more {
+  cursor: pointer;
 }

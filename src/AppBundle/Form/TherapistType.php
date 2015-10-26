@@ -21,24 +21,25 @@ class TherapistType extends AbstractType
                'required' => true
             ))
             ->add('title', 'text', array(
-                 'label' => 'Title',
+                 'label' => 'Job Title',
                  'attr' => array(
                     'placeholder' => 'title'
                 ),
-                'required' => true
+                'required' => false
             ))
             ->add('phone', 'text', array(
                  'label' => 'Phone number',
                  'attr' => array(
                     'placeholder' => 'Phone number'
-                 )
+                ),
+                'required' => false
             ))
             ->add('email', 'email', array(
                  'label' => 'Email address',
                  'attr' => array(
                     'placeholder' => 'Email address'
                  ),
-                 'required' => true
+                 'required' => false
             ))
         ;
     }

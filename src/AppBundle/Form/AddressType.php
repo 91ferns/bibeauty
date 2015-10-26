@@ -32,7 +32,6 @@ class AddressType extends AbstractType
                     'placeholder' => 'City'
                 ),
                 'data' => 'Los Angeles',
-                'disabled' => true,
             ))
             ->add('state', 'choice', array(
                  'label' => false,

@@ -15,6 +15,8 @@ jQuery(function($) {
 });
 
 jQuery(function($) {
+  $('[data-toggle="tooltip"]').tooltip();
+
   var theSlider = $('#slider-range');
   var min = theSlider.data('min') || 0;
   var max = theSlider.data('max') || 500;

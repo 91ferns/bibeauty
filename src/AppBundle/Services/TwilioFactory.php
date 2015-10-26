@@ -77,7 +77,7 @@ class TwilioFactory
         $message .= "The BiBeauty Team";
 
         if ($phone = $booking->getPhone()) {
-            $this->sendMessage($business->getPhone(), $message);
+            $this->sendMessage($business->getMobile(), $message);
         }
 
 
@@ -110,8 +110,8 @@ class TwilioFactory
         $message .= "Big Love,\n";
         $message .= "The BiBeauty Team";
 
-        if ($phone = $booking->getPhone()) {
-            $this->sendMessage($business->getPhone(), $message);
+        if ($phone = $booking->getMobile()) {
+            $this->sendMessage($phone, $message);
         }
 
     }
@@ -128,17 +128,17 @@ class TwilioFactory
         $message = sprintf("Hi, %s:\n", $booking->getName());
         $message .= "\n";
         $message .= sprintf("Your booking request with %s has been CANCELLED. Your treatment details are:\n", $business->getName());
-        $message .= sprintf("%s. %s\n", $treatment->getName(), $treatment->getDuration());
+        $message .= sprintf("%s. %s mins.\n", $treatment->getName(), $treatment->getDuration());
         $message .= sprintf("$%.2f (Discounted from $%.2f)\n", $offer->getCurrentPrice(), $treatment->getOriginalPrice());
         $message .= sprintf("%s\n", $dateFormatted);
         $message .= "\n";
         $message .= "Big Love,\n";
         $message .= "The BiBeauty Team";
 
-        if ($phone = $booking->getPhone()) {
-            $this->sendMessage($business->getPhone(), $message);
+        if ($phone = $booking->getMobile()) {
+            $this->sendMessage($phone, $message);
         }
-        
+
     }
 
     // ...

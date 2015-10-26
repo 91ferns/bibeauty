@@ -95,14 +95,7 @@ class TreatmentsController extends Controller
 
         $av = $availabilityRepo->findOneBy(array('id' => $availability));
 
-        $bookingForm = $this->createForm(new BookingType(), new Booking(), array(
-            'action' => $this->generateUrl('do_book_treatment_path', array(
-                'availability' => $av->getId(),
-                'id' => $business->getId(),
-                'slug' => $business->getSlug(),
-            )),
-            'user' => $this->getUser() ? $this->getUser() : null,
-        ));
+        $bookingForm = $this->getBookingForm($av, $business);
 
         return $this->render('treatments/book.html.twig', array(
             'business' => $business,
@@ -125,11 +118,14 @@ class TreatmentsController extends Controller
         $av = $availabilityRepo->findOneById($availability);
 
         if ($av->getActive() === false) {
+
+            $bookingForm = $this->getBookingForm($av, $business);
+
             return $this->render('treatments/book.html.twig', array(
                 'business' => $business,
                 'availability' => $av,
-                'form' => $form->createView(),
-                'error' => 'Someone has taken that booking already'
+                'form' => $bookingForm->createView(),
+                'err' => 'Someone has taken that booking already'
             ));
         }
 
@@ -170,6 +166,17 @@ class TreatmentsController extends Controller
             ));
         }
 
+    }
+
+    protected function getBookingForm($av, $business) {
+        return $this->createForm(new BookingType(), new Booking(), array(
+            'action' => $this->generateUrl('do_book_treatment_path', array(
+                'availability' => $av->getId(),
+                'id' => $business->getId(),
+                'slug' => $business->getSlug(),
+            )),
+            'user' => $this->getUser() ? $this->getUser() : null,
+        ));
     }
 
     /**

@@ -8,72 +8,81 @@
 
   </div>
   <div class="panel-body">
-    <table class="table table-striped">
+    <div class="table-responsive">
+      <table class="table table-striped">
 
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Client</th>
-          <th>Category</th>
-          <th>Treatment</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Price</th>
-          <th>Therapist</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        {% if bookings | length > 0 %}
-          {% for booking in bookings %}
-          {% set availability = booking.getAvailability %}
-          {% set treatment = availability.getTreatment %}
+        <thead>
           <tr>
-            <td>{{ booking.getId }}</th>
-            <td>{{ booking.getName }}</td>
-            <td>{{ treatment.getTreatmentCategory.getCategoryName }}</td>
-            <td>{{ treatment.getTreatmentCategory.getLabel }}</td>
-            <td>{{ availability.getDate | date('d-m-Y') }}</td>
-            <td>{{ availability.getDate | date('g:i A') }}</td>
-            <td>{{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency('USD') }}</td>
-            <td>
-              {% if business.getTherapists | length > 0 %}
-              <select>
-                {% for therapist in business.getTherapists %}
-                <option value="{{therapist.id}}">{{therapist.getName}}</option>
-                {% endfor %}
-              </select>
-              {% else %}
-              <span>None available</span>
-              {% endif %}
-            </td>
-            <td>
-              <form class="bookingstatus" method="post" action="{{ path('admin_business_bookings_status',{'id':app.request.get('id'),'slug':app.request.get('slug')}) }}" >
-                <select name="bookingstatus" id="status{{booking.getId}}">
-                  {% for id,status in statuses %}
-                    <option value="{{id}}" {{ id == booking.getStatus ? 'selected' }}>{{status}}</option>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Category</th>
+            <th>Treatment</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Price</th>
+            <th>Therapist</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% if bookings | length > 0 %}
+            {% for booking in bookings %}
+            {% set availability = booking.getAvailability %}
+            {% set treatment = availability.getTreatment %}
+            <tr>
+              <td>{{ booking.getId }}</th>
+              <td>{{ booking.getName }}
+                <a class="client-more" style="font-size: 60%;"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  data-html="true"
+                  title="Phone: {{ booking.getPhone }}.<br>Email: {{ booking.getEmail }}.">
+                  <i class="fa fa-chevron-down"></i>
+                </a></td>
+              <td>{{ treatment.getTreatmentCategory.getCategoryName }}</td>
+              <td>{{ treatment.getTreatmentCategory.getLabel }}</td>
+              <td>{{ availability.getDate | date('d-m-Y') }}</td>
+              <td>{{ availability.getDate | date('g:i A') }}</td>
+              <td>{{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency('USD') }}</td>
+              <td>
+                {% if business.getTherapists | length > 0 %}
+                <select>
+                  {% for therapist in business.getTherapists %}
+                  <option value="{{therapist.id}}">{{therapist.getName}}</option>
                   {% endfor %}
                 </select>
-                <input type="hidden" name="bookingid" value="{{booking.getId}}" />
-              </form>
-            </td>
-          </tr>
+                {% else %}
+                <span>None available</span>
+                {% endif %}
+              </td>
+              <td>
+                <form class="bookingstatus" method="post" action="{{ path('admin_business_bookings_status',{'id':app.request.get('id'),'slug':app.request.get('slug')}) }}" >
+                  <select name="bookingstatus" id="status{{booking.getId}}">
+                    {% for id,status in statuses %}
+                      <option value="{{id}}" {{ id == booking.getStatus ? 'selected' }}>{{status}}</option>
+                    {% endfor %}
+                  </select>
+                  <input type="hidden" name="bookingid" value="{{booking.getId}}" />
+                </form>
+              </td>
+            </tr>
 
-          {% endfor %}
+            {% endfor %}
 
-        {% else %}
-          <tr>
-            <td colspan="9">
-              There are no bookings yet.
-            </td>
-          </tr>
-        {% endif %}
+          {% else %}
+            <tr>
+              <td colspan="9">
+                There are no bookings yet.
+              </td>
+            </tr>
+          {% endif %}
 
-      </tbody>
+        </tbody>
 
-    </table>
+      </table>
+    </div> <!-- table responsive -->
   </div>
 </div>
 

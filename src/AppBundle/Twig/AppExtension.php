@@ -22,7 +22,8 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('slugify', array($this, 'slugFilter')),
             new \Twig_SimpleFilter('meridian', array($this, 'hourMeridianFilter')),
             new \Twig_SimpleFilter('nicehour', array($this, 'formatHourFilter')),
-            new \Twig_SimpleFilter('duration', array($this, 'formatMinutesFilter'))
+            new \Twig_SimpleFilter('duration', array($this, 'formatMinutesFilter')),
+            new \Twig_SimpleFilter('today', array($this, 'formatTodayFilter'))
         );
     }
 
@@ -116,6 +117,29 @@ class AppExtension extends \Twig_Extension
             return $phoneUtil->format($usNumberProto, \libphonenumber\PhoneNumberFormat::NATIONAL);
         } catch (\libphonenumber\NumberParseException $e) {
             return '';
+        }
+    }
+
+    public function formatTodayFilter( $date ) {
+        $timestamp = "2014.09.02T13:34";
+
+        $today = new \DateTime(); // This object represents current date/time
+        $today->setTime( 0, 0, 0 ); // reset time part, to prevent partial comparison
+
+        $date->setTime( 0, 0, 0 ); // reset time part, to prevent partial comparison
+
+        $diff = $today->diff( $date );
+        $diffDays = (integer) $diff->format( "%R%a" ); // Extract days count in interval
+
+        switch( $diffDays ) {
+            case 0:
+                return "Today";
+            case -1:
+                return "Yesterday";
+            case +1:
+                return "Tomorrow";
+            default:
+                return "Sometime";
         }
     }
 

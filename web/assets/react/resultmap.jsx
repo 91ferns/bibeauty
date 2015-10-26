@@ -25,12 +25,16 @@ var ResultMap = React.createClass({
           alert('Something went wrong with our system. Try refreshing');
           return;
         }
+
+        console.log(response.data);
+
         _this.setState({ mapResults: response.data });
+        _this.setMap();
       });
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-
+          return;
           var lat = position.coords.latitude;
           var long = position.coords.longitude;
           var pos = new google.maps.LatLng(lat, long);
@@ -45,8 +49,7 @@ var ResultMap = React.createClass({
       }
 	    //Update skipped in render (first load) because map not initted
       //run update now that map is setup
-        //this.state.HELPER.updateResults(this.props.mapResults);
-      this.setMap();
+      //this.state.HELPER.updateResults(this.props.mapResults);
     },
     setMap: function() {
       var map = new google.maps.Map(document.getElementById('results_map'), this.state.options);
@@ -64,7 +67,7 @@ var ResultMap = React.createClass({
       for (var x in markers) {
         var marker = markers[x];
 
-        if (marker.id === id) {
+        if (marker.meta.id === id) {
           theMarker = marker;
         }
       }
@@ -73,7 +76,9 @@ var ResultMap = React.createClass({
         return false;
       }
 
-      marker.click();
+      google.maps.event.trigger( theMarker, 'click' );
+
+      return theMarker;
 
     },
 
@@ -101,8 +106,11 @@ var ResultMap = React.createClass({
       });
       loc.meta = { id: marker.id };
 
+      var markers = this.state.markers;
+      markers.push(loc);
+
       this.setState({
-        markers: this.state.markers.push(loc)
+        markers: markers
       });
 
       this.makeInfoWindow(marker, loc);
@@ -122,13 +130,14 @@ var ResultMap = React.createClass({
         this.resetCenter();
     },
     makeInfoWindow: function(data, marker){
-        var iw = new google.maps.InfoWindow({
-            content: '<div class="loc-info">'+data.name+'</div>',
-            maxWidth: 200
-        });
-        marker.addListener('click', function() {
-            iw.open(this.state.map, marker);
-        }.bind(this));
+      var link = '/businesses/' + data.id + '/' + data.slug;
+      var iw = new google.maps.InfoWindow({
+          content: '<div class="loc-info"><a href="' + link +'">'+data.name+'</a></div>',
+          maxWidth: 200
+      });
+      marker.addListener('click', function() {
+          iw.open(this.state.map, marker);
+      }.bind(this));
     },
     getCurrentCenter: function(){
         var bounds = new google.maps.LatLngBounds();
@@ -156,7 +165,6 @@ var ResultMap = React.createClass({
       }
       return (
         <div className="results_map_wrapper">
-          {warning}
           <div className="results-map-wrapper-outer">
             <div id="results_map"></div>
           </div>
