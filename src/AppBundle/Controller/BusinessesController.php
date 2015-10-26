@@ -78,6 +78,10 @@ class BusinessesController extends Controller
      */
     public function searchAction(Request $request)
     {
+
+        $page = $request->query->get('page', 1);
+        $page = intval($page);
+
         $em = $this->getDoctrine()->getManager();
     	$repo = $em->getRepository("AppBundle:Offer");
 
@@ -88,7 +92,11 @@ class BusinessesController extends Controller
         $params = $form->getData();
 
         $data = $repo->strongParams($params);
-    	$records = $repo->findByMulti($data);
+    	$result = $repo->findByMulti($data, $page);
+
+        $total = $result->count;
+        $records = $result->results;
+        $pageSize = $result->pageSize;
 
         $results = array();
         if($records){
@@ -118,11 +126,16 @@ class BusinessesController extends Controller
 
         }
 
+        $totalPages = ceil($total / $pageSize);
+
         return $this->render('businesses/search.html.twig', array(
             'results' => $results,
             'params' => $params,
             'form' => $form->createView(),
             'categories' => $heirarchy,
+            'total' => $total,
+            'pageSize' => $pageSize,
+            'totalPages' => $totalPages
             //'services' => Service::getServicesByCategory($services->findAll())//$services->findAll()
         ));
     }

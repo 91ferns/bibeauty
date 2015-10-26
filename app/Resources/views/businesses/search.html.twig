@@ -170,12 +170,30 @@ width:360px;
                     </h4>
                   </li> <!-- .list-item-group -->
                   {% endfor %}
+                  <li class="list-group-item">
+                    <a href="{{ path('business_path', {
+                      id: business.getId,
+                      slug: business.getSlug
+                     })
+                    }}">
+                      <big>See All</big> <i class="fa fa-chevron-right"></i>
+                    </a>
+                  </li> <!-- .list-item-group -->
 
                 </ul> <!-- /.list-group -->
 
               {% endif %}
 
               </div>
+              {% if totalPages > 1 %}
+              <nav>
+                <ul class="pagination">
+                  {% for i in 1..totalPages %}
+                    <li><a href="{{ path('listings_search_path', app.request.query| merge({'page': i})) }}">{{i}}</a></li>
+                  {% endfor %}
+                </ul>
+              </nav>
+              {% endif %}
             {% endfor %}
           {% else %}
             <p>There are no results</p>

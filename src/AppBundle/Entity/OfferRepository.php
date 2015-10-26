@@ -27,7 +27,7 @@ class OfferRepository extends EntityRepository
             return $results;
     }
 
-    public function findByMulti($search, $pageSize = 20, $currentPage = 1){
+    public function findByMulti($search, $currentPage = 1, $pageSize = 20){
       $qb    = $this->createQueryBuilder('o');
       $query = $qb
                 ->innerJoin('o.availabilitySet', 'oas')
@@ -63,7 +63,12 @@ class OfferRepository extends EntityRepository
         ->setMaxResults($pageSize); // set the limit
 
 
-      return $result->getResult();
+      return (object) array(
+          'results' => $result->getResult(),
+          'count' => $paginator->count(),
+          'pageSize' => $pageSize
+      );
+
     }
 
 
