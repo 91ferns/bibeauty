@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityRepository;
 class TreatmentCategoryRepository extends EntityRepository
 {
     public function getHeirarchy() {
+        /* This needs a ton of optimizaton */
+        // @todo
         $categories = $this->findAll();
 
         $cats = array();

@@ -99,7 +99,7 @@ class BusinessesController extends Controller
         $pageSize = $result->pageSize;
 
         $results = array();
-        if($records){
+        if ($records) {
           // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
           foreach($records as $record) {
               if (is_array($record)) {

@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
+use Doctrine\ORM\Query\Expr\Join;
+
 /**
  * BookingRepository
  *
@@ -30,17 +32,27 @@ class OfferRepository extends EntityRepository
     public function findByMulti($search, $currentPage = 1, $pageSize = 20){
       $qb    = $this->createQueryBuilder('o');
       $query = $qb
-                ->innerJoin('o.availabilitySet', 'oas')
-                ->innerJoin('o.business','b')
-                ->innerJoin('b.address', 'ba')
-                ->innerJoin('o.treatment', 't')
-                ->innerJoin('oas.availabilities', 'a')
-                ->andWhere('o.isOpen = true')
-                ->andWhere('a.active = true')
-                ->addOrderBy('o.currentPrice', 'ASC');
+                ->leftJoin('o.availabilitySet', 'oas')
+                ->leftJoin('o.business','b')
+                ->addSelect('b')
+                ->leftJoin('b.address', 'ba')
+                ->addSelect('ba')
+                ->leftJoin('o.treatment', 't')
+                ->andWhere('o.isOpen = true');
 
-      if($this->isAvailabilitySearch($search)){
-          $this->filterOffersByAvailability($query, $qb, $search);
+      if ($this->isAvailabilitySearch($search)){
+
+          $subqueryb = $this->getEntityManager()->createQueryBuilder();
+          $subquery = $subqueryb
+              ->from('AppBundle\Entity\Availability', 'a')
+              ->select('a.id')
+              ->andWhere('a.active = true')
+              ->andWhere('a.availabilitySet = oas')
+              ->andWhere('a.business = b')
+            ;
+
+          $this->filterOffersByAvailability($subquery, $subqueryb, $search, $query);
+
       }
 
       if($this->isLocationSearch($search)){
@@ -55,6 +67,10 @@ class OfferRepository extends EntityRepository
           list($min, $max) = $price;
           $this->filterOffersByPrice($query, $qb, $min, $max);
       }
+
+      $query->addOrderBy('o.currentPrice', 'ASC');
+
+      // die($query->getDQL());
 
       $paginator = new Paginator($query, $fetchJoin = true);
       $result = $paginator
@@ -104,7 +120,7 @@ class OfferRepository extends EntityRepository
             ->orderBy('distance', 'asc');
     }
 
-    public function filterOffersByAvailability(&$query, $qb, $search){
+    public function filterOffersByAvailability($query, $qb, $search, $mainquery) {
 
         $timeQ = $search['time'];
         $dayQ = $search['day'];
@@ -165,6 +181,8 @@ class OfferRepository extends EntityRepository
 
         $expression = $qb->expr()->orX();
 
+        $namedParams = array();
+
         foreach($dates as $k => $dateSet) {
 
             list($min, $max) = $dateSet;
@@ -174,15 +192,19 @@ class OfferRepository extends EntityRepository
                     ':mindate' . $k,
                     ':maxdate' . $k
             ));
-
-            $query
-                ->setParameter('mindate' . $k, $min)
-                ->setParameter('maxdate' . $k, $max);
+            $namedParams['mindate' . $k] = $min;
+            $namedParams['maxdate' . $k] = $max;
         }
 
         $query->andWhere($expression);
 
-        return $query;
+        $mainquery->andWhere($qb->expr()->exists($query));
+
+        forEach($namedParams as $k => $v) {
+            $mainquery->setParameter($k, $v);
+        }
+
+        return $mainquery;
 
     }
 
