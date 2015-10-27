@@ -53,7 +53,7 @@ if ($rabbitConsumer) {
 		$path = '/';
 	}
 
-	$container->setParameter('rabbit_consumer_path', $path);
+	$container->setParameter('rabbit_consumer_vhost', $path);
 }
 
 $rabbitProducer = parse_url(getenv('RABBITMQ_BIGWIG_TX_URL'));  # Producers
@@ -75,6 +75,6 @@ if ($rabbitProducer) {
 		$path = '/';
 	}
 
-	$container->setParameter('rabbit_producer_path', $path);
+	$container->setParameter('rabbit_producer_vhost', $path);
 
 }

@@ -32,7 +32,7 @@ services:
     yelp.factory:
         class: AppBundle\Services\YelpFactory
         arguments: ["%yelp%", @logger]
-    create_availabilities_consumer:
+    create_availabilities_service:
         class: AppBundle\Consumer\CreateAvailabilities
         arguments: ['@service_container']
     twilio.factory:

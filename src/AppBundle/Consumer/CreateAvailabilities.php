@@ -14,13 +14,6 @@ class CreateAvailabilities implements ConsumerInterface
 {
     private $container;
     private $em;
-    private $logger;
-
-    private $routingKey;
-
-    public function setRoutingKey($key) {
-        $this->routingKey = $key;
-    }
 
     public function __construct($container)
     {
