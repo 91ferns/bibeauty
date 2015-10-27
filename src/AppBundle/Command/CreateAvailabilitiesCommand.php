@@ -25,6 +25,7 @@ class CreateAvailabilitiesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        return $this->getContainer()->get('old_sound_rabbit_mq.create_availabilities_producer')->publish(serialize($msg));
 
         /*$pid = pcntl_fork();
 

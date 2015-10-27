@@ -158,3 +158,46 @@ doctrine_migrations:
     namespace: Application\Migrations
     table_name: migration_versions
     name: BiBeauty Migrations
+
+old_sound_rabbit_mq:
+    connections:
+        consumer:
+            host:     "%rabbit_consumer_host%"
+            port:     "%rabbit_consumer_port%"
+            user:     '%rabbit_consumer_user%'
+            password: '%rabbit_consumer_password%'
+            vhost:    '%rabbit_consumer_path%'
+            lazy:     false
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+        producer:
+            host:     "%rabbit_producer_host%"
+            port:     "%rabbit_producer_port"
+            user:     '%rabbit_producer_user%'
+            password: '%rabbit_producer_password%'
+            vhost:    '%rabbit_producer_path%'
+            lazy:     false
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+    producers:
+        create_availabilities:
+            connection:       producer
+            exchange_options: {name: 'create-availabilities', type: direct}
+    consumers:
+        create_availabilities:
+            connection:       consumer
+            exchange_options: {name: 'create-availabilities', type: direct}
+            queue_options:    {name: 'create-availabilities'}
+            callback:         create_availabilities_service

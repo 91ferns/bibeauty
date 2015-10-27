@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
-             new Gregwar\ImageBundle\GregwarImageBundle(),
+            new Gregwar\ImageBundle\GregwarImageBundle(),
             new AppBundle\AppBundle(),
         );
 

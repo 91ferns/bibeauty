@@ -260,6 +260,10 @@ class OffersController extends Controller
 
     protected function doAvailabilities($availabilitySetId) {
 
+        $this->get('old_sound_rabbit_mq.create_availabilities')->publish($availabilitySetId);
+        return true;
+        
+
         $em = $this->getDoctrine()->getManager();
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
