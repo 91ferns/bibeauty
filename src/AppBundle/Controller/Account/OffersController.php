@@ -273,7 +273,6 @@ class OffersController extends Controller
             $this->get('old_sound_rabbit_mq.create_availabilities_producer')->publish($availabilitySetId);
             return true;
         } catch (\Exception $e) {
-            throw $e;
             return false;
         }
 
