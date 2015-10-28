@@ -160,7 +160,7 @@ old_sound_rabbit_mq:
             heartbeat: 0
         producer:
             host:     "%rabbit_producer_host%"
-            port:     "%rabbit_producer_port"
+            port:     "%rabbit_producer_port%"
             user:     '%rabbit_producer_user%'
             password: '%rabbit_producer_password%'
             vhost:    '%rabbit_producer_vhost%'

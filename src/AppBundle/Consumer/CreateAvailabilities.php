@@ -7,9 +7,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
 class CreateAvailabilities implements ConsumerInterface
 {
     private $container;
@@ -27,9 +24,14 @@ class CreateAvailabilities implements ConsumerInterface
 
     public function execute(AMQPMessage $msg)
     {
+
+        $logger = $this->getContainer()->get('logger');
+
         try {
             // $this->logger->addInfo('Start executing');
             $ID = $msg->body;
+
+            echo 'WORKER: Creating availabilities for ' . $ID;
 
             //Process picture upload.
             //$msg will be an instance of `PhpAmqpLib\Message\AMQPMessage` with the $msg->body being the data sent over RabbitMQ.
@@ -40,18 +42,14 @@ class CreateAvailabilities implements ConsumerInterface
             $em = $this->em;
             $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
-            $logger = $this->getContainer()->get('logger');
-
             $offerAvailability = $em->getRepository("AppBundle:OfferAvailabilitySet");
 
             $availabilitySet = $offerAvailability->findOneById($availabilitySetId);
 
             if (!$availabilitySet) {
-                $logger->err('Could not find that availability set. Parammeters: ' . $availabilitySetId);
-                $output->writeln('ERR: Could not find that availability set');
+                $logger->err('Could not find that availability set. Parameters: ' . $availabilitySetId);
             }
 
-            $output->writeln('Executing creation of availability set');
             $logger->info('Executing creation of availability set ' . $availabilitySetId);
 
             // Start it going
@@ -99,15 +97,15 @@ class CreateAvailabilities implements ConsumerInterface
             // End it
 
             $text = 'Created ' . count($matchingDates) . ' availabilities.';
+            echo 'WORKER: ' . $text;
             $logger->info($text);
-
-            $output->writeln($text);
 
             //$this->container->get('api_mailer')->sendPrivatePathInvites($pathInvite);
             /* end your code */
             // $this->logger->addInfo('End executing');
         } catch(\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            echo 'Failed';
+            $logger->addError($e->getMessage());
         }
     }
 }
