@@ -185,13 +185,22 @@ class OffersController extends Controller
         $process = new Process($processText);
         $process->run(); */
 
-        $num = $this->doAvailabilities($availabilitySet->getId());
+        $success = $this->doAvailabilities($availabilitySet->getId());
 
         // we now need to create the availability set
 
+        if ($success) {
+            $message = 'Queued the creation of your availabilities.';
+        } else {
+            $em->remove($availabilitySet);
+            $em->remove($offer);
+            $em->flush();
+            $message = 'Unable to queue your availabilities. Please report this to us on the contact us page.';
+        }
+
         return $this->redirectToRoot($slug, $id, $treatmentId, array(
             'notice',
-            'Created your ' . $num . ' availabilitie(s) for this offer.'
+            $message
         ));
     }
     protected function buildAllTimes()
@@ -260,8 +269,12 @@ class OffersController extends Controller
 
     protected function doAvailabilities($availabilitySetId) {
 
-        $this->get('old_sound_rabbit_mq.create_availabilities')->publish($availabilitySetId);
-        return true;
+        try {
+            $this->get('old_sound_rabbit_mq.create_availabilities_producer')->publish($availabilitySetId);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
 
 
         $em = $this->getDoctrine()->getManager();
