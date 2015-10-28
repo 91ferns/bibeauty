@@ -36,7 +36,10 @@ class CreateAvailabilities implements ConsumerInterface
             //Process picture upload.
             //$msg will be an instance of `PhpAmqpLib\Message\AMQPMessage` with the $msg->body being the data sent over RabbitMQ.
 
-            $this->getContainer()->get('profiler')->disable();
+            if ($this->getContainer()->has('profiler')) {
+                $this->getContainer()->get('profiler')->disable();
+            }
+
             $availabilitySetId = $ID;
 
             $em = $this->em;
