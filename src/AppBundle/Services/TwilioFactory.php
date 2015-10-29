@@ -34,14 +34,22 @@ class TwilioFactory
     }
 
     public function sendMessage( $phone, $message ) {
-        $message = $this->client->account->messages->sendMessage(
-          $this->config->phone_number, // From a valid Twilio number
-          $phone, // Text this number
-          $message
-        );
+        try {
+            $message = $this->client->account->messages->sendMessage(
+              $this->config->phone_number, // From a valid Twilio number
+              $phone, // Text this number
+              $message
+            );
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function bookingNotification(Booking $booking) {
+
+        $one = false;
+        $two = false;
 
         $treatment = $booking->getAvailability()->getTreatment();
         $offer = $booking->getAvailability()->getAvailabilitySet()->getOffer();
@@ -61,7 +69,7 @@ class TwilioFactory
         $message .= "The BiBeauty Team";
 
         if ($phone = $business->getMobile()) {
-            $this->sendMessage($business->getMobile(), $message);
+            $one = $this->sendMessage($phone, $message);
         }
 
         // Build message
@@ -77,8 +85,10 @@ class TwilioFactory
         $message .= "The BiBeauty Team";
 
         if ($phone = $booking->getPhone()) {
-            $this->sendMessage($business->getMobile(), $message);
+            $two = $this->sendMessage($phone, $message);
         }
+
+        return $one && $two;
 
 
     }
