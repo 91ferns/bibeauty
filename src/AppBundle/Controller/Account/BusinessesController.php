@@ -27,7 +27,13 @@ class BusinessesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("AppBundle:Business");
-        $businesses = $repository->findByOwner($this->getUser());
+        $user = $this->getUser();
+
+        if ($user->getSuperAdmin() === true) {
+            $businesses = $repository->findAll();
+        } else {
+            $businesses = $repository->findByOwner($this->getUser());
+        }
 
         // replace this example code with whatever you need
         return $this->render('account/businesses/index.html.twig', array(
@@ -117,7 +123,7 @@ class BusinessesController extends Controller
                 if ($response->rating) {
                     $business->setAverageRating($response->rating);
                 }
-                
+
             } catch (YelpException $e) {
                 $business->setAverageRating(null);
             } catch (Exception $e) {

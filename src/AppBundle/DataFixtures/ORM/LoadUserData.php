@@ -27,30 +27,35 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
         "password"=>"password",
         "firstname"=>"Stephen",
         "lastname"=>"Parente",
+        "superadmin" => true
       ],
       [
         "email"=>"paul@91ferns.com",
         "password"=>"password",
         "firstname"=>"Paul",
         "lastname"=>"Caciula",
+        "superadmin" => true
       ],
       [
         "email"=>"joey@91ferns.com",
         "password"=>"password",
         "firstname"=>"Joe",
         "lastname"=>"Ciervo",
+        "superadmin" => true
       ],
       [
         "email"=>"richard@bibeauty.com",
         "password"=>"password",
         "firstname"=>"Richard",
         "lastname"=>"McBeathe",
+        "superadmin" => true
       ],
       [
         "email"=>"stuart@bibeauty.com",
         "password"=>"password",
         "firstname"=>"Stuart",
         "lastname"=>"Sharpe",
+        "superadmin" => true
       ],
     ];
     /**
