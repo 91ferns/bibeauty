@@ -24,25 +24,29 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a href="#" class="hide-menu btn btn-default hidden-sm hidden-xs">
+        <!--<a href="#" class="hide-menu btn btn-default hidden-sm hidden-xs">
           <span><i class="glyphicon glyphicon-menu-hamburger"></i> Toggle Menu</span>
         </a>
         <a class="navbar-brand hidden-md hidden-lg">
           BiBeauty Admin
-        </a>
+        </a>-->
         <button type="button" class="navbar-toggle collapsed hidden-md hidden-lg" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <img class="navbar-brand" src="{{asset('assets/images/logo.png') }}" />
       </div>
+
+
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{{path('admin_path')}}" class="btn btn-default">
-              <span class="account-label">My Account</span>
-              <span class="account-icon"><img src="{{asset('assets/images/account-generic.png') }}"></span>
-              <span class="account-email">{{ app.user.getEmail() }}</span>
+              <!--<span class="account-label">My Account</span>
+              <span class="account-icon"><img src="{{asset('assets/images/account-generic.png') }}"></span>-->
+              Welcome
+              <span class="account-email">{{ app.user.getEmail() }}!</span>
             </a></li>
             <li><a href="{{path('logout_path')}}" class="btn btn-default">Logout</a></li>
         </ul>
@@ -56,11 +60,11 @@
 
 <main>
 
-  <nav id="secondary">
+  <!--<nav id="secondary">
     <ul class="nav nav-pills nav-stacked">
-      {% include 'shared/nav.html.twig' %}
+      {#% include 'shared/nav.html.twig' %#}
     </ul>
-  </nav>
+  </nav>-->
 
   <section id="admin-main">
 

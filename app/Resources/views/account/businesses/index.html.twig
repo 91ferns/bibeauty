@@ -1,15 +1,19 @@
 {% extends 'admin.html.twig' %}
 
 {% block body %}
+<div class="row">
+  <div class="centered"><button class="btn btn-large btn-primary businesses-btn">My Businesses </button></div>
+  <a class="pull-right" href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
+</div>
+<!--<div class="panel panel-default">-->
 
-<div class="panel panel-default">
-  <div class="panel-heading">
+  <!--<div class="panel-heading">
     Businesses
-    <a href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
-  </div>
-  <div class="panel-body">
+
+  </div>-->
+  <!--<div class="panel-body">-->
     {% if businesses | length > 0 %}
-    <div class="table-responsive">
+    <!--<div class="table-responsive">
       <table class="table table-striped">
 
         <thead>
@@ -22,36 +26,67 @@
           </tr>
         </thead>
 
-        <tbody>
-          {% for business in businesses %}
-          <tr>
-            <td>{{ business.getId }}</td>
+        <tbody>-->
+        <div class="row">
+          {% for i,business in businesses %}
+          <!--<tr>-->
+          <div class="col-md-3 col-xs-12 col-sm-12">
+            <div class="thumbnail panel">
+                <img src="http://placehold.it/320x125/EEE" class="img-circle">
+                <div class="caption">
+                     <!--<h4 class="">{{ business.getName }}</h4>-->
+                     <div class="row">
+                       <div class="col-xs-6">
+                       <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                         My Bookings
+                       </a></div>
+                     <div class="col-xs-6"> <a href="{{ path('admin_business_treatments_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                        All Treatments
+                      </a></div>
+                      <div class="col-xs-6"> <a href="{{ path('admin_business_offers_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                         My Offers
+                       </a></div>
+                       <div class="col-xs-6"> <a href="{{ path('admin_business_therapists_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                          Therapists
+                        </a></div>
+                     <div class="col-xs-12">
+                         <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                         Edit
+                       </a>
+                     </div>
+                   </div>
+                </div>
+            </div>
+            <!--<td>{{ business.getId }}</td>
             <td>{{ business.getName }}</td>
             <td>{{ business.getAddress.getFullAddressString}}
-            <td>
-              <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+            <td>-->
+              <!--<a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
                 View Bookings
               </a>
-            </td>
-            <td>
-              <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                Edit
-              </a>
-            </td>
+            </td>-->
+            <!--<td>-->
 
-          </tr>
+            <!--</td>-->
+            {% if i % 3 == 0 %}
+            </div>
+            <div class="row">
+            {% endif %}
+          </div>
+          <!--</tr>-->
           {% endfor %}
+          </div>
 
 
 
-        </tbody>
-      </table>
-    </div>
+        <!--</tbody>
+      </table>-->
+    <!--</div>-->
     {% else %}
     <p>You have no businesses</p>
     {% endif %}
-  </div>
-</div>
+  <!--</div>
+</div>-->
 
 
 {% endblock %}
