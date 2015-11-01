@@ -1,0 +1,13 @@
+/** BOOK **/
+$drk:#1d93b1;
+$lgt:#52c8e6;
+.business-services .btn-group {
+  height:40px;
+  margin-bottom:10px;
+  > a{
+    &:first-child{background-color:$drk;}
+    background-color:$lgt;
+    color:#fff;
+    border:none;
+  }
+}

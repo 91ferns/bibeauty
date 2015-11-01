@@ -1,0 +1,26 @@
+var BusinessTreatmentsList = React.createClass({displayName: "BusinessTreatmentsList",
+    render: function() {
+      var rows = [];
+      var btn  = React.createElement("div", {className: "notify-btn {cls}"}, React.createElement("a", {href: "#"}, "Show  More"))
+      if(this.props.treatments){
+        this.props.treatments.forEach(function(treatment,i){
+          var cls = '';
+          if(i<=3){
+            cls = 'hidden';
+            btn="";
+          }
+          rows.push(React.createElement(BusinessTreatment, {cls: cls, treatment: treatment}));
+        });
+      }else{
+        return React.createElement("div", {className: "alert alert-danger"}, "This Provider has no treatments yet")
+      }
+      return (
+        React.createElement("span", null, 
+          React.createElement("ul", {className: "col-md-12 list-group"}, 
+            rows
+          ), 
+          btn
+        )
+      );
+    }
+});

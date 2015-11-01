@@ -1,0 +1,17 @@
+var BusinessesList = React.createClass({displayName: "BusinessesList",
+    render: function() {
+        var rows = [];
+        if(this.props.businesses){
+          this.props.businesses.forEach(function(business) {
+              rows.push(React.createElement(Business, {info: business}));
+          }.bind(this));
+        }else{
+          rows.push(React.createElement("div", {className: "alert alert-danger"}, "No Results."));
+        }
+        return (
+            React.createElement("div", {id: "search_results", className: "col-md-8"}, 
+              rows
+            )
+        );
+    }
+});

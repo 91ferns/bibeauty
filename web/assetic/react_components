@@ -1,0 +1,432 @@
+var AvailabilityForm = React.createClass({displayName: "AvailabilityForm",
+  componentDidMount: function() {
+    var treatment = this.props.treatment;
+    var business = this.props.business;
+
+    jQuery.getJSON('/api/businesses/' + this.props.business + '/treatment/' + this.props.treatment + '/availability');
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", {className: "result"}, 
+        "Awesomeu"
+      )
+    );
+  },
+});
+
+var Business = React.createClass({displayName: "Business",
+    render: function() {
+        return (
+          React.createElement("div", {className: "result"}, 
+            React.createElement("div", {className: "row location"}, 
+              React.createElement("div", {className: "col-md-9"}, 
+                React.createElement("h3", {className: "business-name"}, this.props.info.name), 
+                React.createElement("div", {className: "reviews"}, 
+                  React.createElement("div", {className: "reviews-number col-md-3"}, 
+                    "5 Reviews"
+                  ), 
+                  React.createElement("a", {className: "col-md-9", href: "#"}, 
+                    React.createElement("i", {className: "glyphicon glyphicon-map-marker"}), "Show on Map"
+                  ), 
+                  React.createElement("div", {className: "location"}, 
+                    this.props.info.address.city, ",", this.props.info.address.state
+                  ), 
+                  React.createElement("div", {className: "description>"}, 
+                    this.props.info.description
+                  )
+                )
+              ), 
+              React.createElement("div", {className: "col-md-3"}, 
+                React.createElement("img", {className: "business-logo", src: this.props.info.logo})
+              )
+            ), 
+            React.createElement("div", {className: "row treatments"}, 
+                  React.createElement(BusinessTreatmentsList, {treatments: this.props.info.treatments})
+            )
+          )
+        );
+    }
+});
+
+var BusinessesList = React.createClass({displayName: "BusinessesList",
+    render: function() {
+        var rows = [];
+        if(this.props.businesses){
+          this.props.businesses.forEach(function(business) {
+              rows.push(React.createElement(Business, {info: business}));
+          }.bind(this));
+        }else{
+          rows.push(React.createElement("div", {className: "alert alert-danger"}, "No Results."));
+        }
+        return (
+            React.createElement("div", {id: "search_results", className: "col-md-8"}, 
+              rows
+            )
+        );
+    }
+});
+
+var BusinessTreatment = React.createClass({displayName: "BusinessTreatment",
+    render: function() {
+      return (
+        React.createElement("li", {className: "list-group-item row {this.props.cls}"}, 
+          React.createElement("a", {href: "treatment/detail/{this.props.treatment.id}"}, 
+            React.createElement("div", {className: "col-md-8 treatment-name"}, 
+                  this.props.treatment.name
+            ), 
+            React.createElement("div", {className: "col-md-4"}, 
+              React.createElement("div", {className: "col-md-6 savings"}, 
+                    "Save ", React.createElement("span", {className: "blue"}, this.props.treatment.percent_discount, "%")
+              ), 
+              React.createElement("div", {className: "notify-btn"}, 
+                  React.createElement("a", {href: "#"}, "From $", this.props.treatment.start_dollars)
+              )
+            )
+            )
+        )
+      );
+    }
+});
+var BusinessTreatmentsList = React.createClass({displayName: "BusinessTreatmentsList",
+    render: function() {
+      var rows = [];
+      var btn  = React.createElement("div", {className: "notify-btn {cls}"}, React.createElement("a", {href: "#"}, "Show  More"))
+      if(this.props.treatments){
+        this.props.treatments.forEach(function(treatment,i){
+          var cls = '';
+          if(i<=3){
+            cls = 'hidden';
+            btn="";
+          }
+          rows.push(React.createElement(BusinessTreatment, {cls: cls, treatment: treatment}));
+        });
+      }else{
+        return React.createElement("div", {className: "alert alert-danger"}, "This Provider has no treatments yet")
+      }
+      return (
+        React.createElement("span", null, 
+          React.createElement("ul", {className: "col-md-12 list-group"}, 
+            rows
+          ), 
+          btn
+        )
+      );
+    }
+});
+var ResultMap = React.createClass({displayName: "ResultMap",
+    getInitialState: function(){
+
+      return {
+        map: null,
+        firstLoad: true,
+        currentLocation: false,
+        markers: [],
+        options: {
+          zoom: 13,
+          scrollwheel: false,
+          navigationControl: false,
+          center: new google.maps.LatLng(34.0500,-118.2500),
+          MapTypeId: google.maps.MapTypeId.ROADMAP,
+        }
+      };
+
+    },//Map(document.getElementById(mapId), opts);
+
+    componentDidMount: function() {
+      var _this = this;
+
+      $.getJSON('/api/businesses', function(response) {
+        if (response.status !== 'ok') {
+          alert('Something went wrong with our system. Try refreshing');
+          return;
+        }
+
+        console.log(response.data);
+
+        _this.setState({ mapResults: response.data });
+        _this.setMap();
+      });
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          return;
+          var lat = position.coords.latitude;
+          var long = position.coords.longitude;
+          var pos = new google.maps.LatLng(lat, long);
+
+          this.setState({
+            currentLocation: pos,
+            options: $.extend(this.state.options, {
+              center: pos
+            })
+          }); // Set state to new center
+        }.bind(this));
+      }
+	    //Update skipped in render (first load) because map not initted
+      //run update now that map is setup
+      //this.state.HELPER.updateResults(this.props.mapResults);
+    },
+    setMap: function() {
+      var map = new google.maps.Map(document.getElementById('results_map'), this.state.options);
+      this.setState({
+        map: map
+      }, function() {
+        this.updateResults(this.state.mapResults);
+      }.bind(this));
+
+    },
+
+    focusBusiness: function(id) {
+      var markers = this.state.markers;
+      var theMarker = null;
+      for (var x in markers) {
+        var marker = markers[x];
+
+        if (marker.meta.id === id) {
+          theMarker = marker;
+        }
+      }
+
+      if (!theMarker) {
+        return false;
+      }
+
+      google.maps.event.trigger( theMarker, 'click' );
+
+      return theMarker;
+
+    },
+
+    checkParseMarkers: function(markers) {
+      try{
+        markers = JSON.parse(markers);
+      } catch(e) {}
+      return markers;
+    },
+    addMarkers: function(markers) {
+      markers = this.checkParseMarkers(markers);
+      for (var x in markers) {
+        var marker = markers[x];
+        this.addMarker(marker);
+      }
+    },
+    addMarker: function(marker) {
+      var pos = new google.maps.LatLng(marker.coordinates.latitude, marker.coordinates.longitude);
+      var loc = new google.maps.Marker({
+        position: pos,
+        title: marker.name,
+        map: this.state.map,
+        animation: google.maps.Animation.DROP,
+        icon: '/assets/images/map/pin.png',
+      });
+      loc.meta = { id: marker.id };
+
+      var markers = this.state.markers;
+      markers.push(loc);
+
+      this.setState({
+        markers: markers
+      });
+
+      this.makeInfoWindow(marker, loc);
+    },
+    removeMarkers: function(){
+      for (var x in this.state.markers) {
+        var marker = this.state.markers[x];
+        this.addMarker(marker);
+      }
+      this.setState({
+        markers: [],
+      });
+    },
+    updateResults: function(newMarkers){
+        this.removeMarkers();
+        this.addMarkers(newMarkers);
+        this.resetCenter();
+    },
+    makeInfoWindow: function(data, marker){
+      var link = '/businesses/' + data.id + '/' + data.slug;
+      var iw = new google.maps.InfoWindow({
+          content: '<div class="loc-info"><a href="' + link +'">'+data.name+'</a></div>',
+          maxWidth: 200
+      });
+      marker.addListener('click', function() {
+          iw.open(this.state.map, marker);
+      }.bind(this));
+    },
+    getCurrentCenter: function(){
+        var bounds = new google.maps.LatLngBounds();
+        for (var x in this.state.markers) {
+          var marker = this.state.markers[x];
+          bounds.extend(marker.position);
+        }
+        return bounds.getCenter();
+    },
+    resetCenter: function(newpos){
+      newpos = (!!newpos) ? newpos : false;
+      if (newpos) {
+        this.state.options.center = newpos;
+        this.state.map.setOptions({center: newpos});
+      }
+    },
+    render: function() {
+      var warning;
+      if (this.state.currentLocation === false) {
+        warning = React.createElement("div", {className: "alert alert-warning top-warning"}, 
+          React.createElement("div", {className: "container"}, 
+            React.createElement("center", null, React.createElement("strong", null, "We could not get access to your location."))
+          )
+        )
+      }
+      return (
+        React.createElement("div", {className: "results_map_wrapper"}, 
+          React.createElement("div", {className: "results-map-wrapper-outer"}, 
+            React.createElement("div", {id: "results_map"})
+          )
+        )
+      );
+    }
+});
+
+/**<script type="text/jsx">
+    var opts1 = [{val:"opt1",name:"OPT1"},{val:"opt2",name:"OPT3"},{val:"opt3",name:"OPT3"}];
+var opts2 = [{val:"tt1",name:"TT1"},{val:"tt2",name:"TT2"},{val:"tt3",name:"TT3"}];
+var srch  = [{"name":"NCC","lat":"41.103010","lng":"-73.451814"},{"name":"Magrath Park","lat":"41.103617","lng":"-73.450247"},{"name":"St.Mathew's Church","lat":"41.110606","lng":"-73.448215"}];
+React.render(<SearchableBusinessList opts1={opts1} opts2={opts2} srch={srch} />, document.body);
+</script>**/
+var SearchableBusinessList = React.createClass({displayName: "SearchableBusinessList",
+    getInitialState: function() {
+        return {
+            day          : '',
+            time         : '',
+            location     : '',
+            treatment    : '',
+            treatmentType: '',
+            businesses   :[],
+            mapResults  :[]
+        };
+    },
+    componentWillMount: function() {
+      this.setState({
+         mapResults: this.props.srch
+       });
+   },
+   handleUserInput: function(dayInput, timeInput, locationInput, treatmentInput,treatmentTypeInput) {
+       var data ={
+         day          : dayInput,
+         time         : timeInput,
+         location     : locationInput,
+         treatment    : treatmentInput,
+         treatmentType: treatmentTypeInput
+       };
+       var results = this.runSearch(data);
+
+       data.businesses = results.text;
+       data.map_results = results.map;
+       this.setState(data);
+   },
+   runSearch:function(data){
+     /** TODO: PROCESS INPUTS AND RUN SEARCH **/
+     return {
+            text:[
+                {name:'Salon1', address:{city:'norwalk',state:'CT'},treatments:[{name:'waxing',percent_discount:'8',start_dollars:'50'}],description:'Some Fancy Salon',logo:'https://facebook.github.io/react/img/logo.svg'},
+                {name:'Salon2', address:{city:'STAMFORD',state:'ct'},treatments:[{name:'waxing',percent_discount:'5',start_dollars:'20'}],description:'Some OTHER Fancy Salon',logo:'https://facebook.github.io/react/img/logo.svg'}
+              ],
+            map:'[{"name":"Darinor Shopping Plaza","lat":"41.098768","lng":" -73.444656"},{"name":"Post Road Diner","lat":"41.102385","lng":"-73.437096"},{"name":"Silver Star Diner","lat":"41.104152","lng":"-73.432964"}]'
+     };
+   },
+    render: function() {
+        return (
+          React.createElement("div", {className: "componentBody"}, 
+            React.createElement("section", {id: "top-map", className: "nav-pad"}, 
+              React.createElement(ResultMap, {map: this.props.map, mapResults: this.state.mapResults})
+            ), 
+            React.createElement("section", {id: "below-map", className: "nav-pad"}, 
+              React.createElement("div", {className: "container"}, 
+                React.createElement("div", {className: "col-lg-4"}, 
+                  React.createElement(SearchForm, {
+                      day: this.state.day, 
+                      time: this.state.time, 
+                      location: this.state.location, 
+                      treatment: this.state.treatment, 
+                      treatmentType: this.state.treatmentType, 
+                      tx_opts: this.props.opts1, 
+                      txtype_opts: this.props.opts2, 
+                      onUserInput: this.handleUserInput}
+                  )
+                ), 
+                React.createElement(BusinessesList, {businesses: this.state.businesses})
+              )
+            )
+          )
+        );
+    }
+});
+
+var SearchForm = React.createClass({displayName: "SearchForm",
+    handleChange: function() {
+          this.props.onUserInput(
+              this.refs.dayInput.getDOMNode().value,
+              this.refs.timeInput.getDOMNode().value,
+              this.refs.locationInput.getDOMNode().value,
+              this.refs.treatmentInput.getDOMNode().value,
+              this.refs.treatmentTypeInput.getDOMNode().value
+          );
+    },
+    render: function() {
+      var opts1 = this.props.tx_opts.map(function (opt) {
+         return (React.createElement("option", {value: opt.val}, opt.name, " "));
+       });
+       var opts2 = this.props.txtype_opts.map(function (opt) {
+          return (React.createElement("option", {value: opt.val}, opt.name, " "));
+        });
+        return (
+          React.createElement("form", null, 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Availability"), 
+              React.createElement("div", {className: "input-group"}, 
+                React.createElement("input", {ref: "dayInput", onChange: this.handleChange, type: "text", id: "day", name: "day", className: "form-control", placeholder: "Day", value: this.props.day}), 
+                React.createElement("span", {className: "input-group-addon", id: "basic-addon1"}, React.createElement("i", {className: "fa fa-chevron-circle-down fa-lg"}))
+              ), 
+              React.createElement("div", {className: "input-group"}, 
+                React.createElement("input", {ref: "timeInput", onChange: this.handleChange, type: "text", id: "time", name: "time", className: "form-control", placeholder: "Time", value: this.props.time}), 
+                React.createElement("span", {className: "input-group-addon", id: "basic-addon1"}, React.createElement("i", {className: "fa fa-chevron-circle-down fa-lg"}))
+              )
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Location"), 
+              React.createElement("input", {ref: "locationInput", onChange: this.handleChange, type: "text", id: "location", name: "location", className: "form-control", placeholder: "Enter Area or postcode", value: this.props.location})
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Treatment Type / Category"), 
+              React.createElement("div", {className: "dropdown-group"}, 
+                React.createElement("select", {ref: "treatmentTypeInput", onChange: this.handleChange, id: "treatmentType", name: "treatmentType", className: "form-control", value: this.props.treatmentType}, 
+                  React.createElement("option", null, "Treatment Type"), 
+                  opts2
+                )
+              ), 
+              React.createElement("div", {className: "dropdown-group"}, 
+                React.createElement("select", {ref: "treatmentInput", onChange: this.handleChange, id: "treatment", name: "treatment", className: "form-control", value: this.props.treatment}, 
+                  React.createElement("option", null, "Treatment"), 
+                  opts1
+                )
+              )
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Price Range"), 
+              React.createElement("div", {className: "range"}, 
+    	           React.createElement("input", {type: "text", id: "amount_left", readOnly: true, styles: ""}), 
+                 React.createElement("input", {type: "text", id: "amount_right", readOnly: true, styles: ""}), 
+                 React.createElement("div", {id: "slider-range"})
+              )
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("p", {className: "notify-btn"}, React.createElement("a", {href: "#"}, "SEARCH"))
+        )
+        );
+    }
+});

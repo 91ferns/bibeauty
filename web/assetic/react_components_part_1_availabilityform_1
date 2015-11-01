@@ -1,0 +1,16 @@
+var AvailabilityForm = React.createClass({displayName: "AvailabilityForm",
+  componentDidMount: function() {
+    var treatment = this.props.treatment;
+    var business = this.props.business;
+
+    jQuery.getJSON('/api/businesses/' + this.props.business + '/treatment/' + this.props.treatment + '/availability');
+  },
+
+  render: function() {
+    return (
+      React.createElement("div", {className: "result"}, 
+        "Awesomeu"
+      )
+    );
+  },
+});

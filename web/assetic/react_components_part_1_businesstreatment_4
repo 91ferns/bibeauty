@@ -1,0 +1,21 @@
+var BusinessTreatment = React.createClass({displayName: "BusinessTreatment",
+    render: function() {
+      return (
+        React.createElement("li", {className: "list-group-item row {this.props.cls}"}, 
+          React.createElement("a", {href: "treatment/detail/{this.props.treatment.id}"}, 
+            React.createElement("div", {className: "col-md-8 treatment-name"}, 
+                  this.props.treatment.name
+            ), 
+            React.createElement("div", {className: "col-md-4"}, 
+              React.createElement("div", {className: "col-md-6 savings"}, 
+                    "Save ", React.createElement("span", {className: "blue"}, this.props.treatment.percent_discount, "%")
+              ), 
+              React.createElement("div", {className: "notify-btn"}, 
+                  React.createElement("a", {href: "#"}, "From $", this.props.treatment.start_dollars)
+              )
+            )
+            )
+        )
+      );
+    }
+});

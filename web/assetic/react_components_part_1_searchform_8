@@ -1,0 +1,66 @@
+var SearchForm = React.createClass({displayName: "SearchForm",
+    handleChange: function() {
+          this.props.onUserInput(
+              this.refs.dayInput.getDOMNode().value,
+              this.refs.timeInput.getDOMNode().value,
+              this.refs.locationInput.getDOMNode().value,
+              this.refs.treatmentInput.getDOMNode().value,
+              this.refs.treatmentTypeInput.getDOMNode().value
+          );
+    },
+    render: function() {
+      var opts1 = this.props.tx_opts.map(function (opt) {
+         return (React.createElement("option", {value: opt.val}, opt.name, " "));
+       });
+       var opts2 = this.props.txtype_opts.map(function (opt) {
+          return (React.createElement("option", {value: opt.val}, opt.name, " "));
+        });
+        return (
+          React.createElement("form", null, 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Availability"), 
+              React.createElement("div", {className: "input-group"}, 
+                React.createElement("input", {ref: "dayInput", onChange: this.handleChange, type: "text", id: "day", name: "day", className: "form-control", placeholder: "Day", value: this.props.day}), 
+                React.createElement("span", {className: "input-group-addon", id: "basic-addon1"}, React.createElement("i", {className: "fa fa-chevron-circle-down fa-lg"}))
+              ), 
+              React.createElement("div", {className: "input-group"}, 
+                React.createElement("input", {ref: "timeInput", onChange: this.handleChange, type: "text", id: "time", name: "time", className: "form-control", placeholder: "Time", value: this.props.time}), 
+                React.createElement("span", {className: "input-group-addon", id: "basic-addon1"}, React.createElement("i", {className: "fa fa-chevron-circle-down fa-lg"}))
+              )
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Location"), 
+              React.createElement("input", {ref: "locationInput", onChange: this.handleChange, type: "text", id: "location", name: "location", className: "form-control", placeholder: "Enter Area or postcode", value: this.props.location})
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Treatment Type / Category"), 
+              React.createElement("div", {className: "dropdown-group"}, 
+                React.createElement("select", {ref: "treatmentTypeInput", onChange: this.handleChange, id: "treatmentType", name: "treatmentType", className: "form-control", value: this.props.treatmentType}, 
+                  React.createElement("option", null, "Treatment Type"), 
+                  opts2
+                )
+              ), 
+              React.createElement("div", {className: "dropdown-group"}, 
+                React.createElement("select", {ref: "treatmentInput", onChange: this.handleChange, id: "treatment", name: "treatment", className: "form-control", value: this.props.treatment}, 
+                  React.createElement("option", null, "Treatment"), 
+                  opts1
+                )
+              )
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("div", {className: "form-group"}, 
+              React.createElement("h4", null, "Price Range"), 
+              React.createElement("div", {className: "range"}, 
+    	           React.createElement("input", {type: "text", id: "amount_left", readOnly: true, styles: ""}), 
+                 React.createElement("input", {type: "text", id: "amount_right", readOnly: true, styles: ""}), 
+                 React.createElement("div", {id: "slider-range"})
+              )
+            ), 
+            React.createElement("hr", null), 
+            React.createElement("p", {className: "notify-btn"}, React.createElement("a", {href: "#"}, "SEARCH"))
+        )
+        );
+    }
+});

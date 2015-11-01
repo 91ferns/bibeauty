@@ -1,0 +1,33 @@
+var Business = React.createClass({displayName: "Business",
+    render: function() {
+        return (
+          React.createElement("div", {className: "result"}, 
+            React.createElement("div", {className: "row location"}, 
+              React.createElement("div", {className: "col-md-9"}, 
+                React.createElement("h3", {className: "business-name"}, this.props.info.name), 
+                React.createElement("div", {className: "reviews"}, 
+                  React.createElement("div", {className: "reviews-number col-md-3"}, 
+                    "5 Reviews"
+                  ), 
+                  React.createElement("a", {className: "col-md-9", href: "#"}, 
+                    React.createElement("i", {className: "glyphicon glyphicon-map-marker"}), "Show on Map"
+                  ), 
+                  React.createElement("div", {className: "location"}, 
+                    this.props.info.address.city, ",", this.props.info.address.state
+                  ), 
+                  React.createElement("div", {className: "description>"}, 
+                    this.props.info.description
+                  )
+                )
+              ), 
+              React.createElement("div", {className: "col-md-3"}, 
+                React.createElement("img", {className: "business-logo", src: this.props.info.logo})
+              )
+            ), 
+            React.createElement("div", {className: "row treatments"}, 
+                  React.createElement(BusinessTreatmentsList, {treatments: this.props.info.treatments})
+            )
+          )
+        );
+    }
+});

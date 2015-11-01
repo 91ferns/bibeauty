@@ -1,0 +1,74 @@
+/**<script type="text/jsx">
+    var opts1 = [{val:"opt1",name:"OPT1"},{val:"opt2",name:"OPT3"},{val:"opt3",name:"OPT3"}];
+var opts2 = [{val:"tt1",name:"TT1"},{val:"tt2",name:"TT2"},{val:"tt3",name:"TT3"}];
+var srch  = [{"name":"NCC","lat":"41.103010","lng":"-73.451814"},{"name":"Magrath Park","lat":"41.103617","lng":"-73.450247"},{"name":"St.Mathew's Church","lat":"41.110606","lng":"-73.448215"}];
+React.render(<SearchableBusinessList opts1={opts1} opts2={opts2} srch={srch} />, document.body);
+</script>**/
+var SearchableBusinessList = React.createClass({displayName: "SearchableBusinessList",
+    getInitialState: function() {
+        return {
+            day          : '',
+            time         : '',
+            location     : '',
+            treatment    : '',
+            treatmentType: '',
+            businesses   :[],
+            mapResults  :[]
+        };
+    },
+    componentWillMount: function() {
+      this.setState({
+         mapResults: this.props.srch
+       });
+   },
+   handleUserInput: function(dayInput, timeInput, locationInput, treatmentInput,treatmentTypeInput) {
+       var data ={
+         day          : dayInput,
+         time         : timeInput,
+         location     : locationInput,
+         treatment    : treatmentInput,
+         treatmentType: treatmentTypeInput
+       };
+       var results = this.runSearch(data);
+
+       data.businesses = results.text;
+       data.map_results = results.map;
+       this.setState(data);
+   },
+   runSearch:function(data){
+     /** TODO: PROCESS INPUTS AND RUN SEARCH **/
+     return {
+            text:[
+                {name:'Salon1', address:{city:'norwalk',state:'CT'},treatments:[{name:'waxing',percent_discount:'8',start_dollars:'50'}],description:'Some Fancy Salon',logo:'https://facebook.github.io/react/img/logo.svg'},
+                {name:'Salon2', address:{city:'STAMFORD',state:'ct'},treatments:[{name:'waxing',percent_discount:'5',start_dollars:'20'}],description:'Some OTHER Fancy Salon',logo:'https://facebook.github.io/react/img/logo.svg'}
+              ],
+            map:'[{"name":"Darinor Shopping Plaza","lat":"41.098768","lng":" -73.444656"},{"name":"Post Road Diner","lat":"41.102385","lng":"-73.437096"},{"name":"Silver Star Diner","lat":"41.104152","lng":"-73.432964"}]'
+     };
+   },
+    render: function() {
+        return (
+          React.createElement("div", {className: "componentBody"}, 
+            React.createElement("section", {id: "top-map", className: "nav-pad"}, 
+              React.createElement(ResultMap, {map: this.props.map, mapResults: this.state.mapResults})
+            ), 
+            React.createElement("section", {id: "below-map", className: "nav-pad"}, 
+              React.createElement("div", {className: "container"}, 
+                React.createElement("div", {className: "col-lg-4"}, 
+                  React.createElement(SearchForm, {
+                      day: this.state.day, 
+                      time: this.state.time, 
+                      location: this.state.location, 
+                      treatment: this.state.treatment, 
+                      treatmentType: this.state.treatmentType, 
+                      tx_opts: this.props.opts1, 
+                      txtype_opts: this.props.opts2, 
+                      onUserInput: this.handleUserInput}
+                  )
+                ), 
+                React.createElement(BusinessesList, {businesses: this.state.businesses})
+              )
+            )
+          )
+        );
+    }
+});
