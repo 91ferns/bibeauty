@@ -41,4 +41,22 @@ class BusinessRepository extends EntityRepository
                   ->getResult();
     return $result;
   }
+
+  public function findBusinessTreatmentsCategory($business)
+  {
+    $treatments = [];
+    foreach($business->getTreatments() as $tx){
+      $cat = $tx->getTreatmentCategory()->getCategoryName();
+      $this->checkSetCatKey($tx, $cat, $treatments);
+      $treatments[$cat][] = $tx;
+    }
+    return $treatments;
+  }
+
+  private function checkSetCatKey($tx,$cat,&$treatments)
+  {
+    if(!array_key_exists($cat, $treatments)){
+      $treatments[$cat] = [];
+    }
+  }
 }

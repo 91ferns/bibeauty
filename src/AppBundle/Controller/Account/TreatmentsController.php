@@ -23,11 +23,12 @@ class TreatmentsController extends Controller
      */
     public function indexAction($id= null,$slug = null, Request $request)
     {
-        $business = $this->businessBySlugAndId($slug, $id);
-
+        $business   = $this->businessBySlugAndId($slug, $id);
+        $em         = $this->getDoctrine()->getManager();
+        $treatments = $em->getRepository("AppBundle:Business")->findBusinessTreatmentsCategory($business);
         return $this->render('account/treatments/index.html.twig', array(
             'business' => $business,
-            'treatments' => $business->getTreatments(),
+            'treatments' => $treatments,
         ));
 
     }

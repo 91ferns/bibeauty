@@ -226,13 +226,16 @@ a.edit-btn{
       background-color: $brand-primary;
       color: white;
       font-size: 1.5em;
-
+      > .centered{
+        .admin-btn{     position: absolute;  right: 0;  top: 30%;}
+      > img {}//margin-left: 15%;}
+      }
       a.admin-btn {
         font-size: 0.7em;
-        background-color: $brand-turquoise;
-        color: white;
-        border: 1px solid $brand-turquoise;
         display: inline-block;
+        color:#52c8e6;
+        font-weight:normal;
+
         @media (min-width: $screen-md-min) {
           float: right;
         }
@@ -275,7 +278,7 @@ a.edit-btn{
     padding: 10px;
     outline:none;
     > .caret{position: relative;left: 26%;}
-  }
+    }
   }
   .businesses-list{
      //position:absolute;
@@ -318,6 +321,39 @@ a.edit-btn{
   }
 }
 
+.panel.transparent{
+  background-color:transparent;
+  border: none;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  h4 {text-align:center;background-color:transparent;}
+  >.panel-heading{
+    background-color:transparent;
+    border:0;
+  }
+}
+.table-striped.table th, .table-striped.table td,
+.table-striped.table thead, .table-striped.table tr,
+.table thead>tr>th, .table tbody,
+.table > thead > tr > th   {
+    border-top: none !important;
+    border-left: none !important;
+    border-bottom: none !important;
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #f5f5f5;
+}
+.table-responsive{
+  background-color: transparent;
+  margin-bottom:30px!important;
+  table {
+    background-color:#fff;
+    tr > td:nth-child(2){
+      span.cat-icon {background-image:url('/assets/images/cat_circle.png');    background-size: contain;padding:0px 5px 2px 5px;background-repeat:no-repeat; }
+      span:not(.cat-icon){margin-left:4px;}
+    }
+  }
+}
 .shadow{
   -webkit-box-shadow: 4px 4px 9px 0 #e6e6e6;
 -moz-box-shadow:    4px 4px 9px 0 #e6e6e6;

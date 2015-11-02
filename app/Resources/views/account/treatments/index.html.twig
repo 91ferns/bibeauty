@@ -1,17 +1,29 @@
 {% extends 'admin.html.twig' %}
 
 {% block body %}
-{% include 'shared/adminnav.html.twig' %}
-<div class="panel panel-default">
+
+<div class="panel panel-default transparent">
+  {% include 'shared/adminnav.html.twig' %}
   <div class="panel-heading">
-    Treatments for {{ business.getName }}
-    <a class="admin-btn" href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
-      <i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong>
-    </a>
+    <!--Treatments for {{ business.getName }}-->
+      <div class="centered">
+      <img src="{% if business.hasLogoAttachment %}
+                  {{ business.getLogoAttachment.getKey | s3 }}
+              {% else %}
+                  {{ asset('assets/images/placeholder-image1.png') }}
+              {% endif %}"  />
+              <a class="admin-btn" href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
+                <i class="fa fa-plus fa-lg"></i><strong>Add Treatment</strong>
+              </a>
+      </div>
+
   </div>
-  <div class="panel-body">
-    {% if treatments.count > 0 %}
-    <div class="table-responsive">
+  <!--<div class="panel-body">-->
+    {% if treatments|length > 0 %}
+    {% for category,cattxs in treatments %}
+    <h4>{{ category }}</h4>
+    <div class="table-responsive shadow">
+
       <table class="table table-striped">
         <thead>
           <tr>
@@ -25,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for treatment in treatments %}
+          {% for treatment in cattxs %}
           <tr>
             <td>
               <a href="{{ path('admin_business_treatments_show_path',{
@@ -34,7 +46,7 @@
                 'treatmentId': treatment.getId
                 }) }}">{{ treatment.id }}</a>
             </td>
-            <td>{{ treatment.getTreatmentCategory.getCategoryName }}
+            <td><span class="cat-icon">{{ category[:1] }}</span><span>{{ treatment.getTreatmentCategory.getCategoryName }}</span>
             <td>{{ treatment.getLabel }}</td>
             <td>{{ treatment.getName }}</td>
             <td>${{ treatment.getOriginalPrice }}</td>
@@ -51,10 +63,11 @@
         </tbody>
       </table>
     </div>
+    {% endfor %}
     {% else %}
       <p>No treatments are added.</p>
     {% endif %}
-  </div>
+<!--  </div>-->
 </div>
 
 <!-- Modal -->
