@@ -168,12 +168,16 @@ $admin-side-width: 250px;
       display: none;
     }
   }
-
+  @media (min-width: 768px){
+  .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+      margin-left: -45px;
+  }
+}
 }
 // index (default) page
 div.centered{
   text-align: center;
-  button.businesses-btn{margin: 0 auto;padding-left:10px; padding-right:10px;}//text-align: center;
+  //button.businesses-btn{margin: 0 auto;padding-left:10px; padding-right:10px;}//text-align: center;
 }
 .admin-main-inner a.pull-right{margin-right:30px; position: relative;top: -25px;}
 .admin .thumbnail.panel  {
@@ -237,11 +241,28 @@ div.centered{
   }
 .admin .centered{
   position: relative;
+  button.businesses-btn{
+    position:relative;
+    width: 280px;
+    position: relative;
+    width: 280px;
+    border-radius: 4px;
+    padding: 10px;
+    > .caret{position: relative;left: 26%;}
+  }
   .businesses-list{
      //position:absolute;
      border:1px solid rgb(180, 180, 180);
-     width: 7%;
+     background-color:#fff;
+     //width: 7%;
+     width: 100%;
+    /* margin: 0 auto; */
+    position: absolute;
+    top: 100%;
+    left: 0;
      margin: 0 auto;
+     //position: absolute;
+     //left: 47.4%;
      li{
        padding-top:8px;
        padding-bottom:8px;
