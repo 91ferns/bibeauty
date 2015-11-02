@@ -4,6 +4,8 @@ namespace AppBundle\Twig;
 
 use AppBundle\Entity\OperatingSchedule;
 use Cocur\Slugify\Slugify;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use AppBundle\Entity\Business;
 
 class AppExtension extends \Twig_Extension
 {
@@ -23,21 +25,25 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('meridian', array($this, 'hourMeridianFilter')),
             new \Twig_SimpleFilter('nicehour', array($this, 'formatHourFilter')),
             new \Twig_SimpleFilter('duration', array($this, 'formatMinutesFilter')),
-            new \Twig_SimpleFilter('today', array($this, 'formatTodayFilter'))
+            new \Twig_SimpleFilter('today', array($this, 'formatTodayFilter')),
         );
     }
-
+    public function getFunctions()
+  {
+      return array(
+          new \Twig_SimpleFunction('get_businesses', array($this, 'getBusinesses')),
+      );
+  }
     protected $bucket;
 
-    public function __construct($aws) {
+    public function __construct($aws, RegistryInterface $doctrine) {
         $this->bucket = (string) $aws['bucket'];
+        $this->doctrine = $doctrine;
     }
 
     public function s3Filter( $key )
     {
-
         return sprintf('http://%s.%s/%s', $this->bucket, self::AWS_HOST, $key);
-
     }
 
     public function slugFilter( $string ) {
@@ -141,6 +147,17 @@ class AppExtension extends \Twig_Extension
             default:
                 return "Sometime";
         }
+    }
+
+    public function getBusinesses($user)
+    {
+      //$user = $this->getUser();
+      $em = $this->doctrine->getManager();
+      $repository = $em->getRepository("AppBundle:Business");
+
+      return ($user->getSuperAdmin() === true)  ?
+        $repository->findAll() :
+          $repository->findByOwner($user);
     }
 
     public function getName()

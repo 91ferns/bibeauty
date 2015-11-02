@@ -49,7 +49,7 @@ services:
     app.twig_extension:
         class: AppBundle\Twig\AppExtension
         public: false
-        arguments: ["%aws%"]
+        arguments: ["%aws%","@doctrine"]
         tags:
             - { name: twig.extension }
 #    service_name:

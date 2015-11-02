@@ -84,7 +84,9 @@
     </div>
     {% endif %}
     <div class="admin-main-inner">
+      <div class="container">
       {% block body %}{% endblock %}
+    </div>
     </div>
 
   </section>
@@ -111,6 +113,12 @@
     output='js/client.js' %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}<script>
+      jQuery(document).ready(function(){
+        jQuery('#businesses-link').on('click',function(){
+        jQuery('.businesses-list').toggleClass('hidden');
+      });
+  });
+</script>{% endblock %}
 </body>
 </html>

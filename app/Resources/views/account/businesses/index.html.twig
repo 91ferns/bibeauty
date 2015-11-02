@@ -43,7 +43,7 @@
           {% for i,business in businesses %}
           <!--<tr>-->
           <div class="col-md-3 col-xs-12 col-sm-12">
-            <div class="thumbnail panel">
+            <div class="thumbnail panel shadow">
 
                 <img src="{% if business.hasLogoAttachment %}
                               {{ business.getLogoAttachment.getKey | s3 }}
