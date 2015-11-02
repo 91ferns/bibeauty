@@ -227,7 +227,18 @@ a.edit-btn{
       color: white;
       font-size: 1.5em;
       > .centered{
-        .admin-btn{     position: absolute;  right: 0;  top: 30%;}
+        .admin-actions{    position: absolute;    right: 0;    top: 30%;}
+        .admin-btn{     /*position: absolute;*/  right: 0;  top: 30%;
+          >span{
+            position:relative;
+            top:-30px;
+            border-right:1px solid #e6e6e6;
+            left: 8px;
+            height: 40px;
+            display: block;
+          }
+          > strong{    margin-left: -10px;}
+        }
       > img {}//margin-left: 15%;}
       }
       a.admin-btn {
@@ -249,6 +260,7 @@ a.edit-btn{
       .fa-trash-o {
         padding-right: 3px;
       }
+
       .fa-plus {
         padding-right: 3px;
         &:before {
@@ -258,15 +270,17 @@ a.edit-btn{
     }
 
 }
-.admin  .fa-plus {
+.admin {
+  .fa{
     padding-right: 3px;
     position: relative;
     top: 5px;
     left: -10px;
-    &:before {
-        content: url(../images/add_icon.png);
     }
-  }
+    .fa-plus:before {content: url(../images/add_icon.png);}
+    .fa-trash:before{content: url(/assets/images/delete_icon.png);}
+}
+
 .admin .centered{
   position: relative;
   button.businesses-btn{
@@ -349,11 +363,12 @@ a.edit-btn{
   table {
     background-color:#fff;
     tr > td:nth-child(2){
-      span.cat-icon {background-image:url('/assets/images/cat_circle.png');    background-size: contain;padding:0px 5px 2px 5px;background-repeat:no-repeat; }
-      span:not(.cat-icon){margin-left:4px;}
+
     }
   }
 }
+span.cat-icon {background-image:url('/assets/images/cat_circle.png');    background-size: contain;padding:0px 5px 2px 5px;background-repeat:no-repeat; }
+//table.table.table-striped td:not(last-child) span:not(.cat-icon){margin-left:4px;}
 .shadow{
   -webkit-box-shadow: 4px 4px 9px 0 #e6e6e6;
 -moz-box-shadow:    4px 4px 9px 0 #e6e6e6;

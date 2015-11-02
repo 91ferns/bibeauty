@@ -28,7 +28,6 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Category</th>
             <th>Treatment</th>
             <th>Name</th>
             <th>Full Price</th>
@@ -46,8 +45,8 @@
                 'treatmentId': treatment.getId
                 }) }}">{{ treatment.id }}</a>
             </td>
-            <td><span class="cat-icon">{{ category[:1] }}</span><span>{{ treatment.getTreatmentCategory.getCategoryName }}</span>
-            <td>{{ treatment.getLabel }}</td>
+            <!--<td><span>{{ treatment.getTreatmentCategory.getCategoryName }}</span>-->
+            <td><span class="cat-icon">{{ category[:1] }}</span>{{ treatment.getLabel }}</td>
             <td>{{ treatment.getName }}</td>
             <td>${{ treatment.getOriginalPrice }}</td>
             <td>{{treatment.getDuration | duration }}</td>

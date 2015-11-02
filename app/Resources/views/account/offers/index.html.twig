@@ -26,22 +26,30 @@ span.strikethrough{text-decoration: line-through;}
 
 {% block body %}
 
-<div class="panel panel-default">
+<div class="panel panel-default transparent">
+  {% include 'shared/adminnav.html.twig' %}
   <div class="panel-heading">
-    Offers
-    <a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offer</strong></a>
-    <a id="deleteSelectedOffersButton" class="admin-btn"><i class="fa fa-trash fa-lg"></i> <strong>Delete Offer(s)</strong></a>
+      <div class="centered">
+          <img src="{% if business.hasLogoAttachment %}
+                      {{ business.getLogoAttachment.getKey | s3 }}
+                  {% else %}
+                      {{ asset('assets/images/placeholder-image1.png') }}
+                  {% endif %}"  />
+        <div class="admin-actions">
+          <a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offer</strong></a>
+        <a id="deleteSelectedOffersButton" class="admin-btn"><i class="fa fa-trash fa-lg"></i> <strong>Delete Offer(s)</strong><span></span></a>
+      </div>
+      </div>
   </div>
   <div class="panel-body">
     {% if offers | length > 0 %}
-    <div class="table-responsive">
-      <table class="table businesses-table">
+    <div class="table-responsive shadow">
+      <table class="table businesses-table table-striped">
         <thead>
           <tr>
             <th>ID</th>
             <!--<th><a href="#" id="check-all-box">All</a></th>-->
             <th><input name="Offers[]" class="offer-check" type="checkbox" value="all" /></th>
-            <th>Category</th>
             <th>Treatment</th>
             <th>Start Date</th>
             <th class="times-heading">Times</th>
@@ -60,8 +68,8 @@ span.strikethrough{text-decoration: line-through;}
             <td><span class="btns">
               <div class="btn-group"><input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}"></div>
             </span></td>
-            <td><span class="treatment-name">{{offer.getTreatment.getTreatmentCategory.getCategoryName}}</span></td>
-            <td><span class="treatment-name">{{offer.getTreatment.getName}}</span></td>
+            <!--<td><span class="treatment-name">{{offer.getTreatment.getTreatmentCategory.getCategoryName}}</span></td>-->
+            <td><span class="treatment-name"><span class="cat-icon">{{ offer.getTreatment.getTreatmentCategory.getCategoryName[:1] }}</span>{{offer.getTreatment.getName}}</span></td>
             <td><span class="offer-start">{{av.getStartDate | date('d-m-Y')}}</span></td>
             <td><span class="offer-times">
               {{av.getTimes() | join(', ')}}
