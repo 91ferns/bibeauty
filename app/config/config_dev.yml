@@ -44,22 +44,22 @@ monolog:
         #    type:   chromephp
         #    level:  info
 assetic:
-#  filters:
-#    cssrewrite: ~
-#    sass: ~
-#    compass: ~
-#  use_controller: true
-#windows-only config
-  ruby: C:\Ruby22\bin\ruby.exe
-  sass: C:\Ruby22\bin\sass.bat
   filters:
     cssrewrite: ~
-    sass:
-      bin: C:\Ruby22\bin\sass
-      apply_to: "\.scss$"
-    compass:
-      bin: C:\Ruby22\bin\compass
-  use_controller: false
+    sass: ~
+    compass: ~
+  use_controller: true
+#windows-only config
+#  ruby: C:\Ruby22\bin\ruby.exe
+#  sass: C:\Ruby22\bin\sass.bat
+#  filters:
+#    cssrewrite: ~
+#    sass:
+#      bin: C:\Ruby22\bin\sass
+#      apply_to: "\.scss$"
+#    compass:
+#      bin: C:\Ruby22\bin\compass
+#  use_controller: false
 
 #swiftmailer:
 #    delivery_address: me@example.com

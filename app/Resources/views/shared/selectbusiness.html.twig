@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="centered">
+    <button class="btn btn-large btn-primary businesses-btn">My Businesses <span class="caret"></span>
+      <ul class="businesses-list hidden list-unstyled">
+        {% for business in businesses %}
+            <li><a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
+        {% endfor %}
+      </ul>
+    </button>
+
+  </div>
+ {% if doAddBtn is defined %}
+      <a class="pull-right" href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
+{% endif %}
+</div>

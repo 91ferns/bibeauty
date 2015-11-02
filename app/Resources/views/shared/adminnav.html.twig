@@ -1,0 +1,39 @@
+{% set businesses = get_businesses(app.user) %}
+<ul class="nav nav-pills admin-navigation nav-justified shadow">
+  <li role="presentation" class="" id="home">
+  <a href="{{ path('admin_businesses_path')}}" id="home-link">
+    My Businesses
+  </a>
+</li> <!-- /.active -->
+{% if business is defined %}
+<li role="presentation" id="business-select" class="{% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}">
+  <button id="businesses-link" >
+    {{business.getName}}
+    <span class="caret"></span>
+      <ul class="businesses-list hidden list-unstyled">
+        {% for business in businesses %}
+            <li><a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
+        {% endfor %}
+      </ul>
+  </button>
+</li>
+
+<li role="presentation" id="bookings" class="{% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}">
+  <a href="{{path('admin_business_bookings_path', { id: business.getId, slug: business.getSlug })}}" id="bookings-link">
+    My Bookings
+  </a>
+</li> <!-- /#bookings -->
+
+<li role="presentation" id="services" class="{% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}active{% endif %}">
+  <a href="{{ path('admin_business_treatments_path', { id: business.getId, slug: business.getSlug }) }}" id="services-link">
+    All Treatments
+  </a>
+</li> <!-- /#services renamed all treatments -->
+
+<li role="presentation" id="offers" class="{% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}">
+  <a href="{{path('admin_business_offers_path', { id: business.getId, slug: business.getSlug }) }}" id="offers-link">
+    My Offers
+  </a>
+</li> <!-- /#offers -->
+</ul>
+{% endif %}
