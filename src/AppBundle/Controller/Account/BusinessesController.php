@@ -27,17 +27,11 @@ class BusinessesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("AppBundle:Business");
-        $user = $this->getUser();
-
-        if ($user->getSuperAdmin() === true) {
-            $businesses = $repository->findAll();
-        } else {
-            $businesses = $repository->findByOwner($this->getUser());
-        }
+        $businesses = $this->getBusinesses();
 
         // replace this example code with whatever you need
         return $this->render('account/businesses/index.html.twig', array(
-            'businesses' => $businesses
+            'businesses' => $businesses,
         ));
 
     }
@@ -52,9 +46,11 @@ class BusinessesController extends Controller
         $address  = new Address();
 
         $form = $this->createForm(new BusinessType(), $business);
+        $businesses = $this->getBusinesses();
         // replace this example code with whatever you need
         return $this->render('account/businesses/new.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'businesses' => $businesses
         ));
 
     }
@@ -157,11 +153,13 @@ class BusinessesController extends Controller
         //$form->createView()
         $form = $this->createForm(new BusinessType(), $business);
 
+        $businesses = $this->getBusinesses();
 
         // replace this example code with whatever you need
         return $this->render('account/businesses/show.html.twig', array(
             'businessForm' => $form->createView(),
-            'business' => $business
+            'business' => $business,
+            'businesses' => $businesses
         ));
 
     }
@@ -252,6 +250,16 @@ class BusinessesController extends Controller
             ));
         }
 
+    }
+
+    private function getBusinesses(){
+      $user = $this->getUser();
+      $em = $this->getDoctrine()->getManager();
+      $repository = $em->getRepository("AppBundle:Business");
+
+      return ($user->getSuperAdmin() === true)  ?
+        $repository->findAll() :
+          $repository->findByOwner($this->getUser());
     }
 
 }

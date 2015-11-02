@@ -1,7 +1,7 @@
 {% extends 'admin.html.twig' %}
 
 {% block body %}
-<div class="row">
+<!--<div class="row">
   <div class="centered">
     <button class="btn btn-large btn-primary businesses-btn">My Businesses <span class="caret"></span>
       <ul class="businesses-list hidden list-unstyled">
@@ -14,7 +14,8 @@
   </div>
 
   <a class="pull-right" href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
-</div>
+</div>-->
+{% include 'shared/selectbusiness.html.twig' with {'doAddBtn':true} %}
 <!--<div class="panel panel-default">-->
 
   <!--<div class="panel-heading">
@@ -66,8 +67,8 @@
                           Therapists
                         </a></div>
                      <div class="col-xs-12">
-                         <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                         Edit
+                         <a class="edit-btn" href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                           <span>Edit</span>
                        </a>
                      </div>
                    </div>
