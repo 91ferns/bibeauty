@@ -12,9 +12,11 @@
               {% else %}
                   {{ asset('assets/images/placeholder-image1.png') }}
               {% endif %}"  />
-              <a class="admin-btn" href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
+            <div class="admin-actions">
+                <a class="admin-btn" href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
                 <i class="fa fa-plus fa-lg"></i><strong>Add Treatment</strong>
               </a>
+            </div>
       </div>
 
   </div>
