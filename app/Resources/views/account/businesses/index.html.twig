@@ -45,11 +45,9 @@
           <div class="col-md-3 col-xs-12 col-sm-12">
             <div class="thumbnail panel shadow">
 
-                <img src="{% if business.hasLogoAttachment %}
-                              {{ business.getLogoAttachment.getKey | s3 }}
-                          {% else %}
-                              {{ asset('assets/images/placeholder-image1.png') }}
-                          {% endif %}"  class="img-circle">
+                <div style="background-image: url('{% if business.hasLogoAttachment %}{{ business.getLogoAttachment.getKey | s3 }}{% else %}{{ asset('assets/images/placeholder-image1.png') }}{% endif %}');" class="business-logo">
+                  <span class="sr-only">{{ business.getName }}</span>
+                </div>
                 <div class="caption">
                      <!--<h4 class="">{{ business.getName }}</h4>-->
                      <div class="row">
@@ -85,10 +83,6 @@
             <!--<td>-->
 
             <!--</td>-->
-            {% if i % 3 == 0 %}
-            </div>
-            <div class="row">
-            {% endif %}
           </div>
           <!--</tr>-->
           {% endfor %}

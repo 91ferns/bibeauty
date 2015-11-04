@@ -3,13 +3,10 @@
 // src/AppBundle/Services/AWS.php
 namespace AppBundle\Services;
 
-
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Aws\S3\S3Client;
 
-
 use AppBundle\Entity\Booking;
-
 use \Services_Twilio;
 
 class TwilioFactory
