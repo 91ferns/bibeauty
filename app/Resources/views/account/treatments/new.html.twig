@@ -2,17 +2,27 @@
 
 {% block body %}
 {% include 'shared/adminnav.html.twig' %}
-<div class="panel panel-default">
+<div class="panel panel-default transparent">
   <div class="panel-heading">
-    Add a Treatment for {{ business.getName }}
+    <!--Add a Treatment for {{ business.getName }}-->
+    <div class="centered">
+    <img src="{% if business.hasLogoAttachment %}
+                {{ business.getLogoAttachment.getKey | s3 }}
+            {% else %}
+                {{ asset('assets/images/placeholder-image1.png') }}
+            {% endif %}"  />
+    </div>
   </div>
   <div class="panel-body">
-    {{ form_start(form) }}
+    {% include 'shared/treatmentadder.html.twig' %}
+    <div class="col-md-8 shadow">
+      {{ form_start(form) }}
 
-      {{ form_widget(form) }}
-      <input type="submit" value="Create"
-           class="btn btn-primary" />
-    {{ form_end(form) }} <!-- /. form -->
+        {{ form_widget(form) }}
+        <input type="submit" value="Create"
+             class="btn btn-primary" />
+      {{ form_end(form) }} <!-- /. form -->
+    </div>
   </div>
 </div>
 

@@ -2,16 +2,29 @@
 
 {% block body %}
 {% include 'shared/adminnav.html.twig' %}
-<div class="panel panel-default">
+<div class="panel panel-default transparent">
   <div class="panel-heading">
-    {{ treatment.getTreatmentCategory.getLabel }}
-      <a class="admin-btn" data-toggle="modal" href="#add-availability">
+      <div class="centered">
+      <img src="{% if business.hasLogoAttachment %}
+                  {{ business.getLogoAttachment.getKey | s3 }}
+              {% else %}
+                  {{ asset('assets/images/placeholder-image1.png') }}
+              {% endif %}"  />
+            <div class="admin-actions">
+              <a class="admin-btn" href="{{ path('admin_delete_treatment', {slug:slug, id:id, treatmentId:treatment.getId }) }}" >
+                <i class="fa fa-trash fa-sm"></i> <strong>Delete</strong>
+              </a>
+            </div>
+      </div>
+
+  </div>
+      <!--<a class="admin-btn" data-toggle="modal" href="#add-availability">
         <i class="fa fa-plus fa-sm"></i> <strong>Add Offer</strong>
-      </a>
+      </a>00>
 
       <a class="admin-btn" href="{{ path('admin_delete_treatment', {slug:slug, id:id, treatmentId:treatment.getId }) }}" >
         <i class="fa fa-trash fa-sm"></i> <strong>Delete</strong>
-      </a>
+      </a>-->
   </div>
   <div class="panel-body">
 

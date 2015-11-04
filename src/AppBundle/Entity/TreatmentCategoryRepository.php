@@ -19,13 +19,37 @@ class TreatmentCategoryRepository extends EntityRepository
 
         $cats = array();
         foreach($categories as $category) {
-            if ($category->getParent() === NULL) {
+            if ($this->isCat($category)) {
                 $cats[] = $category;
             }
         }
 
         return $cats;
 
+    }
+    public function findTreatmentsByCategory()
+    {
+      $treatments = $this->findAll();
+      $txs        = [];
+      foreach($treatments as $treatment) {
+          if (!$this->isCat($treatment)) {
+              $cat = $treatment->getParent();
+              $cat = $cat->getLabel();
+              $this->checkMakeCatKey($cat, $txs);
+              $txs[$cat][] = $treatment;
+          }
+      }
+      return $txs;
+    }
+    private function checkMakeCatKey($cat, &$txs)
+    {
+      if(!array_key_exists($cat, $txs)){
+        $txs[$cat] = [];
+      }
+    }
+    private function isCat($row)
+    {
+      return  ($row->getParent() === NULL) ? true : false;
     }
 
 }

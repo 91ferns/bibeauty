@@ -69,12 +69,14 @@ class OffersController extends Controller
 
        $form = $this->createForm(new BookingType(), $booking);
        $business = $this->businessBySlugAndId($slug, $id);
-
+       $em         = $this->getDoctrine()->getManager();
+       $treatments = $em->getRepository("AppBundle:Business")->findBusinessTreatmentsCategory($business);
        return $this->render(
           'account/offers/new.html.twig',
           array(
              'form' => $form->createView(),
              'business' => $business,
+             'treatments' => $treatments,
           )
        );
     }
