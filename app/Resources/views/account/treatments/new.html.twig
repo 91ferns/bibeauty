@@ -14,14 +14,42 @@
     </div>
   </div>
   <div class="panel-body">
-    {% include 'shared/treatmentadder.html.twig' %}
-    <div class="col-md-8 shadow">
-      {{ form_start(form) }}
 
-        {{ form_widget(form) }}
+    {% include 'shared/treatmentadder.html.twig' %}
+    <div class="col-md-8">
+      {% if txs|length > 0 %}
+        {% for cat,cattxs in txs %}
+        <h4>{{cat}}</h4>
+        <div class="table-responsive shadow">
+          <table data-cat="{{cat}}" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Treatment</th>
+                <th>Name</th>
+                <th>Duration</th>
+                <th>Full Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for tx in cattxs %}
+              <tr data-id="tx.getId">
+                <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}</td>
+                <td><input type="text" name="name" value="{{ tx.getName }}"/></td>
+                <td><input type="text" name="duration" value="{{tx.getDuration | duration }}" /></td>
+                <td><input type="text" name="originalPrice" value="${{ tx.getOriginalPrice }}" /></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endfor %}
+      {% endif %}
+      {#{ form_start(form) }#}
+
+        {#{ form_widget(form) }#}
         <input type="submit" value="Create"
              class="btn btn-primary" />
-      {{ form_end(form) }} <!-- /. form -->
+      {#{ form_end(form) }#} <!-- /. form -->
     </div>
   </div>
 </div>

@@ -43,6 +43,7 @@ class TreatmentsController extends Controller
         $treatmentType = $this->createForm(new TreatmentType(), new Treatment());
         $em         = $this->getDoctrine()->getManager();
         $treatments = $em->getRepository("AppBundle:TreatmentCategory")->findTreatmentsByCategory();
+        $txs        = $em->getRepository("AppBundle:Business")->findBusinessTreatmentsCategory($business);
         /*
             'action'   => $this->generateUrl('admin_create_treatment_category',["slug"=>$slug, "id"=>$id]),
             'business' => $business,
@@ -53,6 +54,7 @@ class TreatmentsController extends Controller
             'business' => $business,
             'form' => $treatmentType->createView(),
             'treatments' => $treatments,
+            'txs'        => $txs,
         ));
 
     }
