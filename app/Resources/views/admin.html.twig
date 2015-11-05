@@ -114,10 +114,11 @@
     <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
 {% block javascripts %}<script>
-      jQuery(document).ready(function(){
-        jQuery('#businesses-link').on('click',function(){
+  jQuery(document).ready(function(){
+      jQuery('#businesses-link').on('click',function(){
         jQuery('.businesses-list').toggleClass('hidden');
       });
+      txAdder.init();
   });
 </script>{% endblock %}
 </body>
