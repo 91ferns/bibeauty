@@ -1,17 +1,74 @@
 {% extends 'admin.html.twig' %}
 
 {% block body %}
-
-<div class="panel panel-default">
-  <div class="panel-heading">Add a Booking</div>
+{% include 'shared/adminnav.html.twig' %}
+<div class="panel panel-default transparent">
+  <div class="panel-heading">
+    <div class="centered">
+    <img src="{% if business.hasLogoAttachment %}
+                {{ business.getLogoAttachment.getKey | s3 }}
+            {% else %}
+                {{ asset('assets/images/placeholder-image1.png') }}
+            {% endif %}"  />
+    </div>
+  </div>
   <div class="panel-body">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-      <input type="submit" value="Create"
-           class="btn btn-default pull-right" />
-    {{ form_end(form) }}
+
+    {% include 'shared/treatmentadder.html.twig' %}
+    <div class="col-md-8">
+      {% if offers|length > 0 %}
+      <form class="form-inline" role="form">
+        {% for cat,catoffers in offers %}
+        <h4>{{ cat }}</h4>
+        <div class="table-responsive shadow">
+          <table data-cat="{{cat}}" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Treatment</th>
+                <th>Start Date</th>
+                <th>Times</th>
+                <th>Original Price</th>
+                <th>Discount Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <form action="{{ path('admin_offer_new_path',{ slug: business.getSlug, id: business.getId }) }}" method="post" class="form-inline" role="form">
+              {% for offer in catoffers %}
+              {% set tx = offer.getTreatment.getTreatmentCategory %}
+              {% set av = offer.getAvailabilitySet %}
+              <tr data-id="{{offer.getId}}">
+                <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}<input type="hidden" name="category[]" value="{{tx.getId}}"/><input type="hidden" name="id[]" value="{{offer.getId}}"/></td>
+                <td><div class="input-group "><input type="text" class="form-control" name="StartDate[]" value="{{av.getStartDate | date('d-m-Y')}}"/></div></td>
+                <td><div class="input-group "><textarea class="form-control" name="Times[]" >{{av.getTimes() | join(', ')}}" /></textarea></div></td>
+                <td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="OriginalPrice[]" value="{{ offer.getTreatment.getOriginalPrice }}"></div></td>
+                <td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="CurrentPrice[]" value="{{ offer.getCurrentPrice }}" /></div></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endfor %}
+      {% endif %}
+      {#{ form_start(form) }#}
+
+        {#{ form_widget(form) }#}
+        <input type="submit" value="Add Offers"
+             class="btn btn-primary pull-right" />
+      {#{ form_end(form) }#} <!-- /. form -->
+    </form>
+    </div>
   </div>
 </div>
+<!--<div class="panel panel-default">
+  <div class="panel-heading">Add a Booking</div>
+  <div class="panel-body">
+    {#{ form_start(form) }#}
+    {#{ form_widget(form) }#}
+      <input type="submit" value="Create"
+           class="btn btn-default pull-right" />
+    {#{ form_end(form) }#}
+  </div>
+</div>-->
 
 
 {% endblock %}

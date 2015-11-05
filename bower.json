@@ -25,5 +25,8 @@
   },
   "resolutions": {
     "select2": "~4.0.0"
+  },
+  "devDependencies": {
+    "typeahead.js": "~0.11.1"
   }
 }

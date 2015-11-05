@@ -4,7 +4,6 @@
 {% include 'shared/adminnav.html.twig' %}
 <div class="panel panel-default transparent">
   <div class="panel-heading">
-    <!--Add a Treatment for {{ business.getName }}-->
     <div class="centered">
     <img src="{% if business.hasLogoAttachment %}
                 {{ business.getLogoAttachment.getKey | s3 }}
@@ -32,7 +31,6 @@
               </tr>
             </thead>
             <tbody>
-              <form class="form-inline" role="form">
               {% for tx in cattxs %}
               <tr data-id="{{tx.getId}}">
                 <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}<input type="hidden" name="category[]" value="{{tx.getId}}"/></td>

@@ -61,42 +61,72 @@ class OffersController extends Controller
 
 
     /**
-     * @Route("/account/offers/{id}/{slug}/new", name="admin_new_booking_path")
+     * @Route("/account/offers/{id}/{slug}/new", name="admin_new_offer_path")
      * @Method({"GET"})
      */
     public function createAction($id, $slug, Request $request) {
-       $booking = new Booking();
+       //$booking = new Booking();
 
-       $form = $this->createForm(new BookingType(), $booking);
-       $business = $this->businessBySlugAndId($slug, $id);
+       //$form = $this->createForm(new BookingType(), $booking);
+       /*$business = $this->businessBySlugAndId($slug, $id);
        $em         = $this->getDoctrine()->getManager();
-       $treatments = $em->getRepository("AppBundle:Business")->findBusinessTreatmentsCategory($business);
-       return $this->render(
-          'account/offers/new.html.twig',
-          array(
-             'form' => $form->createView(),
-             'business' => $business,
-             'treatments' => $treatments,
-          )
-       );
+       $treatments = $em->getRepository("AppBundle:Business")->findBusinessTreatmentsCategory($business);*/
+       $offers   = $this->getRepo('Offer');
+       $business = $this->businessBySlugAndId($slug, $id);
+       $offers   = $offers->findOffersByBusinessByCategory($business);
+      /*foreach($offers as $cat => $offs){
+        echo $cat .':<br>';
+        foreach($offs as $off){
+          echo $off->getTreatment()->getName() .'<br>';
+        }
+      }*/
+
+      $treatments = $this->getRepo('Business')->findBusinessTreatmentsCategory($business);
+      return $this->render(
+         'account/offers/new.html.twig',
+         array(
+            'business'   => $business,
+            'treatments' => $treatments,
+            'offers'     => $offers,
+         )
+      );
     }
 
     /**
      * @Route("/account/offers/{id}/{slug}/new", name="admin_offer_new_path")
-     * @Method("POST")
+     * @Method("{GET,POST}")
      */
     public function createCheckAction($id, $slug, Request $request) {
+         $offers     = $this->getRepo('Offer');
+         $business   = $this->businessBySlugAndId($slug, $id);
+         $offers     = $offers->findOffersByBusinessByCategory($business);
+         $treatments = $em->getRepository("AppBundle:Business")->findBusinessTreatmentsCategory($business);
+         return $this->render(
+            'account/offers/new.html.twig',
+            array(
+               'business'   => $business,
+               'treatments' => $treatments,
+               'offers'     => $offers,
+            )
+         );
 
         // Treatment ID comes from request then we just return the checkCreate
-
-        $treatmentId = $request->request->get('Treatment', false);
+        /*$treatmentId = $request->request->get('Treatment', false);
 
         if (!$treatmentId) {
             return $this->redirectToRoute('admin_business_offers_path', array(
                 'id' => $id,
                 'slug' => $slug
             ));
-        }
+        }*/
+        return $this->render(
+           'account/offers/new.html.twig',
+           array(
+              'business'   => $business,
+              'treatments' => $treatments,
+              'offers'     => $offers,
+           )
+        );
 
         return $this->checkCreateAvailabilityAction($id, $slug, $treatmentId, $request);
 

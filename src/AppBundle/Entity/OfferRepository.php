@@ -286,4 +286,21 @@ class OfferRepository extends EntityRepository
     }
 
   //if()andWhere('r.winner IN (:ids)')  ->setParameter('ids', $ids);
+  public function findOffersByBusinessByCategory($business)
+  {
+      $offers = $this->findBy(['business'=>$business]);
+      $offs   = [];
+      foreach($offers as $offer){
+        $tx  = $offer->getTreatment();
+        $cat = $tx->getTreatmentCategory()->getParent()->getLabel();
+        $this->checkMakeCatKey($cat,$offs);
+        $offs[$cat][] = $offer;
+      }
+      return $offs;
+  }
+  private function checkMakeCatKey($cat,&$offs){
+      if(!array_key_exists($cat, $offs)){
+        $offs[$cat] = [];
+      }
+  }
 }
