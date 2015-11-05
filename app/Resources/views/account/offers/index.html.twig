@@ -36,7 +36,8 @@ span.strikethrough{text-decoration: line-through;}
                       {{ asset('assets/images/placeholder-image1.png') }}
                   {% endif %}"  />
         <div class="admin-actions">
-          <a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offer</strong></a>
+          <!--<a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offer</strong></a>-->
+          <a href="{{path('admin_business_offers_new_path', {id:business.getId,slug:business.getSlug}) }}" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offers</strong></a>
         <a id="deleteSelectedOffersButton" class="admin-btn"><i class="fa fa-trash fa-lg"></i> <strong>Delete Offer(s)</strong><span></span></a>
       </div>
       </div>

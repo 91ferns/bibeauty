@@ -61,3 +61,8 @@
 
 
 {% endblock %}
+{% block javascripts %}<script>
+  jQuery(document).ready(function(){
+      txAdder.init();
+  });
+</script>{% endblock %}

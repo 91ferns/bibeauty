@@ -395,6 +395,21 @@ box-shadow:         4px 4px 9px 0 #e6e6e6;
 .client-more {
   cursor: pointer;
 }
+.table-responsive.shadow.offers{
+  padding-bottom: 30px;
+}
+table.offers-add{
+  tr{
+    td{
+      padding-top: 40px!important;
+      &:last-child > .form-group{
+        position: absolute;
+        left: 45px;
+        width: 400px;
+     }
+   }
+  }
+}
 
 .admin table[data-cat] thead th{
   &:first-child{width:41%;}
