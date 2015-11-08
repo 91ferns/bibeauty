@@ -185,16 +185,18 @@ width:360px;
               {% endif %}
 
               </div>
-              {% if totalPages > 1 %}
-              <nav>
-                <ul class="pagination">
-                  {% for i in 1..totalPages %}
-                    <li><a href="{{ path('listings_search_path', app.request.query| merge({'page': i})) }}">{{i}}</a></li>
-                  {% endfor %}
-                </ul>
-              </nav>
-              {% endif %}
             {% endfor %}
+
+            {% if totalPages > 1 %}
+            <nav>
+              <ul class="pagination">
+                {% for i in 1..totalPages %}
+                  <li><a href="{{ path('listings_search_path', app.request.query| merge({'page': i})) }}">{{i}}</a></li>
+                {% endfor %}
+              </ul>
+            </nav>
+            {% endif %}
+            
           {% else %}
             <p>There are no results</p>
           {% endif %}

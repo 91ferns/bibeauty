@@ -66,6 +66,7 @@ class Address {
 
    /**
     * @ORM\PrePersist
+    * @ORM\PreUpdate
     */
    public function geocode() {
        $curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
