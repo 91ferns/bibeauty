@@ -369,6 +369,22 @@ class OffersController extends Controller
     }
 
     /**
+     * @Route("/account/treatments/edittimes", name="admin_business_offers_edittime_path")
+     * @Method({"POST"})
+     */
+    public function editTimesAction(Request $request)
+    {
+      $req    = $request->request;
+      $id     = $req->get('pk',false);
+      $times  = $req->get('Times', array());
+      $em = $this->getDoctrine()->getManager();
+      $offers = $em->getRepository("AppBundle:Offer");
+      $offer  = $offers->findOneBy(['id'=>$id]);
+      $offer->setTimes($times);
+      return new JsonResponse(array('success' => true));
+    }
+
+    /**
      * @Route("/account/offers/{id}/{slug}/edit", name="admin_edit_offer")
      * @Method("POST")
      */

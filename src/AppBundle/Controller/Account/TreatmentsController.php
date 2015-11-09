@@ -117,6 +117,68 @@ class TreatmentsController extends Controller
     }
 
     /**
+     * @Route("/account/treatments/{id}/{slug}/addedit", name="admin_business_treatments_addedit_path")
+     * @Method("POST")
+     */
+    public function addEditAction($id, $slug, Request $request) {
+      $req = $request->request;
+      $extantIds = $req->get('id');
+      $em  = $this->getDoctrine()->getManager();
+      $txs = $em->getRepository("AppBundle:Treatment");
+      foreach($extantIds as $k => $id){
+        //do update
+          //$tx  = $txs->findOneBy(['id'=>$id]);
+          //$tx->setName = $req->get('name');
+          //$em->persist($tx);
+      }
+
+      $length = count($req->get('name')) -1;
+      //loop new and create
+      for($i=$k; $k <= $length; $i++ ){
+        $tx = new Treatment();
+        $tx->setName         = $req->get('name')[$i];
+        $tx->setDuration     = $req->get('duration')[$i];
+        $tx->setoriginalPrice = $req->get('originalPrice')[$i];
+        $em->persist($tx);
+        var_dump($req->get('name')[$i]); exit;
+      }
+      $em->flush();
+      echo '<pre>'; var_dump($request->request->get('id')); exit;
+    }
+
+    /**
+     * @Route("/account/treatments/editname", name="admin_business_treatments_editname_path")
+     * @Method({"POST"})
+     */
+    public function editnameAction(Request $request)
+    {
+      $req    = $request->request;
+      $id     = $req->get('pk',false);
+      $name   = $req->get('Name',false);
+      $em  = $this->getDoctrine()->getManager();
+      $txs = $em->getRepository("AppBundle:Treatments");
+      $tx  = $txs->findOneBy(['id'=>$id]);
+      $tx->setName($price);
+      return new JsonResponse(array('success' => true));
+    }
+
+    /**
+     * @Route("/account/treatments/editduration", name="admin_business_treatments_editduration_path")
+     * @Method({"POST"})
+     */
+    public function editdurationAction(Request $request)
+    {
+      $req    = $request->request;
+      $id     = $req->get('pk',false);
+      $dur    = $req->get('Duration',false);
+      $em  = $this->getDoctrine()->getManager();
+      $txs = $em->getRepository("AppBundle:Treatments");
+      $tx  = $txs->findOneBy(['id'=>$id]);
+      $tx->setDuration($dur);
+      return new JsonResponse(array('success' => true));
+    }
+
+    /**
      * @Route("/account/treatments/{id}/{slug}/remove/{treatmentId}", name="admin_delete_treatment")
      * @Method("GET")
      */

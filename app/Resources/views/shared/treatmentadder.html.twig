@@ -1,0 +1,26 @@
+<div class="col-md-4">
+  <div class=" shadow" stlye="background-color:#fff;">
+    <div class="">
+      <div class="search">Search Treatments</div>
+    </div>
+    <hr>
+    <div class="">
+      {% for category,cattxs in treatments %}
+        <h4 style="text-align:left;">{{ category }}</h4>
+        <ul data-cat="{{category}}" class="treatment list-unstyled ">
+          {% for tx in cattxs %}
+            <li class="col-md-12" data-cat="{{ category }}" data-id="{{tx.getId}}" data-price="{% if tx.getOriginalPrice is defined  %}{{tx.getOriginalPrice}}{% endif %}" >
+              {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}
+                {{ tx.getLabel | replace({'and': "&amp;"}) | raw }}
+              {% else %}
+                {{ tx.getName }}
+              {% endif %}
+               <img class="pull-right" src="{{ asset('assets/images/add_icon.png') }}" />
+            </li>
+          {% endfor %}
+        </ul>
+        <hr>
+      {% endfor %}
+    </div>
+  </div>
+</div>

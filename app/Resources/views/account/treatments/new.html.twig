@@ -17,7 +17,7 @@
     {% include 'shared/treatmentadder.html.twig' %}
     <div class="col-md-8">
       {% if txs|length > 0 %}
-      <form class="form-inline" role="form">
+      <form class="form-inline" role="form" method="post" action="{{path('admin_business_treatments_addedit_path', {id:business.getId, slug:business.getSlug}) }}" >
         {% for cat,cattxs in txs %}
         <h4>{{cat}}</h4>
         <div class="table-responsive shadow">
@@ -33,7 +33,7 @@
             <tbody>
               {% for tx in cattxs %}
               <tr data-id="{{tx.getId}}">
-                <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}<input type="hidden" name="category[]" value="{{tx.getId}}"/></td>
+                <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}<input type="hidden" name="category[]" value="{{tx.getTreatmentCategory.getId}}"/><input type="hidden" name="id[]" value="{{tx.getId}}"/></td>
                 <td><div class="input-group "><input type="text" class="form-control" name="name[]" value="{{ tx.getName }}"/></div></td>
                 <td><div class="input-group "><input type="text" class="form-control" name="duration[]" value="{{tx.getDuration}}" /><span class="input-group-addon">min.</span></div></td>
                 <td>
