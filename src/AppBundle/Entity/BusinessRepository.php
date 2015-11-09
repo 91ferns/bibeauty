@@ -47,6 +47,7 @@ class BusinessRepository extends EntityRepository
     $treatments = [];
     foreach($business->getTreatments() as $tx){
       $cat = $tx->getTreatmentCategory()->getCategoryName();
+
       $this->checkSetCatKey($tx, $cat, $treatments);
       $treatments[$cat][] = $tx;
     }

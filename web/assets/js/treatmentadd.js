@@ -11,24 +11,23 @@ var txAdder = (function($,w,undefined){
     var txprice = $row.data('price');
     var txname  = $row.text();
     var $table  = getTableByCat(cat);
-    console.log(txprice);
     addNewRow($table,cat,txid,txname,txprice,doOffers);
   },
   getRowTemplate = function(cat,txid,txname){
    return '<tr data-id="'+txid+'">'+
-            '<td><span class="cat-icon">'+cat.charAt(0)+'</span>'+txname+'<input type="hidden" name="category[]" value="'+txid+'"/></td>'+
-            '<td><div class="input-group "><input type="text" class="form-control" name="name[]" value=""></div></td>'+
-            '<td><div class="input-group "><input type="text" class="form-control" name="duration[]" value=""><span class="input-group-addon">min.</span></div></td>'+
-            '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="originalPrice[]" value=""></div></td>'+
+            '<td><span class="cat-icon">'+cat.charAt(0)+'</span>'+txname+'<input type="hidden" name="newcategory[]" value="'+txid+'"/></td>'+
+            '<td><div class="input-group "><input type="text" class="form-control" name="newname[]" value=""></div></td>'+
+            '<td><div class="input-group "><input type="text" class="form-control" name="newduration[]" value=""><span class="input-group-addon">min.</span></div></td>'+
+            '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="neworiginalPrice[]" value=""></div></td>'+
           '</tr>';
   },
   getOfferRowTemplate = function(cat,txid,txname,txprice){
     return '<tr data-id="'+txid+'">'+
-             '<td><span class="cat-icon">'+cat.charAt(0)+'</span>'+txname+'<input type="hidden" name="category[]" value="'+txid+'"/></td>'+
-             '<td><div class="input-group "><input type="text" class="form-control" name="StartDate[]" value=""></div></td>'+
-             '<td><div class="input-group "><input type="text" class="form-control" name="Times[]" value=""></div></td>'+
-             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" disabled class="form-control" name="OriginalPrice[]" value="'+txprice+'"></div></td>'+
-             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="CurrentPrice[]" value=""></div>'+
+             '<td><span class="cat-icon">'+cat.charAt(0)+'</span>'+txname+'<input type="hidden" name="newcategory[]" value="'+txid+'"/></td>'+
+             '<td><div class="input-group "><input type="text" class="form-control" name="newStartDate[]" value=""></div></td>'+
+             '<td><div class="input-group "><input type="text" class="form-control" name="newTimes[]" value=""></div></td>'+
+             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" disabled class="form-control" name="neworiginalPrice[]" value="'+txprice+'"></div></td>'+
+             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="newCurrentPrice[]" value=""></div>'+
                '<div class="form-group" style="padding-top: 30px;"><div class="input-group"><label for="">Repeat</label><br><div class="btn-group" data-toggle="buttons">'+
                   '<label class="btn btn-primary active" ><input type="radio" name="RecurrenceType" checked value="never" class="form-control" /> Never</label>'+
                   '<label class="btn btn-primary" ><input type="radio" name="RecurrenceType" value="daily" class="form-control" /> Daily</label>'+

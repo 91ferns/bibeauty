@@ -100,8 +100,8 @@ class TreatmentsController extends Controller
           $em = $this->getDoctrine()->getManager();
           $em->persist($treatment);
           $em->flush();
-          $this->get('session')->getFlashBag()->add('notice','Treatment successfully updated.');
-          return $this->redirectToRoute('admin_business_treatments_show_path',["slug"=>$slug,"id"=>$id,"treatmentId"=>$treatmentId]);
+          $this->get('session')->getFlashBag()->add('notice','Treatments successfully updated.');
+          return $this->redirectToRoute('admin_business_treatments_new_path',["slug"=>$slug,"id"=>$id]);
         }
 
         // replace this example code with whatever you need
@@ -115,36 +115,72 @@ class TreatmentsController extends Controller
         ));
 
     }
-
     /**
      * @Route("/account/treatments/{id}/{slug}/addedit", name="admin_business_treatments_addedit_path")
      * @Method("POST")
      */
-    public function addEditAction($id, $slug, Request $request) {
+  public function addEditAction($id, $slug, Request $request) {
       $req = $request->request;
-      $extantIds = $req->get('id');
       $em  = $this->getDoctrine()->getManager();
       $txs = $em->getRepository("AppBundle:Treatment");
-      foreach($extantIds as $k => $id){
-        //do update
-          //$tx  = $txs->findOneBy(['id'=>$id]);
-          //$tx->setName = $req->get('name');
-          //$em->persist($tx);
-      }
 
-      $length = count($req->get('name')) -1;
-      //loop new and create
-      for($i=$k; $k <= $length; $i++ ){
-        $tx = new Treatment();
-        $tx->setName         = $req->get('name')[$i];
-        $tx->setDuration     = $req->get('duration')[$i];
-        $tx->setoriginalPrice = $req->get('originalPrice')[$i];
+      $txs->updateAll($req->get('id'),$req->get('name'),$req->get('duration'),$req->get('originalPrice'));
+            $categories = $req->get('newcategory');
+            $durations  = $req->get('newduration');
+            $names      = $req->get('newname');
+            $prices     = $req->get('neworiginalPrice');
+      $business = $this->businessBySlugAndId($slug, $id);
+      $em   = $this->getDoctrine()->getManager();
+      $cats = $em->getRepository("AppBundle:TreatmentCategory");
+      $lastCat = [];
+      foreach($names as $k=>$name){
+        $catid = $categories[$k];
+        $cat = $this->checkSetCat($lastCat,$catid,$cats);
+        $tx  = new Treatment();
+        $tx->setName($names[$k]);
+        $tx->setDescription("");
+        $tx->setDuration($durations[$k]);
+        $tx->setTreatmentCategory($cat);
+        $tx->setoriginalPrice($prices[$k]);
+        $tx->setBusiness($business);
         $em->persist($tx);
-        var_dump($req->get('name')[$i]); exit;
       }
       $em->flush();
-      echo '<pre>'; var_dump($request->request->get('id')); exit;
+      $this->get('session')->getFlashBag()->add('notice','Treatments successfully created/updated.');
+        return $this->redirectToRoute('admin_business_treatments_new_path',["slug"=>$slug,"id"=>$id]);
     }
+
+      function checkSetCat(&$lastCat, $id,$cats)
+      {
+        if(!array_key_exists($id,$lastCat)){
+            $lastCat[$id] = $cats->findOneBy(['id'=>$id]);
+        }
+        return $lastCat[$id];
+      }
+      /*//do Updates
+      foreach($extantIds as $k => $id){
+          $tx  = $txs->findOneBy(['id'=>$id]);
+          $tx->setName = $req->get('name');
+          $em->persist($tx);
+          //$em->persist($tx);
+          $em->flush();
+      }
+      /*foreach ($repo->findById($extantIds) as $obj) {
+        $obj->setOrder(array_search($obj->getId(), $extantids));
+      }*/
+
+      //$length = count($req->get('name')) -1;
+
+      //loop new and create
+      /*for($i=$k+1; $i <= 3; $i++ ){
+        echo $i;
+        $tx = new Treatment();
+        var_dump($req->get('duration')[$i]);
+        $tx->setName          = $req->get('name')[$i];
+        $tx->setDuration      = $req->get('duration')[$i];
+        $tx->setoriginalPrice = $req->get('originalPrice')[$i];
+        $em->persist($tx);
+      }*/
 
     /**
      * @Route("/account/treatments/editname", name="admin_business_treatments_editname_path")
