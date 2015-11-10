@@ -167,6 +167,24 @@ class BusinessesController extends Controller
     }
 
     /**
+     * @Route("/account/businesses/{id}/{slug}/delete", name="admin_business_delete_path")
+     * @Method("GET")
+     */
+    public function deleteAction($id, $slug, Request $request)
+    {
+        $business = $this->businessBySlugAndId($slug, $id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($business);
+
+        $em->flush();
+
+        // replace this example code with whatever you need
+        return $this->redirectToRoute('admin_businesses_path');
+
+    }
+
+    /**
      * @Route("/account/businesses/{id}/{slug}", name="admin_business_edit_path")
      * @Method("POST")
      */

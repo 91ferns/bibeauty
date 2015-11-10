@@ -19,6 +19,7 @@
             <th>Address</th>
             <th>Bookings</th>
             <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
 
@@ -36,6 +37,11 @@
             <td>
               <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
                 Edit
+              </a>
+            </td>
+            <td>
+              <a href="{{ path('admin_business_delete_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                Delete
               </a>
             </td>
 
