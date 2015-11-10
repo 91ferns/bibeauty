@@ -41,7 +41,7 @@ class Treatment {
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
     protected $description;
