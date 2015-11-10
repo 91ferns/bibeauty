@@ -137,12 +137,12 @@ class Business {
     protected $updated;
 
     /**
-     * @ORM\OneToMany(targetEntity="Treatment", cascade={"persist"}, mappedBy="business")
+     * @ORM\OneToMany(targetEntity="Treatment", cascade={"persist", "remove"}, mappedBy="business")
      */
     protected $treatments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Therapist", cascade={"persist"}, mappedBy="business")
+     * @ORM\OneToMany(targetEntity="Therapist", cascade={"persist", "remove"}, mappedBy="business")
      */
     protected $therapists;
 

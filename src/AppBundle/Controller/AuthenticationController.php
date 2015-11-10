@@ -105,7 +105,7 @@ class AuthenticationController extends Controller {
          $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
          $this->get('security.token_storage')->setToken($token);
 
-         return $this->redirectToRoute('homepage');
+         return $this->redirectToRoute('admin_businesses_path');
       } else {
 
          return $this->render(
@@ -142,9 +142,9 @@ class AuthenticationController extends Controller {
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user = $em->getRepository("AppBundle:User")->findOneBy(['resetToken'=>$token]);   
+            $user = $em->getRepository("AppBundle:User")->findOneBy(['resetToken'=>$token]);
                 //var_dump($user); exit;
-        $encoder = $factory->getEncoder($user); 
+        $encoder = $factory->getEncoder($user);
 
             $password = $encoder->encodePassword($request->request->get('password'), $user->getSalt());
             //$user->updatePassword($user,$password);
@@ -188,7 +188,7 @@ class AuthenticationController extends Controller {
                 'text/html'
         );
 
-        $x = $this->get('mailer')->send($message);    
+        $x = $this->get('mailer')->send($message);
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository("AppBundle:User")->findBy(['email'=>$email]);
         $user->setResetToken($token);
