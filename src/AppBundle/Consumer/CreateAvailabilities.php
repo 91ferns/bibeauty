@@ -51,7 +51,7 @@ class CreateAvailabilities implements ConsumerInterface
 
             if (!$availabilitySet) {
                 $msg = 'Could not find that availability set. Parameters: ' . $availabilitySetId;
-                throw new Exception($msg, 0);
+                throw new \Exception($msg, 0);
             }
 
             $logger->info('Executing creation of availability set ' . $availabilitySetId);
