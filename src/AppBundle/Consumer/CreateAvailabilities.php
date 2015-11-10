@@ -50,7 +50,8 @@ class CreateAvailabilities implements ConsumerInterface
             $availabilitySet = $offerAvailability->findOneById($availabilitySetId);
 
             if (!$availabilitySet) {
-                $logger->err('Could not find that availability set. Parameters: ' . $availabilitySetId);
+                $msg = 'Could not find that availability set. Parameters: ' . $availabilitySetId;
+                throw new Exception($msg, 0);
             }
 
             $logger->info('Executing creation of availability set ' . $availabilitySetId);
@@ -100,7 +101,6 @@ class CreateAvailabilities implements ConsumerInterface
             // End it
 
             $text = 'Created ' . count($matchingDates) . ' availabilities.';
-            echo 'WORKER: ' . $text;
             $logger->info($text);
 
             //$this->container->get('api_mailer')->sendPrivatePathInvites($pathInvite);
@@ -109,6 +109,10 @@ class CreateAvailabilities implements ConsumerInterface
         } catch(\Exception $e) {
             echo 'Failed';
             $logger->addError($e->getMessage());
+
+            return $e->getCode();
         }
+
+        return 0;
     }
 }
