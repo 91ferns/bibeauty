@@ -30,7 +30,7 @@ var txAdder = (function($,w,undefined){
   getOfferRowTemplate = function(cat,txid,txname,txprice,incr){
     return '<tr data-id="'+txid+'">'+
              '<td><span class="cat-icon">'+cat.charAt(0)+'</span>'+txname+'<input type="hidden" name="newTreatment[]" value="'+txid+'"/></td>'+
-             '<td><div class="input-group "><input type="text" class="form-control" name="newStartDate[]" value=""></div></td>'+
+             '<td><div class="input-group "><input type="text" class="form-control" id="DayField" name="newStartDate[]" value=""></div></td>'+
              '<td><div class="input-group ">'+ getTimeSelect(incr) +' </div></td>'+
              '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" disabled class="form-control" name="newOriginalPrice[]" value="'+txprice+'"></div></td>'+
              '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="newCurrentPrice[]" value=""></div>'+
@@ -53,7 +53,7 @@ var txAdder = (function($,w,undefined){
     for(var i = 7; i<=21; i++){
       for(var j=0; j<=3; j++){
         var min  = j*15;
-        if(j==0) min += '0';
+        if(j===0) min += '0';
         var hour24 = i+':'+min;
         var hour12 = (i < 13) ? i+':'+min +' AM' : i-12 + ':' + min + ' PM';
 
@@ -68,6 +68,7 @@ var txAdder = (function($,w,undefined){
       table = getNewTableHtml(cat,doOffers);
       $submit = $('input[type="submit"]');
       $submit.removeClass('hidden');
+      $('.no-offers').addClass('hidden');
       $(table).insertBefore($submit);
     }
     return $('table[data-cat="'+cat+'"]');

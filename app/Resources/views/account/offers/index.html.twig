@@ -43,7 +43,7 @@ span.strikethrough{text-decoration: line-through;}
       </div>
   </div>
   <div class="panel-body">
-    {% if offers | length > 0 %}
+
     <div class="table-responsive shadow">
       <table class="table businesses-table table-striped">
         <thead>
@@ -60,6 +60,7 @@ span.strikethrough{text-decoration: line-through;}
           </tr>
         </thead>
         <tbody>
+          {% if offers | length > 0 %}
           {% for offer in offers %}
           {% set av = offer.getAvailabilitySet %}
           <tr>
@@ -99,13 +100,18 @@ span.strikethrough{text-decoration: line-through;}
             </span></td>
           </tr>
           {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="9">
+                There are no offers yet.
+              </td>
+            </tr>
+          {% endif %}
         </tbody>
 
       </table>
     </div>
-    {% else %}
-      <p>You have no offers</p>
-    {% endif %}
+
 
   </div>
 </div>
@@ -180,6 +186,10 @@ jQuery(document).ready(function(){
       $percentage.text(percent);
       $(this).text(newValue);
     }
+  });
+
+  jQuery('#businesses-link').on('click',function(){
+    jQuery('.businesses-list').toggleClass('hidden');
   });
 });
 

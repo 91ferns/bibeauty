@@ -6,10 +6,10 @@
     <hr>
     <div class="">
       {% for category,cattxs in treatments %}
-        <h4 style="text-align:left;">{{ category }}</h4>
-        <ul data-cat="{{category}}" class="treatment list-unstyled ">
+        <h4 style="text-align:left;" data-toggle="collapse" aria-expanded="{% if loop.index0 == 0 %} true {% else %} false {% endif %}" data-target="#collapse_{{ category | replace({' ': '_'}) }}">{{ category }}</h4>
+        <ul data-cat="{{category}}" id="collapse_{{ category | replace({' ': '_'}) }}" class="treatment list-unstyled collapse {% if loop.index0 == 0 %} in {% endif %}">
           {% for tx in cattxs %}
-            <li class="col-md-12" data-cat="{{ category }}" data-id="{{tx.getId}}" data-price="{% if tx.getOriginalPrice is defined  %}{{tx.getOriginalPrice}}{% endif %}" >
+            <li class="col-md-12 " data-cat="{{ category }}" data-id="{{tx.getId}}" data-price="{% if tx.getOriginalPrice is defined  %}{{tx.getOriginalPrice}}{% endif %}" >
               {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}
                 {{ tx.getLabel | replace({'and': "&amp;"}) | raw }}
               {% else %}

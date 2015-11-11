@@ -101,6 +101,11 @@
 <script>
   jQuery('form.bookingstatus > select[name="bookingstatus"').on('change',function(){
     jQuery(this).parent().submit();
-  })
+  });
+  jQuery(document).ready(function(){
+    jQuery('#businesses-link').on('click',function(){
+      jQuery('.businesses-list').toggleClass('hidden');
+    });
+  });
 </script>
 {% endblock %}

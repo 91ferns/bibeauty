@@ -1,5 +1,10 @@
 {% extends 'admin.html.twig' %}
-
+{% block stylesheets %}
+{{ parent() }}
+<style>
+  .select2.select2-hidden-accessible{display:none;}
+</style>
+{% endblock %}
 {% block body %}
 {% include 'shared/adminnav.html.twig' %}
 <div class="panel panel-default transparent">
@@ -100,7 +105,7 @@
              class="btn btn-primary pull-right" />
       {#{ form_end(form) }#} <!-- /. form -->
       {% else %}
-         There are no offers currently
+         <span class="no-offers">There are no offers currently</span>
          <input type="submit" value="Add Offers"
               class="btn btn-primary pull-right hidden" />
       {% endif %}
@@ -110,21 +115,15 @@
     </div>
   </div>
 </div>
-<!--<div class="panel panel-default">
-  <div class="panel-heading">Add a Booking</div>
-  <div class="panel-body">
-    {#{ form_start(form) }#}
-    {#{ form_widget(form) }#}
-      <input type="submit" value="Create"
-           class="btn btn-default pull-right" />
-    {#{ form_end(form) }#}
-  </div>
-</div>-->
-
 
 {% endblock %}
+
 {% block javascripts %}<script>
   jQuery(document).ready(function(){
       txAdder.init(true);
+      jQuery('#businesses-link').on('click',function(){
+        jQuery('.businesses-list').toggleClass('hidden');
+      });
   });
+
 </script>{% endblock %}

@@ -64,5 +64,8 @@
 {% block javascripts %}<script>
   jQuery(document).ready(function(){
       txAdder.init();
+      jQuery('#businesses-link').on('click',function(){
+        jQuery('.businesses-list').toggleClass('hidden');
+      });
   });
 </script>{% endblock %}
