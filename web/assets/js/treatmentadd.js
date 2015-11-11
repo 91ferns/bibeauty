@@ -34,7 +34,7 @@ var txAdder = (function($,w,undefined){
              '<td><div class="input-group ">'+ getTimeSelect(incr) +' </div></td>'+
              '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" disabled class="form-control" name="newOriginalPrice[]" value="'+txprice+'"></div></td>'+
              '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="newCurrentPrice[]" value=""></div>'+
-               '<div class="form-group" style="padding-top: 30px;"><div class="input-group"><label for="">Repeat</label><br><div class="btn-group" data-toggle="buttons">'+
+               '<div class="form-group" style="padding-top: 30px;"><div class="input-group" style="position:relative;"><br><div class="btn-group" style="position: absolute;left:-500px;" data-toggle="buttons"><label for="">Repeat</label>'+
                   '<label class="btn btn-primary active" ><input type="radio" name="newRecurrenceType['+incr+'][]" checked value="never" class="form-control" /> Never</label>'+
                   '<label class="btn btn-primary" ><input type="radio" name="newRecurrenceType['+incr+'][]" value="daily" class="form-control" /> Daily</label>'+
                   '<label class="btn btn-primary"><input type="radio" name="newRecurrenceType['+incr+'][]" value="weekly" class="form-control" /> Weekly</label>'+
