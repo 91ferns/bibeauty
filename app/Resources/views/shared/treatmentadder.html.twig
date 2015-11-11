@@ -1,21 +1,28 @@
 <div class="col-md-4">
-  <div class=" shadow" stlye="background-color:#fff;">
+  <div class=" shadow" style="background-color:#fff;">
     <div class="">
-      <div class="search">Search Treatments</div>
+      <div class="search">
+        <div class="input-group input-group-lg">
+        <input type="text" class="form-control" style="border: 0;" placeholder="Search Treatments">
+        <span class="input-group-btn" style="border: 0;">
+          <button class="btn btn-default" type="button" style="border: 0;"><img class="pull-right" src="{{ asset('assets/images/search_icon.png') }}"> </button>
+        </span>
+      </div>
+      </div>
     </div>
-    <hr>
+    <hr style="margin-top:5px;">
     <div class="">
       {% for category,cattxs in treatments %}
-        <h4 style="text-align:left;" data-toggle="collapse" aria-expanded="{% if loop.index0 == 0 %} true {% else %} false {% endif %}" data-target="#collapse_{{ category | replace({' ': '_'}) }}">{{ category }}</h4>
+        <h4 style="text-align:left;padding-left: 12px;color: rgb(153, 153, 153);cursor:pointer" data-toggle="collapse" aria-expanded="{% if loop.index0 == 0 %} true {% else %} false {% endif %}" data-target="#collapse_{{ category | replace({' ': '_'}) }}">{{ category }}</h4>
         <ul data-cat="{{category}}" id="collapse_{{ category | replace({' ': '_'}) }}" class="treatment list-unstyled collapse {% if loop.index0 == 0 %} in {% endif %}">
           {% for tx in cattxs %}
-            <li class="col-md-12 " data-cat="{{ category }}" data-id="{{tx.getId}}" data-price="{% if tx.getOriginalPrice is defined  %}{{tx.getOriginalPrice}}{% endif %}" >
+            <li class="col-md-12 " style="padding-bottom: 5px;" data-cat="{{ category }}" data-id="{{tx.getId}}" data-price="{% if tx.getOriginalPrice is defined  %}{{tx.getOriginalPrice}}{% endif %}" >
               {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}
                 {{ tx.getLabel | replace({'and': "&amp;"}) | raw }}
               {% else %}
                 {{ tx.getName }}
               {% endif %}
-               <img class="pull-right" src="{{ asset('assets/images/add_icon.png') }}" />
+               <img class="pull-right img-responsive" style="cursor:pointer" src="{{ asset('assets/images/add_icon.png') }}" />
             </li>
           {% endfor %}
         </ul>
