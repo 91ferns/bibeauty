@@ -16,8 +16,10 @@
 
     {% include 'shared/treatmentadder.html.twig' %}
     <div class="col-md-8">
-      {% if offers|length > 0 %}
-      <form class="form-inline" role="form">
+
+      <form action="{{ path('admin_business_offers_addedit_path',{ slug: business.getSlug, id: business.getId }) }}" method="post" class="form-inline" role="form">
+        {% if offers|length > 0 %}
+        {% set j = 0 %}
         {% for cat,catoffers in offers %}
         <h4>{{ cat }}</h4>
         <div class="table-responsive shadow offers">
@@ -27,19 +29,39 @@
                 <th>Treatment</th>
                 <th>Start Date</th>
                 <th>Times</th>
-                <th>Original Price</th>
-                <th>Discount Price</th>
+                <th style="width:13%;">Original Price</th>
+                <th style="width:13%;">Discount Price</th>
               </tr>
             </thead>
             <tbody>
-              <form action="{{ path('admin_offer_new_path',{ slug: business.getSlug, id: business.getId }) }}" method="post" class="form-inline" role="form">
-              {% for offer in catoffers %}
+              {% for i,offer in catoffers %}
               {% set tx = offer.getTreatment.getTreatmentCategory %}
               {% set av = offer.getAvailabilitySet %}
+              {% set avs = av.getAvailabilities %}
+              {% set times = [] %}
+              {% for t in avs %}
+                {% set times = times|merge([t.getDate | date('h:i')])  %}
+              {% endfor %}
               <tr data-id="{{offer.getId}}">
               <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}<input type="hidden" name="Treatment[]" value="{{tx.getId}}"/><input type="hidden" name="id[]" value="{{offer.getId}}"/></td>
-                <td><div class="input-group "><input type="text" class="form-control" name="StartDate[]" value="{{av.getStartDate | date('d-m-Y')}}"/></div></td>
-                <td><div class="input-group "><textarea class="form-control" name="Times[]" >{{av.getTimes() | join(', ')}}" /></textarea></div></td>
+                <td><div class="input-group "><input type="text" class="form-control" disabled name="StartDate[]" value="{{av.getStartDate | date('d-m-Y')}}"/></div></td>
+                <td>
+                  <!--<div class="input-group "><textarea class="form-control" name="Times[]" >{{av.getTimes() | join(', ')}}" /></textarea></div>-->
+                  <input type="hidden" name ="AvailabilityId" value="{{av.getId}}"/>
+                  <div class="select2-wrapper">
+                    <select multiple="true" class="form-control select2" name="Times[{{j}}][]">
+                      <option value="ALL">All Times</option>
+                    {% for hour in 7..21 %}
+                      {% for minute in 0..3 %}
+                        {% set formattedMinute = "%02d"|format(minute * 15) %}
+                        {% set time = hour ~ ':' ~ formattedMinute %}
+                        {% set selected = time in times ? 'selected' : '' %}
+                        <option {{ selected }} value="{{hour}}:{{formattedMinute}}">{{hour | nicehour }}:{{formattedMinute}} {{ hour | meridian }}</option>
+                      {% endfor %}
+                    {% endfor %}
+                    </select>
+                  </div>
+                </td>
                 <td><div class="input-group "><span class="input-group-addon">$</span><input type="text" disabled class="form-control" name="OriginalPrice[]" value="{{ offer.getTreatment.getOriginalPrice }}"></div></td>
                 <td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="CurrentPrice[]" value="{{ offer.getCurrentPrice }}" /></div>
                 <div class="form-group">
@@ -48,16 +70,16 @@
                       <!--<input type="checkbox" name="Recurring" class="form-control" />-->
                       <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary active" >
-                          <input type="radio" name="RecurrenceType" checked value="never" class="form-control" /> Never
+                          <input type="radio" name="RecurrenceType[{{j}}]" checked value="never" class="form-control" /> Never
                         </label>
                         <label class="btn btn-primary" >
-                          <input type="radio" name="RecurrenceType" value="daily" class="form-control" /> Daily
+                          <input type="radio" name="RecurrenceType[{{j}}]" value="daily" class="form-control" /> Daily
                         </label>
                         <label class="btn btn-primary">
-                          <input type="radio" name="RecurrenceType" value="weekly" class="form-control" /> Weekly
+                          <input type="radio" name="RecurrenceType[{{j}}]" value="weekly" class="form-control" /> Weekly
                         </label>
                         <label class="btn btn-primary">
-                          <input type="radio" name="RecurrenceType" value="monthly" class="form-control" /> Monthly
+                          <input type="radio" name="RecurrenceType[{{j}}]" value="monthly" class="form-control" /> Monthly
                         </label>
                       </div>
 
@@ -65,19 +87,26 @@
                   </div> <!-- /.form-group -->
                 </td>
               </tr>
+              {% set j = j + 1 %}
               {% endfor %}
             </tbody>
           </table>
         </div>
         {% endfor %}
-      {% endif %}
       {#{ form_start(form) }#}
 
         {#{ form_widget(form) }#}
         <input type="submit" value="Add Offers"
              class="btn btn-primary pull-right" />
       {#{ form_end(form) }#} <!-- /. form -->
+      {% else %}
+         There are no offers currently
+         <input type="submit" value="Add Offers"
+              class="btn btn-primary pull-right hidden" />
+      {% endif %}
+
     </form>
+
     </div>
   </div>
 </div>

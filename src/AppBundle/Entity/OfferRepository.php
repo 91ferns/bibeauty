@@ -303,4 +303,24 @@ class OfferRepository extends EntityRepository
         $offs[$cat] = [];
       }
   }
+
+/*  public function updateAll($ids,$times,$prices,$recurrence)
+  {
+      foreach($ids as $k => $id){
+        $this->doUpdate($id,$names[$k],$times[$k],$prices[$k]);
+      }
+  }*/
+
+  public function doUpdate($id,$time,$price,$recurrence){
+    $qb = $this->createQueryBuilder('o');
+    $qb->update("AppBundle:Offer",'o')
+        ->set('o.currentPrice',':price')
+        ->where('o.id = :id')
+        ->setParameters([
+            'price'=>$price,
+            'id'=>$id
+          ])
+        ->getQuery()
+        ->execute();
+  }
 }

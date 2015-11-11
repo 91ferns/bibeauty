@@ -74,6 +74,7 @@ class OffersController extends Controller
        $offers   = $this->getRepo('Offer');
        $business = $this->businessBySlugAndId($slug, $id);
        $offers   = $offers->findOffersByBusinessByCategory($business);
+
       /*foreach($offers as $cat => $offs){
         echo $cat .':<br>';
         foreach($offs as $off){
@@ -101,6 +102,7 @@ class OffersController extends Controller
          $business   = $this->businessBySlugAndId($slug, $id);
          $offers     = $offers->findOffersByBusinessByCategory($business);
          $treatments = $em->getRepository("AppBundle:Business")->findBusinessTreatmentsCategory($business);
+         var_dump($business.getId());exit;
          return $this->render(
             'account/offers/new.html.twig',
             array(
@@ -247,7 +249,142 @@ class OffersController extends Controller
         }
         return $times;
     }
+    /**
+     * @Route("/account/offers/{id}/{slug}/addedit", name="admin_business_offers_addedit_path")
+     * @Method("POST")
+     */
+  public function addEditAction($id, $slug, Request $request) {
+      $req = $request->request;
+      $em   = $this->getDoctrine()->getManager();
+      $business = $this->businessBySlugAndId($slug, $id);
+      $times = $req->get('Times', array());
+      $recurrenceTypes = $req->get('RecurrenceType', 'never');
+      $prices = $req->get('CurrentPrice', array());
+      $ids    = $req->get('id', array());
+      echo '<pre>';
+      var_dump($ids);echo '<br>';
+      var_dump($times); echo '<br>';
+      var_dump($recurrenceTypes);echo '<br>';
+      var_dump($prices);
+      exit;
 
+      $offers = $em->getRepository("AppBundle:Offer");
+
+      /** UPDATE EXISTING **/
+      foreach($ids as $k=>$id){
+        echo $k . '<br>';
+        $this->returnWithError($times[$k], 'Time ');
+        $this->returnWithError($prices[$k], 'Current Price ');
+        $offers->doUpdate($id,$times[$k],$prices[$k],$recurrenceTypes[$k]);
+      }
+
+      /** INSERT NEW OFFERS **/
+      $treatments      = $req->get('newTreatments');
+      $dates           = $req->get('newStartDate');
+      $times           =
+      $prices          = $req->get('newCurrentPrice');
+      $recurrenceTypes = $req->get('newRecurrenceType', 'never');
+      //$business = $this->businessBySlugAndId($slug, $id);
+      foreach($treatments as $k=>$tx){
+        $this->doCreate($slug, $id, $business, $tx, $dates[$k], $times[$k], $prices[$k],$recurrenceTypes[$k]);
+      }
+      $em->flush();
+      $this->get('session')->getFlashBag()->add('notice','Treatments successfully created/updated.');
+      return  $this->redirectToRoute('admin_business_treatments_new_path',  ["slug"=>$slug,"id"=>$id]);
+    }
+
+    function returnWithError($val,$field)
+    {
+      if (empty($val) || !$val || count($val) < 1) {
+        $this->get('session')->getFlashBag()->add('error', $field . ' cannot be empty. Please check and resubmit.');
+          return $this->redirectToRoute('admin_business_treatments_new_path',["slug"=>$slug,"id"=>$id]);
+      }
+      return false;
+    }
+
+    protected function doCreate($slug, $id, $business, $treatmentId, $date, $times, $discount,$recurrenceType,$recurrenceDOWs = array())
+    {
+      if (!$date || !$times || count($times) < 1 ){
+          return $this->redirectToRoot($slug, $id, $treatmentId, array(
+              'error',
+              'Date and time must be specified.'
+          ));
+      }
+
+      if (!$discount) {
+          return $this->redirectToRoot($slug, $id, $treatmentId, array(
+              'error',
+              'You must specify a discount.'
+          ));
+      }
+    $recurrenceDOWs = array_unique($recurrenceDOWs);
+
+    $treatments = $this->getRepo('Treatment');
+    $treatment = $treatments->findOneBy(array( 'id'=>$treatmentId ));
+
+    if (!$treatment) {
+        return $this->redirectToRoot($slug, $id, $treatmentId, array(
+            'error',
+            'Treatment not found.'
+        ));
+    }
+
+    if ((float) $discount >= (float) $treatment->getOriginalPrice()) {
+        return $this->redirectToRoot($slug, $id, $treatmentId, array(
+            'error',
+            'Discount must be cheaper than the original price.'
+        ));
+    }
+
+
+    $em = $this->getDoctrine()->getManager();
+
+    $offer = new Offer();
+    $offer->setBusiness($business);
+    $offer->setTreatment($treatment);
+    $offer->setCurrentPrice($discount);
+    $em->persist($offer);
+
+    $startDateTime = new \DateTime($date);
+
+    $availabilitySet = new OfferAvailabilitySet();
+    $availabilitySet->setOffer($offer);
+    $availabilitySet->setStartDate($startDateTime);
+    $availabilitySet->setDaysOfTheWeek($recurrenceDOWs);
+    $availabilitySet->setTimes($times);
+    $availabilitySet->setTreatment($treatment);
+    $availabilitySet->setRecurrenceType($recurrenceType);
+
+    $em->persist($availabilitySet);
+    $em->flush();
+
+    /*
+    $root = $this->get('kernel')->getRootDir();
+    $env = $this->get('kernel')->getEnvironment();
+
+    $processText = sprintf('php %s/console bibeauty:generate:availabilities %d --env=%s',
+        $root,
+        $availabilitySet->getId(),
+        $env
+    );
+
+    $process = new Process($processText);
+    $process->run(); */
+
+    $success = $this->doAvailabilities($availabilitySet->getId());
+
+    // we now need to create the availability set
+
+    if ($success) {
+        $message = 'Queued the creation of your availabilities.';
+    } else {
+        $em->remove($availabilitySet);
+        $em->remove($offer);
+        $em->flush();
+        $message = 'Unable to queue your availabilities. Please report this to us on the contact us page.';
+    }
+    return $message;
+  }
     /**
      * @Route("/account/offers/{id}/{slug}/toggleEnabled", name="admin_treatment_toggle_is_open")
      * @Method("POST")

@@ -120,6 +120,7 @@ class TreatmentsController extends Controller
      * @Method("POST")
      */
   public function addEditAction($id, $slug, Request $request) {
+    
       $req = $request->request;
       $em  = $this->getDoctrine()->getManager();
       $txs = $em->getRepository("AppBundle:Treatment");
