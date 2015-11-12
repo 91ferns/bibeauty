@@ -260,6 +260,7 @@ class OffersController extends Controller
       $times = $req->get('Times', array());
       $recurrenceTypes = $req->get('RecurrenceType', 'never');
       $prices = $req->get('CurrentPrice', array());
+      $businessId = $id;
       $ids    = $req->get('id', array());
       /*echo '<pre>';
       var_dump($ids);echo '<br>';
@@ -272,7 +273,6 @@ class OffersController extends Controller
 
         /** UPDATE EXISTING **/
         foreach($ids as $k=>$id){
-          echo $k . '<br>';
           $this->returnWithError($times[$k], 'Time ');
           $this->returnWithError($prices[$k], 'Current Price ');
           $offers->doUpdate($id,$times[$k],$prices[$k],$recurrenceTypes[$k]);
@@ -282,22 +282,18 @@ class OffersController extends Controller
 
       /** INSERT NEW OFFERS **/
       $treatments      = $req->get('newTreatment');
-      $dates           = $req->get('newStartDate');
-      $times           = $req->get('newTimes');
-      $prices          = $req->get('newCurrentPrice');
-      $recurrenceTypes = $req->get('newRecurrenceType', 'never');
-      //$business = $this->businessBySlugAndId($slug, $id);
-/*var_dump($treatments);echo '<br>';
-      var_dump($dates);echo '<br>';
-      var_dump($times); echo '<br>';
-      var_dump($recurrenceTypes);echo '<br>';
-      var_dump($prices);exit;*/
-      foreach($treatments as $k=>$tx){
-        $this->doCreate($slug, $id, $business, $tx, $dates[$k], $times[$k], $prices[$k],$recurrenceTypes[$k][0]);
+      if(!empty($treatments)){
+        $dates           = $req->get('newStartDate');
+        $times           = $req->get('newTimes');
+        $prices          = $req->get('newCurrentPrice');
+        $recurrenceTypes = $req->get('newRecurrenceType', 'never');
+        foreach($treatments as $k=>$tx){
+          $this->doCreate($slug, $id, $business, $tx, $dates[$k], $times[$k], $prices[$k],$recurrenceTypes[$k][0]);
+        }
+        $em->flush();
       }
-      $em->flush();
       $this->get('session')->getFlashBag()->add('notice','Treatments successfully created/updated.');
-      return  $this->redirectToRoute('admin_business_treatments_new_path',  ["slug"=>$slug,"id"=>$id]);
+      return  $this->redirectToRoute('admin_business_offers_new_path',  ["slug"=>$slug,"id"=>$businessId]);
     }
 
     function returnWithError($val,$field)

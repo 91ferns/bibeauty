@@ -321,6 +321,7 @@ class OfferRepository extends EntityRepository
             'id'=>$id
           ])
         ->getQuery()
+        //var_dump($qb->getSql());exit;
         ->execute();
   }
 }
