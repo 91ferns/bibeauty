@@ -45,8 +45,9 @@
               {% set avs = av.getAvailabilities %}
               {% set times = [] %}
               {% for t in avs %}
-                {% set times = times|merge([t.getDate | date('h:i')])  %}
+                {% set times = times|merge([t.getDate | date('g:i')])  %}
               {% endfor %}
+  
               <tr data-id="{{offer.getId}}">
               <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}<input type="hidden" name="Treatment[]" value="{{tx.getId}}"/><input type="hidden" name="id[]" value="{{offer.getId}}"/></td>
                 <td><div class="input-group "><input type="text" class="form-control DayField" disabled name="StartDate[]" value="{{av.getStartDate | date('d-m-Y')}}"/></div></td>
