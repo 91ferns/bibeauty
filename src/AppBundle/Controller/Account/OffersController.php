@@ -261,32 +261,39 @@ class OffersController extends Controller
       $recurrenceTypes = $req->get('RecurrenceType', 'never');
       $prices = $req->get('CurrentPrice', array());
       $ids    = $req->get('id', array());
-      echo '<pre>';
+      /*echo '<pre>';
       var_dump($ids);echo '<br>';
       var_dump($times); echo '<br>';
       var_dump($recurrenceTypes);echo '<br>';
-      var_dump($prices);
-      exit;
+      var_dump($prices);*/
 
-      $offers = $em->getRepository("AppBundle:Offer");
+      if(!empty($ids)){
+        $offers = $em->getRepository("AppBundle:Offer");
 
-      /** UPDATE EXISTING **/
-      foreach($ids as $k=>$id){
-        echo $k . '<br>';
-        $this->returnWithError($times[$k], 'Time ');
-        $this->returnWithError($prices[$k], 'Current Price ');
-        $offers->doUpdate($id,$times[$k],$prices[$k],$recurrenceTypes[$k]);
+        /** UPDATE EXISTING **/
+        foreach($ids as $k=>$id){
+          echo $k . '<br>';
+          $this->returnWithError($times[$k], 'Time ');
+          $this->returnWithError($prices[$k], 'Current Price ');
+          $offers->doUpdate($id,$times[$k],$prices[$k],$recurrenceTypes[$k]);
+        }
       }
 
+
       /** INSERT NEW OFFERS **/
-      $treatments      = $req->get('newTreatments');
+      $treatments      = $req->get('newTreatment');
       $dates           = $req->get('newStartDate');
-      $times           =
+      $times           = $req->get('newTimes');
       $prices          = $req->get('newCurrentPrice');
       $recurrenceTypes = $req->get('newRecurrenceType', 'never');
       //$business = $this->businessBySlugAndId($slug, $id);
+/*var_dump($treatments);echo '<br>';
+      var_dump($dates);echo '<br>';
+      var_dump($times); echo '<br>';
+      var_dump($recurrenceTypes);echo '<br>';
+      var_dump($prices);exit;*/
       foreach($treatments as $k=>$tx){
-        $this->doCreate($slug, $id, $business, $tx, $dates[$k], $times[$k], $prices[$k],$recurrenceTypes[$k]);
+        $this->doCreate($slug, $id, $business, $tx, $dates[$k], $times[$k], $prices[$k],$recurrenceTypes[$k][0]);
       }
       $em->flush();
       $this->get('session')->getFlashBag()->add('notice','Treatments successfully created/updated.');
@@ -321,7 +328,7 @@ class OffersController extends Controller
 
     $treatments = $this->getRepo('Treatment');
     $treatment = $treatments->findOneBy(array( 'id'=>$treatmentId ));
-
+  //  var_dump($treatment);
     if (!$treatment) {
         return $this->redirectToRoot($slug, $id, $treatmentId, array(
             'error',
@@ -372,7 +379,8 @@ class OffersController extends Controller
     $process->run(); */
 
     $success = $this->doAvailabilities($availabilitySet->getId());
-
+  //  var_dump($success);
+  //  var_dump($availabilitySet->getId());exit;
     // we now need to create the availability set
 
     if ($success) {
@@ -438,12 +446,12 @@ class OffersController extends Controller
 
     protected function doAvailabilities($availabilitySetId) {
 
-        try {
+        /*try {
             $this->get('old_sound_rabbit_mq.create_availabilities_producer')->publish($availabilitySetId);
             return true;
         } catch (\Exception $e) {
             return false;
-        }
+        }*/
 
 
         $em = $this->getDoctrine()->getManager();

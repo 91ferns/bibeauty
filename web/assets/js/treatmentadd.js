@@ -14,6 +14,7 @@ var txAdder = (function($,w,undefined){
     var $table  = getTableByCat(cat);
     addNewRow($table,cat,txid,txname,txprice,doOffers,incr);
     $('tr[data-id="'+txid+'"]').find('select').select2();
+    $('.DayField').datepicker();
   },
   getIncr = function(){
     var rows = $('.container .panel .col-md-8 tbody tr');
@@ -29,11 +30,11 @@ var txAdder = (function($,w,undefined){
   },
   getOfferRowTemplate = function(cat,txid,txname,txprice,incr){
     return '<tr data-id="'+txid+'">'+
-             '<td><span class="cat-icon">'+cat.charAt(0)+'</span>'+txname+'<input type="hidden" name="newTreatment[]" value="'+txid+'"/></td>'+
-             '<td><div class="input-group "><input type="text" class="form-control" id="DayField" name="newStartDate[]" value=""></div></td>'+
+             '<td><span class="cat-icon">'+cat.charAt(0)+'</span>'+txname+'<input type="hidden" name="newTreatment['+incr+']" value="'+txid+'"/></td>'+
+             '<td><div class="input-group "><input type="text" class="form-control DayField" name="newStartDate['+incr+']" value=""></div></td>'+
              '<td><div class="input-group ">'+ getTimeSelect(incr) +' </div></td>'+
-             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" disabled class="form-control" name="newOriginalPrice[]" value="'+txprice+'"></div></td>'+
-             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="newCurrentPrice[]" value=""></div>'+
+             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" disabled class="form-control" name="newOriginalPrice['+incr+']" value="'+txprice+'"></div></td>'+
+             '<td><div class="input-group "><span class="input-group-addon">$</span><input type="text" class="form-control" name="newCurrentPrice['+incr+']" value=""></div>'+
                '<div class="form-group" style="padding-top: 30px;"><div class="input-group" style="position:relative;"><br><div class="btn-group" style="position: absolute;left:-500px;" data-toggle="buttons"><label for="">Repeat</label>'+
                   '<label class="btn btn-primary active" ><input type="radio" name="newRecurrenceType['+incr+'][]" checked value="never" class="form-control" /> Never</label>'+
                   '<label class="btn btn-primary" ><input type="radio" name="newRecurrenceType['+incr+'][]" value="daily" class="form-control" /> Daily</label>'+

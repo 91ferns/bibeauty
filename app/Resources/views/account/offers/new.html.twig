@@ -49,7 +49,7 @@
               {% endfor %}
               <tr data-id="{{offer.getId}}">
               <td><span class="cat-icon">{{ cat[:1] }}</span>{{ tx.getLabel }}<input type="hidden" name="Treatment[]" value="{{tx.getId}}"/><input type="hidden" name="id[]" value="{{offer.getId}}"/></td>
-                <td><div class="input-group "><input type="text" class="form-control" disabled name="StartDate[]" value="{{av.getStartDate | date('d-m-Y')}}"/></div></td>
+                <td><div class="input-group "><input type="text" class="form-control DayField" disabled name="StartDate[]" value="{{av.getStartDate | date('d-m-Y')}}"/></div></td>
                 <td>
                   <!--<div class="input-group "><textarea class="form-control" name="Times[]" >{{av.getTimes() | join(', ')}}" /></textarea></div>-->
                   <input type="hidden" name ="AvailabilityId" value="{{av.getId}}"/>
@@ -124,6 +124,7 @@
       jQuery('#businesses-link').on('click',function(){
         jQuery('.businesses-list').toggleClass('hidden');
       });
+      jQuery('.DayField').datepicker();
   });
 
 </script>{% endblock %}
