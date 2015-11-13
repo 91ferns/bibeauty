@@ -18,74 +18,69 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
     {% block stylesheets %}{% endblock %}
+    <style type="text/css">
+    html, body {
+      height: 100%;
+    }
+    </style>
 </head>
 <body class="admin">
 
-<nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a href="#" class="hide-menu btn btn-default hidden-sm hidden-xs">
-          <span><i class="glyphicon glyphicon-menu-hamburger"></i> Toggle Menu</span>
+      <button type="button" class="navbar-toggle " data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand">
+          <span class="sr-only">BiBeauty Admin</span>
+          <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
         </a>
-        <a class="navbar-brand hidden-md hidden-lg">
-          BiBeauty Admin
-        </a>
-        <button type="button" class="navbar-toggle collapsed hidden-md hidden-lg" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
       </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{path('admin_path')}}" class="btn btn-default">
-              <span class="account-label">My Account</span>
-              <span class="account-icon"><img src="{{asset('assets/images/account-generic.png') }}"></span>
-              <span class="account-email">{{ app.user.getEmail() }}</span>
-            </a></li>
-            <li><a href="{{path('logout_path')}}" class="btn btn-default">Logout</a></li>
-        </ul>
-        <ul class="nav navbar-nav hidden-md hidden-lg">
-          {% include 'shared/nav.html.twig' %}
-        </ul>
-      </div>
-
     </div>
-</nav>
-
-<main>
-
-  <nav id="secondary">
-    <ul class="nav nav-pills nav-stacked">
-      {% include 'shared/nav.html.twig' %}
-    </ul>
   </nav>
 
-  <section id="admin-main">
+  <div class="navmenu navmenu-default navmenu-fixed-left">
+    <ul class="nav navmenu-nav">
+      <li><a href="../navmenu/">Pacific Salon 1</a></li>
+      <li><a href="../navmenu-push/">Pacific Salon 1</a></li>
+      <li class="active"><a href="./">Pacific Salon 1</a></li>
+    </ul>
+    <ul class="nav navmenu-nav">
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
 
-    <div class="alert" role="alert">
-      <ul>
-        {% for flashMessage in app.session.flashbag.get('notice') %}
-          <li class="notice">
-              {{ flashMessage }}
-          </li>
-        {% endfor %}
-        {% for flashMessage in app.session.flashbag.get('error') %}
-          <li class="error">
-              {{ flashMessage }}
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
+  <div class="canvas">
 
-    <div class="admin-main-inner">
-      {% block body %}{% endblock %}
-    </div>
+    <div class="container">
+      <section id="admin-main">
 
-  </section>
+        <div class="alert" role="alert">
+          <ul>
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+              <li class="notice">
+                  {{ flashMessage }}
+              </li>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+              <li class="error">
+                  {{ flashMessage }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
 
-</main>
+        <div class="admin-main-inner">
+          {% block body %}{% endblock %}
+        </div>
+
+      </section>
+    </div><!-- /.container -->
+
+  </div>
 
 <!-- footer -->
 <script>
