@@ -176,14 +176,14 @@ class AuthenticationController extends Controller {
     function forgotPasswordEmail(Request $request){
         $email = $request->request->get('email');
         $token = sha1(uniqid($email, true));
-         $message = \Swift_Message::newInstance()
+        $message = \Swift_Message::newInstance()
                 ->setSubject('Bibeauty Password Reset')
                 ->setFrom('infofo@bibeauty.com')
                 ->setTo($email)
                 ->setBody(
                     $this->renderView(
-                    'emails/passwordreset.html.twig',
-                    array('token' => $token)
+                        'emails/passwordreset.html.twig',
+                        array('token' => $token)
                 ),
                 'text/html'
         );
