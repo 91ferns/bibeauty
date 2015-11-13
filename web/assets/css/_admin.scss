@@ -54,11 +54,14 @@ $admin-nav-height: 110px;
     }
   }
 
-  @media (min-width: 992px) {
+  .navbar {
+    background: #464646;
+    border: none;
+  }
+
+  @media (min-width: $screen-md-min) {
     padding: 0;
     .navbar {
-      background: #464646;
-      border: none;
       height: $admin-nav-height;
     }
     .canvas {
