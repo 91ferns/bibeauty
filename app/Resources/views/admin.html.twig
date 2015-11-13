@@ -43,11 +43,13 @@
   </nav>
 
   <div class="navmenu navmenu-default navmenu-fixed-left">
+    {% if businesses is defined %}
     <ul class="nav navmenu-nav">
-      <li><a href="../navmenu/">Pacific Salon 1</a></li>
-      <li><a href="../navmenu-push/">Pacific Salon 1</a></li>
-      <li class="active"><a href="./">Pacific Salon 1</a></li>
+      {% for business in businesses %}
+        <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
+      {% endfor %}
     </ul>
+    {% endif %}
     <ul class="nav navmenu-nav">
       <li><a href="{{ path('logout_path') }}">Logout</a></li>
     </ul>
