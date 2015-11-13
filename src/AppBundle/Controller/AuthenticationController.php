@@ -124,9 +124,9 @@ class AuthenticationController extends Controller {
     * @Method({"GET"})
     */
    function forgotPassword(Request $request){
-            return $this->render(
-                'authentication/forgotpassword.html.twig'
-            );
+        return $this->render(
+            'authentication/forgotpassword.html.twig'
+        );
    }
 
     /**
@@ -176,22 +176,46 @@ class AuthenticationController extends Controller {
     function forgotPasswordEmail(Request $request){
         $email = $request->request->get('email');
         $token = sha1(uniqid($email, true));
-        $message = \Swift_Message::newInstance()
-                ->setSubject('Bibeauty Password Reset')
-                ->setFrom('infofo@bibeauty.com')
-                ->setTo($email)
-                ->setBody(
-                    $this->renderView(
-                        'emails/passwordreset.html.twig',
-                        array('token' => $token)
-                ),
-                'text/html'
-        );
 
-        $x = $this->get('mailer')->send($message);
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository("AppBundle:User")->findBy(['email'=>$email]);
+        $user = $em->getRepository("AppBundle:User")->findOneBy(['email'=>$email]);
+
+        if (!$user) {
+            return $this->render(
+                'authentication/forgotpassword.html.twig',
+                array(
+                    'error' => 'Could not find a user by that email address'
+                )
+            );
+        }
+
         $user->setResetToken($token);
         $em->flush();
+
+        try {
+
+            $message = \Swift_Message::newInstance()
+                    ->setSubject('Bibeauty Password Reset')
+                    ->setFrom('infofo@bibeauty.com')
+                    ->setTo($email)
+                    ->setBody(
+                        $this->renderView(
+                            'emails/passwordreset.html.twig',
+                            array('token' => $token)
+                    ),
+                    'text/html'
+            );
+
+            $x = $this->get('mailer')->send($message);
+
+        } catch (\Exception $e) {
+            return $this->render(
+                'authentication/forgotpassword.html.twig',
+                array(
+                    'error' => 'Our system is having trouble sending emails right now. Please try again later'
+                )
+            );
+        }
+
     }
 }
