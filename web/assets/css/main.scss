@@ -463,71 +463,9 @@ main section {
   }
 }
 
-$admin-nav-height: 110px;
 
-// @import 'admin';
-.admin {
 
-  .brand-wrapper {
-    text-align: center;
-    padding: 16px 0;
-    height: $admin-nav-height;
-  }
-  .navbar-brand {
-    padding: 0px;
-    float: none;
-    margin: 0 !important;
-    color: $brand-primary;
-    > img {
-      display: inline;
-    }
-  }
-
-  .navbar-toggle {
-    left: 15px;
-    position: absolute;
-    border: 0px;
-    background: none !important;
-    .icon-bar {
-      color: $brand-primary;
-      border-color: $brand-primary;
-      background: $brand-primary;
-    }
-  }
-
-  .navmenu {
-    z-index: 1;
-    padding-top: $navbar-height + 20px;
-  }
-
-  .canvas {
-    position: relative;
-    left: 0;
-    z-index: 2;
-    min-height: 100%;
-    padding: 50px 0 0 0;
-    background: #fff;
-  }
-
-  @media (min-width: 0) {
-    .navbar-toggle {
-      display: block; /* force showing the toggle */
-    }
-  }
-
-  @media (min-width: 992px) {
-    padding: 0;
-    .navbar {
-      background: #464646;
-      border: none;
-      height: $admin-nav-height;
-    }
-    .canvas {
-      padding: 0;
-      padding-top: $admin-nav-height;
-    }
-  }
-}
+@import 'admin';
 
 @import 'businesses';
 
