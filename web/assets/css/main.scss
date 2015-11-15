@@ -791,3 +791,118 @@ $greydrk:#7f8d9a;
 .bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{
   color:#bec3c7;
 }
+
+/* Select 2 stuff */
+.select2-selection.select2-selection--single{
+  height: 46px;
+  font-size: 18px;
+  padding-top: 5px;
+  border-radius: 0;
+  color:#000;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder{color:#000;}
+.select2-container--default .select2-selection--single .select2-selection__arrow{top:10px;}
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #000 transparent;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #000 transparent transparent transparent;
+}
+
+.form-transparent-wrapper {
+  input, select, button, .select2-selection {
+    border: 0px !important;
+    font-size: 16px !important;
+  }
+
+  button {
+    text-align: center;
+    height: 46px;
+    width: 100%;
+
+    @media (min-width: $screen-md-min) {
+      width: 145px;
+    }
+  }
+
+  .select2-selection {
+    padding-left: 8px;
+  }
+
+  .select2-container--default {
+    &.select2-container--open .select2-selection--single .select2-selection__arrow b {
+      border-color: transparent transparent white transparent;
+    }
+
+    .select2-selection--single .select2-selection__arrow {
+      background-color: $brand-primary;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      right: 15px;
+      b {
+        border-color: white transparent transparent transparent;
+      }
+    }
+  }
+
+  #TreatmentSelect-Wrapper {
+    select {
+      @media (max-width: $screen-sm-max) {
+        width: 100% !important;
+      }
+
+      @media (min-width: $screen-md-min) {
+        width: 230px;
+      }
+    }
+  }
+
+  .checkbox {
+    background-color: white;
+    width: 100%;
+
+    @media (min-width: $screen-md-min) {
+      width: 145px;
+    }
+    font-size: 16px;
+    color: #666666;
+    height: 46px;
+    padding: 10px 16px;
+    line-height: 1.33333;
+    border-radius: 0px;
+    label {
+      width: 100%;
+      padding-left: 0px;
+      position: relative;
+    }
+    input {
+      margin: 0;
+      @media (max-width: $screen-sm-max) {
+        right: 0px;
+        position: absolute;
+      }
+      @media (min-width: $screen-md-min) {
+        float: right;
+      }
+      
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+    	width: 24px;
+      height: 24px;
+    	border-radius: 50%;
+      &:checked {
+      	background-color: $brand-primary;
+      	color: white;
+        background-image: url('../images/checkmark.png');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+
+  input, select, .select2-selection {
+    color: #666666 !important;
+  }
+}

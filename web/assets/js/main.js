@@ -1,5 +1,24 @@
 jQuery(function($) {
    	$('#DayField').datepicker();
+
+    $('.ghetto-checkbox').click(function() {
+      var checked = [];
+      $('.ghetto-checkbox').each(function() {
+        var $this = $(this);
+
+        if ($this.is(':checked')) {
+          checked.push($this.val());
+        }
+
+      });
+
+      if (checked.length > 1) {
+        $('#DateSelect').val('all');
+      } else {
+        $('#DateSelect').val(checked[0]);
+      }
+
+    });
 });
 
 //window scroll function for navbar opacity
