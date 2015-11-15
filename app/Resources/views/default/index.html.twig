@@ -1,23 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<style>
-.select2-selection.select2-selection--single{
-  height: 46px;
-font-size: 18px;
-padding-top: 5px;
-border-radius: 0;
-color:#000;
-}
-.select2-container--default .select2-selection--single .select2-selection__placeholder{color:#000;}
-.select2-container--default .select2-selection--single .select2-selection__arrow{top:10px;}
-.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-    border-color: transparent transparent #000 transparent;
-}
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: #000 transparent transparent transparent;
-}
-</style>
 <section id="top-slider">
     <div class="jumbotron">
         <div class="container">
@@ -27,16 +10,16 @@ color:#000;
             <div class="row">
               <div class="col-md-10 col-md-offset-1">
                 <div class="form-transparent-wrapper">
-                  <form action="{{path('listings_search_path')}}">
-                    <div class="row">
-                      <div class="col-md-3 col-sm-6">
+                  <form action="{{path('listings_search_path')}}" class="form-inline">
+                      <div class="form-group">
                         <label class="sr-only" for="JumboLocation">Name</label>
                         <input type="text" name="location" class="form-control input-lg" id="JumboLocation" placeholder="Location" value="Los Angeles" disabled>
-                      </div> <!-- /.col -->
-                      <div class="col-md-3 col-sm-6">
+                      </div> <!-- /.form-group -->
+
+                      <div class="form-group" id="TreatmentSelect-Wrapper">
                         <label class="sr-only" for="JumboTreatment">Treatment</label>
-                        <select data-minimumResultsForSearch="1" data-placeholder="Select a Treatment" class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
-                          <option style="color: #999;" value="">Select a Treatment</option>
+                        <select data-minimumResultsForSearch="1" data-placeholder="Treatment" class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
+                          <option style="color: #999;" value="">Treatment</option>
                           {% for category in categories %}
                             <option value="{{category.id }}">{{category.getLabel}}</option>
                             {% for subcategory in category.getChildren %}
@@ -44,25 +27,39 @@ color:#000;
                             {% endfor %}
                           {% endfor %}
                         </select>
-                      </div> <!-- /.col -->
-                      <div class="col-md-3 col-sm-6">
-                          <label class="sr-only" for="JumboDate">Date</label>
-                          <div class="input-group input-group-lg">
-                              <span class="input-group-addon" id="JumboDate">
-                                  <i class="fa fa-calendar"></i>
-                              </span>
-                              <select class="form-control" name="date" aria-describedby="JumboDate">
-                                <option value="all">Date</option>
-                                <option value="all">Today or Tomorrow</option>
-                                <option value="today">Today</option>
-                                <option value="tomorrow">Tomorrow</option>
-                              </select>
+                      </div> <!-- /.form-group -->
+
+                      <select class="sr-only" name="date" aria-describedby="JumboDate" id="DateSelect">
+                        <option value="all">Date</option>
+                        <option value="all">Today or Tomorrow</option>
+                        <option value="today">Today</option>
+                        <option value="tomorrow">Tomorrow</option>
+                      </select>
+
+                      <div class="form-group">
+                          <label class="sr-only" for="JumboDate">Today?</label>
+                          <div class="checkbox">
+                            <label>
+                              Today
+                              <input type="checkbox" class="ghetto-checkbox" value="today">
+                            </label>
                           </div>
-                      </div> <!-- /.col -->
-                      <div class="col-md-3 col-sm-6" id="searchbar-front">
-                        <button type="submit" class="btn btn-default btn-lg"><i class="fa fa-search"></i> Search</button>
-                      </div> <!-- /.col -->
-                    </div> <!-- /.row -->
+                      </div> <!-- /.form-group -->
+
+                      <div class="form-group">
+                          <label class="sr-only" for="JumboDate">Tomorrow?</label>
+                          <div class="checkbox">
+                            <label>
+                              Tomorrow
+                              <input type="checkbox" class="ghetto-checkbox" value="tomorrow">
+                            </label>
+                          </div>
+                      </div> <!-- /.form-group -->
+
+                      <div class="form-group" id="searchbar-front">
+                        <button type="submit" class="btn btn-default btn-lg">Search</button>
+                      </div> <!-- /.form-group -->
+
                   </form>
                 </div> <!-- /.form-transparent-wrapper-->
               </div> <!-- /.col -->
@@ -172,8 +169,13 @@ color:#000;
   </div> <!-- /.container -->
 
 </section>
+<style type="text/css">
+.select2-dropdown {
+  border: 0px;
+  border-radius: 0;
+}
+</style>
 {% endblock %}
-
 {% block javascripts %}
 <script>
   jQuery(document).ready(function(){
