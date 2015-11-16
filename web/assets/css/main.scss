@@ -845,7 +845,7 @@ $greydrk:#7f8d9a;
   }
 
   #TreatmentSelect-Wrapper {
-    select {
+    select:not(.select2-hidden-accessible) {
       @media (max-width: $screen-sm-max) {
         width: 100% !important;
       }
@@ -883,13 +883,16 @@ $greydrk:#7f8d9a;
       @media (min-width: $screen-md-min) {
         float: right;
       }
-      
+
       appearance: none;
       -webkit-appearance: none;
       border: 0;
     	width: 24px;
       height: 24px;
     	border-radius: 50%;
+
+      background-color: #666666;
+
       &:checked {
       	background-color: $brand-primary;
       	color: white;
@@ -903,4 +906,8 @@ $greydrk:#7f8d9a;
   input, select, .select2-selection {
     color: #666666 !important;
   }
+}
+
+.select2-hidden-accessible {
+  width: 1px !important;
 }
