@@ -2,62 +2,70 @@
 
 {% block body %}
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Businesses
-    <a href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
-  </div>
-  <div class="panel-body">
+<a href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
+
     {% if businesses | length > 0 %}
-    <div class="table-responsive">
-      <table class="table table-striped">
-
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Bookings</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-
-        <tbody>
+      <div class="row">
           {% for business in businesses %}
-          <tr>
-            <td>{{ business.getId }}</td>
-            <td>{{ business.getName }}</td>
-            <td>{{ business.getAddress.getFullAddressString}}
-            <td>
-              <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                View Bookings
-              </a>
-            </td>
-            <td>
-              <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                Edit
-              </a>
-            </td>
-            <td>
-              <a href="{{ path('admin_business_delete_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                Delete
-              </a>
-            </td>
 
-          </tr>
-          {% endfor %}
+          <div class="col-md-4 col-sm-6">
+            <div class="business-card card" data-id="{{ business.getId }}">
 
+              <figure class="thumbnail">
+                {% if business.getLogoAttachment %}
+                  <span class="sr-only">{{ business.getName }}</span>
+                  <img src="{{ business.getLogoAttachment.getKey }}" alt="{{ business.getLogo }}">
+                {% else %}
+                  <span class="business-title">{{ business.getName }}</span>
+                {% endif %}
+              </figure>
 
+              <div class="under-thumbnail">
 
-        </tbody>
-      </table>
+                <div class="buttons-caption-wrapper">
+
+                  <div class="buttons-caption half">
+                    <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      My Bookings
+                    </a>
+                  </div>
+                  <div class="buttons-caption half bordered">
+                    <a href="{{ path('admin_business_treatments_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      All Treatments
+                    </a>
+                  </div>
+                  <div class="buttons-caption half">
+                    <a href="{{ path('admin_business_offers_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      My Offers
+                    </a>
+                  </div>
+                  <div class="buttons-caption half bordered">
+                    <a href="{{ path('admin_business_therapists_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      Therapists
+                    </a>
+                  </div>
+
+                  <div class="buttons-caption full">
+                    <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      Edit
+                    </a> <a href="{{ path('admin_business_delete_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      Delete
+                    </a>
+                  </div>
+
+                </div> <!-- /.buttons-caption -->
+
+              </div>
+
+            </div>
+          </div>
+
+        {% endfor %}
+
     </div>
     {% else %}
     <p>You have no businesses</p>
     {% endif %}
-  </div>
-</div>
 
 
 {% endblock %}

@@ -1,7 +1,68 @@
 
 $admin-nav-height: 110px;
+$card-radius: 10px;
 
 .admin {
+
+  .card {
+    background-color: white;
+    border-radius: 12px;
+
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
+
+    .thumbnail {
+      margin: 0;
+      background: transparent;
+      border-radius: $card-radius $card-radius 0 0;
+      padding: 42px;
+      min-height: 300px;
+      text-align: center;
+    }
+
+    .business-title {
+      font-size: 18px;
+      color: #b4b4b4;
+    }
+
+    .buttons-caption-wrapper {
+      background: #f5f5f5;
+      color: #b4b4b4;
+      border-radius: 0 0 $card-radius $card-radius;
+
+      border-top: 1px solid #e6e6e6;
+
+      @extend .clearfix;
+
+
+      .buttons-caption {
+        &, a {
+          color: #b4b4b4;
+        }
+        width: 100%;
+        text-align: center;
+        line-height: 58px;
+        &.half {
+          width: 50%;
+
+          &.bordered {
+            border-left: 1px solid #e6e6e6;
+          }
+
+        }
+
+        border-bottom: 1px solid #e6e6e6;
+        &:last-child {
+          border-bottom: 0px;
+        }
+
+        height: 58px;
+        float: left;
+        font-size: 15px;
+
+      }
+
+    }
+  }
 
   .brand-wrapper {
     text-align: center;
