@@ -13,9 +13,12 @@
 
               <figure class="thumbnail">
                 {% if business.getLogoAttachment %}
-                  <span class="sr-only">{{ business.getName }}</span>
-                  <img src="{{ business.getLogoAttachment.getKey }}" alt="{{ business.getLogo }}">
+
+                  <div class="logo-circle" style="background-image: url('{{ business.getLogoAttachment.getKey | s3 }}')">
+                    <span class="sr-only">{{ business.getName }}</span>
+                  </div>
                 {% else %}
+
                   <span class="business-title">{{ business.getName }}</span>
                 {% endif %}
               </figure>

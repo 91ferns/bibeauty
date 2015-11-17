@@ -19,6 +19,15 @@ $card-radius: 10px;
       text-align: center;
     }
 
+    .logo-circle {
+      border-radius: 50%;
+      padding-bottom: 100%;
+      background-color: #f0f0f0;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
     .business-title {
       font-size: 18px;
       color: #b4b4b4;
