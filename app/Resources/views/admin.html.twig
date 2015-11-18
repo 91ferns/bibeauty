@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% include 'shared/favicon.html.twig' %}
 
-    <title>{% block title %}BiBeauty{% endblock %}</title>
+    <title>{% block title %}BiBeauty Admin{% endblock %}</title>
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,600,300" rel="stylesheet" type="text/css">
     {% stylesheets
       '@vendor_css'
@@ -43,9 +43,9 @@
   </nav>
 
   <div class="navmenu navmenu-default navmenu-fixed-left">
-    {% if businesses is defined %}
+    {% if app.user.hasBusinesses %}
     <ul class="nav navmenu-nav">
-      {% for business in businesses %}
+      {% for business in app.user.getBusinesses %}
         <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
       {% endfor %}
     </ul>
