@@ -4,6 +4,42 @@ $card-radius: 10px;
 
 .admin {
 
+  .almost-a {
+
+  }
+
+  .navbar-right {
+    position: absolute;
+    right: 0px;
+    
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      padding-top: 20px;
+
+      > li {
+        display: inline-block;
+
+        a, .almost-a {
+          color: $brand-primary;
+          font-size: 16px;
+          display: inline-block;
+          padding: 8px 15px;
+          border-left: 1px solid #646464;
+        }
+
+        &:first-child {
+          a, .almost-a {
+            border-left: 0px;
+          }
+        }
+
+      }
+    }
+  }
+
   .business-panel-header {
     padding-bottom: 15px;
   }

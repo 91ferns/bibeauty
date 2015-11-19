@@ -34,11 +34,27 @@
         <span class="icon-bar"></span>
       </button>
       <div class="brand-wrapper">
-        <a class="navbar-brand">
-          <span class="sr-only">BiBeauty Admin</span>
-          <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
-        </a>
+        <div class="navbar-brand">
+          <div class="container" style="position:relative;">
+            <div class="navbar-right visible-md visible-lg">
+              <ul>
+                <li>
+                  <span class="almost-a">
+                    Welcome {{ app.user.getFirstName }}
+                  </span>
+                </li>
+                <li><a href="{{path('logout_path')}}">
+                  Logout
+                </a></li>
+              </ul>
+            </div> <!-- /.navbar-right -->
+            
+            <span class="sr-only">BiBeauty Admin</span>
+            <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
+          </div> <!-- /.container -->
+        </div> <!-- .navbar-brand -->
       </div>
+
     </div>
   </nav>
 
