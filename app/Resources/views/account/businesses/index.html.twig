@@ -11,7 +11,7 @@
         <select id="BusinessesSelect" class="businesses-select form-control" name="BusinessSelected">
           {% if app.user.hasBusinesses %}
             {% for business in app.user.getBusinesses %}
-            <option value="{{business.getId}}">{{business.getName}}</option>
+            <option value="{{business.getId}}" data-url="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</option>
             {% endfor %}
           {% endif %}
         </select>
@@ -19,11 +19,12 @@
       </div>
 
       <div class="hidden-xs hidden-sm col-md-4">
-
-        <a href="{{path('admin_new_businesses_path')}}" class="admin-btn">
-          <i class="fa fa-plus fa-lg"></i>
-          <strong>Add Business</strong>
-        </a>
+        <div class="admin-buttons align-right">
+          <a href="{{path('admin_new_businesses_path')}}" class="admin-btn">
+            <img src="{{ asset('assets/images/add-button.png') }}" alt="Add">
+            Add Business
+          </a>
+        </div>
 
       </div>
 

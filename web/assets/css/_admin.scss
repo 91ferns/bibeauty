@@ -4,6 +4,26 @@ $card-radius: 10px;
 
 .admin {
 
+  .business-panel-header {
+    padding-bottom: 15px;
+  }
+
+  .admin-btn {
+    font-size: 18px;
+    line-height: 26px;
+    color: $brand-primary;
+    text-decoration: none;
+
+    img {
+      margin-top: -2px;
+      margin-right: 4px;
+    }
+  }
+
+  .admin-buttons {
+    padding-top: 16px;
+  }
+
   .card {
     background-color: white;
     border-radius: 12px;
@@ -114,7 +134,7 @@ $card-radius: 10px;
     left: 0;
     z-index: 2;
     min-height: 100%;
-    padding: 50px 0 0 0;
+    padding: 80px 0 0 0;
     background: #f0f0f0;
   }
 

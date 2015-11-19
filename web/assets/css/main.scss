@@ -911,3 +911,129 @@ $greydrk:#7f8d9a;
 .select2-hidden-accessible {
   width: 1px !important;
 }
+
+.businesses-select {
+  padding: 0px;
+  height: 64px;
+  border: 0px;
+  background: none;
+
+  box-shadow: none;
+
+  &.select2-drop-above.select2-dropdown-open .select2-choice {
+
+    background-color: $brand-primary;
+    background-image: none;
+
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+    border: 0px;
+    color: white;
+
+    border-radius: 12px;
+
+  }
+
+  &.select2-dropdown-open {
+    .select2-choice {
+      box-shadow: none;
+      // border-radius: 12px 12px 0 0;
+    }
+
+    .select2-arrow b {
+      background-position: -19px center !important;
+    }
+  }
+
+  .select2-choice {
+    border-radius: 12px;
+    border: 0px;
+    height: 64px;
+    line-height: 64px;
+    background-color: $brand-primary;
+    background-image: none;
+
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+
+    color: white;
+
+    .select2-arrow {
+      background: none;
+      border: 0px;
+
+      b {
+        background-image: url('../images/select2-arrows.png') !important;
+        background-size: auto !important;
+        background-position: 0px center;
+        // background-position: -19px center;
+      }
+    }
+  }
+
+  .select2-chosen {
+    text-align: center;
+  }
+}
+
+.admin {
+  .select2-drop {
+    background-color: white;
+    box-shadow: none;
+    border-radius: 0;
+    color: #b4b4b4;
+    margin-top: -12px;
+
+    &:before {
+      content: "";
+      border-radius: 0 0 12px 12px;
+      height: 12px;
+      width: 100%;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, .05);
+      display: block;
+      background-color: $brand-primary;
+    }
+
+    &.select2-drop-above {
+      margin-top: 12px;
+      &:before {
+        content: none;
+        height: 0px;
+      }
+      &:after {
+        content: "";
+        border-radius: 12px 12px 0 0;
+        height: 12px;
+        width: 100%;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, .05);
+        display: block;
+        background-color: $brand-primary;
+      }
+    }
+
+    .select2-results {
+      padding: 0px;
+      margin: 0px;
+      li {
+        height: 64px;
+        color: #b4b4b4;
+        padding: 20px;
+
+        &.select2-highlighted {
+          background-color: transparent;
+          color: $brand-primary;
+        }
+
+        .select2-result-label {
+          padding: 0px;
+        }
+      }
+    }
+  }
+
+  .select2-drop-active {
+    border: 0px;
+  }
+}
+
+.align-right {
+  text-align: right;
+}
