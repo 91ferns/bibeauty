@@ -12,11 +12,11 @@
 
         {{ form_start(form, {'attr': { 'novalidate': 'true' }} ) }}
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4 col-xs-6">
               {{ form_label(form.headerAttachment ) }}
               {{ form_widget(form.headerAttachment) }}
           </div>
-          <div class="col-md-4 bordered-file">
+          <div class="col-md-4 col-xs-6 bordered-file">
             {{ form_label(form.logoAttachment ) }}
             {{ form_widget(form.logoAttachment) }}
           </div>
