@@ -405,7 +405,63 @@ $card-radius: 10px;
       }
     }
 
+    #signup_headerAttachment, #signup_logoAttachment {
+      margin-top: 10px;
+    }
+
+    .bordered-file {
+      border-left: 1px solid #e6e6e6;
+    }
+
+    .btn-file, #signup_headerAttachment .form-group, #signup_logoAttachment .form-group {
+        position: relative;
+        overflow: hidden;
+
+        @extend .btn;
+        @extend .btn-primary;
+
+        height: 45px;
+        padding: 11px 25px;
+
+        border: 0px;
+        border-radius: 7px;
+
+        &:before {
+          content: "Upload";
+        }
+
+        input[type=file] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          min-width: 100%;
+          min-height: 100%;
+          font-size: 100px;
+          text-align: right;
+          filter: alpha(opacity=0);
+          opacity: 0;
+          outline: none;
+          background: white;
+          cursor: inherit;
+          display: block;
+        }
+    }
+
+    .control-label {
+      font-weight: normal;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+  hr {
+    width: 100%;
+  }
+
+
 }
+
 
 .businesses-table {
 
@@ -420,4 +476,12 @@ $card-radius: 10px;
 
 .client-more {
   cursor: pointer;
+}
+
+.btn-lg {
+  height: 45px;
+  padding: 11px 25px;
+
+  border: 0px;
+  border-radius: 7px;
 }

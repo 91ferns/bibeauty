@@ -29,23 +29,23 @@ class BusinessType extends AbstractType
                   'label' => false
               ))
               ->add('landline', 'text', array(
-                   'label' => 'Landline Phone Number',
+                   'label' => false,
                    'attr' => array(
                       'placeholder' => 'Landline Phone Number'
                   ),
                   'required' => false
               ))
               ->add('mobile', 'text', array(
-                   'label' => 'Mobile Phone Number',
+                   'label' => false,
                    'attr' => array(
                       'placeholder' => 'Mobile Phone Number'
                   ),
                   'required' => false
               ))
                ->add('description', 'textarea', array(
-                   'label' => 'Business Overview',
+                   'label' => false,
                    'attr' => array(
-                      'placeholder' => 'Tell customers a little about what your business does and what makes it stand out :)'
+                      'placeholder' => 'Business Overview: Tell customers a little about what your business does and what makes it stand out :)'
                    )
                 ))
                 ->add('yelpLink', 'url', array(
