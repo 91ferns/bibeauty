@@ -649,6 +649,20 @@ main section {
   text-align: right;
 }
 
+.align-center {
+  text-align: center;
+}
+
+@media (min-width: $screen-md-min) {
+  .align-md-right {
+      text-align: right !important; //align-right:
+  }
+
+  .align-md-center {
+    text-align: center !important;
+  }
+}
+
 #terms {
   li {
     padding-bottom: 5px;

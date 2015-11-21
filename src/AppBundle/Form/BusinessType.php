@@ -12,19 +12,21 @@ class BusinessType extends AbstractType
     {
         $builder
             ->add('headerAttachment', new AttachmentType(), array(
-                'required' => false
+                'required' => false,
+                'label' => 'Upload Header'
             ))
             ->add('logoAttachment', new AttachmentType(), array(
-                'required' => false
+                'required' => false,
+                'label' => 'Upload Logo'
             ))
             ->add('name', 'text', array(
                 'label' => false,
                 'attr' => array(
-                   'placeholder' => 'Name'
+                   'placeholder' => 'Business Name'
                 )
              ))
               ->add('address', new AddressType(), array(
-                  'label' => 'Business Details'
+                  'label' => false
               ))
               ->add('landline', 'text', array(
                    'label' => 'Landline Phone Number',

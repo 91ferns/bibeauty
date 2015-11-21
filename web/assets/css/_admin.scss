@@ -11,7 +11,7 @@ $card-radius: 10px;
   .navbar-right {
     position: absolute;
     right: 0px;
-    
+
     ul {
       list-style-type: none;
       margin: 0;
@@ -70,9 +70,30 @@ $card-radius: 10px;
       margin: 0;
       background: transparent;
       border-radius: $card-radius $card-radius 0 0;
-      padding: 42px;
-      min-height: 300px;
+
+      padding: 22px;
+      float: left;
+      width: 50%;
+
+      @media (min-width:$screen-md-min) {
+        float: none;
+        min-height: 300px;
+        width: 100%;
+        padding: 42px;
+      }
       text-align: center;
+    }
+
+    .under-thumbnail {
+      float: left;
+      width: 50%;
+      border-left: 1px solid #e6e6e6;
+
+      @media (min-width: $screen-md-min) {
+        border-left: 0px;
+        float: none;
+        width: 100%;
+      }
     }
 
     .logo-circle {
@@ -107,10 +128,12 @@ $card-radius: 10px;
         text-align: center;
         line-height: 58px;
         &.half {
-          width: 50%;
+          @media (min-width: $screen-md-min) {
+            width: 50%;
 
-          &.bordered {
-            border-left: 1px solid #e6e6e6;
+            &.bordered {
+              border-left: 1px solid #e6e6e6;
+            }
           }
 
         }

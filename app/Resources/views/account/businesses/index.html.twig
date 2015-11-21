@@ -10,7 +10,7 @@
           {% for business in app.user.getBusinesses %}
 
           <div class="col-md-4 col-sm-6">
-            <div class="business-card card" data-id="{{ business.getId }}">
+            <div class="business-card card clearfix" data-id="{{ business.getId }}">
 
               <figure class="thumbnail">
                 {% if business.getLogoAttachment %}
