@@ -1,8 +1,15 @@
 {% extends 'admin.html.twig' %}
 
-{% block body %}
+{% block toolbar %}
+<div class="admin-buttons align-center align-md-right">
+  <a href="{{path('admin_new_businesses_path')}}" class="admin-btn">
+    <img src="{{ asset('assets/images/add-button.png') }}" alt="Add">
+    Add Business
+  </a>
+</div>
+{% endblock %}
 
-  {% include 'shared/adminheader.html.twig' %}
+{% block body %}
 
     {% if app.user.hasBusinesses %}
 

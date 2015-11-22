@@ -485,3 +485,30 @@ $card-radius: 10px;
   border: 0px;
   border-radius: 7px;
 }
+
+.business-panel-header {
+  .btn-group .btn {
+    font-size: 16px;
+    padding: 20px 12px;
+    color: #b4b4b4;
+    box-shadow: none !important;
+    border: 0px;
+    border-left: 1px solid #f0f0f0;
+
+  }
+
+  .btn-group .btn-group:first-child .btn {
+    border-radius: 6px 0 0 6px;
+  }
+
+  .btn-group:last-child .btn {
+    border-radius: 0 6px 6px 0;
+  }
+
+  .btn-group > .active {
+    color: white;
+    background-color: $brand-primary;
+    box-shadow: none;
+    border: 0px;
+  }
+}

@@ -48,7 +48,7 @@
                 </a></li>
               </ul>
             </div> <!-- /.navbar-right -->
-            
+
             <span class="sr-only">BiBeauty Admin</span>
             <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
           </div> <!-- /.container -->
@@ -92,6 +92,87 @@
         </div>
 
         <div class="admin-main-inner">
+
+          <header class="business-panel-header">
+
+            {% if business is defined %}
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+              <div class="btn-group" role="group">
+                <a class="btn btn-default" href="{{ path('admin_businesses_path') }}">My Businesses</a>
+              </div>
+              <div class="btn-group" role="group">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    My Businesses
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    {% if app.user.hasBusinesses %}
+                      {% for business in app.user.getBusinesses %}
+                        <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
+                      {% endfor %}
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}" href="{{
+                  path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId })
+                }}">My Bookings</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}active{% endif %}" href="{{
+                  path('admin_business_treatments_path', { 'slug': business.getSlug, 'id': business.getId })
+                }}">All Treatments</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}" href="{{
+                  path('admin_business_offers_path', { 'slug': business.getSlug, 'id': business.getId })
+                }}">My Offers</a>
+              </div>
+            </div> <!-- .btn-group -->
+
+            <div class="row">
+
+              <div class="col-md-4 col-md-offset-4">
+                <h4 class="business-title">
+                {% if business.getLogoAttachment %}
+                  <img src="{{ business.getLogoAttachment.getKey | s3 }}" alt="{{business.getName}}" class="img-responsive img-circle" style="margin: 0 auto;" height="50">
+                {% else %}
+                  {{ business.getName }}
+                {% endif %}
+                </h4>
+              </div>
+
+            {% else %}
+
+            <div class="row">
+
+              <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+
+                <select id="BusinessesSelect" class="businesses-select form-control" name="BusinessSelected">
+                  <option></option>
+                  {% if app.user.hasBusinesses %}
+                    {% for business in app.user.getBusinesses %}
+                    <option value="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</option>
+                    {% endfor %}
+                  {% endif %}
+                </select>
+
+              </div>
+
+            {% endif %}
+
+              {# Not ideal but need to do if else condition in a weird way because the way block inheritence works #}
+              <div class="col-md-4">
+                {% block toolbar %}{% endblock %}
+              </div> <!-- /.col-md-4 -->
+
+            </div> <!-- /.row -->
+            {# end crazy crap #}
+
+          </header> <!-- /header -->
+
           {% block body %}{% endblock %}
         </div>
 

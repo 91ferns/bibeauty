@@ -1,47 +1,29 @@
 {% extends 'admin.html.twig' %}
 {% block stylesheets %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<style>
-/*.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{background-color:#5cb85c;}*/
+{% endblock %}
 
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default{background-color:#bec3c7;color:white;}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
-  background-color:#6acba2;
-}
-.bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label,.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{
-  background-color:#757575; font-weight:bold;
-}
-.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-on, .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off,
- .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-label {
-   padding-left:12px;
- }
- .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off{font-weight:bold;}
-table th.times-heading,
-table tr>td{max-width:260px!important;}
-span.strikethrough{text-decoration: line-through;}
-</style>
+{% block toolbar %}
+<a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
+<a id="deleteSelectedOffersButton" class="admin-btn" href="javascript:void(0);"><i class="fa fa-trash fa-lg"></i> Delete</a>
 {% endblock %}
 
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    Offers
-    <a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offer</strong></a>
-    <a id="deleteSelectedOffersButton" class="admin-btn"><i class="fa fa-trash fa-lg"></i> <strong>Delete Offer(s)</strong></a>
-  </div>
   <div class="panel-body">
     {% if offers | length > 0 %}
     <div class="table-responsive">
-      <table class="table businesses-table">
+      <table class="table businesses-table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
             <!--<th><a href="#" id="check-all-box">All</a></th>-->
-            <th><input name="Offers[]" class="offer-check" type="checkbox" value="all" /></th>
-            <th>Category</th>
+            <th>
+              <span class="sr-only">
+                <input name="Offers[]" class="offer-check" type="checkbox" value="all" />
+              </span>
+              All
+            </th>
             <th>Treatment</th>
             <th>Start Date</th>
             <th class="times-heading">Times</th>
@@ -53,15 +35,16 @@ span.strikethrough{text-decoration: line-through;}
         <tbody>
           {% for offer in offers %}
           {% set av = offer.getAvailabilitySet %}
-          <tr>
-            <td><span class="offer-id">
-            {{ offer.getId }}
-            </span></td>
+          <tr data-id="{{ offer.getId }}">
             <td><span class="btns">
               <div class="btn-group"><input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}"></div>
             </span></td>
-            <td><span class="treatment-name">{{offer.getTreatment.getTreatmentCategory.getCategoryName}}</span></td>
-            <td><span class="treatment-name">{{offer.getTreatment.getName}}</span></td>
+            <td><span class="treatment-name">
+              <span class="icon-rounded">
+                {{offer.getTreatment.getTreatmentCategory.getCategoryName | slice(0,1) | capitalize }}
+              </span>
+              {{offer.getTreatment.getName}}
+            </span></td>
             <td><span class="offer-start">{{av.getStartDate | date('d-m-Y')}}</span></td>
             <td><span class="offer-times">
               {{av.getTimes() | join(', ')}}
@@ -79,15 +62,12 @@ span.strikethrough{text-decoration: line-through;}
                 <input type="checkbox" disabled="disabled" checked="checked"> {{ av.getRecurrenceType}}
               {% endif %}
             </span></td>
-            <td><span class="enabled">
-              <div class="onoffswitch">
-                <form id="offerStatus{{offer.getId}}" action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
-                  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" {% if offer.getIsOpen %}checked{% endif %}>
-                  <input type="hidden" name="offerId" value="{{offer.getId}}" />
-                </form>
-              </div>
-
-            </span></td>
+            <td>
+              <form id="offerStatus{{offer.getId}}" action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
+                <input type="checkbox" name="onoffswitch" {% if offer.getIsOpen %}checked{% endif %}>
+                <input type="hidden" name="offerId" value="{{offer.getId}}" />
+              </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -131,15 +111,7 @@ span.strikethrough{text-decoration: line-through;}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 <script>
 jQuery(document).ready(function(){
-  jQuery('.onoffswitch > form input[type="checkbox"]').bootstrapSwitch({
-    onText:'&#10004;',
-    offText:'&times;',
-    onColor:'success',
-    offColor:'default',
-    handleWidth:'4px',
-    lableWidth:'4px',
-    size:'large'
-  });
+
   jQuery(document).on("change","[name='Treatment']",function(e){
     var $el  = jQuery(e.target);
     var val  = $el.val();
@@ -173,10 +145,6 @@ jQuery(document).ready(function(){
     }
   });
 });
-
-jQuery('.onoffswitch > form input[type="checkbox"]').on('switchChange.bootstrapSwitch',function(){
-  jQuery(this).parents('form').submit();
-})
 
 jQuery('a#deleteSelectedOffersButton').on('click',function(e){
   e.preventDefault();
