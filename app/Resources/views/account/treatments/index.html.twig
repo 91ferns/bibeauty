@@ -1,18 +1,18 @@
 {% extends 'admin.html.twig' %}
 
+{% block toolbar %}
+<a href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
+  <i class="fa fa-plus fa-lg"></i>Add a treatment
+</a>
+{% endblock %}
+
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    Treatments for {{ business.getName }}
-    <a class="admin-btn" href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
-      <i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong>
-    </a>
-  </div>
   <div class="panel-body">
     {% if treatments.count > 0 %}
-    <div class="table-responsive">
-      <table class="table table-striped">
+    <div class="table-responsive-old">
+      <table class="table table-striped businesses-table">
         <thead>
           <tr>
             <th>ID</th>
