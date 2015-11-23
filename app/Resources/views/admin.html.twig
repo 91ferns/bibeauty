@@ -201,11 +201,7 @@
 
             <div class="col-md-4 col-md-offset-4 col-md-pull-4">
               <h4 class="business-title">
-              {% if business.getLogoAttachment %}
-                <img src="{{ business.getLogoAttachment.getKey | s3 }}" alt="{{business.getName}}" class="img-responsive img-circle" style="margin: 0 auto;" height="50">
-              {% else %}
                 {{ business.getName }}
-              {% endif %}
               </h4>
             </div> <!-- /.col -->
 
