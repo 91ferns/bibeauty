@@ -455,13 +455,24 @@ $card-radius: 10px;
       margin-bottom: 10px;
     }
 
-  hr {
-    width: 100%;
+    hr {
+      width: 100%;
+    }
+
+
   }
 
-
+.panel-default {
+  border: 0px;
+  box-shadow: none;
+  > .panel-body {
+    padding: 0px;
+  }
+  background-color: transparent;
+  @media (min-width: $screen-md-min) {
+    background-color: white;
+  }
 }
-
 
 .businesses-table {
 
@@ -472,6 +483,70 @@ $card-radius: 10px;
   #check-all-box:hover{
     color:black;
   }
+
+  tr > th {
+    height: 80px;
+    vertical-align: middle !important;
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  @media (min-width: $screen-md-min) {
+
+    tbody > tr {
+      > td {
+        padding: 15px 8px;
+      }
+    }
+
+    tr > td:first-child,
+    tr > th:first-child {
+      padding-left: 25px !important;
+    }
+
+    tr > td:last-child,
+    tr > th:last-child {
+      padding-right: 25px !important;
+    }
+  }
+
+  @media (max-width: $screen-sm-max) {
+    thead {
+      display: none;
+    }
+
+    tr > td:first-child {
+      display: none;
+    }
+
+    .delete-form {
+      display: inline;
+    }
+
+    tr {
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      border: none;
+      background-color: white !important;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: block;
+      .treatment-name-td {
+        padding-top: 15px !important;
+      }
+      > td {
+        &:before {
+          content: attr(title) ": ";
+          font-weight: bold;
+        }
+        &:nth-child(2) {
+          border-top: none !important;
+        }
+        display: block;
+        padding: 8px 25px !important;
+      }
+    }
+  }
+
 }
 
 .client-more {
@@ -494,6 +569,7 @@ $card-radius: 10px;
     box-shadow: none !important;
     border: 0px;
     border-left: 1px solid #f0f0f0;
+    border-color: #f0f0f0 !important;
 
   }
 
@@ -510,5 +586,34 @@ $card-radius: 10px;
     background-color: $brand-primary;
     box-shadow: none;
     border: 0px;
+  }
+}
+
+$icon-rounded-size: 32px;
+
+.icon-rounded {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #c4c4c4;
+  color: #c4c4c4;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 50%;
+  display: inline-block;
+  width: $icon-rounded-size;
+  height: $icon-rounded-size;
+  padding: ($icon-rounded-size / 4) 0;
+  margin-top: -($icon-rounded-size / 4);
+
+  line-height: 1;
+
+  font-size: $icon-rounded-size / 2.2;
+  margin-right: .5em;
+
+}
+
+.admin {
+  .toolbar-block {
+    padding: 15px 0;
   }
 }

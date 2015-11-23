@@ -13,7 +13,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     {% if offers | length > 0 %}
-    <div class="table-responsive">
+    <div class="table-responsive-old">
       <table class="table businesses-table table-striped">
         <thead>
           <tr>
@@ -28,7 +28,7 @@
             <th>Start Date</th>
             <th class="times-heading">Times</th>
             <th>Discount</th>
-            <th>Re-occurring</th>
+            <th>Reoccurring</th>
             <th>Enabled</th>
           </tr>
         </thead>
@@ -37,33 +37,35 @@
           {% set av = offer.getAvailabilitySet %}
           <tr data-id="{{ offer.getId }}">
             <td><span class="btns">
-              <div class="btn-group"><input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}"></div>
+              <input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}" style="margin:0;">
             </span></td>
-            <td><span class="treatment-name">
+            <td title="Treatment" class="treatment-name-td"><span class="treatment-name">
               <span class="icon-rounded">
                 {{offer.getTreatment.getTreatmentCategory.getCategoryName | slice(0,1) | capitalize }}
               </span>
               {{offer.getTreatment.getName}}
             </span></td>
-            <td><span class="offer-start">{{av.getStartDate | date('d-m-Y')}}</span></td>
-            <td><span class="offer-times">
+            <td title="Start Date"><span class="offer-start">{{av.getStartDate | date('m/d/Y')}}</span></td>
+            <td title="Times"><span class="offer-times">
               {{av.getTimes() | join(', ')}}
             </span></td>
-            <td><span class="discount">
+            <td title="Discount"><span class="discount">
 
               <span class="percent">{{ offer.getDiscountPercentage }}</span>% /
               <span class="strikethrough">${{ offer.getTreatment.getOriginalPrice }}</span>
                 <a href="#" id="currentPrice{{offer.getId}}" class="price-editable" data-type="text" data-pk="{{ offer.getId }}" data-url="{{ path('admin_edit_offer',{id:offer.getId,slug:business.getSlug}) }}" >${{ offer.getCurrentPrice }}</a>
             </span></td>
-            <td><span class="recurring">
+            <td title="Reoccuring"><span class="recurring">
               {% if av.getRecurrenceType == 'never' %}
                 <input type="checkbox" disabled="disabled">
               {% else %}
-                <input type="checkbox" disabled="disabled" checked="checked"> {{ av.getRecurrenceType}}
+                <input type="checkbox" disabled="disabled" checked="checked"> {{ av.getRecurrenceType | capitalize }}
               {% endif %}
             </span></td>
-            <td>
-              <form id="offerStatus{{offer.getId}}" action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
+            <td title="Enabled">
+              <form id="offerStatus{{offer.getId}}"
+              class="delete-form"
+              action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
                 <input type="checkbox" name="onoffswitch" {% if offer.getIsOpen %}checked{% endif %}>
                 <input type="hidden" name="offerId" value="{{offer.getId}}" />
               </form>
