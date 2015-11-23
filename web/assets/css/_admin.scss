@@ -484,6 +484,8 @@ $card-radius: 10px;
     color:black;
   }
 
+  margin-bottom: 0px;
+
   tr > th {
     height: 80px;
     vertical-align: middle !important;
@@ -524,10 +526,10 @@ $card-radius: 10px;
     }
 
     tr {
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
       border: none;
       background-color: white !important;
-      border-radius: 6px;
+      border-radius: 9px;
       margin-bottom: 20px;
       display: block;
       .treatment-name-td {
@@ -537,6 +539,7 @@ $card-radius: 10px;
         &:before {
           content: attr(title) ": ";
           font-weight: bold;
+          margin-right: 5px;
         }
         &:nth-child(2) {
           border-top: none !important;
