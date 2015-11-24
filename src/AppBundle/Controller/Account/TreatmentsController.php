@@ -64,21 +64,70 @@ class TreatmentsController extends Controller
     public function newSubmit($slug, $id, Request $request) {
 
         $business = $this->businessBySlugAndId($slug, $id);
-        $service = new Treatment();
-        $service->setBusiness($business);
-        $form = $this->createForm(new TreatmentType(), $service);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($service);
-          $em->flush();
-          return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
-        } else {
-          return $this->render('account/businesses/new.html.twig', array(
-            'form' => $form->createView()
-          ));
+        $post = $request->get('autoadd');
+        $em = $this->getDoctrine()->getManager();
+        $failed = 0;
+        $total = count($post);
+
+        $errors = array();
+
+        foreach($post as $treatmentData) {
+            $treatmentData = (object) $treatmentData;
+
+            $treatmentCategoryId = intval($treatmentData->treatmentCategory);
+            $tcRepo = $em->getRepository('AppBundle:TreatmentCategory');
+
+            $treatmentCategory = $tcRepo->findOneById($treatmentCategoryId);
+
+            if (!$treatmentCategory) {
+                $failed++;
+                continue;
+            }
+
+            $treatment = new Treatment();
+            $treatment->setBusiness($business);
+            $treatment->setTreatmentCategory($treatmentCategory);
+            $treatment->setName($treatmentData->name);
+            $treatment->setDuration(intval($treatmentData->duration));
+            $treatment->setOriginalPrice(floatval($treatmentData->originalPrice));
+            $treatment->setDescription($treatmentData->name);
+
+            $validator = $this->get('validator');
+            $validationErrors = $validator->validate($treatment);
+
+            if (count($validationErrors) < 1) {
+                $em->persist($treatment);
+            } else {
+                $errors[] = (string) $validationErrors;
+                $failed++;
+            }
         }
+
+        if ($failed === $total) {
+            // All failed
+            $this->addFlash(
+                'error',
+                implode(' ', $errors)
+            );
+        } elseif ($failed > 0) {
+            // Some failed
+            $this->addFlash(
+                'error',
+                'We could not add ' . $failed . ' of your new treatments.'
+            );
+            $em->flush();
+        } else {
+            $this->addFlash(
+                'notice',
+                'Successfully added all of your new treatments.'
+            );
+            $em->flush();
+            // All succeeded
+        }
+
+        return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
+
     }
 
     /**
