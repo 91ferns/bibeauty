@@ -32,7 +32,21 @@ jQuery(function($) {
     this.schemae = {};
 
     this.rows = [];
+
+    this.row = -1;
   };
+
+  Autoadd.prototype.getRowCounter = function() {
+    return this.row;
+  }
+
+  Autoadd.prototype.incrementRow = function() {
+    return this.row++;
+  }
+
+  Autoadd.prototype.resetRow = function() {
+    this.row = -1;
+  }
 
   Autoadd.prototype.isDirty = function() {
     return false;
@@ -42,28 +56,71 @@ jQuery(function($) {
     this.schemae[label] = schema;
   };
 
-  Autoadd.prototype.createInputFor = function(name, d) {
+  Autoadd.prototype.createInputFor = function(schemaData, schemaName, obj) {
+
+
+    /*
+    treatmentCategory: { type: String, label: 'Treatment' },
+    name: { type: String, label: 'Name' },
+    duration: { type: Number, label: 'Duration' },
+    originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
+    */
+
     var input = $('<input>');
-    d = d || '';
+    var type;
 
-    input.attr('name', name + '[]').addClass('form-control').attr('value', d)
-      .attr('placeholder', name);
+    switch (schemaData.type || schemaData) {
 
-    return input;
+      case Number:
+        type = 'text';
+
+      default:
+        type = 'text';
+
+    }
+
+    input.attr('name', 'autoadd[' + this.getRowCounter() + '][' + schemaName + ']')
+      .addClass('form-control').attr('value', '')
+      .attr('placeholder', schemaData.label || schemaName)
+      .attr('required', true).attr('type', type);
+
+    var finalElement;
+
+    if (typeof(obj) === 'object') {
+      var key = Object.keys(obj)[0];
+      var value = obj[key];
+
+      input.attr('type', 'hidden');
+      input.val(key);
+
+      var newElement = $('<span></span>');
+      newElement.append(input);
+      newElement.append($('<span></span>').text(value));
+
+      finalElement = newElement;
+    } else {
+
+      if (obj) {
+        input.val(obj);
+      }
+
+      finalElement = input;
+    }
+
+    return finalElement;
   };
 
   Autoadd.prototype.pushRow = function(label, data) {
     var schema = this.schemae[label] || false;
     if (!schema) return false;
 
+    this.incrementRow();
+
     var newObject = [];
 
     for (var x in schema) {
-      if (data.hasOwnProperty(x)) {
-        newObject.push(data[x]);
-      } else {
-        newObject.push(this.createInputFor(x));
-      }
+      var theData = data[x] || '';
+      newObject.push(this.createInputFor(schema[x], x, theData));
     }
 
     this.rows.push(newObject);
@@ -74,8 +131,13 @@ jQuery(function($) {
 
   Autoadd.prototype.sync = function() {
 
+    this.resetRow();
+
     var newHtml = [];
     for (var x in this.rows) {
+
+      this.incrementRow();
+
       var theRow = this.rows[x];
 
       var newRow = $('<tr></tr>');
@@ -99,26 +161,61 @@ jQuery(function($) {
   var theAutoadd = new Autoadd();
 
   theAutoadd.addSchema('treatment', {
-    treatment: String,
-    name: String,
-    duration: Number,
-    price: { type: Number, label: 'Full Price' },
+    treatmentCategory: { type: String, label: 'Treatment' },
+    name: { type: String, label: 'Name' },
+    duration: { type: Number, label: 'Duration' },
+    originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
   });
 
   function getAutoadd() {
     return theAutoadd;
   }
 
+  $('.ul-filter').on('keyup', function() {
+    var $this = $(this);
+
+    if ($this.data('filters')) {
+      var filters = $this.data('filters');
+    } else {
+      return false;
+    }
+
+    var grep = $(filters);
+
+    if (!grep) {
+      return false;
+    }
+
+    var value = $this.val();
+
+    grep.children('li').each(function() {
+      var parentKey = $(this).data('parent');
+      if (
+        ($(this).text().search(value) > -1) ||
+        (parentKey && parentKey.search(value) > -1)
+      ) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+
+  })
+
   $('.add-button-autoadd').click(function() {
     var $this = $(this);
     var a = getAutoadd();
+
     if (a.isDirty()) {
       return false;
     }
 
     if ($(this).hasClass('button-treatment')) {
+      var id = $this.data('add-id');
+      var obj = {};
+      obj[id] = $this.data('add-label');
       a.pushRow('treatment', {
-        treatment: $this.data('add-label')
+        treatmentCategory: obj
       });
     } else {
 

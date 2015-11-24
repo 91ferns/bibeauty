@@ -9,18 +9,18 @@
       <div class="panel-heading">
 
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search Treatments">
+          <input type="text" class="form-control ul-filter" placeholder="Search Treatments" data-filters=".filterable-ul">
           <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>
         </div>
 
       </div>
       <div class="panel-body">
         <!-- List group -->
-        <ul class="list-group">
+        <ul class="list-group filterable-ul">
           {% for treatment in treatments %}
             <li class="list-group-item category-name">{{ treatment.getLabel }}</li>
             {% for subtreatment in treatment.getChildren %}
-              <li class="list-group-item">
+              <li class="list-group-item" data-parent="{{treatment.getLabel}}">
                 {{ subtreatment.getLabel | slice(0,30) }}
                 <a href="#" data-add-id="{{subtreatment.getId}}" data-add-label="{{ subtreatment.getLabel }}" class="add-button-autoadd button-treatment pull-right icon-rounded"><i class="fa fa-plus"></i></a>
               </li>
