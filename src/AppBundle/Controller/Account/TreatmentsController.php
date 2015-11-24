@@ -39,7 +39,11 @@ class TreatmentsController extends Controller
     public function newAction($id, $slug, Request $request) {
 
         $business = $this->businessBySlugAndId($slug, $id);
-        $treatmentType = $this->createForm(new TreatmentType(), new Treatment());
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $em->getRepository("AppBundle:TreatmentCategory");
+
+        $treatments = $repository->getHeirarchy();
         /*
             'action'   => $this->generateUrl('admin_create_treatment_category',["slug"=>$slug, "id"=>$id]),
             'business' => $business,
@@ -48,7 +52,7 @@ class TreatmentsController extends Controller
 
         return $this->render('account/treatments/new.html.twig', array(
             'business' => $business,
-            'form' => $treatmentType->createView(),
+            'treatments' => $treatments
         ));
 
     }

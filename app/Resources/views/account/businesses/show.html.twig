@@ -2,53 +2,76 @@
 
 {% block body %}
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    {{ business.getName }}
-    <a href="{{ path('admin_business_treatments_new_path', { id: business.getId, slug: business.getSlug })}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong></a>
-    <a href="#" class="admin-btn"><i class="fa fa-trash-o fa-lg"></i><strong>Delete</strong></a>
-  </div>
+<div class="panel panel-default padded">
   <div class="panel-body">
-    {{ form_start(businessForm, {'attr': { 'novalidate': 'true' }}) }}
+    <div class="row">
+      <div class="col-md-7">
 
-        <div class="form-group">
+        {{ form_start(form, {'attr': { 'novalidate': 'true' }} ) }}
+        <div class="row">
+          <div class="col-md-4 col-xs-6">
+              {{ form_label(form.headerAttachment ) }}
+              {{ form_widget(form.headerAttachment) }}
 
-          {{ form_label(businessForm.headerAttachment) }}
-          {{ form_widget(businessForm.headerAttachment) }}
+              <p>&nbsp;</p>
 
-          {% if business is defined %}
-            {% if business.getHeaderAttachment %}
-            <figure class="">
-              <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive" width="180">
-            </figure>
+              {% if business is defined %}
+                {% if business.getHeaderAttachment %}
+                <figure class="">
+                  <img src="{{ business.getHeaderAttachment.getKey | s3 }}" class="img-responsive" width="180">
+                </figure>
+                {% endif %}
+              {% endif %}
+          </div>
+          <div class="col-md-4 col-xs-6 bordered-file">
+            {{ form_label(form.logoAttachment ) }}
+            {{ form_widget(form.logoAttachment) }}
+
+            <p>&nbsp;</p>
+
+            {% if business is defined %}
+              {% if business.getLogoAttachment %}
+              <figure class="">
+                <img src="{{ business.getLogoAttachment.getKey | s3 }}" class="img-responsive" width="100">
+              </figure>
+              {% endif %}
             {% endif %}
-          {% endif %}
-
-          {{ form_errors(businessForm.headerAttachment) }}
-
+          </div>
         </div>
 
-        <div class="form-group">
+        <p>&nbsp;</p>
 
-          {{ form_label(businessForm.logoAttachment) }}
-          {{ form_widget(businessForm.logoAttachment) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.address) }}
 
-          {% if business is defined %}
-            {% if business.getLogoAttachment %}
-            <figure class="">
-              <img src="{{ business.getLogoAttachment.getKey | s3 }}" class="img-responsive" width="100">
-            </figure>
-            {% endif %}
-          {% endif %}
+        <hr>
 
-          {{ form_errors(businessForm.logoAttachment) }}
+        {{ form_row(form.landline) }}
+        {{ form_row(form.mobile) }}
 
+        <hr>
+
+        {{ form_row(form.description) }}
+        {{ form_row(form.yelpLink) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.website) }}
+
+        <hr>
+
+        <div class="checkboxes clearfix">
+            {{ form_widget(form.acceptsCash) }}
+            {{ form_widget(form.acceptsCredit) }}
         </div>
 
-        {{ form_widget(businessForm) }}
-        <input type="submit" value="Edit Business"
-             class="btn btn-primary" />
-    {{ form_end(businessForm) }} <!-- /. form -->
+        {{ form_widget(form) }}
+
+          <input type="submit" value="Create"
+               class="btn btn-primary btn-lg" />
+        {{ form_end(form) }}
+
+
+      </div> <!-- /.col-md-7 -->
+    </div>
   </div>
 </div>
 

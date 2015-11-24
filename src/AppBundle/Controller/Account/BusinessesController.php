@@ -158,7 +158,7 @@ class BusinessesController extends Controller
 
         // replace this example code with whatever you need
         return $this->render('account/businesses/show.html.twig', array(
-            'businessForm' => $form->createView(),
+            'form' => $form->createView(),
             'business' => $business
         ));
 
