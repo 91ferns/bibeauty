@@ -48,8 +48,24 @@ jQuery(function($) {
     this.row = -1;
   }
 
+  Autoadd.prototype.serialize = function() {
+    return this.self.parents('form').serializeArray();
+  }
+
   Autoadd.prototype.isDirty = function() {
-    return false;
+    var $formData = this.serialize();
+
+    var isValid = $formData.filter(function(v) {
+      return v.value.toString().length < 1;
+    });
+
+    isValid = isValid.length < 1;
+
+    if (!isValid) {
+      alert('Please fill out the previous fields first');
+    }
+
+    return !isValid;
   };
 
   Autoadd.prototype.addSchema = function(label, schema) {
