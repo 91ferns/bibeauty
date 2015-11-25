@@ -82,24 +82,43 @@ jQuery(function($) {
     originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
     */
 
-    var input = $('<input>');
+    var input;
     var type;
 
-    switch (schemaData.type || schemaData) {
+    if (schemaData.enum) {
+      input = $('<select></select>');
 
-      case Number:
-        type = 'text';
-        break;
+      for (var x in schemaData.enum) {
+        var option = schemaData.enum[x];
 
-      default:
-        type = 'text';
+        var theOption = $('<option></option>').text(option).attr('value', option);
+        input.append(theOption);
 
+      }
+
+    } else {
+
+      input = $('<input>');
+
+      switch (schemaData.type || schemaData) {
+        case Number:
+          type = 'text';
+          break;
+        default:
+          type = 'text';
+      }
+
+      input.attr('type', type);
     }
 
     input.attr('name', 'autoadd[' + this.getRowCounter() + '][' + schemaName + ']')
-      .addClass('form-control').attr('value', '')
+      .addClass('form-control').attr('value', schemaData.default || '')
       .attr('placeholder', schemaData.label || schemaName)
-      .attr('required', true).attr('type', type);
+      .attr('required', true);
+
+    if (schemaData.disabled || false) {
+      input.attr('disabled', true);
+    }
 
     var finalElement;
 
@@ -187,10 +206,10 @@ jQuery(function($) {
   theAutoadd.addSchema('offer', {
     treatmentCategory: { type: String, label: 'Treatment' },
     startDate: { type: Date, label: 'Start Date' },
-    times: { type: String, label: 'Duration', enum: [
+    times: { type: String, label: 'Times', enum: [
       '9:00'
     ] },
-    originalPrice: { type: Number, label: 'Original Price', },
+    originalPrice: { type: Number, label: 'Original Price', disabled: true },
     discountPrice: { type: Number, label: 'Full Price', default: 0.0 },
   });
 
@@ -214,12 +233,13 @@ jQuery(function($) {
       return false;
     }
 
-    var value = $this.val();
+    var value = $this.val().toLowerCase();
 
     grep.children('li').each(function() {
       var parentKey = $(this).data('parent');
+      console.log(parentKey);
       if (
-        ($(this).text().search(value) > -1) ||
+        ($(this).text().toLowerCase().search(value) > -1) ||
         (parentKey && parentKey.search(value) > -1)
       ) {
         $(this).show();
@@ -248,7 +268,8 @@ jQuery(function($) {
       });
     } else {
       a.pushRow('offer', {
-        treatmentCategory: obj
+        treatmentCategory: obj,
+        originalPrice: $this.data('original-price')
       });
     }
 

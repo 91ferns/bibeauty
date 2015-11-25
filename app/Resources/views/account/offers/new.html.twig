@@ -25,9 +25,13 @@
           {% for category, treatmentsArray in treatments %}
             <li class="list-group-item category-name">{{ category }}</li>
             {% for subtreatment in treatmentsArray %}
-              <li class="list-group-item" data-parent="{{category}}">
+              <li class="list-group-item" data-parent="{{ category | lower }}">
                 {{ subtreatment.getName | slice(0,30) }}
-                <a href="#" data-add-id="{{subtreatment.getId}}" data-add-label="{{ subtreatment.getName }}" class="add-button-autoadd button-offer pull-right icon-rounded"><i class="fa fa-plus"></i></a>
+                <a href="#"
+                  data-add-id="{{subtreatment.getId}}"
+                  data-add-label="{{ subtreatment.getName }}"
+                  data-original-price="{{ subtreatment.getOriginalPrice }}"
+                  class="add-button-autoadd button-offer pull-right icon-rounded"><i class="fa fa-plus"></i></a>
               </li>
             {% endfor %}
           {% endfor %}
