@@ -38,19 +38,19 @@ jQuery(function($) {
 
   Autoadd.prototype.getRowCounter = function() {
     return this.row;
-  }
+  };
 
   Autoadd.prototype.incrementRow = function() {
     return this.row++;
-  }
+  };
 
   Autoadd.prototype.resetRow = function() {
     this.row = -1;
-  }
+  };
 
   Autoadd.prototype.serialize = function() {
     return this.self.parents('form').serializeArray();
-  }
+  };
 
   Autoadd.prototype.isDirty = function() {
     var $formData = this.serialize();
@@ -89,6 +89,7 @@ jQuery(function($) {
 
       case Number:
         type = 'text';
+        break;
 
       default:
         type = 'text';
@@ -183,15 +184,26 @@ jQuery(function($) {
     originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
   });
 
+  theAutoadd.addSchema('offer', {
+    treatmentCategory: { type: String, label: 'Treatment' },
+    startDate: { type: Date, label: 'Start Date' },
+    times: { type: String, label: 'Duration', enum: [
+      '9:00'
+    ] },
+    originalPrice: { type: Number, label: 'Original Price', },
+    discountPrice: { type: Number, label: 'Full Price', default: 0.0 },
+  });
+
   function getAutoadd() {
     return theAutoadd;
   }
 
   $('.ul-filter').on('keyup', function() {
     var $this = $(this);
+    var filters;
 
     if ($this.data('filters')) {
-      var filters = $this.data('filters');
+      filters = $this.data('filters');
     } else {
       return false;
     }
@@ -216,7 +228,7 @@ jQuery(function($) {
       }
     });
 
-  })
+  });
 
   $('.add-button-autoadd').click(function() {
     var $this = $(this);
@@ -226,15 +238,18 @@ jQuery(function($) {
       return false;
     }
 
+    var id = $this.data('add-id');
+    var obj = {};
+    obj[id] = $this.data('add-label');
+
     if ($(this).hasClass('button-treatment')) {
-      var id = $this.data('add-id');
-      var obj = {};
-      obj[id] = $this.data('add-label');
       a.pushRow('treatment', {
         treatmentCategory: obj
       });
     } else {
-
+      a.pushRow('offer', {
+        treatmentCategory: obj
+      });
     }
 
     a.sync();

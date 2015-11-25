@@ -61,22 +61,25 @@ class OffersController extends Controller
 
 
     /**
-     * @Route("/account/offers/{id}/{slug}/new", name="admin_new_booking_path")
+     * @Route("/account/offers/{id}/{slug}/new", name="admin_new_offer_path")
      * @Method({"GET"})
      */
     public function createAction($id, $slug, Request $request) {
-       $booking = new Booking();
 
-       $form = $this->createForm(new BookingType(), $booking);
-       $business = $this->businessBySlugAndId($slug, $id);
+        $business = $this->businessBySlugAndId($slug, $id);
 
-       return $this->render(
-          'account/offers/new.html.twig',
-          array(
-             'form' => $form->createView(),
-             'business' => $business,
-          )
-       );
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Treatment");
+
+        $treatments = $repository->findByBusiness($business);
+
+        return $this->render(
+            'account/offers/new.html.twig',
+            array(
+                'treatments' => $treatments,
+                'business' => $business,
+            )
+        );
     }
 
     /**

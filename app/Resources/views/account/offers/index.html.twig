@@ -1,10 +1,7 @@
 {% extends 'admin.html.twig' %}
-{% block stylesheets %}
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-{% endblock %}
 
 {% block toolbar %}
-<a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
+<a href="{{ path('admin_new_offer_path', { id: business.getId, slug: business.getSlug }) }}" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
 <a id="deleteSelectedOffersButton" class="admin-btn" href="javascript:void(0);"><i class="fa fa-trash fa-lg"></i> Delete</a>
 {% endblock %}
 

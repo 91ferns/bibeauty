@@ -1,16 +1,80 @@
 {% extends 'admin.html.twig' %}
 
+{% block toolbar %}
+<a href="{{ path('admin_new_offer_path', { id: business.getId, slug: business.getSlug }) }}" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
+<a id="deleteSelectedOffersButton" class="admin-btn" href="javascript:void(0);"><i class="fa fa-trash fa-lg"></i> Delete</a>
+{% endblock %}
+
 {% block body %}
 
-<div class="panel panel-default">
-  <div class="panel-heading">Add a Booking</div>
-  <div class="panel-body">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-      <input type="submit" value="Create"
-           class="btn btn-default pull-right" />
-    {{ form_end(form) }}
+<div class="row">
+
+  <div class="col-md-4">
+    <div class="panel panel-sidebar">
+      <div class="panel-heading">
+
+        <div class="input-group">
+          <input type="text" class="form-control ul-filter" placeholder="Search Treatments" data-filters=".filterable-ul">
+          <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>
+        </div>
+
+      </div>
+      <div class="panel-body">
+        <!-- List group -->
+        <ul class="list-group filterable-ul">
+          {% for category, treatmentsArray in treatments %}
+            <li class="list-group-item category-name">{{ category }}</li>
+            {% for subtreatment in treatmentsArray %}
+              <li class="list-group-item" data-parent="{{category}}">
+                {{ subtreatment.getName | slice(0,30) }}
+                <a href="#" data-add-id="{{subtreatment.getId}}" data-add-label="{{ subtreatment.getName }}" class="add-button-autoadd button-offer pull-right icon-rounded"><i class="fa fa-plus"></i></a>
+              </li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <div class="col-md-8">
+
+    <form action="" method="post">
+
+      <div class="panel panel-default">
+        <div class="panel panel-body">
+
+            <table class="table businesses-table table-striped">
+
+              <thead>
+                <tr>
+                  <th>Treatment</th>
+                  <th>Start Date</th>
+                  <th>Times</th>
+                  <th>Original Price</th>
+                  <th>Discount Price</th>
+                </tr>
+              </thead>
+
+              <tbody class="autoadd">
+              </tbody>
+
+            </table>
+
+
+
+        </div>
+      </div> <!-- /.panel -->
+
+      <p>&nbsp;</p>
+
+      <div class="align-right">
+        <button class="btn btn-lg btn-primary" type="submit">Add Treatments</button>
+      </div>
+
+    </form>
+
+  </div>
+
 </div>
 
 
