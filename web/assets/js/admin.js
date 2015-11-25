@@ -99,6 +99,8 @@ jQuery(function($) {
 
       }
 
+    } else if (schemaData.type === Text) {
+      input = $('<textarea></textarea>');
     } else {
 
       input = $('<input>');
@@ -160,7 +162,13 @@ jQuery(function($) {
 
     }
 
-    return finalElement;
+    var labelString = schemaData.label || schemaName;
+
+    var td = $('<td></td>');
+    td.attr('title', labelString.toUpperCase());
+    td.html(finalElement);
+
+    return td;
   };
 
   Autoadd.prototype.pushRow = function(label, data) {
@@ -196,10 +204,7 @@ jQuery(function($) {
       var newRow = $('<tr></tr>');
 
       for (var rt in theRow) {
-        var tmp = $('<td></td>');
-
-        tmp.html(theRow[rt]);
-        newRow.append(tmp);
+        newRow.append(theRow[rt]);
       }
 
       newHtml.push(newRow);
@@ -215,8 +220,9 @@ jQuery(function($) {
 
   theAutoadd.addSchema('treatment', {
     treatmentCategory: { type: String, label: 'Treatment' },
-    name: { type: String, label: 'Name' },
-    duration: { type: Number, label: 'Duration' },
+    name: { type: String, label: 'What is it?' },
+    description: { type: Text, label: 'What do they get?', },
+    duration: { type: Number, label: 'Duration (in minutes)' },
     originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
   });
 
@@ -297,9 +303,11 @@ jQuery(function($) {
     var $this = $(this);
     var a = getAutoadd();
 
+    /*
     if (a.isDirty()) {
       return false;
     }
+    */
 
     var id = $this.data('add-id');
     var obj = {};
@@ -319,5 +327,12 @@ jQuery(function($) {
     a.sync();
 
 
+  });
+
+  $('[data-confirm="true"]').click(function(e) {
+    if (!confirm('Are you sure you want to delete this business?')) {
+      e.preventDefault();
+      return false;
+    }
   });
 });

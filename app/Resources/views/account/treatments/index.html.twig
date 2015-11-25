@@ -16,12 +16,10 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Category</th>
             <th>Treatment</th>
             <th>Name</th>
-            <th>Full Price</th>
             <th>Duration</th>
-            <th>Edit</th>
+            <th>Full Price</th>
           </tr>
         </thead>
         <tbody>
@@ -34,18 +32,22 @@
                 'treatmentId': treatment.getId
                 }) }}">{{ treatment.id }}</a>
             </td>
-            <td>{{ treatment.getTreatmentCategory.getCategoryName }}
-            <td>{{ treatment.getLabel }}</td>
-            <td>{{ treatment.getName }}</td>
-            <td>${{ treatment.getOriginalPrice }}</td>
-            <td>{{treatment.getDuration | duration }}</td>
-            <td>
+            <td title="Treatment">
+              <span class="icon-rounded">
+                {{ treatment.getTreatmentCategory.getCategoryName | slice (0, 1) | capitalize }}
+              </span>
+              {{ treatment.getLabel }}
+            </td>
+            <td title="Name">
+              {{ treatment.getName }}
               <a href="{{ path('admin_business_treatments_show_path',{
                 'id': business.getId,
                 'slug': business.getSlug,
                 'treatmentId': treatment.getId
-                }) }}">Edit</a>
+                }) }}"><i class="fa fa-pencil fa-small"></i></a>
             </td>
+            <td title="Duration">{{treatment.getDuration | duration }}</td>
+            <td title="Price">${{ treatment.getOriginalPrice }}</td>
           </tr>
           {% endfor %}
         </tbody>

@@ -85,13 +85,18 @@ class TreatmentsController extends Controller
                 continue;
             }
 
+            if (!$treatmentData->name) {
+                $total--;
+                continue;
+            }
+
             $treatment = new Treatment();
             $treatment->setBusiness($business);
             $treatment->setTreatmentCategory($treatmentCategory);
             $treatment->setName($treatmentData->name);
             $treatment->setDuration(intval($treatmentData->duration));
             $treatment->setOriginalPrice(floatval($treatmentData->originalPrice));
-            $treatment->setDescription($treatmentData->name);
+            $treatment->setDescription($treatmentData->description);
 
             $validator = $this->get('validator');
             $validationErrors = $validator->validate($treatment);

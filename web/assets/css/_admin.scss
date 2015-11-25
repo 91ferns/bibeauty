@@ -101,7 +101,7 @@ $card-radius: 10px;
       padding-bottom: 100%;
       background-color: #f0f0f0;
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: cover;
       background-position: center;
     }
 
@@ -172,6 +172,7 @@ $card-radius: 10px;
     position: absolute;
     border: 0px;
     background: none !important;
+    margin-top: 21px;
     .icon-bar {
       color: $brand-primary;
       border-color: $brand-primary;
@@ -662,7 +663,11 @@ $icon-rounded-size: 32px;
     .panel-body {
       padding: 0px;
 
-      height: 400px;
+      height: 30vh;
+
+      @media (min-width: $screen-md-min) {
+        height: 400px;
+      }
       overflow: scroll;
 
       ul {

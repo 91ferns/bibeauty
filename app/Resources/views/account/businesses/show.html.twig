@@ -65,7 +65,11 @@
 
         {{ form_widget(form) }}
 
-          <input type="submit" value="Create"
+          <a class="btn btn-secondary btn-lg" data-confirm="true" href="{{ path('admin_business_delete_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+            Delete
+          </a>
+
+          <input type="submit" value="Save"
                class="btn btn-primary btn-lg" />
         {{ form_end(form) }}
 
