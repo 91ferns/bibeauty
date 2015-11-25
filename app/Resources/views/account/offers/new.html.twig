@@ -1,8 +1,10 @@
 {% extends 'admin.html.twig' %}
 
 {% block toolbar %}
+<!--
 <a href="{{ path('admin_new_offer_path', { id: business.getId, slug: business.getSlug }) }}" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
 <a id="deleteSelectedOffersButton" class="admin-btn" href="javascript:void(0);"><i class="fa fa-trash fa-lg"></i> Delete</a>
+-->
 {% endblock %}
 
 {% block body %}
@@ -51,11 +53,11 @@
 
               <thead>
                 <tr>
-                  <th>Treatment</th>
-                  <th>Start Date</th>
-                  <th>Times</th>
-                  <th>Original Price</th>
-                  <th>Discount Price</th>
+                  <th width="32%">Treatment</th>
+                  <th width="20%">Start Date</th>
+                  <th width="16%">Times</th>
+                  <th width="16%">Original Price</th>
+                  <th width="16%">Discount Price</th>
                 </tr>
               </thead>
 

@@ -87,11 +87,14 @@ jQuery(function($) {
 
     if (schemaData.enum) {
       input = $('<select></select>');
+      input.attr('multiple', true);
 
       for (var x in schemaData.enum) {
         var option = schemaData.enum[x];
 
-        var theOption = $('<option></option>').text(option).attr('value', option);
+        var val = Object.keys(option)[0];
+
+        var theOption = $('<option></option>').text(option[val]).attr('value', val);
         input.append(theOption);
 
       }
@@ -140,7 +143,21 @@ jQuery(function($) {
         input.val(obj);
       }
 
-      finalElement = input;
+      if (schemaData.type === Date) {
+
+        var wrapper = $('<div></div>').addClass('input-group');
+        var addon = $('<span class="input-group-addon"><i class="fa fa-calendar fa-lg"></i></span>');
+
+        input.attr('id', 'DayField');
+        wrapper.append(input).append(addon);
+
+        input.datepicker();
+
+        finalElement = wrapper;
+      } else {
+        finalElement = input;
+      }
+
     }
 
     return finalElement;
@@ -203,14 +220,40 @@ jQuery(function($) {
     originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
   });
 
+  var enumPopulated = [];
+  for (var h = 7; h <= 21; h++) {
+    for (var m = 0; m < 60; m = m + 15) {
+      var mFormatted;
+      if (m === 0) {
+        mFormatted = '00';
+      } else {
+        mFormatted = m;
+      }
+
+      var nicehour;
+
+      if (h === 0 || h === 12) {
+        nicehour = h;
+      } else {
+        nicehour = h % 12;
+      }
+
+      var meridian = h >= 12 ? 'PM' : 'AM';
+      var string = nicehour + ':' + mFormatted + ' ' + meridian;
+
+      var obj = {};
+      obj[h + ':' + mFormatted] = string;
+
+      enumPopulated.push(obj);
+    }
+  }
+
   theAutoadd.addSchema('offer', {
     treatmentCategory: { type: String, label: 'Treatment' },
     startDate: { type: Date, label: 'Start Date' },
-    times: { type: String, label: 'Times', enum: [
-      '9:00'
-    ] },
+    times: { type: String, label: 'Times', enum: enumPopulated },
     originalPrice: { type: Number, label: 'Original Price', disabled: true },
-    discountPrice: { type: Number, label: 'Full Price', default: 0.0 },
+    discountPrice: { type: Number, label: 'Discount Price', default: 0.0 },
   });
 
   function getAutoadd() {
