@@ -2,7 +2,7 @@
 
 {% block toolbar %}
 <!--
-<a href="{{ path('admin_new_offer_path', { id: business.getId, slug: business.getSlug }) }}" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
+<a href="{{ path('admin_business_offers_new_path', { id: business.getId, slug: business.getSlug }) }}" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
 <a id="deleteSelectedOffersButton" class="admin-btn" href="javascript:void(0);"><i class="fa fa-trash fa-lg"></i> Delete</a>
 -->
 {% endblock %}
@@ -74,7 +74,7 @@
       <p>&nbsp;</p>
 
       <div class="align-right">
-        <button class="btn btn-lg btn-primary" type="submit">Add Treatments</button>
+        <button class="btn btn-lg btn-primary" type="submit">Add Offers</button>
       </div>
 
     </form>

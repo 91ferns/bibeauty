@@ -61,7 +61,7 @@ class OffersController extends Controller
 
 
     /**
-     * @Route("/account/offers/{id}/{slug}/new", name="admin_new_offer_path")
+     * @Route("/account/offers/{id}/{slug}/new", name="admin_business_offers_new_path")
      * @Method({"GET"})
      */
     public function createAction($id, $slug, Request $request) {
