@@ -75,7 +75,7 @@ jQuery(function($) {
     this.schemae[label] = schema;
   };
 
-  Autoadd.prototype.createInputFor = function(schemaData, schemaName, obj) {
+  Autoadd.prototype.createInputFor = function(label, schemaData, schemaName, obj) {
 
 
     /*
@@ -119,7 +119,7 @@ jQuery(function($) {
       input.attr('type', type);
     }
 
-    input.attr('name', 'autoadd[' + this.getRowCounter() + '][' + schemaName + ']')
+    input.attr('name', label + '[' + this.getRowCounter() + '][' + schemaName + ']')
       .addClass('form-control').attr('value', schemaData.default || '')
       .attr('placeholder', schemaData.label || schemaName)
       .attr('required', true);
@@ -184,7 +184,7 @@ jQuery(function($) {
 
     for (var x in schema) {
       var theData = data[x] || '';
-      newObject.push(this.createInputFor(schema[x], x, theData));
+      newObject.push(this.createInputFor(label, schema[x], x, theData));
     }
 
     this.rows.push(newObject);
@@ -223,12 +223,65 @@ jQuery(function($) {
     this.form = $(form);
 
     this.form.on('submit', function(e) {
+
+      this.form.find('.alert').remove();
+
       // Need to iterate through all the rows and validate them against their schema
       var data = this.form.serializeArray();
+      var errors = [];
 
-      console.log(data);
+      for (var itemNumber in data) {
+        var theItem = data[itemNumber];
 
-      return false;
+        var key = theItem.name;
+        var value = theItem.value;
+
+        // Need to parse the key
+        // first is gonna be autoadd since we're using the autoadd form
+        var found = key.match(/([^[]+)\[([0-9]+)\]\[(.+)\]/);
+
+        var schemaType = found[1] || false;
+        var theNumber = found[2] || false;
+        var itemCategory = found[3] || false;
+
+        if (!this.schemae.hasOwnProperty(schemaType) || !itemNumber ||!itemCategory) {
+          continue;
+        }
+
+        var theSchema = this.schemae[schemaType];
+        var relatedSchema = theSchema[itemCategory] || false;
+
+        if (!relatedSchema) {
+          continue;
+        }
+
+        if (relatedSchema.validation) {
+          var valid = relatedSchema.validation(value);
+
+          console.log(valid);
+
+          if (valid === true) {
+            continue;
+          } else {
+            errors.push(valid);
+          }
+        }
+
+      }
+
+      if (errors.length > 0) {
+        var ul = $('<div class="alert alert-danger"><ul></ul></div>');
+
+        for (var x in errors) {
+          var li = $('<li></li>').text(errors[x]);
+          ul.append(li);
+        }
+
+        this.form.prepend(ul);
+        return false;
+      } else {
+        return true;
+      }
 
 
     }.bind(this));
@@ -242,9 +295,9 @@ jQuery(function($) {
     name: { type: String, label: 'What is it?' },
     description: { type: Text, label: 'What do they get?', },
     duration: { type: Number, label: 'Duration (in minutes)', validation: function(val) {
-      var intVal = parseint(val);
+      var intVal = parseInt(val);
 
-      if (intval >= 520) {
+      if (intVal >= 520) {
         return 'Duration must be shorter than 520 minutes';
       }
 
@@ -257,9 +310,9 @@ jQuery(function($) {
     } },
     originalPrice: { type: Number, label: 'Full Price', default: 0.0,
       validation: function(val) {
-        var floatVal = parsefloat(val);
+        var floatVal = parseFloat(val);
 
-        if (floatval > 0.00) {
+        if (floatVal > 0.00) {
           return true;
         }
 
@@ -345,7 +398,7 @@ jQuery(function($) {
 
     grep.children('li').each(function() {
       var parentKey = $(this).data('parent');
-      console.log(parentKey);
+
       if (
         ($(this).text().toLowerCase().search(value) > -1) ||
         (parentKey && parentKey.search(value) > -1)

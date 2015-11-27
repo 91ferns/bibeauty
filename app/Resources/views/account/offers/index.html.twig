@@ -15,7 +15,7 @@
         <thead>
           <tr>
             <!--<th><a href="#" id="check-all-box">All</a></th>-->
-            <th>
+            <th class="select-col">
               <span class="sr-only">
                 <input name="Offers[]" class="offer-check" type="checkbox" value="all" />
               </span>
@@ -33,7 +33,7 @@
           {% for offer in offers %}
           {% set av = offer.getAvailabilitySet %}
           <tr data-id="{{ offer.getId }}">
-            <td><span class="btns">
+            <td class="select-col"><span class="btns">
               <input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}" style="margin:0;">
             </span></td>
             <td title="Treatment" class="treatment-name-td"><span class="treatment-name">

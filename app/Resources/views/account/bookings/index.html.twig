@@ -9,7 +9,7 @@
 
         <thead>
           <tr>
-            <th>All</th>
+            <th class="select-col">All</th>
             <th>Client</th>
             <th>Treatment</th>
             <th>Date</th>
@@ -27,7 +27,7 @@
             {% set availability = booking.getAvailability %}
             {% set treatment = availability.getTreatment %}
             <tr>
-              <td>
+              <td class="select-col">
                 <input type="checkbox" name="bookings[]" value="{{ booking.getId }}">
               </th>
               <td title="Client">{{ booking.getName }}

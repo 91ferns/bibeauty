@@ -65,9 +65,9 @@ class TreatmentsController extends Controller
 
         $business = $this->businessBySlugAndId($slug, $id);
 
-        $post = $request->get('autoadd');
+        $post = $request->get('treatment');
         $em = $this->getDoctrine()->getManager();
-        $failed = 0;
+        $failed = array();
         $total = count($post);
 
         $errors = array();
@@ -107,6 +107,7 @@ class TreatmentsController extends Controller
                 $errors[] = (string) $validationErrors;
                 $failed[] = $treatment;
             }
+
         }
 
         $numFailed = count($failed);
@@ -134,10 +135,11 @@ class TreatmentsController extends Controller
             return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
         }
 
-        return $this->render('account/treatments/show.html.twig', array(
+        return $this->render('account/treatments/new.html.twig', array(
             //'businessForm' => $form->createView(),
             'business' => $business,
             'failed'  => $failed,
+            'treatments' => $this->getDoctrine()->getManager()->getRepository("AppBundle:TreatmentCategory")->getHeirarchy(),
         ));
 
     }

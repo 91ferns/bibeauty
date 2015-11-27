@@ -522,8 +522,8 @@ $card-radius: 10px;
       display: none;
     }
 
-    tr > td:first-child {
-      display: none;
+    td.select-col {
+      display: none !important;
     }
 
     .delete-form {
@@ -531,6 +531,11 @@ $card-radius: 10px;
     }
 
     tr {
+
+      @media (max-width: $screen-sm-max) {
+        @include clearfix;
+      }
+
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
       border: none;
       background-color: white !important;
@@ -545,12 +550,27 @@ $card-radius: 10px;
           content: attr(title) ": ";
           font-weight: bold;
           margin-right: 5px;
+          color: black;
         }
         &:nth-child(2) {
           border-top: none !important;
         }
+
+        color: #b4b4b4;
+
         display: block;
         padding: 8px 25px !important;
+
+
+        // Special rules for the table data stuff. Try to zero in by title
+        &[title="Duration"], &[title="Price"] {
+          float: left;
+          width: 50%;
+          &:before {
+            display: block;
+          }
+        }
+
       }
     }
   }
