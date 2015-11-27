@@ -671,6 +671,10 @@ $card-radius: 10px;
       display: block;
     }
 
+    &.form-focused .panel-heading {
+      border-bottom: 1px solid #e6e6e6;
+    }
+
     .panel-body {
       display: none;
       @media (min-width: $screen-md-min) {
@@ -682,7 +686,9 @@ $card-radius: 10px;
     border-radius: 6px;
 
     .panel-heading {
-      border-bottom: 1px solid #e6e6e6;
+      @media (min-width: $screen-md-min) {
+        border-bottom: 1px solid #e6e6e6;
+      }
       .input-group {
         .form-control {
           border: 0px;
