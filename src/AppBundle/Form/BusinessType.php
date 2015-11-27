@@ -13,11 +13,11 @@ class BusinessType extends AbstractType
         $builder
             ->add('headerAttachment', new AttachmentType(), array(
                 'required' => false,
-                'label' => 'Upload Header'
+                'label' => 'Upload a pic of your work station / salon'
             ))
             ->add('logoAttachment', new AttachmentType(), array(
                 'required' => false,
-                'label' => 'Upload Logo'
+                'label' => 'Upload a profile pic of you (must be a pic of you)'
             ))
             ->add('name', 'text', array(
                 'label' => false,

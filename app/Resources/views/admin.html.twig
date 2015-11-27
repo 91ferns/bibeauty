@@ -141,7 +141,15 @@
             <div class="visible-xs visible-sm">
               <div class="dropdown dropdown-navigation">
                 <button class="btn btn-navigation dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  My Businesses
+                  {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}
+                    My Bookings
+                  {% elseif app.request.attributes.get('_route') starts with 'admin_business_treatments' %}
+                    My Treatments
+                  {% elseif app.request.attributes.get('_route') starts with 'admin_business_offers' %}
+                    My Offers
+                  {% else %}
+                    My Businesses
+                  {% endif %}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu multi-level">
@@ -153,14 +161,13 @@
                   <li class="dropdown-submenu">
 
                     <!-- sub dropdown -->
-                    <a href="#" tabindex="-1">
-                      {{business.getName | slice(0,10)}}...
-                      <i class="fa fa-caret-right"></i>
+                    <a href="javascript: void(0);" tabindex="-1">
+                      {{business.getName | slice(0,40) }}
                     </a>
                     <ul class="dropdown-menu">
                       {% if app.user.hasBusinesses %}
                         {% for business in app.user.getBusinesses %}
-                          <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
+                          <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{ business.getName | slice(0,40) }}</a></li>
                         {% endfor %}
                       {% endif %}
                     </ul>
@@ -175,7 +182,7 @@
                   <li>
                     <a class=" {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}active{% endif %}" href="{{
                       path('admin_business_treatments_path', { 'slug': business.getSlug, 'id': business.getId })
-                    }}">All Treatments</a>
+                    }}">My Treatments</a>
                   </li>
                   <li>
                     <a class=" {% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}" href="{{
@@ -215,14 +222,33 @@
 
               <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-md-pull-4">
 
-                <select id="BusinessesSelect" class="businesses-select form-control" name="BusinessSelected">
-                  <option></option>
-                  {% if app.user.hasBusinesses %}
-                    {% for business in app.user.getBusinesses %}
-                    <option value="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</option>
-                    {% endfor %}
-                  {% endif %}
-                </select>
+                <div class="dropdown dropdown-navigation">
+                  <button class="btn btn-navigation dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}
+                      My Bookings
+                    {% elseif app.request.attributes.get('_route') starts with 'admin_business_treatments' %}
+                      My Treatments
+                    {% elseif app.request.attributes.get('_route') starts with 'admin_business_offers' %}
+                      My Offers
+                    {% else %}
+                      My Businesses
+                    {% endif %}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu multi-level">
+
+                    {% if app.user.hasBusinesses %}
+                      {% for business in app.user.getBusinesses %}
+                      <li>
+                        <a class="" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                          {{business.getName}}
+                        </a>
+                      </li>
+                      {% endfor %}
+                    {% endif %}
+
+                  </ul>
+                </div> <!-- /.dropdown -->
 
               </div><!-- /.col -->
 

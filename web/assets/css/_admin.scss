@@ -597,7 +597,16 @@ $card-radius: 10px;
   }
 }
 
-$icon-rounded-size: 32px;
+@mixin rounded-icon($size) {
+  width: $size;
+  height: $size;
+  padding: ($size / 4) 0;
+  margin-top: -($size / 4);
+
+  line-height: 1;
+
+  font-size: $size / 2.2;
+}
 
 .icon-rounded {
   border-width: 1px;
@@ -608,16 +617,19 @@ $icon-rounded-size: 32px;
   text-transform: uppercase;
   border-radius: 50%;
   display: inline-block;
-  width: $icon-rounded-size;
-  height: $icon-rounded-size;
-  padding: ($icon-rounded-size / 4) 0;
-  margin-top: -($icon-rounded-size / 4);
 
-  line-height: 1;
+  @include rounded-icon(16px);
 
-  font-size: $icon-rounded-size / 2.2;
+  @media (min-width: $screen-md-min) {
+    @include rounded-icon(32px);
+  }
+
   margin-right: .5em;
 
+}
+
+.filterable-ul .icon-rounded {
+  @include rounded-icon(32px);
 }
 
 .admin {
@@ -634,6 +646,17 @@ $icon-rounded-size: 32px;
   }
 
   .panel-sidebar {
+
+    &.form-focused .panel-body {
+      display: block;
+    }
+
+    .panel-body {
+      display: none;
+      @media (min-width: $screen-md-min) {
+        display: block;
+      }
+    }
 
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.45);
     border-radius: 6px;

@@ -34,6 +34,8 @@ jQuery(function($) {
     this.rows = [];
 
     this.row = -1;
+    this.form = null;
+
   };
 
   Autoadd.prototype.getRowCounter = function() {
@@ -49,7 +51,8 @@ jQuery(function($) {
   };
 
   Autoadd.prototype.serialize = function() {
-    return this.self.parents('form').serializeArray();
+    var form = this.form || this.self.parents('form');
+    return form.serializeArray();
   };
 
   Autoadd.prototype.isDirty = function() {
@@ -216,14 +219,54 @@ jQuery(function($) {
     }
   };
 
+  Autoadd.prototype.bindTo = function(form) {
+    this.form = $(form);
+
+    this.form.on('submit', function(e) {
+      // Need to iterate through all the rows and validate them against their schema
+      var data = this.form.serializeArray();
+
+      console.log(data);
+
+      return false;
+
+
+    }.bind(this));
+
+  };
+
   var theAutoadd = new Autoadd();
 
   theAutoadd.addSchema('treatment', {
     treatmentCategory: { type: String, label: 'Treatment' },
     name: { type: String, label: 'What is it?' },
     description: { type: Text, label: 'What do they get?', },
-    duration: { type: Number, label: 'Duration (in minutes)' },
-    originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
+    duration: { type: Number, label: 'Duration (in minutes)', validation: function(val) {
+      var intVal = parseint(val);
+
+      if (intval >= 520) {
+        return 'Duration must be shorter than 520 minutes';
+      }
+
+      if (intVal >= 15) {
+        return true;
+      }
+
+      return 'Duration must be longer than 15 minutes';
+
+    } },
+    originalPrice: { type: Number, label: 'Full Price', default: 0.0,
+      validation: function(val) {
+        var floatVal = parsefloat(val);
+
+        if (floatval > 0.00) {
+          return true;
+        }
+
+        return 'Price must be greater than $0.00';
+
+      }
+    },
   });
 
   var enumPopulated = [];
@@ -262,9 +305,25 @@ jQuery(function($) {
     discountPrice: { type: Number, label: 'Discount Price', default: 0.0 },
   });
 
+  theAutoadd.bindTo('#AutoaddForm');
+
   function getAutoadd() {
     return theAutoadd;
   }
+
+  $('.canvas').click(function() {
+    // close form-focused
+    $('.form-focused').removeClass('form-focused');
+  });
+
+  $('.panel-sidebar').click(function(e) {
+    e.stopPropagation();
+  });
+
+  $('.ul-filter')
+    .on('focus', function() {
+      $(this).parents('.panel').first().addClass('form-focused');
+    });
 
   $('.ul-filter').on('keyup', function() {
     var $this = $(this);

@@ -105,17 +105,19 @@ class TreatmentsController extends Controller
                 $em->persist($treatment);
             } else {
                 $errors[] = (string) $validationErrors;
-                $failed++;
+                $failed[] = $treatment;
             }
         }
 
-        if ($failed === $total) {
+        $numFailed = count($failed);
+
+        if ($numFailed === $total) {
             // All failed
             $this->addFlash(
                 'error',
                 implode(' ', $errors)
             );
-        } elseif ($failed > 0) {
+        } elseif ($numFailed > 0) {
             // Some failed
             $this->addFlash(
                 'error',
@@ -129,9 +131,14 @@ class TreatmentsController extends Controller
             );
             $em->flush();
             // All succeeded
+            return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
         }
 
-        return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
+        return $this->render('account/treatments/show.html.twig', array(
+            //'businessForm' => $form->createView(),
+            'business' => $business,
+            'failed'  => $failed,
+        ));
 
     }
 

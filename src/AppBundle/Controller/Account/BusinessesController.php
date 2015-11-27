@@ -256,16 +256,10 @@ class BusinessesController extends Controller
             $em->persist($business);
             $em->flush();
 
-            return $this->redirectToRoute('admin_business_path', array(
-                'id' => $business->getId(),
-                'slug' => $business->getSlug()
-            ));
+            return $this->redirectToRoute('admin_businesses_path');
 
         } else {
-            return $this->redirectToRoute('admin_business_path', array(
-                'id' => $business->getId(),
-                'slug' => $business->getSlug()
-            ));
+            return $this->redirectToRoute('admin_businesses_path');
         }
 
     }

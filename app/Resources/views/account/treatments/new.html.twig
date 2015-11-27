@@ -33,10 +33,10 @@
 
   <div class="col-md-8">
 
-    <form action="" method="post">
+    <form action="" method="post" id="AutoaddForm">
 
       <div class="panel panel-default">
-        <div class="panel panel-body">
+        <div class="panel-body">
 
             <table class="table businesses-table table-striped">
 
@@ -71,6 +71,12 @@
   </div>
 
 </div>
+
+{% if failed is defined %}
+  <script>
+  var previouslyFailed = JSON.parse({{failed|json_encode()}});
+  </script>
+{% endif %}
 
 
 {% endblock %}
