@@ -100,12 +100,13 @@ class OffersController extends Controller
 
         $errors = array();
 
-        print_r($post);
-        die();
-
         foreach($post as $offerData) {
 
-            $this->createOffer($business, $offerData);
+            $offer = $this->createOffer($business, $offerData, &$error);
+            if ($error) {
+                $errors[] = $error;
+                $failed[] = $offer
+            }
 
         }
 
@@ -121,38 +122,32 @@ class OffersController extends Controller
             // Some failed
             $this->addFlash(
                 'error',
-                'We could not add ' . $failed . ' of your new treatments.'
+                'We could not add ' . $failed . ' of your new offers.'
             );
             $em->flush();
         } else {
             $this->addFlash(
                 'notice',
-                'Successfully added all of your new treatments.'
+                'Successfully added all of your new offers.'
             );
-            $em->flush();
             // All succeeded
-            return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
+            return $this->redirectToRoute('admin_business_offers_path',["slug"=>$slug,"id"=>$id]);
         }
 
-        return $this->render('account/treatments/new.html.twig', array(
-            //'businessForm' => $form->createView(),
-            'business' => $business,
-            'failed'  => $failed,
-            'treatments' => $this->getDoctrine()->getManager()->getRepository("AppBundle:TreatmentCategory")->getHeirarchy(),
-        ));
+        $repository = $em->getRepository("AppBundle:Treatment");
+        $treatments = $repository->findByBusiness($business);
 
-        if (!$treatmentId) {
-            return $this->redirectToRoute('admin_business_offers_path', array(
-                'id' => $id,
-                'slug' => $slug
-            ));
-        }
-
-        return $this->checkCreateAvailabilityAction($id, $slug, $treatmentId, $request);
+        return $this->render(
+            'account/offers/new.html.twig',
+            array(
+                'treatments' => $treatments,
+                'business' => $business,
+            )
+        );
 
     }
 
-    public function createOffer($business, $data) {
+    public function createOffer($business, $data, &$error) {
         // this is absolutely something that would be offloaded to the worker
 
         //treatmentCategory
@@ -189,10 +184,7 @@ class OffersController extends Controller
           $times = $this->buildAllTimes();
         }
         if (!$date || !$times || count($times) < 1 ){
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'Date and time must be specified.'
-            ));
+            $error = 'Date and time must be specified.';
         }
 
         if (!$data->discountPrice) {
@@ -202,10 +194,7 @@ class OffersController extends Controller
         }
 
         if (!$discount) {
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'You must specify a discount.'
-            ));
+            $error = 'You must specify a discount.';
         }
 
         if (!$data->recurrenceDates) {
@@ -220,18 +209,14 @@ class OffersController extends Controller
         $treatment = $treatments->findOneBy(array( 'id' => $treatmentId ));
 
         if (!$treatment) {
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'Treatment not found.'
-            ));
+            $error = 'Treatment not found.';
         }
 
         if ((float) $discount >= (float) $treatment->getOriginalPrice()) {
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'Discount must be cheaper than the original price.'
-            ));
+            $error = 'Discount must be cheaper than the original price.';
         }
+
+        $validator = $this->get('validator');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -239,7 +224,14 @@ class OffersController extends Controller
         $offer->setBusiness($business);
         $offer->setTreatment($treatment);
         $offer->setCurrentPrice($discount);
-        $em->persist($offer);
+
+        $offerErrors = $validator->validate($offer);
+
+        if (count($offerErrors) < 1) {
+            $em->persist($offer);
+        } else {
+            return (string) $validationErrors;
+        }
 
         $startDateTime = new \DateTime($date);
 
@@ -251,26 +243,27 @@ class OffersController extends Controller
         $availabilitySet->setTreatment($treatment);
         $availabilitySet->setRecurrenceType($recurrenceType);
 
-        $em->persist($availabilitySet);
-        $em->flush();
+        $availabilityErrors = $validator->validate($availabilitySet);
 
+        if (count($availabilityErrors) < 1) {
+            $em->persist($availabilitySet);
+        } else {
+            return (string) $validationErrors;
+        }
+
+        $em->flush();
         $success = $this->doAvailabilities($availabilitySet->getId());
 
         // we now need to create the availability set
 
-        if ($success) {
-            $message = 'Queued the creation of your availabilities.';
-        } else {
+        if (!$success) {
             $em->remove($availabilitySet);
             $em->remove($offer);
             $em->flush();
-            $message = 'Unable to queue your availabilities. Please report this to us on the contact us page.';
+            return 'Unable to queue your availabilities. Please report this to us on the contact us page.';
         }
 
-        return $this->redirectToRoot($slug, $id, $treatmentId, array(
-            'notice',
-            $message
-        ));
+        return $offer;
     }
 
 
