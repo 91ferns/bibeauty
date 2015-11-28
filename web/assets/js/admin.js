@@ -95,14 +95,6 @@ jQuery(function($) {
 
   Autoadd.prototype.createInputFor = function(label, schemaData, schemaName, obj) {
 
-
-    /*
-    treatmentCategory: { type: String, label: 'Treatment' },
-    name: { type: String, label: 'Name' },
-    duration: { type: Number, label: 'Duration' },
-    originalPrice: { type: Number, label: 'Full Price', default: 0.0 },
-    */
-
     var input;
     var type;
 
@@ -208,17 +200,56 @@ jQuery(function($) {
 
     var newObject = [];
 
+    var first = true;
+
     for (var x in schema) {
       var theData = data[x] || '';
       var input = this.createInputFor(label, schema[x], x, theData);
+
       if (input) {
+        if (first) {
+          input.append(' <a href="javascript: void(0);" class="autoadd-row-remove"><i class="fa fa-times"></i></a>');
+        }
         newObject.push(input);
       }
+      first = false;
     }
 
     this.rows.push(newObject);
 
     return newObject;
+
+  };
+
+  Autoadd.prototype.adjustPECacheForRemoval = function(number) {
+    delete this.postExecutionHooks[number]; // deletes it
+
+    var newPECache = {};
+    var newHooks = {};
+    var newIndex;
+
+    for (var x in this.postExecutionHooks) {
+      if (x > number) {
+        newIndex = x - 1;
+      } else {
+        newIndex = x;
+      }
+
+      newHooks[newIndex] = this.postExecutionHooks[x];
+    }
+
+    for (var y in this.executionCache) {
+      if (y > number) {
+        newIndex = y - 1;
+      } else {
+        newIndex = y;
+      }
+
+      newPECache[newIndex] = this.executionCache[y];
+    }
+
+    this.postExecutionHooks = newHooks;
+    this.executionCache = newPECache;
 
   };
 
@@ -251,9 +282,28 @@ jQuery(function($) {
 
   };
 
+  Autoadd.prototype.rebindEvents = function() {
+    var rowRemove = this.self.find('.autoadd-row-remove');
+    var $this = this;
+
+    rowRemove.off('click').on('click', function() {
+
+      var thisRow = $(this).parents('tr');
+      var index = thisRow.data('index');
+
+      $this.adjustPECacheForRemoval(index);
+      $this.rows = $this.rows.splice(index, 1);
+
+      $this.sync();
+    });
+
+  };
+
   Autoadd.prototype.sync = function() {
 
     this.resetRow();
+
+    console.log('sync()');
 
     var newHtml = [];
     for (var x in this.rows) {
@@ -263,6 +313,8 @@ jQuery(function($) {
       var theRow = this.rows[x];
 
       var newRow = $('<tr></tr>');
+      newRow.attr('data-index', x);
+      newRow.addClass('autoadd-added');
 
       for (var rt in theRow) {
         newRow.append(theRow[rt]);
@@ -281,6 +333,9 @@ jQuery(function($) {
     for (var y in newHtml) {
       this.self.append(newHtml[y]);
     }
+
+    this.rebindEvents();
+
   };
 
   Autoadd.prototype.bindTo = function(form) {
