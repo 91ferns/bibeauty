@@ -2,6 +2,16 @@
 $admin-nav-height: 110px;
 $card-radius: 10px;
 
+.btn-navigation {
+  position: relative;
+  .caret {
+    position: absolute;
+    right: 12%;
+    top: 50%;
+    margin-top: -3px;
+  }
+}
+
 .admin {
 
   .almost-a {
@@ -63,6 +73,8 @@ $card-radius: 10px;
   .card {
     background-color: white;
     border-radius: 12px;
+
+    margin-bottom: 15px;
 
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
 
