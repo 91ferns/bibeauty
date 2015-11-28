@@ -90,7 +90,56 @@ class OffersController extends Controller
 
         // Treatment ID comes from request then we just return the checkCreate
 
-        $treatmentId = $request->request->get('Treatment', false);
+        $business = $this->businessBySlugAndId($slug, $id);
+
+        $post = $request->get('offer');
+        $em = $this->getDoctrine()->getManager();
+
+        $failed = array();
+        $total = count($post);
+
+        $errors = array();
+
+        print_r($post);
+        die();
+
+        foreach($post as $offerData) {
+
+            $this->createOffer($business, $offerData);
+
+        }
+
+        $numFailed = count($failed);
+
+        if ($numFailed === $total) {
+            // All failed
+            $this->addFlash(
+                'error',
+                implode(' ', $errors)
+            );
+        } elseif ($numFailed > 0) {
+            // Some failed
+            $this->addFlash(
+                'error',
+                'We could not add ' . $failed . ' of your new treatments.'
+            );
+            $em->flush();
+        } else {
+            $this->addFlash(
+                'notice',
+                'Successfully added all of your new treatments.'
+            );
+            $em->flush();
+            // All succeeded
+            return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
+        }
+
+        return $this->render('account/treatments/new.html.twig', array(
+            //'businessForm' => $form->createView(),
+            'business' => $business,
+            'failed'  => $failed,
+            'treatments' => $this->getDoctrine()->getManager()->getRepository("AppBundle:TreatmentCategory")->getHeirarchy(),
+        ));
 
         if (!$treatmentId) {
             return $this->redirectToRoute('admin_business_offers_path', array(
@@ -103,17 +152,39 @@ class OffersController extends Controller
 
     }
 
-    /**
-     * @Route("/account/offers/{id}/{slug}/{treatmentId}/new", name="admin_treatment_availability_new_path")
-     * @Method("POST")
-     */
-    public function checkCreateAvailabilityAction($id, $slug, $treatmentId, Request $request) {
+    public function createOffer($business, $data) {
         // this is absolutely something that would be offloaded to the worker
-        $business = $this->businessBySlugAndId($slug, $id);
 
-        $date = $request->request->get('Date', false);
-        $times = $request->request->get('Times', array());
-        $recurrenceType = $request->request->get('RecurrenceType', 'never');
+        //treatmentCategory
+        //startDate
+        //times
+        //discountPrice
+        //RecurrenceType
+        // RecurrenceDates
+
+        $slug = $business->getSlug();
+        $id = $business->getId();
+
+        $treatmentId = $data->treatmentCategory;
+
+        if (!$data->startDate) {
+            $date = false;
+        } else {
+            $date = $data->startDate;
+        }
+
+        if (!$data->times) {
+            $times = array();
+        } else {
+            $times = $data->times;
+        }
+
+        if (!$data->recurrenceType) {
+            $recurrenceType = 'never';
+        } else {
+            $recurrenceType = $data->recurrenceType;
+        }
+
         if($times[0] == 'ALL'){
           $times = $this->buildAllTimes();
         }
@@ -124,7 +195,11 @@ class OffersController extends Controller
             ));
         }
 
-        $discount = $request->request->get('Discount', false);
+        if (!$data->discountPrice) {
+            $discount = false;
+        } else {
+            $discount = $data->discountPrice;
+        }
 
         if (!$discount) {
             return $this->redirectToRoot($slug, $id, $treatmentId, array(
@@ -133,11 +208,16 @@ class OffersController extends Controller
             ));
         }
 
-        $recurrenceDOWs = $request->request->get('RecurrenceDates', array());
+        if (!$data->recurrenceDates) {
+            $recurrenceDOWs = array();
+        } else {
+            $recurrenceDOWs = $data->recurrenceDOWs;
+        }
+
         $recurrenceDOWs = array_unique($recurrenceDOWs);
 
         $treatments = $this->getRepo('Treatment');
-        $treatment = $treatments->findOneBy(array( 'id'=>$treatmentId ));
+        $treatment = $treatments->findOneBy(array( 'id' => $treatmentId ));
 
         if (!$treatment) {
             return $this->redirectToRoot($slug, $id, $treatmentId, array(
@@ -152,7 +232,6 @@ class OffersController extends Controller
                 'Discount must be cheaper than the original price.'
             ));
         }
-
 
         $em = $this->getDoctrine()->getManager();
 
@@ -175,19 +254,6 @@ class OffersController extends Controller
         $em->persist($availabilitySet);
         $em->flush();
 
-        /*
-        $root = $this->get('kernel')->getRootDir();
-        $env = $this->get('kernel')->getEnvironment();
-
-        $processText = sprintf('php %s/console bibeauty:generate:availabilities %d --env=%s',
-            $root,
-            $availabilitySet->getId(),
-            $env
-        );
-
-        $process = new Process($processText);
-        $process->run(); */
-
         $success = $this->doAvailabilities($availabilitySet->getId());
 
         // we now need to create the availability set
@@ -206,8 +272,9 @@ class OffersController extends Controller
             $message
         ));
     }
-    protected function buildAllTimes()
-    {
+
+
+    protected function buildAllTimes() {
       $times = [];
         for($i=7;$i<=21;$i++){
           for($j=0;$j<=3;$j++){

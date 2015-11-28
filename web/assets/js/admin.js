@@ -303,8 +303,6 @@ jQuery(function($) {
 
     this.resetRow();
 
-    console.log('sync()');
-
     var newHtml = [];
     for (var x in this.rows) {
 
