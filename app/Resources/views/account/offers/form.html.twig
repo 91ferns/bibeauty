@@ -1,0 +1,68 @@
+<td></td>
+<td colspan="4">
+  <div class="form-group">
+    <div class="input-group">
+      <label for="">Repeat</label><br>
+      <!--<input type="checkbox" name="Recurring" class="form-control" />-->
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary active" >
+          <input type="radio" name="{{ prefix }}[{{ index }}][RecurrenceType]" checked value="never" class="form-control" /> Never
+        </label>
+        <label class="btn btn-primary" >
+          <input type="radio" name="{{ prefix }}[{{ index }}][RecurrenceType]" value="daily" class="form-control" /> Daily
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="{{ prefix }}[{{ index }}][RecurrenceType]" value="weekly" class="form-control" /> Weekly
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="{{ prefix }}[{{ index }}][RecurrenceType]" value="monthly" class="form-control" /> Monthly
+        </label>
+      </div>
+
+    </div>
+  </div> <!-- /.form-group -->
+
+  <div id="repeat-subform">
+
+    <div class="form-group">
+      <label>Days</label>
+
+      <div>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="{{ prefix }}[{{ index }}][RecurrenceDates][]" value="sunday"> Sunday
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="{{ prefix }}[{{ index }}][RecurrenceDates][]" value="monday"> Monday
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="{{ prefix }}[{{ index }}][RecurrenceDates][]" value="tuesday"> Tuesday
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="{{ prefix }}[{{ index }}][RecurrenceDates][]" value="wednesday"> Wednesday
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="{{ prefix }}[{{ index }}][RecurrenceDates][]" value="thursday"> Thursday
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="{{ prefix }}[{{ index }}][RecurrenceDates][]" value="friday"> Friday
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="{{ prefix }}[{{ index }}][RecurrenceDates][]" value="saturday"> Saturday
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <p class="help-block">
+    <strong>Never:</strong> Offer appears only on the selected date and times and is then removed.<br>
+    <strong>Daily:</strong> Offer appears on the selected times every day of the week that you are open<br>
+    <strong>Weekly:</strong> Offer appears on the same day each week and those you select.<br>
+    <strong>Monthly:</strong> Offer appears on the same date scheduled each month.
+  </p>
+
+  </div>
+
+</td>

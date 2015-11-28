@@ -235,6 +235,22 @@ class OffersController extends Controller
       $em->flush();
       return $this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
     }
+
+
+    /**
+     * @Route("/ajax/offers/recurrenceform", name="ajax_delete_offer")
+     * @Method("GET")
+     */
+    public function offerForm(Request $request) {
+        return $this->render(
+            'account/offers/form.html.twig',
+            array(
+                'prefix' => $request->query->get('prefix'),
+                'index' => $request->query->get('index'),
+            )
+        );
+    }
+
     /**
      * @Route("/account/offers/{id}/{slug}/remove", name="admin_delete_offer")
      * @Method("POST")
@@ -252,7 +268,9 @@ class OffersController extends Controller
       $em->flush();
       //return true;//$this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
       return new Response();
- }
+    }
+
+
     protected function redirectToRoot($slug, $id, $treatmentId, $flash = false) {
         if ($flash) {
             list($type, $message) = $flash;

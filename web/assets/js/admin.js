@@ -36,6 +36,17 @@ jQuery(function($) {
     this.row = -1;
     this.form = null;
 
+    this.postExecutionHooks = {};
+    this.executionCache = {};
+
+  };
+
+  Autoadd.prototype.addToExecutionCache = function(index, html) {
+    this.executionCache[index] = html;
+  };
+
+  Autoadd.prototype.getFromExecutionCache = function(index) {
+    return this.executionCache[index] || false;
   };
 
   Autoadd.prototype.getRowCounter = function() {
@@ -47,7 +58,14 @@ jQuery(function($) {
   };
 
   Autoadd.prototype.resetRow = function() {
+    var $this = this;
     this.row = -1;
+
+    $('.hook-generated').each(function() {
+      var index = $(this).data('index');
+
+      $this.addToExecutionCache(index, $(this).html());
+    });
   };
 
   Autoadd.prototype.serialize = function() {
@@ -88,7 +106,15 @@ jQuery(function($) {
     var input;
     var type;
 
-    if (schemaData.enum) {
+    if (schemaData.type === undefined) {
+      this.postExecutionHooks[this.getRowCounter()] = {
+        type: label,
+        data: schemaData,
+        callback: schemaData.callback
+      };
+
+      return;
+    } else if (schemaData.enum) {
       input = $('<select></select>');
       input.attr('multiple', true);
 
@@ -184,12 +210,44 @@ jQuery(function($) {
 
     for (var x in schema) {
       var theData = data[x] || '';
-      newObject.push(this.createInputFor(label, schema[x], x, theData));
+      var input = this.createInputFor(label, schema[x], x, theData);
+      if (input) {
+        newObject.push(input);
+      }
     }
 
     this.rows.push(newObject);
 
     return newObject;
+
+  };
+
+  Autoadd.prototype.postExecutionHookFor = function(number, newRow) {
+    var hook = this.postExecutionHooks[number] || false;
+
+    if (!hook) {
+      return;
+    }
+
+    var tr = $('<tr></tr>');
+    tr.addClass('hook-generated').attr('data-index', number);
+
+    var cached = this.getFromExecutionCache(number);
+
+    if (cached) {
+      tr.html(cached);
+
+      return tr;
+    }
+
+    this.postExecutionHooks[number].executed = true;
+
+    hook.callback(hook.type, hook.data, number, function(data) {
+      tr.html(data);
+      newRow.after(tr);
+    });
+
+    return false;
 
   };
 
@@ -211,6 +269,12 @@ jQuery(function($) {
       }
 
       newHtml.push(newRow);
+
+      var maybeHtml = this.postExecutionHookFor(x, newRow);
+      if (maybeHtml) {
+        newHtml.push(maybeHtml);
+      }
+
     }
 
     this.self.html('');
@@ -257,8 +321,6 @@ jQuery(function($) {
 
         if (relatedSchema.validation) {
           var valid = relatedSchema.validation(value);
-
-          console.log(valid);
 
           if (valid === true) {
             continue;
@@ -356,6 +418,21 @@ jQuery(function($) {
     times: { type: String, label: 'Times', enum: enumPopulated },
     originalPrice: { type: Number, label: 'Original Price', disabled: true },
     discountPrice: { type: Number, label: 'Discount Price', default: 0.0 },
+    recurrence: { type: undefined, callback: function(schemaType, schemaData, num, callback) {
+      var promise = $.ajax({
+        type: 'GET',
+        url: '/ajax/offers/recurrenceform',
+        data: {
+          prefix: schemaType,
+          index: num,
+        },
+        dataType: 'html',
+      }).done(function(data) {
+        callback(data);
+      }).error(function(err) {
+        alert(err);
+      });
+    }}
   });
 
   theAutoadd.bindTo('#AutoaddForm');
