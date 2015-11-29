@@ -108,7 +108,7 @@ jQuery(function($) {
       return;
     } else if (schemaData.enum) {
       input = $('<select></select>');
-      input.attr('multiple', true);
+      input.attr('multiple', true).attr('data-placeholder', 'Times');
 
       for (var x in schemaData.enum) {
         var option = schemaData.enum[x];
@@ -275,6 +275,7 @@ jQuery(function($) {
 
     hook.callback(hook.type, hook.data, number, function(data) {
       tr.html(data);
+      newRow.find('select').select2();
       newRow.find('.offer-form-input').on('change', function() {
 
         var val = $(this).val();
@@ -282,6 +283,7 @@ jQuery(function($) {
           // If all is in the array
           $('option', this).prop('selected', true);
           $('option[value="all"]', this).prop('selected', false);
+          $(this).trigger('change');
         }
 
       });
