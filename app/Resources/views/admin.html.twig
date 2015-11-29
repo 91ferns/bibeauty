@@ -100,7 +100,7 @@
             {% if business is defined %}
             <div class="btn-group btn-group-justified hidden-xs hidden-sm" role="group">
               <div class="btn-group" role="group">
-                <a class="btn btn-default" href="{{ path('admin_businesses_path') }}">My Businesses</a>
+                <a class="btn btn-default" href="{{ path('admin_businesses_path') }}">Home</a>
               </div>
               <div class="btn-group" role="group">
                 <div class="dropdown">
@@ -148,14 +148,14 @@
                   {% elseif app.request.attributes.get('_route') starts with 'admin_business_offers' %}
                     My Offers
                   {% else %}
-                    My Businesses
+                    Home
                   {% endif %}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu multi-level">
 
                   <li>
-                    <a class="btn btn-default" href="{{ path('admin_businesses_path') }}">My Businesses</a>
+                    <a class="btn btn-default" href="{{ path('admin_businesses_path') }}">Home</a>
                   </li>
 
                   <li class="dropdown-submenu">
@@ -231,7 +231,7 @@
                     {% elseif app.request.attributes.get('_route') starts with 'admin_business_offers' %}
                       My Offers
                     {% else %}
-                      My Businesses
+                      Home
                     {% endif %}
                     <span class="caret"></span>
                   </button>

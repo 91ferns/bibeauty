@@ -140,7 +140,7 @@ jQuery(function($) {
     input.attr('name', label + '[' + this.getRowCounter() + '][' + schemaName + ']')
       .addClass('form-control').attr('value', schemaData.default || '')
       .attr('placeholder', schemaData.label || schemaName)
-      .attr('required', true);
+      .attr('required', true).addClass(label + '-form-input');
 
     if (schemaData.disabled || false) {
       input.attr('disabled', true);
@@ -275,6 +275,16 @@ jQuery(function($) {
 
     hook.callback(hook.type, hook.data, number, function(data) {
       tr.html(data);
+      newRow.find('.offer-form-input').on('change', function() {
+
+        var val = $(this).val();
+        if (val.indexOf('all') > -1) {
+          // If all is in the array
+          $('option', this).prop('selected', true);
+          $('option[value="all"]', this).prop('selected', false);
+        }
+
+      });
       newRow.after(tr);
     });
 
@@ -437,7 +447,7 @@ jQuery(function($) {
     },
   });
 
-  var enumPopulated = [];
+  var enumPopulated = [{ all: 'All' }];
   for (var h = 7; h <= 21; h++) {
     for (var m = 0; m < 60; m = m + 15) {
       var mFormatted;
@@ -485,6 +495,7 @@ jQuery(function($) {
       }).error(function(err) {
         alert(err);
       });
+
     }}
   });
 

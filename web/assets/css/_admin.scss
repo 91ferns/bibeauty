@@ -554,6 +554,20 @@ $card-radius: 10px;
       display: none;
     }
 
+    .autoadd {
+      tr {
+        border-radius: 9px 9px 0 0;
+        margin-bottom: 0px;
+      }
+      .hook-generated {
+        border-radius: 0 0 9px 9px;
+      }
+
+      .hook-generated + tr {
+        margin-top: 20px;
+      }
+    }
+
     td.select-col {
       display: none !important;
     }
@@ -577,6 +591,7 @@ $card-radius: 10px;
       .treatment-name-td {
         padding-top: 15px !important;
       }
+
       > td {
         &:before {
           content: attr(title) ": ";
@@ -592,7 +607,6 @@ $card-radius: 10px;
 
         display: block;
         padding: 8px 25px !important;
-
 
         // Special rules for the table data stuff. Try to zero in by title
         &[title="Duration"], &[title="Price"] {
