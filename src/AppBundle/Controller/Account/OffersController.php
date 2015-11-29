@@ -97,16 +97,19 @@ class OffersController extends Controller
 
         $failed = array();
         $total = count($post);
+        $succeeded = array();
 
         $errors = array();
 
         foreach($post as $offerData) {
-
-            $offer = $this->createOffer($business, $offerData, $error);
-
+            $data = (object) $offerData;
+            $offer = $this->createOffer($business, $data, $error);
+            var_dump($error);
             if ($error) {
                 $errors[] = $error;
                 $failed[] = $offer;
+            } else {
+                $succeeded[] = $offer;
             }
 
         }
@@ -161,21 +164,28 @@ class OffersController extends Controller
         $slug = $business->getSlug();
         $id = $business->getId();
 
-        $treatmentId = $data->treatmentCategory;
+        if (!property_exists($data, 'treatmentCategory')) {
+            $treatmentId = null;
+        } else {
+            $treatmentId = $data->treatmentCategory;
+        }
 
-        if (!$data->startDate) {
+        if (!property_exists($data, 'startDate')) {
             $date = false;
         } else {
             $date = $data->startDate;
         }
 
-        if (!$data->times) {
+        if (!property_exists($data, 'times')) {
             $times = array();
         } else {
             $times = $data->times;
+            if (!is_array($times)) {
+                $times = array($times);
+            }
         }
 
-        if (!$data->recurrenceType) {
+        if (!property_exists($data, 'recurrenceType')) {
             $recurrenceType = 'never';
         } else {
             $recurrenceType = $data->recurrenceType;
@@ -188,7 +198,7 @@ class OffersController extends Controller
             $error = 'Date and time must be specified.';
         }
 
-        if (!$data->discountPrice) {
+        if (!property_exists($data, 'discountPrice')) {
             $discount = false;
         } else {
             $discount = $data->discountPrice;
@@ -198,7 +208,7 @@ class OffersController extends Controller
             $error = 'You must specify a discount.';
         }
 
-        if (!$data->recurrenceDates) {
+        if (!property_exists($data, 'recurrenceDates')) {
             $recurrenceDOWs = array();
         } else {
             $recurrenceDOWs = $data->recurrenceDOWs;
@@ -231,7 +241,8 @@ class OffersController extends Controller
         if (count($offerErrors) < 1) {
             $em->persist($offer);
         } else {
-            return (string) $validationErrors;
+            $error = (string) $offerErrors;
+            return $offer;
         }
 
         $startDateTime = new \DateTime($date);
@@ -249,7 +260,9 @@ class OffersController extends Controller
         if (count($availabilityErrors) < 1) {
             $em->persist($availabilitySet);
         } else {
-            return (string) $validationErrors;
+            $em->remove($offer);
+            $error = (string) $availabilityErrors;
+            return $offer;
         }
 
         $em->flush();
