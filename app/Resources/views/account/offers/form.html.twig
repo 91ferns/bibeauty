@@ -2,7 +2,7 @@
 <td colspan="4">
   <div class="form-group">
     <div class="input-group">
-      <label for="">Repeat</label><br>
+      <label for="" style="font-weight: normal;">Repeat</label>
       <!--<input type="checkbox" name="Recurring" class="form-control" />-->
       <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-primary active" >
@@ -22,47 +22,58 @@
     </div>
   </div> <!-- /.form-group -->
 
-  <div id="repeat-subform">
+  <div class="repeat-subform" style="display: none;">
 
     <div class="form-group">
-      <label>Days</label>
 
-      <div>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="sunday"> Sunday
+      <div class="input-group">
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="sunday"> Sun
         </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="monday"> Monday
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="monday"> Mon
         </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="tuesday"> Tuesday
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="tuesday"> Tues
         </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="wednesday"> Wednesday
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="wednesday"> Wed
         </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="thursday"> Thursday
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="thursday"> Thu
         </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="friday"> Friday
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="friday"> Fri
         </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="saturday"> Saturday
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="saturday"> Sat
         </label>
       </div>
     </div>
 
   </div>
 
-  <hr>
-
-  <p class="help-block">
-    <strong>Never:</strong> Offer appears only on the selected date and times and is then removed.<br>
-    <strong>Daily:</strong> Offer appears on the selected times every day of the week that you are open<br>
-    <strong>Weekly:</strong> Offer appears on the same day each week and those you select.<br>
-    <strong>Monthly:</strong> Offer appears on the same date scheduled each month.
-  </p>
-
-  </div>
-
 </td>
+
+<script>
+$('.checkbox-button').off('click').on('click', function() {
+  var $this = $(this);
+  if ($this.is(':checked')) {
+    $this.parent().addClass('active');
+  } else {
+    $this.parent().removeClass('active');
+  }
+});
+
+$('input[name="{{ prefix }}[{{ index }}][recurrenceType]"]').change(function() {
+  var parentWrapper = $(this).parents('td');
+
+  var val = $('input[name="{{ prefix }}[{{ index }}][recurrenceType]"]:checked').val();
+  if (val === 'weekly') {
+    parentWrapper.find('.repeat-subform').show();
+  } else {
+    parentWrapper.find('.repeat-subform').hide();
+  }
+});
+
+</script>

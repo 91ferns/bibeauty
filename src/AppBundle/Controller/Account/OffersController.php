@@ -102,10 +102,11 @@ class OffersController extends Controller
 
         foreach($post as $offerData) {
 
-            $offer = $this->createOffer($business, $offerData, &$error);
+            $offer = $this->createOffer($business, $offerData, $error);
+
             if ($error) {
                 $errors[] = $error;
-                $failed[] = $offer
+                $failed[] = $offer;
             }
 
         }

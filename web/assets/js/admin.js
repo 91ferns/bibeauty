@@ -571,6 +571,15 @@ jQuery(function($) {
 
   });
 
+  $('.checkbox-button').on('change', function() {
+    var $this = $(this);
+    if ($this.is(':checked')) {
+      $this.parent().addClass('active');
+    } else {
+      $this.parent().removeClass('active');
+    }
+  });
+
   $('[data-confirm="true"]').click(function(e) {
     if (!confirm('Are you sure you want to delete this business?')) {
       e.preventDefault();

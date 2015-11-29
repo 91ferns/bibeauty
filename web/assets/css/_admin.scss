@@ -14,6 +14,26 @@ $card-radius: 10px;
 
 .admin {
 
+  .hook-generated {
+    .btn {
+      margin: 0 5px;
+      background-color: transparent;
+
+      color: #b4b4b4;
+      padding-top: 3px;
+      padding-bottom: 3px;
+      box-shadow: none;
+
+      border-color: #b4b4b4;
+
+      &.active {
+        background-color: $brand-primary;
+        color: white;
+      }
+    }
+
+  }
+
   .almost-a {
 
   }
