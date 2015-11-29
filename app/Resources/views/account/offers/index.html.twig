@@ -1,8 +1,15 @@
 {% extends 'admin.html.twig' %}
 
 {% block toolbar %}
-<a href="{{ path('admin_business_offers_new_path', { id: business.getId, slug: business.getSlug }) }}" class="admin-btn"><i class="fa fa-plus fa-lg"></i> Add Offer</a>
-<a id="deleteSelectedOffersButton" class="admin-btn" href="javascript:void(0);"><i class="fa fa-trash fa-lg"></i> Delete</a>
+<div class="admin-buttons align-center align-md-right">
+  <a href="{{ path('admin_business_offers_new_path', { id: business.getId, slug: business.getSlug }) }}" class="admin-btn">
+    <img src="{{ asset('assets/images/add-button-toolbar.png') }}" alt="Add">
+    Add Offer
+  </a>
+  <a id="deleteSelectedOffersButton" class="admin-btn delete-button" href="javascript:void(0);">
+    <img src="{{ asset('assets/images/delete-button-toolbar.png') }}" alt="Delete"> Delete
+  </a>
+</div>
 {% endblock %}
 
 {% block body %}

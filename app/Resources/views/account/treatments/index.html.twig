@@ -1,9 +1,12 @@
 {% extends 'admin.html.twig' %}
 
 {% block toolbar %}
-<a href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
-  <i class="fa fa-plus fa-lg"></i>Add a treatment
-</a>
+<div class="admin-buttons align-center align-md-right">
+  <a href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}" class="admin-btn">
+    <img src="{{ asset('assets/images/add-button-toolbar.png') }}" alt="Add">
+    Add Treatment
+  </a>
+</div>
 {% endblock %}
 
 {% block body %}
