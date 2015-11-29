@@ -27,8 +27,6 @@ $border-radius-large: $border-radius-base;
 @import '../../../web/assets/components/jasny-bootstrap/scss/jasny-bootstrap';
 
 @import '../components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';
-//@import 'select2';
-@import 'switch';
 
 // Our stuff
 
@@ -797,7 +795,7 @@ $green:#6acba2;
 $greylgt:#bec3c7;
 $greydrk:#7f8d9a;
 
-/* Select 2 stuff
+
 .select2-selection.select2-selection--single{
   height: 46px;
   font-size: 18px;
@@ -812,7 +810,7 @@ $greydrk:#7f8d9a;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
     border-color: #000 transparent transparent transparent;
-}*/
+}
 
 .form-transparent-wrapper {
   input, select, button, .select2-selection {
@@ -829,7 +827,7 @@ $greydrk:#7f8d9a;
       width: 145px;
     }
   }
-  /*
+
   .select2-selection {
     padding-left: 8px;
   }
@@ -849,7 +847,7 @@ $greydrk:#7f8d9a;
         border-color: white transparent transparent transparent;
       }
     }
-  }*/
+  }
 
   #TreatmentSelect-Wrapper {
     select:not(.select2-hidden-accessible) {
