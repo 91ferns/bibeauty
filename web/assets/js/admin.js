@@ -1,15 +1,4 @@
 jQuery(function($) {
-  if ($('#BusinessesSelect')) {
-    $('#BusinessesSelect').select2({
-      theme: "bootstrap",
-      minimumResultsForSearch: 6,
-      placeholder: 'My Businesses',
-    });
-    $('#BusinessesSelect').on('change', function() {
-      var val = $(this).val();
-      window.location.href = val;
-    });
-  }
 
   /*
   $(document).on('change', '.btn-file :file', function() {
@@ -275,7 +264,11 @@ jQuery(function($) {
 
     hook.callback(hook.type, hook.data, number, function(data) {
       tr.html(data);
-      newRow.find('select').select2();
+      newRow.find('select').select2({
+        closeOnSelect: false,
+
+      });
+      
       newRow.find('.offer-form-input').on('change', function() {
 
         var val = $(this).val();
