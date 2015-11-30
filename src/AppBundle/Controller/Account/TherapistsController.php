@@ -12,7 +12,9 @@ use AppBundle\Entity\Therapist;
 
 use AppBundle\Form\TherapistType;
 
-class TherapistsController extends Controller
+use AppBundle\Controller\AdminAwareController;
+
+class TherapistsController extends Controller implements AdminAwareController
 {
     /**
      * @Route("/account/therapists/{id}/{slug}", name="admin_business_therapists_path")

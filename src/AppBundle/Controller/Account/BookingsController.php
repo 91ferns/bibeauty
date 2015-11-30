@@ -9,8 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\Booking;
 
+use AppBundle\Controller\AdminAwareController;
 
-class BookingsController extends Controller
+class BookingsController extends Controller implements AdminAwareController
 {
     /**
      * @Route("/account/businesses/{id}/{slug}/bookings", name="admin_business_bookings_path")

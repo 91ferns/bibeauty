@@ -20,7 +20,9 @@ use AppBundle\Entity\Offer;
 
 use Symfony\Component\Process\Process;
 
-class OffersController extends Controller
+use AppBundle\Controller\AdminAwareController;
+
+class OffersController extends Controller implements AdminAwareController
 {
     /**
      * @Route("/account/offers/{id}/{slug}", name="admin_business_offers_path")

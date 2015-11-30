@@ -15,7 +15,9 @@ use AppBundle\Entity\Business;
 use AppBundle\Entity\TreatmentCategory;
 use AppBundle\Entity\Treatment;
 
-class TreatmentsController extends Controller
+use AppBundle\Controller\AdminAwareController;
+
+class TreatmentsController extends Controller implements AdminAwareController
 {
     /**
      * @Route("/account/treatments/{id}/{slug}/", name="admin_business_treatments_path")
