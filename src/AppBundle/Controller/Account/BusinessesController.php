@@ -15,9 +15,12 @@ use AppBundle\Entity\Business;
 use AppBundle\Entity\Address;
 use AppBundle\Entity\ServiceCategory;
 
+use AppBundle\Controller\AdminAwareController;
+
+
 use Stevenmaguire\Yelp\Exception as YelpException;
 
-class BusinessesController extends Controller
+class BusinessesController extends Controller implements AdminAwareController
 {
     /**
      * @Route("/account/businesses", name="admin_businesses_path")
@@ -25,15 +28,6 @@ class BusinessesController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("AppBundle:Business");
-        $user = $this->getUser();
-
-        if ($user->getSuperAdmin() === true) {
-            $businesses = $repository->findAll();
-        } else {
-            $businesses = $repository->findByOwner($this->getUser());
-        }
 
         // replace this example code with whatever you need
         return $this->render('account/businesses/index.html.twig', array());

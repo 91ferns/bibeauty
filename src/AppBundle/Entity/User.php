@@ -115,6 +115,10 @@ class User implements AdvancedUserInterface, \Serializable {
         return $this;
     }
 
+    public function clearBusinesses() {
+        $this->businesses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Remove business
      *

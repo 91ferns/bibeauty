@@ -23,6 +23,11 @@ parameters:
         phone_number: 6506811823
 
 services:
+    kernel.listener.superadmin:
+        class: AppBundle\EventListener\AdminAwareListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
     aws.factory:
         class: AppBundle\Services\AWSFactory
         arguments: ["%aws%", @logger]
