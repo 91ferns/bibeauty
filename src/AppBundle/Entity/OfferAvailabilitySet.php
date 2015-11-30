@@ -61,7 +61,6 @@ class OfferAvailabilitySet {
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     * @Assert\NotBlank()
      */
     private $processed = false;
 

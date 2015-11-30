@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="TreatmentRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="app_treatments")
  */

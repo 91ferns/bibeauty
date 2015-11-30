@@ -1,93 +1,79 @@
 {% extends 'admin.html.twig' %}
-{% block stylesheets %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<style>
-/*.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{background-color:#5cb85c;}*/
 
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-default{background-color:#bec3c7;color:white;}
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
-  background-color:#6acba2;
-}
-.bootstrap-switch.bootstrap-switch-on .bootstrap-switch-label,.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{
-  background-color:#757575; font-weight:bold;
-}
-.bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-on, .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off,
- .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-label {
-   padding-left:12px;
- }
- .bootstrap-switch.bootstrap-switch-large .bootstrap-switch-handle-off{font-weight:bold;}
-table th.times-heading,
-table tr>td{max-width:260px!important;}
-span.strikethrough{text-decoration: line-through;}
-</style>
+{% block toolbar %}
+<div class="admin-buttons align-center align-md-right">
+  <a href="{{ path('admin_business_offers_new_path', { id: business.getId, slug: business.getSlug }) }}" class="admin-btn">
+    <img src="{{ asset('assets/images/add-button-toolbar.png') }}" alt="Add">
+    Add Offer
+  </a>
+  <a id="deleteSelectedOffersButton" class="admin-btn delete-button" href="javascript:void(0);">
+    <img src="{{ asset('assets/images/delete-button-toolbar.png') }}" alt="Delete"> Delete
+  </a>
+</div>
 {% endblock %}
 
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    Offers
-    <a href="#add-offer-modal" data-toggle="modal" class="admin-btn"><i class="fa fa-plus fa-lg"></i> <strong>Add Offer</strong></a>
-    <a id="deleteSelectedOffersButton" class="admin-btn"><i class="fa fa-trash fa-lg"></i> <strong>Delete Offer(s)</strong></a>
-  </div>
   <div class="panel-body">
     {% if offers | length > 0 %}
-    <div class="table-responsive">
-      <table class="table businesses-table">
+    <div class="table-responsive-old">
+      <table class="table businesses-table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
             <!--<th><a href="#" id="check-all-box">All</a></th>-->
-            <th><input name="Offers[]" class="offer-check" type="checkbox" value="all" /></th>
-            <th>Category</th>
+            <th class="select-col">
+              <span class="sr-only">
+                <input name="Offers[]" class="offer-check" type="checkbox" value="all" />
+              </span>
+              All
+            </th>
             <th>Treatment</th>
             <th>Start Date</th>
             <th class="times-heading">Times</th>
             <th>Discount</th>
-            <th>Re-occurring</th>
+            <th>Reoccurring</th>
             <th>Enabled</th>
           </tr>
         </thead>
         <tbody>
           {% for offer in offers %}
           {% set av = offer.getAvailabilitySet %}
-          <tr>
-            <td><span class="offer-id">
-            {{ offer.getId }}
+          <tr data-id="{{ offer.getId }}">
+            <td class="select-col"><span class="btns">
+              <input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}" style="margin:0;">
             </span></td>
-            <td><span class="btns">
-              <div class="btn-group"><input name="Offers[]" class="offer-check" type="checkbox" value="{{offer.getId}}"></div>
+            <td title="Treatment" class="treatment-name-td"><span class="treatment-name">
+              <span class="icon-rounded">
+                {{offer.getTreatment.getTreatmentCategory.getCategoryName | slice(0,1) | capitalize }}
+              </span>
+              {{offer.getTreatment.getName}}
             </span></td>
-            <td><span class="treatment-name">{{offer.getTreatment.getTreatmentCategory.getCategoryName}}</span></td>
-            <td><span class="treatment-name">{{offer.getTreatment.getName}}</span></td>
-            <td><span class="offer-start">{{av.getStartDate | date('d-m-Y')}}</span></td>
-            <td><span class="offer-times">
+            <td title="Start Date"><span class="offer-start">{{av.getStartDate | date('m/d/Y')}}</span></td>
+            <td title="Times"><span class="offer-times">
               {{av.getTimes() | join(', ')}}
             </span></td>
-            <td><span class="discount">
+            <td title="Discount"><span class="discount">
 
               <span class="percent">{{ offer.getDiscountPercentage }}</span>% /
               <span class="strikethrough">${{ offer.getTreatment.getOriginalPrice }}</span>
                 <a href="#" id="currentPrice{{offer.getId}}" class="price-editable" data-type="text" data-pk="{{ offer.getId }}" data-url="{{ path('admin_edit_offer',{id:offer.getId,slug:business.getSlug}) }}" >${{ offer.getCurrentPrice }}</a>
             </span></td>
-            <td><span class="recurring">
+            <td title="Reoccuring"><span class="recurring">
               {% if av.getRecurrenceType == 'never' %}
                 <input type="checkbox" disabled="disabled">
               {% else %}
-                <input type="checkbox" disabled="disabled" checked="checked"> {{ av.getRecurrenceType}}
+                <input type="checkbox" disabled="disabled" checked="checked"> {{ av.getRecurrenceType | capitalize }}
               {% endif %}
             </span></td>
-            <td><span class="enabled">
-              <div class="onoffswitch">
-                <form id="offerStatus{{offer.getId}}" action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
-                  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" {% if offer.getIsOpen %}checked{% endif %}>
-                  <input type="hidden" name="offerId" value="{{offer.getId}}" />
-                </form>
-              </div>
-
-            </span></td>
+            <td title="Enabled">
+              <form id="offerStatus{{offer.getId}}"
+              class="delete-form"
+              action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
+                <input type="checkbox" name="onoffswitch" {% if offer.getIsOpen %}checked{% endif %}>
+                <input type="hidden" name="offerId" value="{{offer.getId}}" />
+              </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -128,18 +114,9 @@ span.strikethrough{text-decoration: line-through;}
 
 {% endblock %}
 {% block javascripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 <script>
 jQuery(document).ready(function(){
-  jQuery('.onoffswitch > form input[type="checkbox"]').bootstrapSwitch({
-    onText:'&#10004;',
-    offText:'&times;',
-    onColor:'success',
-    offColor:'default',
-    handleWidth:'4px',
-    lableWidth:'4px',
-    size:'large'
-  });
+
   jQuery(document).on("change","[name='Treatment']",function(e){
     var $el  = jQuery(e.target);
     var val  = $el.val();
@@ -173,10 +150,6 @@ jQuery(document).ready(function(){
     }
   });
 });
-
-jQuery('.onoffswitch > form input[type="checkbox"]').on('switchChange.bootstrapSwitch',function(){
-  jQuery(this).parents('form').submit();
-})
 
 jQuery('a#deleteSelectedOffersButton').on('click',function(e){
   e.preventDefault();

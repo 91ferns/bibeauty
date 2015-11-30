@@ -27,8 +27,6 @@ $border-radius-large: $border-radius-base;
 @import '../../../web/assets/components/jasny-bootstrap/scss/jasny-bootstrap';
 
 @import '../components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';
-//@import 'select2';
-@import 'switch';
 
 // Our stuff
 
@@ -58,10 +56,6 @@ $logo-height: 78px;
 .navbar-default {
   background: rgba(255, 255, 255, 0.7);
   border-bottom: 1px solid $gray-light;
-  box-shadow: 0px 2px 12px 2px rgba(0,0,0,0.18);
-  -webkit-transition: background 2s ease-in;
-  -moz-transition: background 2s ease-in;
-  transition: background 2s ease-in;
 
   &.navbar-static-top {
   width: 100%;
@@ -467,6 +461,8 @@ main section {
   }
 }
 
+
+
 @import 'admin';
 
 @import 'businesses';
@@ -651,6 +647,20 @@ main section {
   text-align: right;
 }
 
+.align-center {
+  text-align: center;
+}
+
+@media (min-width: $screen-md-min) {
+  .align-md-right {
+      text-align: right !important; //align-right:
+  }
+
+  .align-md-center {
+    text-align: center !important;
+  }
+}
+
 #terms {
   li {
     padding-bottom: 5px;
@@ -784,15 +794,8 @@ li.list-group-item .row.gutterless :last-child{
 $green:#6acba2;
 $greylgt:#bec3c7;
 $greydrk:#7f8d9a;
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
-  background-color:#6acba2;
-}
-.bootstrap-switch.bootstrap-switch-off .bootstrap-switch-label{
-  color:#bec3c7;
-}
 
-/* Select 2 stuff */
+
 .select2-selection.select2-selection--single{
   height: 46px;
   font-size: 18px;
@@ -912,4 +915,244 @@ $greydrk:#7f8d9a;
 
 .select2-hidden-accessible {
   width: 1px !important;
+}
+
+.businesses-select {
+  padding: 0px;
+  height: 64px;
+  border: 0px;
+  background: none;
+
+  box-shadow: none;
+
+  &.select2-drop-above.select2-dropdown-open .select2-choice {
+
+    background-color: $brand-primary;
+    background-image: none;
+
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+    border: 0px;
+    color: white;
+
+    border-radius: 12px;
+
+  }
+
+  &.select2-dropdown-open {
+    .select2-choice {
+      box-shadow: none;
+      // border-radius: 12px 12px 0 0;
+    }
+
+    .select2-arrow b {
+      background-position: -19px center !important;
+    }
+  }
+
+  .select2-choice {
+    border-radius: 12px;
+    border: 0px;
+    height: 64px;
+    line-height: 64px;
+    background-color: $brand-primary;
+    background-image: none;
+
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+
+    color: white;
+
+    .select2-arrow {
+      background: none;
+      border: 0px;
+
+      b {
+        background-image: url('../images/select2-arrows.png') !important;
+        background-size: auto !important;
+        background-position: 0px center;
+        // background-position: -19px center;
+      }
+    }
+  }
+
+  .select2-chosen {
+    text-align: center;
+    color: white;
+  }
+}
+
+.admin {
+  .select2-drop {
+    background-color: white;
+    box-shadow: none;
+    border-radius: 0;
+    color: #b4b4b4;
+    margin-top: -12px;
+
+    &:before {
+      content: "";
+      border-radius: 0 0 12px 12px;
+      height: 12px;
+      width: 100%;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, .05);
+      display: block;
+      background-color: $brand-primary;
+    }
+
+    &.select2-drop-above {
+      margin-top: 12px;
+      &:before {
+        content: none;
+        height: 0px;
+      }
+      &:after {
+        content: "";
+        border-radius: 12px 12px 0 0;
+        height: 12px;
+        width: 100%;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, .05);
+        display: block;
+        background-color: $brand-primary;
+      }
+    }
+
+    .select2-results {
+      padding: 0px;
+      margin: 0px;
+      li {
+        height: 64px;
+        color: #b4b4b4;
+        padding: 20px;
+
+        &.select2-highlighted {
+          background-color: transparent;
+          color: $brand-primary;
+        }
+
+        .select2-result-label {
+          padding: 0px;
+        }
+      }
+    }
+  }
+
+  .select2-drop-active {
+    border: 0px;
+  }
+}
+
+.checkboxes .checkbox {
+  float: left;
+  margin-top: 0px;
+  margin-right: 15px;
+}
+
+
+.checkboxes {
+  margin-bottom: 30px;
+}
+
+
+.align-right {
+  text-align: right;
+}
+
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+.btn-navigation {
+  border-radius: 12px;
+  border: 0px;
+  height: 64px;
+  color: white !important;
+  width: 100%;
+  display: block;
+  background-color: #52c8e6;
+  background-image: none;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-navigation {
+  > .dropdown-menu {
+    width: 100%;
+    border: 0px;
+    padding-top: 0;
+    margin-top: -12px;
+
+    &:before {
+      content: "";
+      border-radius: 0 0 12px 12px;
+      height: 12px;
+      width: 100%;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, .05);
+      display: block;
+      background-color: $brand-primary;
+    }
+  }
+
+  ul > li > a {
+    height: 64px;
+    color: #b4b4b4;
+    padding: 20px;
+    line-height: 24px;
+  }
+
+  > .active > a {
+    color: #52c8e6;
+    background-color: transparent;
+  }
+
+  @media (max-width: $screen-sm-max) {
+    .dropdown-submenu > .dropdown-menu {
+      left: 20%;
+      width: 80%;
+      border: 0px;
+      border-radius: 0;
+    }
+  }
 }

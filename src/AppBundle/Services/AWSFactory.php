@@ -11,6 +11,7 @@ use Aws\Exception\MultipartUploadException;
 class AWSFactory
 {
 
+
     public static function createAWSFactory($config, LoggerInterface $logger)
     {
         return new AWSFactory($config, $container);

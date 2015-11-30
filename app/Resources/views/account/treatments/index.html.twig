@@ -1,51 +1,52 @@
 {% extends 'admin.html.twig' %}
 
+{% block toolbar %}
+<div class="admin-buttons align-center align-md-right">
+  <a href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}" class="admin-btn">
+    <img src="{{ asset('assets/images/add-button-toolbar.png') }}" alt="Add">
+    Add Treatment
+  </a>
+</div>
+{% endblock %}
+
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    Treatments for {{ business.getName }}
-    <a class="admin-btn" href="{{ path('admin_business_treatments_new_path', { slug: business.getSlug, id: business.getId })}}">
-      <i class="fa fa-plus fa-lg"></i><strong>Add a treatment</strong>
-    </a>
-  </div>
   <div class="panel-body">
     {% if treatments.count > 0 %}
-    <div class="table-responsive">
-      <table class="table table-striped">
+    <div class="table-responsive-old">
+      <table class="table table-striped businesses-table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Category</th>
+            <th class="select-col">All</th>
             <th>Treatment</th>
             <th>Name</th>
-            <th>Full Price</th>
             <th>Duration</th>
-            <th>Edit</th>
+            <th>Full Price</th>
           </tr>
         </thead>
         <tbody>
           {% for treatment in treatments %}
           <tr>
-            <td>
+            <td class="select-col">
+              <input type="checkbox" value="{{ treatment.id }}" name="treatment[]">
+            </td>
+            <td title="Treatment">
+              <span class="icon-rounded">
+                {{ treatment.getTreatmentCategory.getCategoryName | slice (0, 1) | capitalize }}
+              </span>
+              {{ treatment.getLabel }}
+            </td>
+            <td title="Name">
+              {{ treatment.getName }}
               <a href="{{ path('admin_business_treatments_show_path',{
                 'id': business.getId,
                 'slug': business.getSlug,
                 'treatmentId': treatment.getId
-                }) }}">{{ treatment.id }}</a>
+                }) }}"><i class="fa fa-pencil fa-small"></i></a>
             </td>
-            <td>{{ treatment.getTreatmentCategory.getCategoryName }}
-            <td>{{ treatment.getLabel }}</td>
-            <td>{{ treatment.getName }}</td>
-            <td>${{ treatment.getOriginalPrice }}</td>
-            <td>{{treatment.getDuration | duration }}</td>
-            <td>
-              <a href="{{ path('admin_business_treatments_show_path',{
-                'id': business.getId,
-                'slug': business.getSlug,
-                'treatmentId': treatment.getId
-                }) }}">Edit</a>
-            </td>
+            <td title="Duration">{{treatment.getDuration | duration }}</td>
+            <td title="Price">${{ treatment.getOriginalPrice }}</td>
           </tr>
           {% endfor %}
         </tbody>

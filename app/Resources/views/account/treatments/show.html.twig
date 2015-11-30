@@ -1,18 +1,18 @@
 {% extends 'admin.html.twig' %}
 
+{% block toolbar %}
+  <!--a class="admin-btn" data-toggle="modal" href="#add-availability">
+    <i class="fa fa-plus fa-sm"></i> <strong>Add Offer</strong>
+  </a-->
+
+  <a class="admin-btn" href="{{ path('admin_delete_treatment', { slug: business.getSlug, id: business.getId, treatmentId: treatment.getId }) }}" >
+    <i class="fa fa-trash fa-sm"></i> <strong>Delete</strong>
+  </a>
+{% endblock %}
+
 {% block body %}
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    {{ treatment.getTreatmentCategory.getLabel }}
-      <a class="admin-btn" data-toggle="modal" href="#add-availability">
-        <i class="fa fa-plus fa-sm"></i> <strong>Add Offer</strong>
-      </a>
-
-      <a class="admin-btn" href="{{ path('admin_delete_treatment', {slug:slug, id:id, treatmentId:treatment.getId }) }}" >
-        <i class="fa fa-trash fa-sm"></i> <strong>Delete</strong>
-      </a>
-  </div>
   <div class="panel-body">
 
     {{ form_start(form) }}

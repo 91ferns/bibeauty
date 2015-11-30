@@ -36,9 +36,7 @@ class BusinessesController extends Controller
         }
 
         // replace this example code with whatever you need
-        return $this->render('account/businesses/index.html.twig', array(
-            'businesses' => $businesses
-        ));
+        return $this->render('account/businesses/index.html.twig', array());
 
     }
 
@@ -160,7 +158,7 @@ class BusinessesController extends Controller
 
         // replace this example code with whatever you need
         return $this->render('account/businesses/show.html.twig', array(
-            'businessForm' => $form->createView(),
+            'form' => $form->createView(),
             'business' => $business
         ));
 
@@ -258,16 +256,10 @@ class BusinessesController extends Controller
             $em->persist($business);
             $em->flush();
 
-            return $this->redirectToRoute('admin_business_path', array(
-                'id' => $business->getId(),
-                'slug' => $business->getSlug()
-            ));
+            return $this->redirectToRoute('admin_businesses_path');
 
         } else {
-            return $this->redirectToRoute('admin_business_path', array(
-                'id' => $business->getId(),
-                'slug' => $business->getSlug()
-            ));
+            return $this->redirectToRoute('admin_businesses_path');
         }
 
     }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% include 'shared/favicon.html.twig' %}
 
-    <title>{% block title %}BiBeauty{% endblock %}</title>
+    <title>{% block title %}BiBeauty Admin{% endblock %}</title>
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,600,300" rel="stylesheet" type="text/css">
     {% stylesheets
       '@vendor_css'
@@ -18,74 +18,253 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
     {% block stylesheets %}{% endblock %}
+    <style type="text/css">
+    html, body {
+      height: 100%;
+    }
+    </style>
 </head>
 <body class="admin">
 
-<nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a href="#" class="hide-menu btn btn-default hidden-sm hidden-xs">
-          <span><i class="glyphicon glyphicon-menu-hamburger"></i> Toggle Menu</span>
-        </a>
-        <a class="navbar-brand hidden-md hidden-lg">
-          BiBeauty Admin
-        </a>
-        <button type="button" class="navbar-toggle collapsed hidden-md hidden-lg" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{path('admin_path')}}" class="btn btn-default">
-              <span class="account-label">My Account</span>
-              <span class="account-icon"><img src="{{asset('assets/images/account-generic.png') }}"></span>
-              <span class="account-email">{{ app.user.getEmail() }}</span>
-            </a></li>
-            <li><a href="{{path('logout_path')}}" class="btn btn-default">Logout</a></li>
-        </ul>
-        <ul class="nav navbar-nav hidden-md hidden-lg">
-          {% include 'shared/nav.html.twig' %}
-        </ul>
+      <div class="brand-wrapper">
+        <div class="navbar-brand">
+          <div class="container" style="position:relative;">
+
+            <button type="button" class="navbar-toggle visible-sm visible-xs" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <div class="navbar-right visible-md visible-lg">
+              <ul>
+                <li>
+                  <span class="almost-a">
+                    Welcome {{ app.user.getFirstName }}
+                  </span>
+                </li>
+                <li><a href="{{path('logout_path')}}">
+                  Logout
+                </a></li>
+              </ul>
+            </div> <!-- /.navbar-right -->
+
+            <span class="sr-only">BiBeauty Admin</span>
+            <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
+          </div> <!-- /.container -->
+        </div> <!-- .navbar-brand -->
       </div>
 
     </div>
-</nav>
-
-<main>
-
-  <nav id="secondary">
-    <ul class="nav nav-pills nav-stacked">
-      {% include 'shared/nav.html.twig' %}
-    </ul>
   </nav>
 
-  <section id="admin-main">
+  <div class="navmenu navmenu-default navmenu-fixed-left">
+    {% if app.user.hasBusinesses %}
+    <ul class="nav navmenu-nav">
+      {% for business in app.user.getBusinesses %}
+        <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <ul class="nav navmenu-nav">
+      <li><a href="{{ path('logout_path') }}">Logout</a></li>
+    </ul>
+  </div>
 
-    <div class="alert" role="alert">
-      <ul>
-        {% for flashMessage in app.session.flashbag.get('notice') %}
-          <li class="notice">
-              {{ flashMessage }}
-          </li>
-        {% endfor %}
-        {% for flashMessage in app.session.flashbag.get('error') %}
-          <li class="error">
-              {{ flashMessage }}
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
+  <div class="canvas">
 
-    <div class="admin-main-inner">
-      {% block body %}{% endblock %}
-    </div>
+    <div class="container">
+      <section id="admin-main">
 
-  </section>
+        <div class="alert alert-info" role="alert">
+          <ul>
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+              <li class="notice">
+                  {{ flashMessage }}
+              </li>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+              <li class="error">
+                  {{ flashMessage }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
 
-</main>
+        <div class="admin-main-inner">
+
+          <header class="business-panel-header">
+
+            {% if business is defined %}
+            <div class="btn-group btn-group-justified hidden-xs hidden-sm" role="group">
+              <div class="btn-group" role="group">
+                <a class="btn btn-default" href="{{ path('admin_businesses_path') }}">Home</a>
+              </div>
+              <div class="btn-group" role="group">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="visible-md visible-lg">
+                      {{ business.getName | slice(0,10) }}...
+                    </span>
+                    <span class="visible-xs visible-sm">
+                      {{ business.getName | slice (0, 70) }}
+                    </span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    {% if app.user.hasBusinesses %}
+                      {% for business in app.user.getBusinesses %}
+                        <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</a></li>
+                      {% endfor %}
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}" href="{{
+                  path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId })
+                }}">My Bookings</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}active{% endif %}" href="{{
+                  path('admin_business_treatments_path', { 'slug': business.getSlug, 'id': business.getId })
+                }}">All Treatments</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}" href="{{
+                  path('admin_business_offers_path', { 'slug': business.getSlug, 'id': business.getId })
+                }}">My Offers</a>
+              </div>
+            </div> <!-- .btn-group -->
+
+            <div class="visible-xs visible-sm">
+              <div class="dropdown dropdown-navigation">
+                <button class="btn btn-navigation dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}
+                    My Bookings
+                  {% elseif app.request.attributes.get('_route') starts with 'admin_business_treatments' %}
+                    My Treatments
+                  {% elseif app.request.attributes.get('_route') starts with 'admin_business_offers' %}
+                    My Offers
+                  {% else %}
+                    Home
+                  {% endif %}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu multi-level">
+
+                  <li>
+                    <a class="btn btn-default" href="{{ path('admin_businesses_path') }}">Home</a>
+                  </li>
+
+                  <li class="dropdown-submenu">
+
+                    <!-- sub dropdown -->
+                    <a href="javascript: void(0);" tabindex="-1">
+                      {{business.getName | slice(0,40) }}
+                    </a>
+                    <ul class="dropdown-menu">
+                      {% if app.user.hasBusinesses %}
+                        {% for business in app.user.getBusinesses %}
+                          <li><a data-id="{{ business.getId }}" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{ business.getName | slice(0,40) }}</a></li>
+                        {% endfor %}
+                      {% endif %}
+                    </ul>
+                    <!-- end -->
+
+                  </li>
+                  <li>
+                    <a class=" {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}" href="{{
+                      path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId })
+                    }}">My Bookings</a>
+                  </li>
+                  <li>
+                    <a class=" {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}active{% endif %}" href="{{
+                      path('admin_business_treatments_path', { 'slug': business.getSlug, 'id': business.getId })
+                    }}">My Treatments</a>
+                  </li>
+                  <li>
+                    <a class=" {% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}" href="{{
+                      path('admin_business_offers_path', { 'slug': business.getSlug, 'id': business.getId })
+                    }}">My Offers</a>
+                  </li>
+
+                </ul>
+              </div> <!-- /.dropdown -->
+            </div>
+
+            <div class="row">
+
+            {% else %}
+
+            <div class="row">
+
+              {% endif %}
+
+              {# Not ideal but need to do if else condition in a weird way because the way block inheritence works #}
+              <div class="col-md-4 col-md-push-8 align-center align-md-right">
+                <div class="toolbar-block">
+                  {% block toolbar %}{% endblock %}
+                </div>
+              </div> <!-- /.col-md-4 -->
+              {# end crazy crap #}
+
+            {% if business is defined %}
+
+            <div class="col-md-4 col-md-offset-4 col-md-pull-4">
+              <h4 class="business-title">
+                {{ business.getName }}
+              </h4>
+            </div> <!-- /.col -->
+
+            {% else %}
+
+              <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-md-pull-4">
+
+                <div class="dropdown dropdown-navigation">
+                  <button class="btn btn-navigation dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}
+                      My Bookings
+                    {% elseif app.request.attributes.get('_route') starts with 'admin_business_treatments' %}
+                      My Treatments
+                    {% elseif app.request.attributes.get('_route') starts with 'admin_business_offers' %}
+                      My Offers
+                    {% else %}
+                      Home
+                    {% endif %}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu multi-level">
+
+                    {% if app.user.hasBusinesses %}
+                      {% for business in app.user.getBusinesses %}
+                      <li>
+                        <a class="" href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                          {{business.getName}}
+                        </a>
+                      </li>
+                      {% endfor %}
+                    {% endif %}
+
+                  </ul>
+                </div> <!-- /.dropdown -->
+
+              </div><!-- /.col -->
+
+            {% endif %}
+
+            </div> <!-- /.row -->
+
+          </header> <!-- /header -->
+
+          {% block body %}{% endblock %}
+        </div>
+
+      </section>
+    </div><!-- /.container -->
+
+  </div>
 
 <!-- footer -->
 <script>

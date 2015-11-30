@@ -1,0 +1,49 @@
+<header class="business-panel-header">
+
+  {% if business is defined %}
+  <div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+      <a type="button" class="btn btn-default">Left</button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default">Middle</button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default">Right</button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default">Right</button>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default">Right</button>
+    </div>
+  </div>
+
+  {% block toolbar %}{% endblock %}
+
+  {% else %}
+
+  <div class="row">
+
+    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+
+      <select id="BusinessesSelect" class="businesses-select form-control" name="BusinessSelected">
+        <option></option>
+        {% if app.user.hasBusinesses %}
+          {% for business in app.user.getBusinesses %}
+          <option value="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">{{business.getName}}</option>
+          {% endfor %}
+        {% endif %}
+      </select>
+
+    </div>
+
+    <div class="col-md-4">
+      {% block toolbar %}{% endblock %}
+    </div>
+
+  </div>
+
+  {% endif %}
+
+</header>

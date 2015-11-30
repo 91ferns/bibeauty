@@ -1,0 +1,79 @@
+<td class="hidden-xs hidden-sm"></td>
+<td colspan="4" title="Repeat">
+  <div class="form-group">
+    <div class="input-group">
+      <label for="" style="font-weight: normal;" class="hidden-xs hidden-sm">Repeat</label>
+      <!--<input type="checkbox" name="Recurring" class="form-control" />-->
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary active" >
+          <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" checked value="never" class="form-control" /> Never
+        </label>
+        <label class="btn btn-primary" >
+          <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="daily" class="form-control" /> Daily
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="weekly" class="form-control" /> Weekly
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="monthly" class="form-control" /> Monthly
+        </label>
+      </div>
+
+    </div>
+  </div> <!-- /.form-group -->
+
+  <div class="repeat-subform" style="display: none;">
+
+    <div class="form-group">
+
+      <div class="input-group">
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="sunday"> Sun
+        </label>
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="monday"> Mon
+        </label>
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="tuesday"> Tues
+        </label>
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="wednesday"> Wed
+        </label>
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="thursday"> Thu
+        </label>
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="friday"> Fri
+        </label>
+        <label class="btn btn-primary">
+          <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="saturday"> Sat
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+</td>
+
+<script>
+$('.checkbox-button').off('click').on('click', function() {
+  var $this = $(this);
+  if ($this.is(':checked')) {
+    $this.parent().addClass('active');
+  } else {
+    $this.parent().removeClass('active');
+  }
+});
+
+$('input[name="{{ prefix }}[{{ index }}][recurrenceType]"]').change(function() {
+  var parentWrapper = $(this).parents('td');
+
+  var val = $('input[name="{{ prefix }}[{{ index }}][recurrenceType]"]:checked').val();
+  if (val === 'weekly') {
+    parentWrapper.find('.repeat-subform').show();
+  } else {
+    parentWrapper.find('.repeat-subform').hide();
+  }
+});
+
+</script>

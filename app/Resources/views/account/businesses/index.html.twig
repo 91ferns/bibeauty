@@ -1,63 +1,80 @@
 {% extends 'admin.html.twig' %}
 
+{% block toolbar %}
+<div class="admin-buttons align-center align-md-right">
+  <a href="{{path('admin_new_businesses_path')}}" class="admin-btn">
+    <img src="{{ asset('assets/images/add-button-toolbar.png') }}" alt="Add">
+    Add Business
+  </a>
+</div>
+{% endblock %}
+
 {% block body %}
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Businesses
-    <a href="{{path('admin_new_businesses_path')}}" class="admin-btn"><i class="fa fa-plus fa-lg"></i><strong>Add a business</strong></a>
-  </div>
-  <div class="panel-body">
-    {% if businesses | length > 0 %}
-    <div class="table-responsive">
-      <table class="table table-striped">
+    {% if app.user.hasBusinesses %}
 
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Bookings</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
+      <div class="row">
+          {% for business in app.user.getBusinesses %}
 
-        <tbody>
-          {% for business in businesses %}
-          <tr>
-            <td>{{ business.getId }}</td>
-            <td>{{ business.getName }}</td>
-            <td>{{ business.getAddress.getFullAddressString}}
-            <td>
-              <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                View Bookings
-              </a>
-            </td>
-            <td>
-              <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                Edit
-              </a>
-            </td>
-            <td>
-              <a href="{{ path('admin_business_delete_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
-                Delete
-              </a>
-            </td>
+          <div class="col-md-4 col-sm-6">
+            <div class="business-card card clearfix" data-id="{{ business.getId }}">
 
-          </tr>
-          {% endfor %}
+              <figure class="thumbnail">
+                {% if business.getLogoAttachment %}
 
+                  <div class="logo-circle" style="background-image: url('{{ business.getLogoAttachment.getKey | s3 }}')">
+                    <span class="sr-only">{{ business.getName }}</span>
+                  </div>
+                {% else %}
 
+                  <span class="business-title">{{ business.getName }}</span>
+                {% endif %}
+              </figure>
 
-        </tbody>
-      </table>
+              <div class="under-thumbnail">
+
+                <div class="buttons-caption-wrapper">
+
+                  <div class="buttons-caption half">
+                    <a href="{{ path('admin_business_bookings_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      My Bookings
+                    </a>
+                  </div>
+                  <div class="buttons-caption half bordered">
+                    <a href="{{ path('admin_business_treatments_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      All Treatments
+                    </a>
+                  </div>
+                  <div class="buttons-caption half">
+                    <a href="{{ path('admin_business_offers_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      My Offers
+                    </a>
+                  </div>
+                  <div class="buttons-caption half bordered">
+                    <a href="{{ path('admin_business_therapists_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      Therapists
+                    </a>
+                  </div>
+
+                  <div class="buttons-caption full">
+                    <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      <i class="fa fa-pencil fa-small"></i> Edit
+                    </a>
+                  </div>
+
+                </div> <!-- /.buttons-caption -->
+
+              </div>
+
+            </div>
+          </div>
+
+        {% endfor %}
+
     </div>
     {% else %}
     <p>You have no businesses</p>
     {% endif %}
-  </div>
-</div>
 
 
 {% endblock %}

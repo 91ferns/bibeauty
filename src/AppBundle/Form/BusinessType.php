@@ -12,38 +12,40 @@ class BusinessType extends AbstractType
     {
         $builder
             ->add('headerAttachment', new AttachmentType(), array(
-                'required' => false
+                'required' => false,
+                'label' => 'Upload a pic of your work station / salon'
             ))
             ->add('logoAttachment', new AttachmentType(), array(
-                'required' => false
+                'required' => false,
+                'label' => 'Upload a profile pic of you (must be a pic of you)'
             ))
             ->add('name', 'text', array(
                 'label' => false,
                 'attr' => array(
-                   'placeholder' => 'Name'
+                   'placeholder' => 'Business Name'
                 )
              ))
               ->add('address', new AddressType(), array(
-                  'label' => 'Business Details'
+                  'label' => false
               ))
               ->add('landline', 'text', array(
-                   'label' => 'Landline Phone Number',
+                   'label' => false,
                    'attr' => array(
                       'placeholder' => 'Landline Phone Number'
                   ),
                   'required' => false
               ))
               ->add('mobile', 'text', array(
-                   'label' => 'Mobile Phone Number',
+                   'label' => false,
                    'attr' => array(
                       'placeholder' => 'Mobile Phone Number'
                   ),
                   'required' => false
               ))
                ->add('description', 'textarea', array(
-                   'label' => 'Business Overview',
+                   'label' => false,
                    'attr' => array(
-                      'placeholder' => 'Tell customers a little about what your business does and what makes it stand out :)'
+                      'placeholder' => 'Business Overview: Tell customers a little about what your business does and what makes it stand out :)'
                    )
                 ))
                 ->add('yelpLink', 'url', array(

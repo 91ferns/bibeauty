@@ -61,22 +61,25 @@ class OffersController extends Controller
 
 
     /**
-     * @Route("/account/offers/{id}/{slug}/new", name="admin_new_booking_path")
+     * @Route("/account/offers/{id}/{slug}/new", name="admin_business_offers_new_path")
      * @Method({"GET"})
      */
     public function createAction($id, $slug, Request $request) {
-       $booking = new Booking();
 
-       $form = $this->createForm(new BookingType(), $booking);
-       $business = $this->businessBySlugAndId($slug, $id);
+        $business = $this->businessBySlugAndId($slug, $id);
 
-       return $this->render(
-          'account/offers/new.html.twig',
-          array(
-             'form' => $form->createView(),
-             'business' => $business,
-          )
-       );
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Treatment");
+
+        $treatments = $repository->findByBusiness($business);
+
+        return $this->render(
+            'account/offers/new.html.twig',
+            array(
+                'treatments' => $treatments,
+                'business' => $business,
+            )
+        );
     }
 
     /**
@@ -87,69 +90,144 @@ class OffersController extends Controller
 
         // Treatment ID comes from request then we just return the checkCreate
 
-        $treatmentId = $request->request->get('Treatment', false);
+        $business = $this->businessBySlugAndId($slug, $id);
 
-        if (!$treatmentId) {
-            return $this->redirectToRoute('admin_business_offers_path', array(
-                'id' => $id,
-                'slug' => $slug
-            ));
+        $post = $request->get('offer');
+        $em = $this->getDoctrine()->getManager();
+
+        $failed = array();
+        $total = count($post);
+        $succeeded = array();
+
+        $errors = array();
+
+        foreach($post as $offerData) {
+            $data = (object) $offerData;
+            $offer = $this->createOffer($business, $data, $error);
+            var_dump($error);
+            if ($error) {
+                $errors[] = $error;
+                $failed[] = $offer;
+            } else {
+                $succeeded[] = $offer;
+            }
+
         }
 
-        return $this->checkCreateAvailabilityAction($id, $slug, $treatmentId, $request);
+        $numFailed = count($failed);
+
+        if ($numFailed === $total) {
+            // All failed
+            $this->addFlash(
+                'error',
+                implode(' ', $errors)
+            );
+        } elseif ($numFailed > 0) {
+            // Some failed
+            $this->addFlash(
+                'error',
+                'We could not add ' . $failed . ' of your new offers.'
+            );
+            $em->flush();
+        } else {
+            $this->addFlash(
+                'notice',
+                'Successfully added all of your new offers.'
+            );
+            // All succeeded
+            return $this->redirectToRoute('admin_business_offers_path',["slug"=>$slug,"id"=>$id]);
+        }
+
+        $repository = $em->getRepository("AppBundle:Treatment");
+        $treatments = $repository->findByBusiness($business);
+
+        return $this->render(
+            'account/offers/new.html.twig',
+            array(
+                'treatments' => $treatments,
+                'business' => $business,
+            )
+        );
 
     }
 
-    /**
-     * @Route("/account/offers/{id}/{slug}/{treatmentId}/new", name="admin_treatment_availability_new_path")
-     * @Method("POST")
-     */
-    public function checkCreateAvailabilityAction($id, $slug, $treatmentId, Request $request) {
+    public function createOffer($business, $data, &$error) {
         // this is absolutely something that would be offloaded to the worker
-        $business = $this->businessBySlugAndId($slug, $id);
 
-        $date = $request->request->get('Date', false);
-        $times = $request->request->get('Times', array());
-        $recurrenceType = $request->request->get('RecurrenceType', 'never');
+        //treatmentCategory
+        //startDate
+        //times
+        //discountPrice
+        //RecurrenceType
+        // RecurrenceDates
+
+        $slug = $business->getSlug();
+        $id = $business->getId();
+
+        if (!property_exists($data, 'treatmentCategory')) {
+            $treatmentId = null;
+        } else {
+            $treatmentId = $data->treatmentCategory;
+        }
+
+        if (!property_exists($data, 'startDate')) {
+            $date = false;
+        } else {
+            $date = $data->startDate;
+        }
+
+        if (!property_exists($data, 'times')) {
+            $times = array();
+        } else {
+            $times = $data->times;
+            if (!is_array($times)) {
+                $times = array($times);
+            }
+        }
+
+        if (!property_exists($data, 'recurrenceType')) {
+            $recurrenceType = 'never';
+        } else {
+            $recurrenceType = $data->recurrenceType;
+        }
+
         if($times[0] == 'ALL'){
           $times = $this->buildAllTimes();
         }
         if (!$date || !$times || count($times) < 1 ){
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'Date and time must be specified.'
-            ));
+            $error = 'Date and time must be specified.';
         }
 
-        $discount = $request->request->get('Discount', false);
+        if (!property_exists($data, 'discountPrice')) {
+            $discount = false;
+        } else {
+            $discount = $data->discountPrice;
+        }
 
         if (!$discount) {
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'You must specify a discount.'
-            ));
+            $error = 'You must specify a discount.';
         }
 
-        $recurrenceDOWs = $request->request->get('RecurrenceDates', array());
+        if (!property_exists($data, 'recurrenceDates')) {
+            $recurrenceDOWs = array();
+        } else {
+            $recurrenceDOWs = $data->recurrenceDOWs;
+        }
+
         $recurrenceDOWs = array_unique($recurrenceDOWs);
 
         $treatments = $this->getRepo('Treatment');
-        $treatment = $treatments->findOneBy(array( 'id'=>$treatmentId ));
+        $treatment = $treatments->findOneBy(array( 'id' => $treatmentId ));
 
         if (!$treatment) {
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'Treatment not found.'
-            ));
+            $error = 'Treatment not found.';
         }
 
         if ((float) $discount >= (float) $treatment->getOriginalPrice()) {
-            return $this->redirectToRoot($slug, $id, $treatmentId, array(
-                'error',
-                'Discount must be cheaper than the original price.'
-            ));
+            $error = 'Discount must be cheaper than the original price.';
         }
 
+        $validator = $this->get('validator');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -157,7 +235,15 @@ class OffersController extends Controller
         $offer->setBusiness($business);
         $offer->setTreatment($treatment);
         $offer->setCurrentPrice($discount);
-        $em->persist($offer);
+
+        $offerErrors = $validator->validate($offer);
+
+        if (count($offerErrors) < 1) {
+            $em->persist($offer);
+        } else {
+            $error = (string) $offerErrors;
+            return $offer;
+        }
 
         $startDateTime = new \DateTime($date);
 
@@ -169,42 +255,33 @@ class OffersController extends Controller
         $availabilitySet->setTreatment($treatment);
         $availabilitySet->setRecurrenceType($recurrenceType);
 
-        $em->persist($availabilitySet);
+        $availabilityErrors = $validator->validate($availabilitySet);
+
+        if (count($availabilityErrors) < 1) {
+            $em->persist($availabilitySet);
+        } else {
+            $em->remove($offer);
+            $error = (string) $availabilityErrors;
+            return $offer;
+        }
+
         $em->flush();
-
-        /*
-        $root = $this->get('kernel')->getRootDir();
-        $env = $this->get('kernel')->getEnvironment();
-
-        $processText = sprintf('php %s/console bibeauty:generate:availabilities %d --env=%s',
-            $root,
-            $availabilitySet->getId(),
-            $env
-        );
-
-        $process = new Process($processText);
-        $process->run(); */
-
         $success = $this->doAvailabilities($availabilitySet->getId());
 
         // we now need to create the availability set
 
-        if ($success) {
-            $message = 'Queued the creation of your availabilities.';
-        } else {
+        if (!$success) {
             $em->remove($availabilitySet);
             $em->remove($offer);
             $em->flush();
-            $message = 'Unable to queue your availabilities. Please report this to us on the contact us page.';
+            return 'Unable to queue your availabilities. Please report this to us on the contact us page.';
         }
 
-        return $this->redirectToRoot($slug, $id, $treatmentId, array(
-            'notice',
-            $message
-        ));
+        return $offer;
     }
-    protected function buildAllTimes()
-    {
+
+
+    protected function buildAllTimes() {
       $times = [];
         for($i=7;$i<=21;$i++){
           for($j=0;$j<=3;$j++){
@@ -232,6 +309,22 @@ class OffersController extends Controller
       $em->flush();
       return $this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
     }
+
+
+    /**
+     * @Route("/ajax/offers/recurrenceform", name="ajax_delete_offer")
+     * @Method("GET")
+     */
+    public function offerForm(Request $request) {
+        return $this->render(
+            'account/offers/form.html.twig',
+            array(
+                'prefix' => $request->query->get('prefix'),
+                'index' => $request->query->get('index'),
+            )
+        );
+    }
+
     /**
      * @Route("/account/offers/{id}/{slug}/remove", name="admin_delete_offer")
      * @Method("POST")
@@ -249,7 +342,9 @@ class OffersController extends Controller
       $em->flush();
       //return true;//$this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
       return new Response();
- }
+    }
+
+
     protected function redirectToRoot($slug, $id, $treatmentId, $flash = false) {
         if ($flash) {
             list($type, $message) = $flash;

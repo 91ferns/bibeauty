@@ -40,6 +40,11 @@ class User implements AdvancedUserInterface, \Serializable {
     }
 
     /**
+     * @ORM\OneToMany(targetEntity="Business", cascade={"remove"}, orphanRemoval=true, mappedBy="owner")
+     */
+    protected $businesses;
+
+    /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -94,6 +99,54 @@ class User implements AdvancedUserInterface, \Serializable {
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid(null, true));
+        $this->businesses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add business
+     *
+     * @param \AppBundle\Entity\Review $business
+     * @return Business
+     */
+    public function addBusiness(\AppBundle\Entity\Business $business)
+    {
+        $this->businesses[] = $business;
+
+        return $this;
+    }
+
+    /**
+     * Remove business
+     *
+     * @param \AppBundle\Entity\Business $businesses
+     */
+    public function removeBusiness(\AppBundle\Entity\Business $business)
+    {
+        $this->businesses->removeElement($business);
+    }
+
+    /**
+     * Get businesses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBusinesses()
+    {
+        return $this->businesses;
+    }
+
+    public function hasBusinesses() {
+        return $this->businesses->count() > 0;
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
     }
 
     public function getUsername()

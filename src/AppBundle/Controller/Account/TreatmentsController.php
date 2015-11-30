@@ -39,7 +39,11 @@ class TreatmentsController extends Controller
     public function newAction($id, $slug, Request $request) {
 
         $business = $this->businessBySlugAndId($slug, $id);
-        $treatmentType = $this->createForm(new TreatmentType(), new Treatment());
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $em->getRepository("AppBundle:TreatmentCategory");
+
+        $treatments = $repository->getHeirarchy();
         /*
             'action'   => $this->generateUrl('admin_create_treatment_category',["slug"=>$slug, "id"=>$id]),
             'business' => $business,
@@ -48,7 +52,7 @@ class TreatmentsController extends Controller
 
         return $this->render('account/treatments/new.html.twig', array(
             'business' => $business,
-            'form' => $treatmentType->createView(),
+            'treatments' => $treatments
         ));
 
     }
@@ -60,21 +64,84 @@ class TreatmentsController extends Controller
     public function newSubmit($slug, $id, Request $request) {
 
         $business = $this->businessBySlugAndId($slug, $id);
-        $service = new Treatment();
-        $service->setBusiness($business);
-        $form = $this->createForm(new TreatmentType(), $service);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($service);
-          $em->flush();
-          return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
-        } else {
-          return $this->render('account/businesses/new.html.twig', array(
-            'form' => $form->createView()
-          ));
+        $post = $request->get('treatment');
+        $em = $this->getDoctrine()->getManager();
+        $failed = array();
+        $total = count($post);
+
+        $errors = array();
+
+        foreach($post as $treatmentData) {
+            $treatmentData = (object) $treatmentData;
+
+            $treatmentCategoryId = intval($treatmentData->treatmentCategory);
+            $tcRepo = $em->getRepository('AppBundle:TreatmentCategory');
+
+            $treatmentCategory = $tcRepo->findOneById($treatmentCategoryId);
+
+            if (!$treatmentCategory) {
+                $failed++;
+                continue;
+            }
+
+            if (!$treatmentData->name) {
+                $total--;
+                continue;
+            }
+
+            $treatment = new Treatment();
+            $treatment->setBusiness($business);
+            $treatment->setTreatmentCategory($treatmentCategory);
+            $treatment->setName($treatmentData->name);
+            $treatment->setDuration(intval($treatmentData->duration));
+            $treatment->setOriginalPrice(floatval($treatmentData->originalPrice));
+            $treatment->setDescription($treatmentData->description);
+
+            $validator = $this->get('validator');
+            $validationErrors = $validator->validate($treatment);
+
+            if (count($validationErrors) < 1) {
+                $em->persist($treatment);
+            } else {
+                $errors[] = (string) $validationErrors;
+                $failed[] = $treatment;
+            }
+
         }
+
+        $numFailed = count($failed);
+
+        if ($numFailed === $total) {
+            // All failed
+            $this->addFlash(
+                'error',
+                implode(' ', $errors)
+            );
+        } elseif ($numFailed > 0) {
+            // Some failed
+            $this->addFlash(
+                'error',
+                'We could not add ' . $failed . ' of your new treatments.'
+            );
+            $em->flush();
+        } else {
+            $this->addFlash(
+                'notice',
+                'Successfully added all of your new treatments.'
+            );
+            $em->flush();
+            // All succeeded
+            return $this->redirectToRoute('admin_business_treatments_path',["slug"=>$slug,"id"=>$id]);
+        }
+
+        return $this->render('account/treatments/new.html.twig', array(
+            //'businessForm' => $form->createView(),
+            'business' => $business,
+            'failed'  => $failed,
+            'treatments' => $this->getDoctrine()->getManager()->getRepository("AppBundle:TreatmentCategory")->getHeirarchy(),
+        ));
+
     }
 
     /**

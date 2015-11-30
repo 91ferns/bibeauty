@@ -2,19 +2,81 @@
 
 {% block body %}
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Add a Treatment for {{ business.getName }}
-  </div>
-  <div class="panel-body">
-    {{ form_start(form) }}
+<div class="row">
 
-      {{ form_widget(form) }}
-      <input type="submit" value="Create"
-           class="btn btn-primary" />
-    {{ form_end(form) }} <!-- /. form -->
+  <div class="col-md-4">
+    <div class="panel panel-sidebar">
+      <div class="panel-heading">
+
+        <div class="input-group">
+          <input type="text" class="form-control ul-filter" placeholder="Search Treatments" data-filters=".filterable-ul">
+          <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>
+        </div>
+
+      </div>
+      <div class="panel-body">
+        <!-- List group -->
+        <ul class="list-group filterable-ul">
+          {% for treatment in treatments %}
+            <li class="list-group-item category-name">{{ treatment.getLabel }}</li>
+            {% for subtreatment in treatment.getChildren %}
+              <li class="list-group-item" data-parent="{{treatment.getLabel}}">
+                {{ subtreatment.getLabel | slice(0,30) }}
+                <a href="#" data-add-id="{{subtreatment.getId}}" data-add-label="{{ subtreatment.getLabel }}" class="add-button-autoadd button-treatment pull-right icon-rounded"><i class="fa fa-plus"></i></a>
+              </li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <div class="col-md-8">
+
+    <form action="" method="post" id="AutoaddForm">
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+            <table class="table businesses-table table-striped">
+
+              <thead>
+                <tr>
+                  <th>Treatment</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Duration</th>
+                  <th>Full Price</th>
+                </tr>
+              </thead>
+
+              <tbody class="autoadd">
+              </tbody>
+
+            </table>
+
+
+
+        </div>
+      </div> <!-- /.panel -->
+
+      <p class="hidden-xs hidden-sm">&nbsp;</p>
+
+      <div class="align-right">
+        <button class="btn btn-lg btn-primary" type="submit">Add Treatments</button>
+      </div>
+
+    </form>
+
+  </div>
+
 </div>
+
+{% if failed is defined %}
+  <script>
+  var previouslyFailed = JSON.parse({{failed|json_encode()}});
+  </script>
+{% endif %}
 
 
 {% endblock %}
