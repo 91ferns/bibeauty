@@ -268,7 +268,7 @@ jQuery(function($) {
         closeOnSelect: false,
 
       });
-      
+
       newRow.find('.offer-form-input').on('change', function() {
 
         var val = $(this).val();
@@ -277,6 +277,7 @@ jQuery(function($) {
           $('option', this).prop('selected', true);
           $('option[value="all"]', this).prop('selected', false);
           $(this).trigger('change');
+          $(this).select2('close');
         }
 
       });
