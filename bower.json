@@ -21,7 +21,8 @@
     "jquery-ui": "~1.11.4",
     "react": "~0.13.3",
     "select2": "~4.0.0",
-    "blueimp-file-upload": "~9.11.2"
+    "blueimp-file-upload": "~9.11.2",
+    "handlebars": "~4.0.5"
   },
   "resolutions": {
     "select2": "^3.3.2"

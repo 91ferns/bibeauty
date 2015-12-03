@@ -8,6 +8,24 @@
 
 <div class="row">
 
+  <div class="col-md-5">
+    <!-- Single button -->
+    <div class="btn-group select-replacement">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Action <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        {% for h in 7..21 %}
+          {% for m in 0..4 %}
+          <li><a href="#">{{h}}:{{m}}</a></li>
+          {% endfor %}
+        {% endfor %}
+
+      </ul>
+    </div>
+
+  </div>
+
   <div class="col-md-4">
     <div class="panel panel-sidebar">
       <div class="panel-heading">
@@ -79,6 +97,15 @@
   </div>
 
 </div>
-
+{% verbatim %}
+<script id="times-template" type="text/x-handlebars-template">
+  <div class="entry">
+    <h1>{{title}}</h1>
+    <div class="body">
+      {{body}}
+    </div>
+  </div>
+</script>
+{% endverbatim %}
 
 {% endblock %}

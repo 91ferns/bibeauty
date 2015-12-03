@@ -55,6 +55,7 @@ assetic:
                 - 'assets/components/select2/dist/css/select2.min.css'
         vendor_assets:
             inputs:
+                - 'assets/components/handlebars/handlebars.min.js'
                 - 'assets/components/react/react-with-addons.js'
                 - 'assets/components/jquery/dist/jquery.min.js'
                 - 'assets/components/jquery-ui/jquery-ui.min.js'

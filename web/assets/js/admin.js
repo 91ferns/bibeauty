@@ -1,7 +1,16 @@
 jQuery(function($) {
 
-  function selectize(selector) {
-    console.log(selector);
+  function selectize(element) {
+
+    if (element.prop("tagName") !== 'SELECT') {
+      return;
+    }
+
+    element.hide();
+
+
+
+
   }
 
   /*
@@ -460,8 +469,7 @@ jQuery(function($) {
       }
     },
   });
-
-  var enumPopulated = [{ all: 'All' }];
+  var enumPopulated = [];
   for (var h = 7; h <= 21; h++) {
     for (var m = 0; m < 60; m = m + 15) {
       var mFormatted;
