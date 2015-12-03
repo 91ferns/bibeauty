@@ -103,41 +103,50 @@ class OffersController extends Controller implements AdminAwareController
 
         $errors = array();
 
-        foreach($post as $offerData) {
-            $data = (object) $offerData;
-            $offer = $this->createOffer($business, $data, $error);
-            var_dump($error);
-            if ($error) {
-                $errors[] = $error;
-                $failed[] = $offer;
-            } else {
-                $succeeded[] = $offer;
+        if (count($post) > 0) {
+
+            foreach($post as $offerData) {
+                $data = (object) $offerData;
+                $offer = $this->createOffer($business, $data, $error);
+                var_dump($error);
+                if ($error) {
+                    $errors[] = $error;
+                    $failed[] = $offer;
+                } else {
+                    $succeeded[] = $offer;
+                }
+
             }
 
-        }
+            $numFailed = count($failed);
 
-        $numFailed = count($failed);
+            if ($numFailed === $total) {
+                // All failed
+                $this->addFlash(
+                    'error',
+                    implode(' ', $errors)
+                );
+            } elseif ($numFailed > 0) {
+                // Some failed
+                $this->addFlash(
+                    'error',
+                    'We could not add ' . $failed . ' of your new offers.'
+                );
+                $em->flush();
+            } else {
+                $this->addFlash(
+                    'notice',
+                    'Successfully added all of your new offers.'
+                );
+                // All succeeded
+                return $this->redirectToRoute('admin_business_offers_path',["slug"=>$slug,"id"=>$id]);
+            }
 
-        if ($numFailed === $total) {
-            // All failed
-            $this->addFlash(
-                'error',
-                implode(' ', $errors)
-            );
-        } elseif ($numFailed > 0) {
-            // Some failed
-            $this->addFlash(
-                'error',
-                'We could not add ' . $failed . ' of your new offers.'
-            );
-            $em->flush();
         } else {
             $this->addFlash(
-                'notice',
-                'Successfully added all of your new offers.'
+                'error',
+                'Please enter some offers.'
             );
-            // All succeeded
-            return $this->redirectToRoute('admin_business_offers_path',["slug"=>$slug,"id"=>$id]);
         }
 
         $repository = $em->getRepository("AppBundle:Treatment");

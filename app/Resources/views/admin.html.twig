@@ -78,20 +78,8 @@
     <div class="container">
       <section id="admin-main">
 
-        <div class="alert alert-info" role="alert">
-          <ul>
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-              <li class="notice">
-                  {{ flashMessage }}
-              </li>
-            {% endfor %}
-            {% for flashMessage in app.session.flashbag.get('error') %}
-              <li class="error">
-                  {{ flashMessage }}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
+        {{ app.session.flashbag.get('notice') | flashify('notice') }}
+        {{ app.session.flashbag.get('error') | flashify('danger') }}
 
         <div class="admin-main-inner">
 

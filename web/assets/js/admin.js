@@ -1,5 +1,9 @@
 jQuery(function($) {
 
+  function selectize(selector) {
+    console.log(selector);
+  }
+
   /*
   $(document).on('change', '.btn-file :file', function() {
     var input = $(this),
@@ -264,10 +268,7 @@ jQuery(function($) {
 
     hook.callback(hook.type, hook.data, number, function(data) {
       tr.html(data);
-      newRow.find('select').select2({
-        closeOnSelect: false,
-
-      });
+      selectize(newRow.find('select'));
 
       newRow.find('.offer-form-input').on('change', function() {
 
@@ -288,6 +289,24 @@ jQuery(function($) {
 
   };
 
+  Autoadd.prototype.popRow = function(index) {
+    this.adjustPECacheForRemoval(index);
+
+    var rows = this.rows;
+    var newRows = [];
+
+    for (var x in rows) {
+      if (x == index) {
+        continue;
+      }
+      newRows.push(rows[x]);
+    }
+
+
+    this.rows = newRows;
+    return this;
+  };
+
   Autoadd.prototype.rebindEvents = function() {
     var rowRemove = this.self.find('.autoadd-row-remove');
     var $this = this;
@@ -297,8 +316,7 @@ jQuery(function($) {
       var thisRow = $(this).parents('tr');
       var index = thisRow.data('index');
 
-      $this.adjustPECacheForRemoval(index);
-      $this.rows = $this.rows.splice(index, 1);
+      $this.popRow(index);
 
       $this.sync();
     });

@@ -23,7 +23,8 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('meridian', array($this, 'hourMeridianFilter')),
             new \Twig_SimpleFilter('nicehour', array($this, 'formatHourFilter')),
             new \Twig_SimpleFilter('duration', array($this, 'formatMinutesFilter')),
-            new \Twig_SimpleFilter('today', array($this, 'formatTodayFilter'))
+            new \Twig_SimpleFilter('today', array($this, 'formatTodayFilter')),
+            new \Twig_SimpleFilter('flashify', array($this, 'doBootstrapFlashify'), array('is_safe' => array('html')))
         );
     }
 
@@ -37,6 +38,55 @@ class AppExtension extends \Twig_Extension
     {
 
         return sprintf('http://%s.%s/%s', $this->bucket, self::AWS_HOST, $key);
+
+    }
+
+    public function doBootstrapFlashify( $errors, $type = 'notice' ) {
+
+        if (!$errors) {
+            return '';
+        }
+
+        $container = '<div class="alert alert-' . $type . '" role="alert">';
+
+        if (is_array($errors)) {
+
+            if (count($errors) < 1) {
+                return '';
+            }
+
+            $container .= '<ul>';
+
+            foreach($errors as $error) {
+                $container .= '<li class="' . $type . '">';
+                $container .= $error;
+                $container .= '</li>';
+            }
+
+            $container .= '</ul>';
+        } else {
+            $container .= "<p>${errors}</p>";
+        }
+
+        $container .= '</div>';
+
+        return $container;
+        /*
+
+  <ul>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+      <li class="notice">
+        {{ flashMessage }}
+      </li>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+      <li class="error">
+        {{ flashMessage }}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+*/
 
     }
 

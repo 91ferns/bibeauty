@@ -12,44 +12,21 @@
 
 {% block body %}
 
-<div class="panel panel-default">
+<div class="panel panel-default new-panel">
   <div class="panel-body">
+    <div class="row">
+      <div class="col-md-7">
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
 
-      {{ form_widget(form) }}
-      <input type="submit" value="Edit Treatment"
-           class="btn btn-primary" />
-    {{ form_end(form) }} <!-- /. form -->
-  </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="add-availability" tabindex="-1" role="dialog" aria-labelledby="add-availability-label">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-    {#{ form_start(form) }#}
-      <form action="{{ path('admin_treatment_availability_new_path',{slug:slug, id:id, treatmentId:treatment.getId }) }}" method="post">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="add-service-category-label">Add an Offer</h4>
-        </div>
-        <div class="modal-body">
-          {#{ form_widget(serviceForm) }#}
-          {% include "account/availability/form.html.twig" %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit"
-               class="btn btn-primary">
-               <strong>Add Offer</strong> <i class="fa fa-plus fa-lg"></i>
-           </button>
-        </div>
-      </form> <!-- /.form -->
+          {{ form_widget(form) }}
+          <input type="submit" value="Edit Treatment"
+               class="btn btn-primary" />
+        {{ form_end(form) }} <!-- /. form -->
+
+
+      </div> <!-- /.col-md-7 -->
     </div>
-  </div>
-</div>
-      {#{ form_end(serviceForm) }#} <!-- /. form -->
-  <!--  </div>
   </div>
 </div>
 

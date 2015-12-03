@@ -259,10 +259,11 @@ $card-radius: 10px;
     padding: 0;
     .navbar {
       height: $admin-nav-height;
+      position: absolute;
     }
     .canvas {
       padding: 0;
-      padding-top: $admin-nav-height;
+      padding-top: $admin-nav-height + 20px;
     }
   }
 
@@ -713,6 +714,12 @@ $card-radius: 10px;
 }
 
 .admin {
+
+  .new-panel {
+    padding: 15px;
+
+  }
+  
   .business-title {
     text-align: center;
     margin: 0;
