@@ -24,7 +24,24 @@ jQuery(function($) {
     var HTML = timesTeplate({ enum: theEnum });
     var newElement = $(HTML);
 
-    newElement.find('li > a').not('.select-replacement-all,.select-replacement-all,.select-replacement-close').on('click', function(e) {
+    newElement.find('.select-replacement-all').on('click', function(e) {
+      e.stopPropagation();
+      var par = $(this).parent().parent().find('li').addClass('active');
+      element.find('option').prop('selected', true);
+    });
+
+    newElement.find('.select-replacement-none').on('click', function(e) {
+      e.stopPropagation();
+      $(this).parent().parent().find('li').removeClass('active'); // ('.dropdown-menu')
+      element.find('option').prop('selected', false);
+    });
+
+    newElement.find('.select-replacement-close').on('click', function(e) {
+      e.stopPropagation();
+      $(this).parents('.btn-group').removeClass('open');
+    });
+
+    newElement.find('.select-option').on('click', function(e) {
       e.stopPropagation();
       var isActive = $(this).parent().hasClass('active');
       $(this).parent().toggleClass('active');
@@ -37,20 +54,6 @@ jQuery(function($) {
         opt.prop('selected', true);
       }
 
-    });
-
-    newElement.find('.select-replacement-all').on('click', function() {
-      $(this).parent().parent().find('li').addClass('active'); // ('.dropdown-menu')
-      element.find('option').prop('selected', true);
-    });
-
-    newElement.find('.select-replacement-all').on('click', function() {
-      $(this).parent().parent().find('li').removeClass('active'); // ('.dropdown-menu')
-      element.find('option').prop('selected', false);
-    });
-
-    newElement.find('.select-replacement-close').on('click', function() {
-      $(this).parents('.btn-group').removeClass('open');
     });
 
     element.after(newElement);
