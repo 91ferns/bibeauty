@@ -8,24 +8,6 @@
 
 <div class="row">
 
-  <div class="col-md-5">
-    <!-- Single button -->
-    <div class="btn-group select-replacement">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Action <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        {% for h in 7..21 %}
-          {% for m in 0..4 %}
-          <li><a href="#">{{h}}:{{m}}</a></li>
-          {% endfor %}
-        {% endfor %}
-
-      </ul>
-    </div>
-
-  </div>
-
   <div class="col-md-4">
     <div class="panel panel-sidebar">
       <div class="panel-heading">
@@ -98,14 +80,86 @@
 
 </div>
 {% verbatim %}
+
 <script id="times-template" type="text/x-handlebars-template">
-  <div class="entry">
-    <h1>{{title}}</h1>
-    <div class="body">
-      {{body}}
+  <div class="btn-group select-replacement">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Times <span class="caret"></span>
+    </button>
+    <div class="dropdown-menu">
+      <ul class="dropdown-menu-ul">
+      {{#each enum}}
+        <li><a href="javascript:void(0)" data-value="{{value}}" data-key="{{key}}">{{value}}</a></li>
+      {{/each}}
+        <li class="submenu">
+          <a href="javascript: void(0);" class="select-replacement-all">Select All</a> | <a class="select-replacement-none" href="javascript:void(0);">Deselect All</a> | <a class="select-replacement-close" href="javascript: void(0);">Close</a>
+        </li>
+      </ul>
     </div>
   </div>
 </script>
+
+<script id="form-template" type="text/x-handlebars-template">
+
+  <td class="hidden-xs hidden-sm"></td>
+  <td colspan="4" title="Repeat">
+    <div class="form-group">
+      <div class="input-group">
+        <label for="" style="font-weight: normal;" class="hidden-xs hidden-sm">Repeat</label>
+        <!--<input type="checkbox" name="Recurring" class="form-control" />-->
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary active" >
+            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" checked value="never" class="form-control" /> Never
+          </label>
+          <label class="btn btn-primary" >
+            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="daily" class="form-control" /> Daily
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="weekly" class="form-control" /> Weekly
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="monthly" class="form-control" /> Monthly
+          </label>
+        </div>
+
+      </div>
+    </div> <!-- /.form-group -->
+
+    <div class="repeat-subform" style="display: none;">
+
+      <div class="form-group">
+
+        <div class="input-group">
+          <label class="btn btn-primary">
+            <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="sunday"> Sun
+          </label>
+          <label class="btn btn-primary">
+            <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="monday"> Mon
+          </label>
+          <label class="btn btn-primary">
+            <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="tuesday"> Tues
+          </label>
+          <label class="btn btn-primary">
+            <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="wednesday"> Wed
+          </label>
+          <label class="btn btn-primary">
+            <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="thursday"> Thu
+          </label>
+          <label class="btn btn-primary">
+            <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="friday"> Fri
+          </label>
+          <label class="btn btn-primary">
+            <input class="sr-only checkbox-button" type="checkbox" name="{{ prefix }}[{{ index }}][recurrenceDates][]" value="saturday"> Sat
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+  </td>
+
+</script>
+
 {% endverbatim %}
 
 {% endblock %}

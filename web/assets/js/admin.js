@@ -1,5 +1,8 @@
 jQuery(function($) {
 
+  var timesSource   = $("#times-template").html();
+  var timesTeplate = Handlebars.compile(timesSource);
+
   function selectize(element) {
 
     if (element.prop("tagName") !== 'SELECT') {
@@ -8,7 +11,49 @@ jQuery(function($) {
 
     element.hide();
 
+    var theEnum = [];
 
+    $.each(element.find('option'), function() {
+      var key = $(this).val();
+      var val = $(this).text();
+
+      theEnum.push({ key: key, value: val });
+
+    });
+
+    var HTML = timesTeplate({ enum: theEnum });
+    var newElement = $(HTML);
+
+    newElement.find('li > a').not('.select-replacement-all,.select-replacement-all,.select-replacement-close').on('click', function(e) {
+      e.stopPropagation();
+      var isActive = $(this).parent().hasClass('active');
+      $(this).parent().toggleClass('active');
+
+      var opt = element.find('option[value="' + $(this).data('key') + '"]');
+
+      if (isActive) {
+        opt.prop('selected', false);
+      } else {
+        opt.prop('selected', true);
+      }
+
+    });
+
+    newElement.find('.select-replacement-all').on('click', function() {
+      $(this).parent().parent().find('li').addClass('active'); // ('.dropdown-menu')
+      element.find('option').prop('selected', true);
+    });
+
+    newElement.find('.select-replacement-all').on('click', function() {
+      $(this).parent().parent().find('li').removeClass('active'); // ('.dropdown-menu')
+      element.find('option').prop('selected', false);
+    });
+
+    newElement.find('.select-replacement-close').on('click', function() {
+      $(this).parents('.btn-group').removeClass('open');
+    });
+
+    element.after(newElement);
 
 
   }
