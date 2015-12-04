@@ -10,11 +10,13 @@ jQuery(function($) {
   var brickTemplate = Handlebars.compile(brickSource);
 
   function createBrick(key, val) {
-    return brickTemplate({key: key, val: val});
+    var el = $(brickTemplate({key: key, val: val}));
+
+    return el;
   }
 
-  function removeBrick(key, val) {
-
+  function removeBrick(key, container) {
+    container.find('[data-key="'+key+'"]').remove();
   }
 
   function selectize(element, blockContainer) {
@@ -65,16 +67,27 @@ jQuery(function($) {
 
     newElement.find('.select-option').on('click', function(e) {
       e.stopPropagation();
-      var isActive = $(this).parent().hasClass('active');
-      $(this).parent().toggleClass('active');
 
-      var opt = element.find('option[value="' + $(this).data('key') + '"]');
+      var $thisElement = $(this);
+
+      var key = $thisElement.data('key');
+
+      var isActive = $thisElement.parent().hasClass('active');
+      $thisElement.parent().toggleClass('active');
+
+      var opt = element.find('option[value="' + key + '"]');
 
       if (isActive) {
         opt.prop('selected', false);
+        removeBrick(key, brickContainer);
       } else {
         opt.prop('selected', true);
-        brickContainer.append(createBrick($(this).data('key'), opt.text()));
+        var brick = createBrick(key, opt.text());
+        brick.find('a').on('click', function() {
+          removeBrick(key, brickContainer);
+          $thisElement.click();
+        })
+        brickContainer.append(brick);
       }
 
     });
