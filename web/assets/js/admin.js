@@ -40,6 +40,26 @@ jQuery(function($) {
     var HTML = timesTemplate({ enum: theEnum });
     var newElement = $(HTML);
 
+    newElement.find('.dropdown-toggle').on('click', function() {
+      var trElement = $(this).closest('tr');
+      var trElementWidth = trElement.outerWidth();
+
+      var menu = trElement.find('.dropdown-menu-ul');
+      if (menu.css('position') === 'static') {
+        menu.width($(this).outerWidth() - 2);
+      } else {
+        var left = trElement.offset().left;
+        var currentLeft = $(this).offset().left;
+
+        // need to offset it
+
+        var newLeft = (currentLeft - left) * -1;
+
+        menu.width(trElementWidth - 2).css('left', newLeft);
+      }
+
+    });
+
     var brickContainer = $('<div></div>')
     .addClass('brick-container')
     .addClass('clearfix');
@@ -51,13 +71,38 @@ jQuery(function($) {
     newElement.find('.select-replacement-all').on('click', function(e) {
       e.stopPropagation();
       var par = $(this).parent().parent().find('li').addClass('active');
-      element.find('option').prop('selected', true);
+      var options = element.find('option');
+
+      options.each(function() {
+        var theOption = $(this);
+        if (theOption.prop('selected') !== true) {
+          var brick = createBrick(theOption.val(), theOption.text());
+
+          brick.find('a').on('click', function() {
+            removeBrick(key, brickContainer);
+            $thisElement.click();
+          });
+
+          brickContainer.append(brick);
+        }
+      });
+
+      options.prop('selected', true);
+
+
+
     });
 
     newElement.find('.select-replacement-none').on('click', function(e) {
       e.stopPropagation();
       $(this).parent().parent().find('li').removeClass('active'); // ('.dropdown-menu')
-      element.find('option').prop('selected', false);
+      var options = element.find('option');
+
+      options.each(function() {
+        removeBrick($(this).val(), brickContainer);
+      });
+
+      options.prop('selected', false);
     });
 
     newElement.find('.select-replacement-close').on('click', function(e) {
@@ -86,7 +131,7 @@ jQuery(function($) {
         brick.find('a').on('click', function() {
           removeBrick(key, brickContainer);
           $thisElement.click();
-        })
+        });
         brickContainer.append(brick);
       }
 
