@@ -1,11 +1,25 @@
 jQuery(function($) {
 
   var timesSource   = $("#times-template").html();
-  var timesTeplate = Handlebars.compile(timesSource);
+  var timesTemplate = Handlebars.compile(timesSource);
 
-  function selectize(element) {
+  var formSource = $('#form-template').html();
+  var formTemplate = Handlebars.compile(formSource);
 
-    if (element.prop("tagName") !== 'SELECT') {
+  var brickSource = $('#brick-template').html();
+  var brickTemplate = Handlebars.compile(brickSource);
+
+  function createBrick(key, val) {
+    return brickTemplate({key: key, val: val});
+  }
+
+  function removeBrick(key, val) {
+
+  }
+
+  function selectize(element, blockContainer) {
+
+    if (element.prop("tagName") !== 'SELECT' && element.is(':visible')) {
       return;
     }
 
@@ -21,8 +35,16 @@ jQuery(function($) {
 
     });
 
-    var HTML = timesTeplate({ enum: theEnum });
+    var HTML = timesTemplate({ enum: theEnum });
     var newElement = $(HTML);
+
+    var brickContainer = $('<div></div>')
+    .addClass('brick-container')
+    .addClass('clearfix');
+
+    blockContainer
+      .find('.extra-td')
+      .prepend(brickContainer);
 
     newElement.find('.select-replacement-all').on('click', function(e) {
       e.stopPropagation();
@@ -52,12 +74,12 @@ jQuery(function($) {
         opt.prop('selected', false);
       } else {
         opt.prop('selected', true);
+        brickContainer.append(createBrick($(this).data('key'), opt.text()));
       }
 
     });
 
     element.after(newElement);
-
 
   }
 
@@ -325,24 +347,10 @@ jQuery(function($) {
 
     hook.callback(hook.type, hook.data, number, function(data) {
       tr.html(data);
-      selectize(newRow.find('select'));
-
-      newRow.find('.offer-form-input').on('change', function() {
-
-        var val = $(this).val();
-        if (val.indexOf('all') > -1) {
-          // If all is in the array
-          $('option', this).prop('selected', true);
-          $('option[value="all"]', this).prop('selected', false);
-          $(this).trigger('change');
-          $(this).select2('close');
-        }
-
-      });
-      newRow.after(tr);
+      selectize(newRow.find('select'), tr);
     });
 
-    return false;
+    return tr;
 
   };
 
@@ -402,6 +410,7 @@ jQuery(function($) {
       newHtml.push(newRow);
 
       var maybeHtml = this.postExecutionHookFor(x, newRow);
+
       if (maybeHtml) {
         newHtml.push(maybeHtml);
       }
@@ -552,19 +561,12 @@ jQuery(function($) {
     originalPrice: { type: Number, label: 'Original Price', disabled: true },
     discountPrice: { type: Number, label: 'Discount Price', default: 0.0 },
     recurrence: { type: undefined, callback: function(schemaType, schemaData, num, callback) {
-      var promise = $.ajax({
-        type: 'GET',
-        url: '/ajax/offers/recurrenceform',
-        data: {
-          prefix: schemaType,
-          index: num,
-        },
-        dataType: 'html',
-      }).done(function(data) {
-        callback(data);
-      }).error(function(err) {
-        alert(err);
+      var x = formTemplate({
+        prefix: schemaType,
+        index: num
       });
+      callback(x);
+      return x;
 
     }}
   });

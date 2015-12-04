@@ -99,10 +99,21 @@
   </div>
 </script>
 
+<script id="brick-template" type="text/x-handlebars-template">
+  <div class="btn btn-brick btn-primary select-replacement-btn" data-key="{{ key }}">
+    <span class="brick-label">
+      {{ val }}
+    </span>
+    <a href="javascript: void(0);" class="delete-brick">
+      <i class="fa fa-times"></i>
+    </a>
+  </div>
+</script>
+
 <script id="form-template" type="text/x-handlebars-template">
 
   <td class="hidden-xs hidden-sm"></td>
-  <td colspan="4" title="Repeat">
+  <td colspan="4" title="Repeat" class="extra-td">
     <div class="form-group">
       <div class="input-group">
         <label for="" style="font-weight: normal;" class="hidden-xs hidden-sm">Repeat</label>

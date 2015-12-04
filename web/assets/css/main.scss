@@ -1240,3 +1240,29 @@ $greydrk:#7f8d9a;
     display: block;
   }
 }
+
+.btn-brick {
+  color: white !important;
+  background-color: $brand-primary !important;
+  font-size: 15px;
+  text-transform: lowercase;
+  border-color: #e6e6e6;
+
+  a {
+    color: white;
+  }
+}
+
+.admin .hook-generated .brick-container {
+
+  margin-left: -1%;
+  margin-right: -1%;
+
+  .btn-brick {
+    margin-bottom: 10px;
+
+    width: 21%;
+    margin-right: 1%;
+    margin-left: 1%;
+  }
+}
