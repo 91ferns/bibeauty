@@ -1,13 +1,17 @@
 jQuery(function($) {
 
-  var timesSource   = $("#times-template").html();
-  var timesTemplate = Handlebars.compile(timesSource);
+  if ($('#times-template').length > 0) {
 
-  var formSource = $('#form-template').html();
-  var formTemplate = Handlebars.compile(formSource);
+    var timesSource = $("#times-template").html();
+    var timesTemplate = Handlebars.compile(timesSource);
 
-  var brickSource = $('#brick-template').html();
-  var brickTemplate = Handlebars.compile(brickSource);
+    var formSource = $('#form-template').html();
+    var formTemplate = Handlebars.compile(formSource);
+
+    var brickSource = $('#brick-template').html();
+    var brickTemplate = Handlebars.compile(brickSource);
+
+  }
 
   function createBrick(key, val) {
     var el = $(brickTemplate({key: key, val: val}));
