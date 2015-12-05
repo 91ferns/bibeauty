@@ -23,43 +23,40 @@ jQuery(function($) {
     container.find('[data-key="'+key+'"]').remove();
   }
 
-  function selectize(element, blockContainer) {
+  function selectize(element, brickContainer) {
 
     if (element.prop("tagName") !== 'SELECT' && element.is(':visible')) {
       return;
     }
 
-    var brickContainer = $('<div></div>')
-    .addClass('brick-container')
-    .addClass('clearfix');
+    var newElement;
 
     if (element.is(':hidden')) {
-      blockContainer
-        .find('.extra-td')
-        .prepend(brickContainer);
-      return;
+      // this means this has run already. i dont know wtf is going on with the events
+      newElement = element.parent().find('.select-replacement');
+
+      console.log(newElement);
+
+    } else {
+      element.hide();
+
+      var theEnum = [];
+
+      $.each(element.find('option'), function() {
+        var key = $(this).val();
+        var val = $(this).text();
+
+        theEnum.push({ key: key, value: val });
+
+      });
+
+      var HTML = timesTemplate({ enum: theEnum });
+      newElement = $(HTML);
+
+      element.after(newElement);
     }
 
-    element.hide();
-
-    var theEnum = [];
-
-    $.each(element.find('option'), function() {
-      var key = $(this).val();
-      var val = $(this).text();
-
-      theEnum.push({ key: key, value: val });
-
-    });
-
-    blockContainer
-      .find('.extra-td')
-      .prepend(brickContainer);
-
-    var HTML = timesTemplate({ enum: theEnum });
-    var newElement = $(HTML);
-
-    newElement.find('.dropdown-toggle').on('click', function() {
+    newElement.find('.dropdown-toggle').off('click').on('click', function() {
       var trElement = $(this).closest('tr');
       var trElementWidth = trElement.outerWidth();
 
@@ -79,32 +76,33 @@ jQuery(function($) {
 
     });
 
-    newElement.find('.select-replacement-all').on('click', function(e) {
+    newElement.find('.select-replacement-all').off('click').on('click', function(e) {
       e.stopPropagation();
+
       var par = $(this).parent().parent().find('li').addClass('active');
       var options = element.find('option');
 
       options.each(function() {
         var theOption = $(this);
         if (theOption.prop('selected') !== true) {
+          var key = theOption.val();
           var brick = createBrick(theOption.val(), theOption.text());
+
+          brickContainer.append(brick);
 
           brick.find('a').on('click', function() {
             removeBrick(key, brickContainer);
             $thisElement.click();
           });
 
-          brickContainer.append(brick);
         }
       });
 
       options.prop('selected', true);
 
-
-
     });
 
-    newElement.find('.select-replacement-none').on('click', function(e) {
+    newElement.find('.select-replacement-none').off('click').on('click', function(e) {
       e.stopPropagation();
       $(this).parent().parent().find('li').removeClass('active'); // ('.dropdown-menu')
       var options = element.find('option');
@@ -116,13 +114,15 @@ jQuery(function($) {
       options.prop('selected', false);
     });
 
-    newElement.find('.select-replacement-close').on('click', function(e) {
+    newElement.find('.select-replacement-close').off('click').on('click', function(e) {
       e.stopPropagation();
       $(this).parents('.btn-group').removeClass('open');
     });
 
-    newElement.find('.select-option').on('click', function(e) {
+    newElement.find('.select-option').off('click').on('click', function(e) {
       e.stopPropagation();
+
+      console.log('select option');
 
       var $thisElement = $(this);
 
@@ -147,8 +147,6 @@ jQuery(function($) {
       }
 
     });
-
-    element.after(newElement);
 
   }
 
@@ -483,8 +481,8 @@ jQuery(function($) {
       });
 
       $('.offer-form-input').each(function() {
-        var tr = $(this).closest('tr').next();
-        selectize($(this), tr);
+        var b = $(this).parents('tr').next().find('.brick-container');
+        selectize($(this), b);
       });
 
     }
