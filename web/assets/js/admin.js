@@ -481,6 +481,8 @@ jQuery(function($) {
         selectize($(this), b);
       });
 
+      $('.recurrence-radio[value="weekly"]').click();
+
     }
 
 
