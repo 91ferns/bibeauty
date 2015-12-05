@@ -623,10 +623,33 @@ jQuery(function($) {
     originalPrice: { type: Number, label: 'Original Price', disabled: true },
     discountPrice: { type: Number, label: 'Discount Price', default: 0.0 },
     recurrence: { type: undefined, callback: function(schemaType, schemaData, num, callback) {
-      var x = formTemplate({
+      var x = $(formTemplate({
         prefix: schemaType,
         index: num
+      }));
+
+
+
+      x.find('.checkbox-button').off('click').on('click', function() {
+        var $this = $(this);
+        if ($this.is(':checked')) {
+          $this.parent().addClass('active');
+        } else {
+          $this.parent().removeClass('active');
+        }
       });
+
+      x.find('input[name="'+ schemaType + '['+ num +'][recurrenceType]"]').change(function() {
+        var parentWrapper = $(this).parents('td');
+
+        var val = $('input[name="' + schemaType + '[' + num +'][recurrenceType]"]:checked').val();
+        if (val === 'weekly') {
+          parentWrapper.find('.repeat-subform').show();
+        } else {
+          parentWrapper.find('.repeat-subform').hide();
+        }
+      });
+
       callback(x);
       return x;
 
