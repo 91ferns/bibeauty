@@ -35,8 +35,6 @@ jQuery(function($) {
       // this means this has run already. i dont know wtf is going on with the events
       newElement = element.parent().find('.select-replacement');
 
-      console.log(newElement);
-
     } else {
       element.hide();
 
@@ -121,8 +119,6 @@ jQuery(function($) {
 
     newElement.find('.select-option').off('click').on('click', function(e) {
       e.stopPropagation();
-
-      console.log('select option');
 
       var $thisElement = $(this);
 
