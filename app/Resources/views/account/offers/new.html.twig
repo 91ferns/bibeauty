@@ -26,7 +26,7 @@
             {% for subtreatment in treatmentsArray %}
               <li class="list-group-item" data-parent="{{ category | lower }}">
                 {{ subtreatment.getName | slice(0,30) }}
-                <a href="#"
+                <a href="javascript: void(0);"
                   data-add-id="{{subtreatment.getId}}"
                   data-add-label="{{ subtreatment.getName }}"
                   data-original-price="{{ subtreatment.getOriginalPrice }}"
@@ -120,16 +120,16 @@
         <!--<input type="checkbox" name="Recurring" class="form-control" />-->
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-primary active" >
-            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" checked value="never" class="form-control" /> Never
+            <input type="radio" class="recurrence-radio" name="{{ prefix }}[{{ index }}][recurrenceType]" checked value="never" class="form-control" /> Never
           </label>
           <label class="btn btn-primary" >
-            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="daily" class="form-control" /> Daily
+            <input type="radio" class="recurrence-radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="daily" class="form-control" /> Daily
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="weekly" class="form-control" /> Weekly
+            <input type="radio" class="recurrence-radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="weekly" class="form-control" /> Weekly
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="monthly" class="form-control" /> Monthly
+            <input type="radio" class="recurrence-radio" name="{{ prefix }}[{{ index }}][recurrenceType]" value="monthly" class="form-control" /> Monthly
           </label>
         </div>
 

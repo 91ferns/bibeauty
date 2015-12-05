@@ -29,6 +29,17 @@ jQuery(function($) {
       return;
     }
 
+    var brickContainer = $('<div></div>')
+    .addClass('brick-container')
+    .addClass('clearfix');
+
+    if (element.is(':hidden')) {
+      blockContainer
+        .find('.extra-td')
+        .prepend(brickContainer);
+      return;
+    }
+
     element.hide();
 
     var theEnum = [];
@@ -40,6 +51,10 @@ jQuery(function($) {
       theEnum.push({ key: key, value: val });
 
     });
+
+    blockContainer
+      .find('.extra-td')
+      .prepend(brickContainer);
 
     var HTML = timesTemplate({ enum: theEnum });
     var newElement = $(HTML);
@@ -63,14 +78,6 @@ jQuery(function($) {
       }
 
     });
-
-    var brickContainer = $('<div></div>')
-    .addClass('brick-container')
-    .addClass('clearfix');
-
-    blockContainer
-      .find('.extra-td')
-      .prepend(brickContainer);
 
     newElement.find('.select-replacement-all').on('click', function(e) {
       e.stopPropagation();
@@ -409,7 +416,6 @@ jQuery(function($) {
 
     hook.callback(hook.type, hook.data, number, function(data) {
       tr.html(data);
-      selectize(newRow.find('select'), tr);
     });
 
     return tr;
@@ -447,6 +453,38 @@ jQuery(function($) {
 
       $this.sync();
     });
+
+    $('.checkbox-button').off('click').on('click', function() {
+      var $this = $(this);
+      if ($this.is(':checked')) {
+        $this.parent().addClass('active');
+      } else {
+        $this.parent().removeClass('active');
+      }
+    });
+
+    $('.recurrence-radio').off('change').on('change', function() {
+      var parentWrapper = $(this).parents('td');
+
+      if (!$(this).is(':checked')) {
+        return;
+      }
+
+      var val = $(this).val();
+
+
+      if (val === 'weekly') {
+        parentWrapper.find('.repeat-subform').show();
+      } else {
+        parentWrapper.find('.repeat-subform').hide();
+      }
+    });
+
+    $('select').each(function() {
+      var tr = $(this).closest('tr').next();
+      selectize($(this), tr);
+    });
+
 
   };
 
@@ -628,29 +666,8 @@ jQuery(function($) {
         index: num
       }));
 
-
-
-      x.find('.checkbox-button').off('click').on('click', function() {
-        var $this = $(this);
-        if ($this.is(':checked')) {
-          $this.parent().addClass('active');
-        } else {
-          $this.parent().removeClass('active');
-        }
-      });
-
-      x.find('input[name="'+ schemaType + '['+ num +'][recurrenceType]"]').change(function() {
-        var parentWrapper = $(this).parents('td');
-
-        var val = $('input[name="' + schemaType + '[' + num +'][recurrenceType]"]:checked').val();
-        if (val === 'weekly') {
-          parentWrapper.find('.repeat-subform').show();
-        } else {
-          parentWrapper.find('.repeat-subform').hide();
-        }
-      });
-
       callback(x);
+
       return x;
 
     }}
