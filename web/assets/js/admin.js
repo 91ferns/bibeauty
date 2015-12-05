@@ -775,4 +775,22 @@ jQuery(function($) {
       return false;
     }
   });
+
+  $('input[type="file"]').on('change', function() {
+    // check if parent is a form group
+    var parent = $(this).parent();
+    if (!parent.hasClass('form-group')) {
+      return;
+    }
+
+
+    var val = $(this).val();
+    if (val === '') {
+      parent.removeClass('has-attachment');
+    } else {
+      parent.addClass('has-attachment');
+    }
+
+  });
+
 });

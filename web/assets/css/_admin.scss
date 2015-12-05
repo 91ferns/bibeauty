@@ -482,6 +482,10 @@ $card-radius: 10px;
           content: "Upload";
         }
 
+        &.has-attachment:before {
+          content: "Attached";
+        }
+
         input[type=file] {
           position: absolute;
           top: 0;
@@ -719,7 +723,7 @@ $card-radius: 10px;
     padding: 15px;
 
   }
-  
+
   .business-title {
     text-align: center;
     margin: 0;
