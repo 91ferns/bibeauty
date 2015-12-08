@@ -1,0 +1,424 @@
+.business-logo-search {
+  width: 230px;
+  height: 135px;
+  float: right;
+  display: block;
+
+  background-size: contain;
+  background-position: center;
+  background-repeat:no-repeat;
+}
+
+#business-information {
+
+  padding-top: 0px;
+
+  .business-aside {
+    background: white;
+    padding: 20px 15px;
+    color: #3d3d3d;
+
+    box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.18);
+
+    h3 {
+      font-size: 20px;
+      font-weight: 200;
+
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    h2, p {
+      font-size: 14px;
+      font-weight: 200;
+    }
+
+    .business-info {
+      h1 {
+        font-size: 16px;
+      }
+      h2 {
+        text-transform: none;
+      }
+      .map-show {
+        padding: 2px;
+        font-size: 14px;
+        text-decoration: none;
+        -webkit-transition:all .5s ease-in;
+        -moz-transition:all .5s ease-in;
+        transition:all .5s ease-in;
+      }
+      .map-show:hover {
+        background: none;
+        color: black;
+      }
+      .phone {
+        padding: 2px;
+        font-size: 14px;
+        color: $gray;
+        text-decoration: none;
+      }
+      .phone:hover {
+        color: $gray;
+        background: none;
+      }
+      .email-link {
+        padding: 2px;
+        font-size: 14px;
+        color: $gray;
+        text-decoration: none;
+      }
+      .email-link:hover {
+        color: $gray;
+        background: none;
+      }
+      .website-link {
+        padding: 2px;
+        font-size: 14px;
+        color: $gray;
+        text-decoration: none;
+      }
+      .website-link:hover {
+        color: $gray;
+        background: none;
+      }
+      .fa {
+        padding-right: 5px;
+      }
+    }
+  }
+
+  .jumbotron {
+    @media (min-width: $screen-md-min) {
+      max-height: 455px;
+      overflow: visible;
+    }
+    background-color: #424242;
+    color: white;
+    padding-top: 30px;
+
+
+    h1 {
+      font-size: 22px;
+      margin: 0px;
+    }
+
+    h2 {
+      font-size: 13px;
+      margin: 0;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .nav-pills {
+
+      > li {
+        margin-right: 6px;
+        top: 16px;
+      }
+
+      > li > a {
+        color: white;
+        font-size: 20px;
+        text-align: center;
+        padding-left: 13px;
+        padding-right: 13px;
+        height: 50px;
+        line-height: 50px;
+
+        padding-top: 0px;
+        padding-bottom: 0x;
+        text-transform: uppercase;
+
+        background-color: #3a3a3a;
+        border-bottom: 3px solid #3a3a3a;
+      }
+
+      > .active > a,
+      > li > a:hover {
+        background: #232323;
+        border-bottom-color: $brand-primary;
+      }
+    }
+  }
+
+  .header-attachment-wrapper {
+    height: 290px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255,255,255,0.3);
+    margin-bottom: 15px;
+  }
+
+  .business-aside .ratings {
+    text-align: center;
+  }
+
+  .ratings {
+
+    .ratings-number {
+      font-size: 52px;
+      line-height: 56px;
+    }
+
+    .ratings-lead {
+      > small {
+        font-size: 18px;
+        line-height: 20px;
+        color: #3d3d3d;
+      }
+    }
+
+    p {
+      font-size: 12px;;
+      line-height: 12px;
+      color: #3d3d3d;
+      margin-top: 3px;
+      margin-bottom: 15px;
+      font-weight: 200;
+      text-transform: uppercase;
+    }
+
+  }
+  hr {
+    width: 100%;
+  }
+
+  .business-welcome {
+    font-size: 18px;
+    margin-top: 0px;
+  }
+  .yelp-logo {
+    margin-top: -5px;
+    position: relative;
+    margin-left: 90%;
+  }
+  .review-comments {
+    > .media {
+      background-color: #f7f7f7;
+      padding: 22px 15px;
+      margin-bottom: 15px;
+
+      .media-heading {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .comment-text {
+        font-size: 13px;
+        color: #2a2a2a;
+      }
+
+    }
+  }
+
+  .stars {
+    font-size: 13px;
+  }
+
+  .business-aside .stars {
+    font-size: 35px;
+    bottom: 20px;
+    right: 35px;
+  }
+ .business-services {
+
+   .services {
+     font-family: "Open Sans";
+     font-weight: 200px;
+     font-size: 1.5em;
+   }
+
+   .panel-default {
+     background-color: #f7f7f7;
+     border: none;
+     color: black;
+
+     .fa-tag {
+       color: $brand-primary;
+       padding-right: 5px;
+     }
+     .panel-heading {
+       color: black;
+       background-color: #f7f7f7;
+       border: none;
+     }
+     .panel-title {
+       a {
+         text-decoration: none;
+       }
+       small {
+         padding-left: 10px;
+        }
+     }
+     .panel-body {
+       border: none;
+
+       .list-group-item {
+          .service-name, .service-time {
+            line-height: 32px;
+          }
+          .service-time {
+            color: $gray-medium;
+            padding-left: 10px;
+          }
+          .service-old-price {
+            border-color: white !important;
+            text-decoration: line-through;
+          }
+          .service-price {
+            float: right;
+            padding-right: 30px;
+            background-color: $brand-primary;
+            color: white;
+            padding: 5px 30px;
+            position: relative;
+            bottom: 5px;
+            text-decoration: none;
+          }
+       }
+     }
+   }
+ }
+ .business-comments {
+
+   .btn-secondary {
+     margin-left: 50px;
+     text-transform: uppercase;
+     padding: 5px 20px;
+     -webkit-transition:all 1s ease-in;
+     -moz-transition:all 1s ease-in;
+     transition:all 1s ease-in;
+   }
+   .btn-secondary:hover {
+     background-color: white;
+     color: $brand-primary;
+   }
+ }
+
+}
+
+#business-information {
+
+  .business-services {
+    .panel-heading {
+      padding-top: 13px;
+      padding-bottom: 13px;
+    }
+    .panel-title  {
+
+      line-height: 22px;
+      img {
+        margin-top: -2px;
+      }
+
+      small {
+        font-style: italic;
+        font-size: 12px;
+        text-transform: none;
+      }
+
+      big {
+        font-weight: 100;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+    }
+
+    .panel {
+      border-bottom: 2px solid white;
+    }
+
+    .panel-body {
+      padding-top: 7px;
+      padding-bottom: 7px;
+
+      .list-group {
+        margin-bottom: 0px;
+      }
+    }
+  }
+  .business-aside {
+    //width: 455px;
+
+    .time {
+      font-size: 2.15em;
+      font-weight: 200;
+      padding-top: 4px;
+      padding-bottom: 10px;
+      margin-bottom: 0px;
+      margin-top: -10px;
+      text-align: center;
+
+    }
+    .top {
+      margin-top: 0px;
+      width: 90%;
+      margin-bottom: 10px;
+    }
+    .bottom {
+      width: 90%;
+      margin-top: 10px;
+    }
+    .booked-date {
+      border-left: 1px solid #e1e1e1;
+      border-right: 1px solid #e1e1e1;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 0px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .date {
+      font-size: 1.2em;
+      margin-bottom: 0px;
+      font-weight: 600;
+      padding-right: 5px;
+      padding-top: 3px;
+      text-align: center;
+    }
+    .title {
+      padding-left: 30px;
+      font-size: 1.3em;
+    }
+    .bottom-area {
+      padding-left: 30px;
+      .treatment {
+        font-size: 1.25em;
+        font-weight: 600;
+      }
+      .old-price {
+        text-decoration: line-through;
+        float: right;
+        padding-right: 10px;
+        padding-top: 18px;
+        padding-bottom: 15px;
+      }
+      .price {
+        font-weight: 600;
+        font-size: 1.3em;
+        float: right;
+        padding: 15px 0px;
+        margin-right: 20px;
+      }
+      .duration {
+        padding-top: 15px;
+        font-size: 1.2em;
+        padding-bottom: 15px;
+      }
+      .footer {
+        font-size: 0.825em;
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
+
+.stars {
+  .active {color: #ffcc30;}
+}

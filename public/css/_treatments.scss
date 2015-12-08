@@ -1,0 +1,33 @@
+.quick-login {
+  background: #eeecea;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: black;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 100;
+    strong {
+      font-weight: bold;
+    }
+  }
+
+  .forgot-password {
+    color: $brand-primary;
+    font-size: 14px;
+    margin-top: 1em;
+
+  }
+}
+
+.booking-info {
+  padding-top: 0px;
+}
+.tab-pane#today,
+.tab-pane#tomorrow{
+  max-height:260px;
+  overflow-y:auto;
+  ul.list-group{
+    margin-bottom:0;
+  }
+}
