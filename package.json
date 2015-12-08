@@ -10,14 +10,25 @@
     "all": "npm run build && npm run test"
   },
   "dependencies": {
+    "aws-sdk": "^2.2.21",
     "construx": "^1.0.0",
     "construx-copier": "^1.0.0",
     "construx-dustjs": "^1.1.0",
     "construx-sass": "^1.0.0",
     "dust-makara-helpers": "^4.1.2",
     "express": "^4.12.2",
+    "flux": "^2.1.1",
+    "geocoder": "^0.2.2",
     "kraken-js": "^1.0.3",
-    "makara": "^2.0.3"
+    "kue": "^0.10.4",
+    "makara": "^2.0.3",
+    "mongoose": "^4.2.10",
+    "react": "^0.14.3",
+    "redis": "^2.4.2",
+    "request": "^2.67.0",
+    "slug": "^0.9.1",
+    "twilio": "^2.6.0",
+    "yelp": "^1.0.1"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
