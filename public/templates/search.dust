@@ -1,0 +1,183 @@
+{>"layouts/master" /}
+
+{<body}
+<div class="componentBody">
+  <section id="top-map" class="nav-pad">
+    <div id="results-map-wrapper"></div>
+  </section>
+
+  <section id="below-map">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="search-form-sidebar">
+            {{form_start(form)}}
+              <div class="form-group">
+                <label for="">Availability</label>
+
+                <p>
+                  <select class="form-control" name="date">
+                    <option value="all">Tomorrow or Today</option>
+                    <option value="today">Today</option>
+                    <option value="tomorrow">Tomorrow</option>
+                  </select>
+                </p>
+
+                <p>
+                  <select class="form-control" name="time">
+                    <option value="all">Anytime</option>
+                    <option value="morning">Morning (until 12pm)</option>
+                    <option value="afternoon">Afternoon (12-5pm)</option>
+                    <option value="evening">Evening (5pm-12am)</option>
+                  </select>
+                </p>
+
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+
+              <div class="form-group">
+                {{ form_label(form.location)}}
+                {{ form_widget(form.location, { placeholder: 'Enter Zip code', id: 'LocationField' })}}
+                {{ form_errors(form.location) }}
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+
+              <div class="form-group">
+                <label for="">Treatment Type / Category</label>
+                <div class="input-group TreatmentTypesGroup">
+                  <select data-minimumResultsForSearch="1" data-placeholder="Select a Treatment" name="treatment">
+                    <option style="color: #999;">Select a Treatment</option>
+                    {#categories}
+                    <option value="{{category.getId}}">{{category.getLabel}}</option>
+                    {#children}
+                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</i>
+                    {/children}
+                    {/categories}
+                  </select>
+                  </ul>
+                  <input type="hidden" name="TreatmentTypeId" />
+                </div>
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+
+              <div class="form-group">
+                <label for="">Price Range</label>
+                <div class="range">
+
+      	           <input type="text" id="amount_left" name="min" readonly styles="" value="{{params['min']}}" />
+                   <input type="text" id="amount_right" name="max" readonly styles="" value="{{params['max']}}" />
+                   <div id="slider-range" data-min="{{params['min']}}" data-max="{{params['max']}}"></div>
+                </div>
+                <!--input type="range" id="weight" min="10" value="10" max="2000" step="100"-->
+              </div> <!-- /.form-group -->
+
+              <hr class="fullwidth">
+              <br>
+              <button class="btn btn-lg btn-primary">Update</button>
+
+          </div> <!-- /.search-form-sidebar -->
+
+        </div> <!-- /.col-md-4 -->
+
+        <div class="col-md-8">
+
+          {?results}
+            {#results}
+              <hr>
+              <div class="business">
+                <div class="row">
+                  <div class="col-md-7 ">
+
+
+                    <h3><a style="color: rgb(51, 51, 51);text-decoration:none;" href="{{path('business_path',{id:business.getId,slug:business.getSlug})}}">{{business.getName}}</a>
+                      <span class="badge">{{business.getDistanceFrom | round(1, 'floor')}} miles </span>
+                    </h3>
+                    <span class="stars">
+                      {{ business.getAverageRating | rating }}
+                      from Yelp&trade;
+                    </span> <!-- /.stars -->
+                    <a class="map-icon map-link"
+                       target="_blank"
+                       data-business-id="{{ business.getId }}"
+                       href="{{ business.getAddress.getGoogleMapsUrl }}"
+                    ><i class="fa fa-map-marker fa-lg"></i> Show on Map</a>
+                    <div class="address">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</div>
+                    <p class="business-description">{{business.getDescription}}</p>
+                  </div>
+                  <div class="col-md-5">
+                    <a href="{{ path('business_path',{id:business.getId,slug:business.getSlug}) }}" class="business-logo-search pull-right"
+                    style="{?attachment}
+                      background-image: url('{{ business.getLogoAttachment.getKey | s3 }}');
+                    {:else}
+                      background-image: url('{{ asset('assets/images/placeholder-image1.png') }}');
+                    {/attachment}')"
+                    >
+                      <span class="sr-only">{{ business.getName }}</span>
+                    </a>
+                  </div>
+
+                </div> <!-- /.row -->
+
+                {?offers}
+                <ul class="list-group">
+                  {#offers}
+                  <li class="list-group-item">
+                    <h4 class="panel-title clearfix">
+                      <big>{{ treatment.getName }}</big>
+                      <a class="btn btn-primary pull-right"
+                      href="{{ path('treatments_path', {
+                        id: business.getId,
+                        slug: business.getSlug,
+                        treatment: treatment.getId })
+                      }}">
+                        From
+                        <strong>${{ treatment.getCheapestDiscountPrice | number_format(2) }}</strong>
+                      </a>
+                      <span class="save pull-right">
+                        Save <span class="blue">{{ treatment.getCheapestDiscountPercentage }}%</span>
+                      </span>
+                    </h4>
+                  </li> <!-- .list-item-group -->
+                  {/offers}
+                  <li class="list-group-item">
+                    <a href="{{ path('business_path', {
+                      id: business.getId,
+                      slug: business.getSlug
+                     })
+                    }}">
+                      <big>See All</big> <i class="fa fa-chevron-right"></i>
+                    </a>
+                  </li> <!-- .list-item-group -->
+
+                </ul> <!-- /.list-group -->
+
+              {/offers}
+
+              </div>
+            {/results}
+
+            <nav>
+              <ul class="pagination">
+                {#pages}
+                  <li><a href="{{ path('listings_search_path', app.request.query| merge({'page': i})) }}">{{i}}</a></li>
+                {/pages}
+              </ul>
+            </nav>
+
+          {:else}
+            <p>There are no results</p>
+          {/results}
+
+        </div> <!-- /.col-md-8 -->
+
+      </div>
+
+    </div> <!-- /.container -->
+  </section> <!-- /#below-map -->
+</div>
+
+{/body}

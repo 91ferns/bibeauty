@@ -1,12 +1,12 @@
 {
-    
+
     "express": {
         "view cache": false,
         "view engine": "dust",
         "views": "path:./public/templates"
     },
 
-    
+
     "view engines": {
         "dust": {
             "module": "makara",
@@ -18,12 +18,12 @@
             }
         }
     },
-    
-    
+
+
 
     "middleware": {
 
-        "devtools": {
+        "construx": {
             "enabled": true,
             "priority": 35,
             "module": {
@@ -32,19 +32,28 @@
                     "path:./public",
                     "path:./.build",
                     {
-                        
+
                         "template": {
                             "module": "construx-dustjs",
                             "files": "/templates/**/*.js",
-                            "base": "templates"
+                            "base": "templates",
+                            "config": {
+                                "prepend": "",
+                                "append": "",
+                                "amd": true
+                            }
                         },
-                        
-                        
+
+                        "browserify": {
+                            "module": "construx-browserify",
+                            "files": "/js/app.js"
+                        },
+
                         "css": {
                             "module": "construx-sass",
                             "files": "/css/**/*.css"
                         },
-                        
+
                         "copier": {
                             "module": "construx-copier",
                             "files": "**/*"

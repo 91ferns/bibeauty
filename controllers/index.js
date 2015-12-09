@@ -1,18 +1,13 @@
 'use strict';
 
-var IndexModel = require('../models/index');
-
-
 module.exports = function (router) {
 
-    var model = new IndexModel();
+  router.get('/', function (req, res) {
+    res.render('index', {});
+  });
 
-    router.get('/', function (req, res) {
-        
-        
-        res.render('index', model);
-        
-        
-    });
+  router.get('/search', function(req, res) {
+    res.render('search', {});
+  });
 
 };
