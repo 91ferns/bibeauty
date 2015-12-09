@@ -107,6 +107,7 @@ class OffersController extends Controller implements AdminAwareController
 
             foreach($post as $offerData) {
                 $data = (object) $offerData;
+
                 $offer = $this->createOffer($business, $data, $error);
                 var_dump($error);
                 if ($error) {

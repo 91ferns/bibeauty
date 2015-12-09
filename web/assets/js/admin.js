@@ -29,6 +29,9 @@ jQuery(function($) {
       return;
     }
 
+    var newName = element.attr('name') + '[]';
+    element.attr('name', newName);
+
     var newElement;
 
     if (element.is(':hidden')) {
@@ -82,6 +85,7 @@ jQuery(function($) {
 
       options.each(function() {
         var theOption = $(this);
+        theOption.attr('selected', true);
         if (theOption.prop('selected') !== true) {
           var key = theOption.val();
           var brick = createBrick(theOption.val(), theOption.text());
@@ -95,8 +99,6 @@ jQuery(function($) {
 
         }
       });
-
-      options.prop('selected', true);
 
     });
 
@@ -130,10 +132,10 @@ jQuery(function($) {
       var opt = element.find('option[value="' + key + '"]');
 
       if (isActive) {
-        opt.prop('selected', false);
+        opt.attr('selected', false);
         removeBrick(key, brickContainer);
       } else {
-        opt.prop('selected', true);
+        opt.attr('selected', true);
         var brick = createBrick(key, opt.text());
         brick.find('a').on('click', function() {
           removeBrick(key, brickContainer);
