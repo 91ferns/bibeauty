@@ -11,9 +11,7 @@ module.exports = function babelify(grunt) {
       presets: ['es2015']
     },
     dist: {
-      src: [ 'public/**/*.js' ],
-      dest: '.build/js/app.js',
-      ext: '.js',
+			files: { 'build/js/**/*.js': 'public/js/**/*.{js,jsx}' }
     }
 	};
 };

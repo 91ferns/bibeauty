@@ -7,11 +7,11 @@ module.exports = function watch(grunt) {
 	// Options
 	return {
 		sass: {
-			files: ['/public/css/**/*.{scss,sass}'],
+			files: ['public/css/**/*.{scss,sass}'],
 			tasks: ['styles']
 		},
     scripts: {
-      files: ['/public/js/**/*.js'],
+      files: ['public/js/**/*.js'],
       tasks: ['scripts'],
       options: {
         spawn: false,

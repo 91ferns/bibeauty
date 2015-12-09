@@ -44,26 +44,9 @@
                             }
                         },
 
-                        "jsx": {
-                      		"module": "kraken-jsx-devtools",
-                      		"files": "/js/**/*.js",
-                      		"ext": "jsx"
-                      	},
-
-                        "browserify": {
-                            "module": "construx-browserify",
-                            "files": "/js/app.js",
-                            "ext": "js"
-                        },
-
-                        "css": {
-                            "module": "construx-sass",
-                            "files": "/css/**/*.css"
-                        },
-
                         "copier": {
                             "module": "construx-copier",
-                            "files": "**/*"
+                            "files": "/templates/**/*"
                         }
                     }
                 ]

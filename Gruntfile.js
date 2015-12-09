@@ -11,7 +11,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-makara-browserify');
 
     grunt.registerTask('styles', ['sass', 'autoprefixer']);
-    grunt.registerTask('scripts', ['babel', 'browserify']);
+    grunt.registerTask('scripts', ['browserify']);
 
     grunt.registerTask('wait', function () {
       grunt.log.ok('Waiting for server reload...');

@@ -7,11 +7,17 @@ module.exports = function browserify(grunt) {
 
 	// Options
 	return {
-		build: {
+		dist: {
 			files: {
-				'.build/js/app.js': '.build/js/app.js'
+				'.build/js/app.js': 'public/js/app.js'
 			},
-			options: {}
+			options: {
+				transform: [
+					["babelify", {
+          }]
+				]
+
+			}
 		}
 	};
 };
