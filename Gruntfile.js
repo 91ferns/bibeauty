@@ -10,9 +10,24 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-makara-browserify');
 
+    grunt.registerTask('styles', ['sass', 'autoprefixer']);
+    grunt.registerTask('scripts', ['babel', 'browserify']);
 
-    // Register group tasks
-    grunt.registerTask('build', ['jshint', 'dustjs', 'makara-browserify', 'sass', 'browserify', 'copyto']);
+    grunt.registerTask('wait', function () {
+      grunt.log.ok('Waiting for server reload...');
+
+      var done = this.async();
+
+      setTimeout(function () {
+        grunt.log.writeln('Done waiting!');
+        done();
+      }, 1500);
+    });
+
+    grunt.registerTask('serve', ['express:dev', 'wait']);
+    grunt.registerTask('default', ['styles', 'scripts', 'serve', 'watch']);
+
+    grunt.registerTask('build', ['jshint', 'dustjs', 'makara-browserify', 'styles', 'scripts', 'copyto']);
     grunt.registerTask('test', [ 'jshint', 'mochacli' ]);
 
 };

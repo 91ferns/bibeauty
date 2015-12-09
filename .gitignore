@@ -2,3 +2,5 @@ node_modules
 .build
 *.tmp
 public/components/
+npm-debug.log
+.sass-cache

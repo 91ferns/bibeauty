@@ -44,9 +44,16 @@
                             }
                         },
 
+                        "jsx": {
+                      		"module": "kraken-jsx-devtools",
+                      		"files": "/js/**/*.js",
+                      		"ext": "jsx"
+                      	},
+
                         "browserify": {
                             "module": "construx-browserify",
-                            "files": "/js/app.js"
+                            "files": "/js/app.js",
+                            "ext": "js"
                         },
 
                         "css": {

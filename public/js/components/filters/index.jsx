@@ -4,7 +4,7 @@ var React = require('react');
 
 var Filters = React.createClass({
 	render: function() {
-		return '';
+		return <div className="hey"></div>;
 	},
 });
 
