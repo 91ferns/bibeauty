@@ -19,6 +19,7 @@ use AppBundle\Entity\OfferAvailabilitySet;
 use AppBundle\Entity\Offer;
 
 use Symfony\Component\Process\Process;
+use Symfony\Component\HttpFoundation\Response;
 
 use AppBundle\Controller\AdminAwareController;
 
@@ -109,7 +110,7 @@ class OffersController extends Controller implements AdminAwareController
                 $data = (object) $offerData;
 
                 $offer = $this->createOffer($business, $data, $error);
-                var_dump($error);
+
                 if ($error) {
                     $errors[] = $error;
                     $failed[] = $offer;
@@ -344,16 +345,21 @@ class OffersController extends Controller implements AdminAwareController
     public function deleteOffer($id,$slug,Request $request)
     {
       $req    = $request->request;
-      $offers = $req->get('offers',false);
-      foreach ($offers as $offerid){
-        $em = $this->getDoctrine()->getManager();
-        $offer    = $em->getRepository("AppBundle:Offer")->findOneBy(['id'=>$offerid]);
-        $em->persist($offer);
-        $em->remove($offer);
+      $offerIds = $req->get('offers',false);
+      $em = $this->getDoctrine()->getManager();
+
+      $offers = $em->getRepository("AppBundle:Offer")->findById($offerIds);
+
+      if (count($offers) > 0) {
+
+          foreach ($offers as $offer){
+            $em->remove($offer);
+          }
+          $em->flush();
+
       }
-      $em->flush();
-      //return true;//$this->redirectToRoute('admin_business_offers_path',['id'=>$id,'slug'=>$slug]);
-      return new Response();
+
+      return new Response('Removed ' . count($offers) . ' offers.');
     }
 
 

@@ -151,24 +151,30 @@ jQuery(document).ready(function(){
   });
 });
 
-jQuery('a#deleteSelectedOffersButton').on('click',function(e){
+$('#deleteSelectedOffersButton').on('click',function(e){
   e.preventDefault();
   var $offers = jQuery("input[name='Offers[]']:checkbox:checked");
+
   if($offers.length <= 0) return false;
+
   var offers = $offers.map(function(){
-      return $(this).val();
-    }).get();
-    $.post( "{{ path('admin_delete_offer',{'id':app.request.get('id'),'slug':app.request.get('slug')} ) }}", { offers: offers }, function( data ) {
-      $offers.each(function(i,el){
-        jQuery(el).remove();//.remove();
+    return $(this).val();
+  }).get();
+
+  $.ajax({
+    url: "{{ path('admin_delete_offer',{'id':app.request.get('id'),'slug':app.request.get('slug')} ) }}",
+    method: 'POST',
+    data: {
+      offers: offers
+    },
+    success: function() {
+      $offers.each(function() {
+        $(this).parents('tr').first().remove();
       });
-    }, "json")
-    .done(function(){
-      $offers.each(function(i,el){
-        jQuery(el).remove();//.remove();
-      });
-    });
-    location.reload();
+    },
+    dataType: "html",
+  });
+
 });
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>

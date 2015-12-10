@@ -29,7 +29,10 @@ jQuery(function($) {
       return;
     }
 
-    var newName = element.attr('name') + '[]';
+    var newName = element.attr('name');
+    if (newName.indexOf('[]') < 0) {
+      newName += '[]';
+    }
     element.attr('name', newName);
 
     var newElement;
@@ -289,6 +292,9 @@ jQuery(function($) {
       var key = Object.keys(obj)[0];
       var value = obj[key];
 
+      console.log(key);
+      console.log(value);
+
       input.attr('type', 'hidden');
       input.val(key);
 
@@ -478,7 +484,7 @@ jQuery(function($) {
         }
       });
 
-      $('.offer-form-input').each(function() {
+      $('select[multiple="multiple"].offer-form-input').each(function() {
         var b = $(this).parents('tr').next().find('.brick-container');
         selectize($(this), b);
       });
