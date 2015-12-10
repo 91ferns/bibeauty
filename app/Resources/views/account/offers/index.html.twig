@@ -153,7 +153,7 @@ jQuery(document).ready(function(){
 
 jQuery('a#deleteSelectedOffersButton').on('click',function(e){
   e.preventDefault();
-  var $offers = jQuery(".table.businesses-table .btn-group > input:checkbox:checked");
+  var $offers = jQuery("input[name='Offers[]']:checkbox:checked");
   if($offers.length <= 0) return false;
   var offers = $offers.map(function(){
       return $(this).val();
