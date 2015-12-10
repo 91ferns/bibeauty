@@ -89,7 +89,7 @@ jQuery(function($) {
       options.each(function() {
         var theOption = $(this);
         theOption.attr('selected', true);
-        if (theOption.prop('selected') !== true) {
+        if (theOption.attr('selected') !== true) {
           var key = theOption.val();
           var brick = createBrick(theOption.val(), theOption.text());
 
@@ -114,7 +114,7 @@ jQuery(function($) {
         removeBrick($(this).val(), brickContainer);
       });
 
-      options.prop('selected', false);
+      options.attr('selected', false);
     });
 
     newElement.find('.select-replacement-close').off('click').on('click', function(e) {
