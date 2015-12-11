@@ -749,6 +749,10 @@ class Business {
         $categories = array();
 
         foreach($treatments as $treatment) {
+            if ($treatment->getCheapestDiscountPrice() >= $treatment->getOriginalPrice()) {
+                continue;
+            }
+            
             $category = $treatment->getTreatmentCategory();
             // Parent category name
             //getCategoryName
