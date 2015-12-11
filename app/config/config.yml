@@ -177,7 +177,7 @@ old_sound_rabbit_mq:
     producers:
         create_availabilities:
             connection:       producer
-            exchange_options: {name: 'create-availabilities', type: direct}
+            exchange_options: {name: 'create_availabilities', type: direct}
     multiple_consumers:
         worker:
             connection:       consumer
