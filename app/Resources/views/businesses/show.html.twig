@@ -51,7 +51,7 @@
                 <div class="panel-body">
                   {# This is where the individual services go, as their own accordions #}
                   <ul class="list-group">
-                  {% for treatment in treatmentGroup.treatments if treatment.getCheapestDiscountPrice < treatment.getOriginalPrice %}
+                  {% for treatment in treatmentGroup.treatments if treatment.getCheapestDiscountPrice <  treatment.getOriginalPrice %}
                     <li class="list-group-item clearfix">
                       <span class="service-name">
                         {{ treatment.getName }}

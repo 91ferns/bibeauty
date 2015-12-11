@@ -19,8 +19,6 @@
     </div>
   </div>
 
-  {% block toolbar %}{% endblock %}
-
   {% else %}
 
   <div class="row">
@@ -39,7 +37,12 @@
     </div>
 
     <div class="col-md-4">
+      {% endif %}
+
       {% block toolbar %}{% endblock %}
+
+      {% if business is defined %}{% else %}
+
     </div>
 
   </div>
