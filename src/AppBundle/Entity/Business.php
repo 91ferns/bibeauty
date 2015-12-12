@@ -147,6 +147,11 @@ class Business {
     protected $therapists;
 
     /**
+     * @ORM\OneToMany(targetEntity="Availability", cascade={"persist", "remove"}, mappedBy="business", orphanRemoval=true)
+     */
+    protected $availabilities;
+
+    /**
      * Get id
      *
      * @return integer
@@ -644,6 +649,39 @@ class Business {
     public function getTreatments()
     {
         return $this->treatments;
+    }
+
+    /**
+     * Add availability
+     *
+     * @param \AppBundle\Entity\Availability $availability
+     * @return Business
+     */
+    public function addAvailability(\AppBundle\Entity\Availability $availability)
+    {
+        $this->availabilities[] = $availability;
+
+        return $this;
+    }
+
+    /**
+     * Remove availability
+     *
+     * @param \AppBundle\Entity\Therapist $therapist
+     */
+    public function removeAvailability(\AppBundle\Entity\Availability $availability)
+    {
+        $this->availabilities->removeElement($availability);
+    }
+
+    /**
+     * Get availabilities
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAvailabilities()
+    {
+        return $this->availabilities;
     }
 
     /**
