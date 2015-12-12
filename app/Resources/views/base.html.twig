@@ -23,40 +23,45 @@
 </head>
 <body class="base">
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
-        </a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navagation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a href="{{path('contact_path')}}" class="btn btn-default" id="need-help">
-                      <i class="fa fa-question-circle hidden-xs"></i> Need Help
-                    </a>
+  <nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
+    <div class="container-fluid">
+      <div class="brand-wrapper">
+        <div class="navbar-brand">
+          <div class="container" style="position:relative;">
+
+            <button type="button" class="navbar-toggle visible-sm visible-xs" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <div class="navbar-right visible-md visible-lg">
+              <ul>
+                <li>
+                  <a href="https://www.facebook.com/MyBiBeauty?fref=ts" target="_blank">
+                    <i class="fa fa-facebook hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Facebook</span>
+                  </a>
                 </li>
-                <li class="">
-                    <a href="#" class="btn btn-default" id="blue-button">
-                      Notify Me
-                    </a>
+                <li>
+                  <a href="https://twitter.com/MyBiBeauty" target="_blank">
+                    <i class="fa fa-twitter hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Twitter</span>
+                  </a>
                 </li>
+              </ul>
+            </div>
+
+            <div class="navbar-left visible-md visible-lg">
+              <ul>
                 {% if app.user %}
                   <li>
-                    <a href="{{path('logout_path')}}" class="btn btn-default" id="white-button">
-                      Logout
-                    </a>
+                    <span class="almost-a">
+                      Welcome {{ app.user.getFirstName }}
+                    </span>
                   </li>
-                  <li>
-                    <a href="{{path('admin_path')}}" class="btn btn-default" id="blue-button">
-                      Account
-                    </a>
-                  </li>
+                  <li class="nav-separator"></li>
+                  <li><a href="{{path('logout_path')}}">
+                    Logout
+                  </a></li>
                 {% else %}
                   <li class="">
                       <a href="{{ path('login_route') }}" class="btn btn-default" id="white-button">
@@ -69,26 +74,24 @@
                       </a>
                   </li>
                 {% endif %}
-                <li>
-                  <a href="https://www.facebook.com/MyBiBeauty?fref=ts" target="_blank">
-                    <i class="fa fa-facebook hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Facebook</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="https://twitter.com/MyBiBeauty" target="_blank">
-                    <i class="fa fa-twitter hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Twitter</span>
-                  </a>
-                </li>
-            </ul>
-        </div>
+              </ul>
+            </div> <!-- /.navbar-right -->
+
+            <span class="sr-only">BiBeauty Admin</span>
+            <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
+          </div> <!-- /.container -->
+        </div> <!-- .navbar-brand -->
+      </div>
+
     </div>
-</nav>
+  </nav>
 
-<main>
-{% block body %}{% endblock %}
-</main>
 
-<footer id="site-main-footer">
+  <main>
+  {% block body %}{% endblock %}
+  </main>
+
+  <footer id="site-main-footer">
 
     <div class="top-footer">
         <div class="container">
@@ -150,8 +153,8 @@
         <img src="{{ asset('assets/images/ft_logo.png')}}" alt="BiBeauty">
     </div>
 
-</footer>
-<!-- footer -->
+  </footer> <!-- footer -->
+
 {% javascripts
     '@vendor_assets'
     '@react_components'
