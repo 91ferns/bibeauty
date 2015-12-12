@@ -5,147 +5,153 @@
 <section id="business-information" class="nav-pad">
 
     {% include 'shared/businessheader.html.twig' %}
+    <div class="container">
+    <div class="row">
 
-    <div class="business-main-content">
-      <div class="container">
-        <div class="business-description" id="overview">
-          <div class="row">
-            <div class="col-md-8">
-                <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
-                <p class="business-description">{{business.getDescription}}</p>
-                <hr>
-              </div> <!-- /.business-description -->
+      <div class="col-md-10">
 
-          </div> <!-- /.row -->
-        </div>  <!-- /.business-description -->
+      <div class="business-main-content">
+          <div class="business-description" id="overview">
+            <div class="row">
+              <div class="col-md-8">
+                  <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
+                  <p class="business-description">{{business.getDescription}}</p>
+                  <hr>
+                </div> <!-- /.business-description -->
 
-        <div class="business-services" id="services">
-          <h4>Services</h4>
-          {% if business.hasTreatments %}
-          <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
+            </div> <!-- /.row -->
+          </div>  <!-- /.business-description -->
 
-            {% for treatmentGroup in business.getTreatmentHierarchy %}
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab"
-                id="service-{{ treatmentGroup.slug }}">
-                <h4 class="panel-title">
-                  <a role="button"
-                    data-toggle="collapse"
-                    aria-controls="service-content-{{ treatmentGroup.slug }}"
-                    data-parent="#service-accordion"
-                    href="#service-content-{{ treatmentGroup.slug }}"
-                    aria-expanded="true">
-                      <img src="{{ asset('assets/images/discount-tag.png')}}">
-                      <big>{{ treatmentGroup.label }}</big>
-                      {% if treatmentGroup.treatments | length > 0 %}
-                      <small>See all {{ treatmentGroup.treatments | length }} offers <i class="fa fa-chevron-down"></i></small>
-                      {% endif %}
-                      <span class="pull-right">
-                        from
-                        <strong>${{ treatmentGroup.lowestPrice | number_format(2) }}</strong>
-                      </strong>
-                  </a>
-                </h4>
-              </div>
-              <div id="service-content-{{ treatmentGroup.slug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ treatmentGroup.slug }}">
-                <div class="panel-body">
-                  {# This is where the individual services go, as their own accordions #}
-                  <ul class="list-group">
-                  {% for treatment in treatmentGroup.treatments if treatment.getCheapestDiscountPrice <  treatment.getOriginalPrice %}
-                    <li class="list-group-item clearfix">
-                      <span class="service-name">
-                        {{ treatment.getName }}
-                      </span>
-                      <span class="service-time">
-                        {{ treatment.getTimeForPrint }}
-                      </span>
-                      <div class="pull-right">
-                        <button class="btn btn-default service-old-price" disabled>
-                          ${{ treatment.getOriginalPrice | number_format(2) }}
-                        </button>
-                        <a class="btn btn-primary" data-treatment-id="{{ treatment.getId }}" href="{{ path('treatments_path', {
-                          id: business.getId,
-                          slug: business.getSlug,
-                          treatment: treatment.getId })
-                        }}">
-                          ${{ treatment.getCheapestDiscountPrice | number_format(2) }}
-                        </a>
-                      </div>
-                    </li>
-                  {% endfor %}
-                  </ul>
-                  {# end services #}
+          <div class="business-services" id="services">
+            <h4>Services</h4>
+            {% if business.hasTreatments %}
+            <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
+
+              {% for treatmentGroup in business.getTreatmentHierarchy %}
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab"
+                  id="service-{{ treatmentGroup.slug }}">
+                  <h4 class="panel-title">
+                    <a role="button"
+                      data-toggle="collapse"
+                      aria-controls="service-content-{{ treatmentGroup.slug }}"
+                      data-parent="#service-accordion"
+                      href="#service-content-{{ treatmentGroup.slug }}"
+                      aria-expanded="true">
+                        <img src="{{ asset('assets/images/discount-tag.png')}}">
+                        <big>{{ treatmentGroup.label }}</big>
+                        {% if treatmentGroup.treatments | length > 0 %}
+                        <small>See all {{ treatmentGroup.treatments | length }} offers <i class="fa fa-chevron-down"></i></small>
+                        {% endif %}
+                        <span class="pull-right">
+                          from
+                          <strong>${{ treatmentGroup.lowestPrice | number_format(2) }}</strong>
+                        </strong>
+                    </a>
+                  </h4>
                 </div>
-              </div>
-            </div> <!-- .panel-default -->
-            {% endfor %}
-
-          </div> <!-- /.panel-group -->
-
-          <!--p class="services-notify-me">
-            Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.
-          </p>
-
-          <p>
-            <a class="btn btn-primary">Notify Me</a>
-          </p-->
-
-          {% else %}
-            <p>There are no service categories available for this business.</p>
-          {% endif %}
-
-        </div> <!-- /.business-services -->
-
-        <hr>
-
-        <div class="business-reviews" id="reviews">
-          <h4>Ratings <small><em>(written by customers after their visit)</em></small></h4>
-          <div class="panel panel-default ratings-panel">
-            <div class="panel-heading">
-              <div class="ratings">
-                <div class="row">
-                  <div class="pull-left full-rating">
-                    {{business.getAverageRating}}
+                <div id="service-content-{{ treatmentGroup.slug }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="service-{{ treatmentGroup.slug }}">
+                  <div class="panel-body">
+                    {# This is where the individual services go, as their own accordions #}
+                    <ul class="list-group">
+                    {% for treatment in treatmentGroup.treatments if treatment.getCheapestDiscountPrice <  treatment.getOriginalPrice %}
+                      <li class="list-group-item clearfix">
+                        <span class="service-name">
+                          {{ treatment.getName }}
+                        </span>
+                        <span class="service-time">
+                          {{ treatment.getTimeForPrint }}
+                        </span>
+                        <div class="pull-right">
+                          <button class="btn btn-default service-old-price" disabled>
+                            ${{ treatment.getOriginalPrice | number_format(2) }}
+                          </button>
+                          <a class="btn btn-primary" data-treatment-id="{{ treatment.getId }}" href="{{ path('treatments_path', {
+                            id: business.getId,
+                            slug: business.getSlug,
+                            treatment: treatment.getId })
+                          }}">
+                            ${{ treatment.getCheapestDiscountPrice | number_format(2) }}
+                          </a>
+                        </div>
+                      </li>
+                    {% endfor %}
+                    </ul>
+                    {# end services #}
                   </div>
-                  <div class="col-sm-6">
-                    <small>Venue Rating</small>
-                    <div class="stars">
-                      {{ business.getAverageRating | rating }} <small>from Yelp</small>
-                    </div>
-                  </div>
-                </div> <!-- /.row -->
-              </div> <!-- /.ratings -->
-            </div>
-            <div class="panel-body">
-              Advanced ratings coming soon.
-            </div>
-          </div> <!-- /.panel -->
-          <!--hr>
-            <p>Have you been here? <a class="btn btn-secondary">Write a Review</a></p>-->
+                </div>
+              </div> <!-- .panel-default -->
+              {% endfor %}
+
+            </div> <!-- /.panel-group -->
+
+            <!--p class="services-notify-me">
+              Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.
+            </p>
+
+            <p>
+              <a class="btn btn-primary">Notify Me</a>
+            </p-->
+
+            {% else %}
+              <p>There are no service categories available for this business.</p>
+            {% endif %}
+
+          </div> <!-- /.business-services -->
+
           <hr>
 
-          <div class="review-comments">
-            {% for review in business.getReviews %}
-            <div class="media">
-              <div class="media-left media-middle">
-                <img class="media-object img-circle" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
-              </div>
-              <div class="media-body">
-                <h4 class="media-heading">{{ review.poster.getDisplayName }}</h4>
+          <div class="business-reviews" id="reviews">
+            <h4>Ratings <small><em>(written by customers after their visit)</em></small></h4>
+            <div class="panel panel-default ratings-panel">
+              <div class="panel-heading">
                 <div class="ratings">
-                  <div class="stars">
-                    {{ review.getRating | rating }}
-                  </div>
-                  <em>{{ review.getCreatedAt | elapsed }}</em>
-                </div>
-                <p class="comment-text">{{ review.getContent }}</p>
+                  <div class="row">
+                    <div class="pull-left full-rating">
+                      {{business.getAverageRating}}
+                    </div>
+                    <div class="col-sm-6">
+                      <small>Venue Rating</small>
+                      <div class="stars">
+                        {{ business.getAverageRating | rating }} <small>from Yelp</small>
+                      </div>
+                    </div>
+                  </div> <!-- /.row -->
+                </div> <!-- /.ratings -->
               </div>
-            </div> <!-- /.media -->
-            {% endfor %}
+              <div class="panel-body">
+                Advanced ratings coming soon.
+              </div>
+            </div> <!-- /.panel -->
+            <!--hr>
+              <p>Have you been here? <a class="btn btn-secondary">Write a Review</a></p>-->
+            <hr>
+
+            <div class="review-comments">
+              {% for review in business.getReviews %}
+              <div class="media">
+                <div class="media-left media-middle">
+                  <img class="media-object img-circle" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading">{{ review.poster.getDisplayName }}</h4>
+                  <div class="ratings">
+                    <div class="stars">
+                      {{ review.getRating | rating }}
+                    </div>
+                    <em>{{ review.getCreatedAt | elapsed }}</em>
+                  </div>
+                  <p class="comment-text">{{ review.getContent }}</p>
+                </div>
+              </div> <!-- /.media -->
+              {% endfor %}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+      </div> <!-- /.business-content -->
+
+    </div> <!-- /.col-md-10 -->
+  </div> <!-- /.row -->
+</div><!-- /.container -->
 </section>
 
 <div class="modal fade" id="treatmentModal" tabindex="-1" role="dialog" aria-labelledby="treatmentModalLabel">

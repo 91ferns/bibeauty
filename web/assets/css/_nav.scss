@@ -50,6 +50,12 @@
   }
 }
 
+.navbar-fixed-top {
+  @media (min-width: $screen-md-min) {
+    position: absolute;
+  }
+}
+
 .navbar {
   background: #464646;
   border: none;
@@ -116,4 +122,22 @@ li.nav-separator {
 .navbar-left {
   right: auto;
   left: 0;
+}
+
+.navbar-brand {
+  padding-top: ($navbar-height - $logo-height) / 2;
+  padding-bottom: ($navbar-height - $logo-height) / 2;
+}
+
+.navbar-default {
+
+  &.navbar-static-top {
+  width: 100%;
+  position: fixed;
+  top: 0px;
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+    }
+  }
 }

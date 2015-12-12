@@ -54,9 +54,9 @@
               <ul>
                 {% if app.user %}
                   <li>
-                    <span class="almost-a">
+                    <a href="{{ path('admin_businesses_path') }}">
                       Welcome {{ app.user.getFirstName }}
-                    </span>
+                    </a>
                   </li>
                   <li class="nav-separator"></li>
                   <li><a href="{{path('logout_path')}}">

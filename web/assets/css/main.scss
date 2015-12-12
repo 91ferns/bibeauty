@@ -21,6 +21,8 @@ $border-radius-base: 0px;
 $border-radius-small: $border-radius-base;
 $border-radius-large: $border-radius-base;
 
+$logo-height: 78px;
+
 $nav-height: 110px;
 // Bootstrap
 @import '../../../web/assets/components/bootstrap-sass-official/assets/stylesheets/bootstrap';
@@ -54,28 +56,12 @@ $nav-height: 110px;
 }
 
 // navbar
-$logo-height: 78px;
 
-.navbar-default {
-
-  &.navbar-static-top {
-  width: 100%;
-  position: fixed;
-  top: 0px;
-
-    @media (min-width: $screen-md-min) {
-      position: absolute;
-    }
-  }
-}
-
-.navbar-default.opaque {
-  background: rgba(255, 255, 255, 1);
-}
-
-.navbar-brand {
-  padding-top: ($navbar-height - $logo-height) / 2;
-  padding-bottom: ($navbar-height - $logo-height) / 2;
+.business-header-image {
+  height: 295px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0px 0px 3px black inset;
 }
 
 // buttons for navbar
@@ -86,57 +72,57 @@ $logo-height: 78px;
     border: none;
   }
 }
-@media (min-width : 768px) {    //for normal devices sm or higher
 
-  .navbar {
+.business-info-panel {
 
-    .btn-default {
-      display: inline-block;
-      text-align: center;
-      vertical-align: middle;
-      padding: 5px 10px;
-    }
-    #need-help {
-      border: none;
-      background: none;
-      top: 30px;
-    }
-    #blue-button {
-      color: white;
-      border: 1px solid $brand-primary;
-      background-color: $brand-primary;
-      text-transform: uppercase;
-      top: 33px;
-      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
-      -webkit-transition:all .5s;
-      -moz-transition:all .5s;
-      transition:all .5s;
-    }
-    #blue-button:hover {
-      color: $brand-primary;
-      background-color: white;
-      border: 1px solid white;
-    }
-    #white-button {
-      color: $brand-primary;
-      background-color: white;
-      border: 1px solid white;
-      text-transform: uppercase;
-      top: 33px;
-      margin-left: 12px;
-      margin-right: 12px;
-      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
-      -webkit-transition:all .5s;
-      -moz-transition:all .5s;
-      transition:all .5s;
-    }
-    #white-button:hover {
-      color: white;
-      background-color: $brand-primary;
-      border: 1px solid $brand-primary;
+  .floated-image {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-top: -25px;
+  }
+
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0px 0px 4px rgba(0,0,0,.6);
+  padding: 23px;
+
+  padding-top: 40px;
+
+  position: relative;
+  top: -80px;
+
+  .stars {
+    padding-left: 15px;
+    display: inline-block;
+    position: relative;
+    top: -4px;
+    font-size: 14px;
+    text-transform: none;
+    color: #b4b4b4;
+    i {
+      color: #ffcc30;
     }
   }
+
+  h1, h2, p {
+    margin: 0;
+    margin-top: 9px;
+  }
+
+  h1 {
+    color: #6c6e6d;
+    text-transform: uppercase;
+    font-size: 21px;
+  }
+
+  h2 {
+    font-size: 17px;
+    color: #b4b4b4;
+
+  }
+
 }
+
 .notify-btn a {
   color: white;
   padding: 5px 10px;
