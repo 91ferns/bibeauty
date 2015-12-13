@@ -1,45 +1,78 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<style>
-.select2-selection.select2-selection--single{
-  height: 34px;
-font-size: 14px;
-border-radius: 0;
-color:#000;
-width:360px;
-}
-  span.select2.select2-container.select2-container--default{width:360px;height:34px;}
-  /*.select2-container--default .select2-selection--single .select2-selection__placeholder{color:#000;}*/
-  .select2-container--default .select2-selection--single .select2-selection__arrow{top:6px;    right: 18px;}
-  .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-      border-color: transparent transparent #000 transparent;
-  }
-  .select2-container--default .select2-selection--single .select2-selection__arrow b {
-      border-color: #000 transparent transparent transparent;
-  }
-    </style>
 <div class="componentBody">
   <section id="top-map" class="nav-pad">
     <div id="results-map-wrapper"></div>
   </section>
   <section id="below-map">
     <div class="container">
+
       <div class="row">
+        <div class="col-md-6 col-md-offset-3">
 
+          <nav class="subnav-header">
+
+            <div class="btn-group btn-group-justified hidden-xs hidden-sm" role="group">
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}" href="#">Price Low-High</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}active{% endif %}" href="#">Price High-Low</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default active {% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}" href="#">Rating</a>
+              </div>
+            </div> <!-- .btn-group -->
+
+          </nav>
+
+        </div> <!-- /.col-md-6 -->
+      </div>
+
+      <div class="row">
+        {{form_start(form)}}
         <div class="col-md-4">
-          <div class="search-form-sidebar">
-            {{form_start(form)}}
-              <div class="form-group">
-                <label for="">Availability</label>
+          <div class="search-form-sidebar card">
 
-                <p>
-                  <select class="form-control" name="date">
-                    <option value="all" {% if params['day'] == 'all' %}selected="selected"{% endif %}>Tomorrow or Today</option>
-                    <option value="today" {% if params['day'] == 'today' %}selected="selected"{% endif %}>Today</option>
-                    <option value="tomorrow" {% if params['day'] == 'tomorrow' %}selected="selected"{% endif %}>Tomorrow</option>
-                  </select>
-                </p>
+            <h4>Search</h4>
+
+            <div class="row">
+
+              <select class="sr-only" name="date" aria-describedby="JumboDate" id="DateSelect">
+                <option value="all">Date</option>
+                <option value="all">Today or Tomorrow</option>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomorrow</option>
+              </select>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="sr-only" for="JumboDate">Today?</label>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" class="ghetto-checkbox" value="today" checked="checked">
+                        Today
+                      </label>
+                    </div>
+                </div> <!-- /.form-group -->
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="sr-only" for="JumboDate">Tomorrow?</label>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" class="ghetto-checkbox" value="tomorrow" checked="checked">
+                        Tomorrow
+                      </label>
+                    </div>
+                </div> <!-- /.form-group -->
+              </div>
+
+            </div>
+
+              <div class="form-group">
 
                 <p>
                   <select class="form-control" name="time">
@@ -52,20 +85,15 @@ width:360px;
 
               </div> <!-- /.form-group -->
 
-              <hr class="fullwidth">
-
               <div class="form-group">
-                {{ form_label(form.location)}}
                 {{ form_widget(form.location, { placeholder: 'Enter Zip code', id: 'LocationField' })}}
                 {{ form_errors(form.location) }}
               </div> <!-- /.form-group -->
 
-              <hr class="fullwidth">
-
               <div class="form-group">
-                <label for="">Treatment Type / Category</label>
+
                 <div class="input-group TreatmentTypesGroup">
-                  <select data-minimumResultsForSearch="1" data-placeholder="Select a Treatment" name="treatment">
+                  <select data-minimumResultsForSearch="1" class="form-control" data-placeholder="Select a Treatment" name="treatment">
                     <option style="color: #999;">Select a Treatment</option>
                     {% for category in categories %}
                     <option value="{{category.getId}}" {% if params['treatment'] == category.getId %}selected="selected"{% endif %}>{{category.getLabel}}</option>
@@ -79,8 +107,6 @@ width:360px;
                 </div>
               </div> <!-- /.form-group -->
 
-              <hr class="fullwidth">
-
               <div class="form-group">
                 <label for="">Price Range</label>
                 <div class="range">
@@ -92,19 +118,18 @@ width:360px;
                 <!--input type="range" id="weight" min="10" value="10" max="2000" step="100"-->
               </div> <!-- /.form-group -->
 
-              <hr class="fullwidth">
-              <br>
-              <button class="btn btn-lg btn-primary">Update</button>
-
-              {# <hr class="fullwidth">
-
-              <p class="text-muted">Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.</p>
-
-              <a class="btn btn-lg btn-primary" href="#">Notify</a> #}
-              {{ form_widget(form._token) }}
-
-            {{ form_end(form, {'render_rest': false}) }}
           </div> <!-- /.search-form-sidebar -->
+
+          <button class="btn btn-lg btn-primary">Update</button>
+
+          {# <hr class="fullwidth">
+
+          <p class="text-muted">Didn't find a time or day that works? Let us know what you’re looking for and we’ll notify you when it become available.</p>
+
+          <a class="btn btn-lg btn-primary" href="#">Notify</a> #}
+          {{ form_widget(form._token) }}
+
+        {{ form_end(form, {'render_rest': false}) }}
 
         </div> <!-- /.col-md-4 -->
 
@@ -196,7 +221,7 @@ width:360px;
               </ul>
             </nav>
             {% endif %}
-            
+
           {% else %}
             <p>There are no results</p>
           {% endif %}
@@ -212,8 +237,8 @@ width:360px;
 {% endblock body %}
 {% block javascripts %}
 <script>
-  jQuery(document).ready(function(){
-      jQuery('select[name="treatment"]').select2();
+  jQuery(function($){
+    $('select[name="treatment"]').select2();
   });
 </script>
 {% endblock %}

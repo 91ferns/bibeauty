@@ -64,14 +64,15 @@
                   </a></li>
                 {% else %}
                   <li class="">
-                      <a href="{{ path('login_route') }}" class="btn btn-default" id="white-button">
-                        Login<i class="glyphicon glyphicon-play-circle hidden-xs"></i>
-                      </a>
+                    <a href="{{ path('login_route') }}">
+                      Login
+                    </a>
                   </li>
+                  <li class="nav-separator"></li>
                   <li class="">
-                      <a href="{{ path('signup_route') }}" class="btn btn-default" id="blue-button">
-                        Sign Up<i class="glyphicon glyphicon-play-circle hidden-xs"></i>
-                      </a>
+                    <a href="{{ path('signup_route') }}">
+                      Sign Up
+                    </a>
                   </li>
                 {% endif %}
               </ul>

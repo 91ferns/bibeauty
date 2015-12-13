@@ -31,6 +31,10 @@
   padding-bottom: 0px;
 }
 
+.subnav-header {
+  padding: 30px 0 40px
+}
+
 #below-map {
   padding-top: 10px;
 
@@ -77,12 +81,71 @@
   }
 }
 
+.form-control {
+  height: 46px;
+}
+
 .search-form-sidebar {
+
+  .select2-selection.select2-selection--single {
+    height: 46px;
+    padding-top: 7px;
+    font-size: 14px;
+    border-color: #e6e6e6;
+
+    .select2-selection__arrow {
+      top: 11px;
+    }
+  }
+
   .input-group-addon {
     background: none;
     border-left: none;
     color: $brand-primary;
   }
+
+  .checkbox {
+    background-color: white;
+    width: 100%;
+    font-size: 16px;
+    color: #666666;
+    height: 46px;
+    padding: 12px 11px 8px;
+    line-height: 1.33333;
+    border-radius: 0px;
+    border: 1px solid #e6e6e6;
+
+    position: relative;
+
+    label {
+      padding: 0px;
+    }
+
+    input {
+
+      margin: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #666666;
+
+      right: 11px;
+      top: 10px;
+
+      &:checked {
+        background-color: #52c8e6;
+        color: white;
+        background-image: url("../../assets/images/checkmark.png");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+
+  }
+
   .input-group {
     padding: 3px 0px;
   }

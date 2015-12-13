@@ -11,50 +11,50 @@
               <div class="col-md-10 col-md-offset-1">
                 <div class="form-transparent-wrapper">
                   <form action="{{path('listings_search_path')}}" class="form-inline">
-                      <div class="form-group">
-                        <label class="sr-only" for="JumboLocation">Name</label>
-                        <input type="text" name="location" class="form-control input-lg" id="JumboLocation" placeholder="Location" value="Los Angeles" disabled>
-                      </div> <!-- /.form-group -->
+                    <div class="form-group">
+                      <label class="sr-only" for="JumboLocation">Name</label>
+                      <input type="text" name="location" class="form-control input-lg" id="JumboLocation" placeholder="Location" value="Los Angeles" disabled>
+                    </div> <!-- /.form-group -->
 
-                      <div class="form-group" id="TreatmentSelect-Wrapper">
-                        <label class="sr-only" for="JumboTreatment">Treatment</label>
-                        <select data-minimumResultsForSearch="1" data-placeholder="Treatment" class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
-                          <option style="color: #999;" value="">Treatment</option>
-                          {% for category in categories %}
-                            <option value="{{category.id }}">{{category.getLabel}}</option>
-                            {% for subcategory in category.getChildren %}
-                              <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</i>
-                            {% endfor %}
+                    <div class="form-group" id="TreatmentSelect-Wrapper">
+                      <label class="sr-only" for="JumboTreatment">Treatment</label>
+                      <select data-minimumResultsForSearch="1" data-placeholder="Treatment" class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
+                        <option style="color: #999;" value="">Treatment</option>
+                        {% for category in categories %}
+                          <option value="{{category.id }}">{{category.getLabel}}</option>
+                          {% for subcategory in category.getChildren %}
+                            <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</i>
                           {% endfor %}
-                        </select>
-                      </div> <!-- /.form-group -->
-
-                      <select class="sr-only" name="date" aria-describedby="JumboDate" id="DateSelect">
-                        <option value="all">Date</option>
-                        <option value="all">Today or Tomorrow</option>
-                        <option value="today">Today</option>
-                        <option value="tomorrow">Tomorrow</option>
+                        {% endfor %}
                       </select>
+                    </div> <!-- /.form-group -->
 
-                      <div class="form-group">
-                          <label class="sr-only" for="JumboDate">Today?</label>
-                          <div class="checkbox">
-                            <label>
-                              Today
-                              <input type="checkbox" class="ghetto-checkbox" value="today" checked="checked">
-                            </label>
-                          </div>
-                      </div> <!-- /.form-group -->
+                    <select class="sr-only" name="date" aria-describedby="JumboDate" id="DateSelect">
+                      <option value="all">Date</option>
+                      <option value="all">Today or Tomorrow</option>
+                      <option value="today">Today</option>
+                      <option value="tomorrow">Tomorrow</option>
+                    </select>
 
-                      <div class="form-group">
-                          <label class="sr-only" for="JumboDate">Tomorrow?</label>
-                          <div class="checkbox">
-                            <label>
-                              Tomorrow
-                              <input type="checkbox" class="ghetto-checkbox" value="tomorrow" checked="checked">
-                            </label>
-                          </div>
-                      </div> <!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="sr-only" for="JumboDate">Today?</label>
+                        <div class="checkbox">
+                          <label>
+                            Today
+                            <input type="checkbox" class="ghetto-checkbox" value="today" checked="checked">
+                          </label>
+                        </div>
+                    </div> <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="sr-only" for="JumboDate">Tomorrow?</label>
+                        <div class="checkbox">
+                          <label>
+                            Tomorrow
+                            <input type="checkbox" class="ghetto-checkbox" value="tomorrow" checked="checked">
+                          </label>
+                        </div>
+                    </div> <!-- /.form-group -->
 
                       <div class="form-group" id="searchbar-front">
                         <button type="submit" class="btn btn-default btn-lg">Search</button>
