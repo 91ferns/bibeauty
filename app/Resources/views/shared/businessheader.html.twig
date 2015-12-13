@@ -20,8 +20,8 @@
           <div class="business-info-panel">
             <div class="inner">
               {% if business.hasLogoAttachment %}
-              <div class="pull-left floated-image">
-                <img src="{{ business.getLogoAttachment.getKey | s3 }}" class="img-circle">
+              <div class="pull-left floated-image img-circle"
+                style="background-image: url('{{ business.getLogoAttachment.getKey | s3 }}')">
               </div>
               {% endif %}
               <h1>
