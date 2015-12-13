@@ -33,11 +33,13 @@ $nav-height: 110px;
 
 @import '../components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';
 
+@import 'fonts';
 @import 'nav';
 // Our stuff
 
 body {
   background-color: #f0f0f0;
+  font-family: 'BPreplay', helvetica, sans-serif;
 }
 
 .btn.btn-fullwidth {
