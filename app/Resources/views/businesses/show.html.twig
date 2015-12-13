@@ -12,14 +12,9 @@
 
       <div class="business-main-content">
           <div class="business-description" id="overview">
-            <div class="row">
-              <div class="col-md-8">
-                  <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
-                  <p class="business-description">{{business.getDescription}}</p>
-                  <hr>
-                </div> <!-- /.business-description -->
-
-            </div> <!-- /.row -->
+            <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
+            <p class="business-description">{{business.getDescription}}</p>
+            <hr>
           </div>  <!-- /.business-description -->
 
           <div class="business-services" id="services">
@@ -102,34 +97,13 @@
           <hr>
 
           <div class="business-reviews" id="reviews">
-            <h4>Ratings <small><em>(written by customers after their visit)</em></small></h4>
-            <div class="panel panel-default ratings-panel">
-              <div class="panel-heading">
-                <div class="ratings">
-                  <div class="row">
-                    <div class="pull-left full-rating">
-                      {{business.getAverageRating}}
-                    </div>
-                    <div class="col-sm-6">
-                      <small>Venue Rating</small>
-                      <div class="stars">
-                        {{ business.getAverageRating | rating }} <small>from Yelp</small>
-                      </div>
-                    </div>
-                  </div> <!-- /.row -->
-                </div> <!-- /.ratings -->
-              </div>
-              <div class="panel-body">
-                Advanced ratings coming soon.
-              </div>
-            </div> <!-- /.panel -->
-            <!--hr>
-              <p>Have you been here? <a class="btn btn-secondary">Write a Review</a></p>-->
-            <hr>
+            <h4>Reviews</h4>
+
+            <p>&nbsp;</p>
 
             <div class="review-comments">
               {% for review in business.getReviews %}
-              <div class="media">
+              <div class="media card">
                 <div class="media-left media-middle">
                   <img class="media-object img-circle" src="{{ review.poster.getGravatar }}" alt="{{ review.poster.getDisplayName }}">
                 </div>

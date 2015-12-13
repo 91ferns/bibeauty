@@ -189,10 +189,20 @@
     width: 100%;
   }
 
+  p.business-description {
+    color: #b4b4b4;
+    font-size: 15px;
+    line-height: 25px;
+  }
+
   .business-welcome {
     font-size: 18px;
     margin-top: 0px;
+    color: #6c6e6d;
+    text-transform: uppercase;
+    // letter-spacing: 1px;
   }
+
   .yelp-logo {
     margin-top: -5px;
     position: relative;
@@ -200,7 +210,6 @@
   }
   .review-comments {
     > .media {
-      background-color: #f7f7f7;
       padding: 22px 15px;
       margin-bottom: 15px;
 
@@ -416,6 +425,16 @@
         margin-bottom: 0px;
       }
     }
+  }
+}
+
+.business-main-content {
+  h4 {
+    font-size: 18px;
+    margin-top: 0px;
+    color: #6c6e6d;
+    text-transform: uppercase;
+    text-align: left;
   }
 }
 
