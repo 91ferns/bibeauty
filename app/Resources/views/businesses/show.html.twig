@@ -113,8 +113,8 @@
                     <div class="stars">
                       {{ review.getRating | rating }}
                     </div>
-                    <em>{{ review.getCreatedAt | elapsed }}</em>
                   </div>
+                  <p class="comment-text">{{ review.getCreatedAt | elapsed }}</p>
                   <p class="comment-text">{{ review.getContent }}</p>
                 </div>
               </div> <!-- /.media -->

@@ -120,74 +120,8 @@ body {
   }
 }
 
-.business-info-panel {
-
-  .nav-list {
-    a, .almost-a {
-      padding: 0px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      color: #b4b4b4;
-      &:hover, &:active, &:focus {
-        background: transparent;
-      }
-    }
-    img {
-      margin-right: 5px;
-    }
-  }
-
-  .floated-image {
-    margin-right: 20px;
-    margin-bottom: 20px;
-    margin-top: -25px;
-  }
-
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0px 0px 4px rgba(0,0,0,.5);
-
-  padding-top: 40px;
-  padding-bottom: 23px;
-
-  .inner {
-    padding-left: 23px;
-    padding-right: 23px;
-  }
-
-  position: relative;
-  margin-top: -80px;
-
-  .stars {
-    padding-left: 15px;
-    display: inline-block;
-    position: relative;
-    top: -4px;
-    font-size: 14px;
-    text-transform: none;
-    color: #b4b4b4;
-    i {
-      color: #ffcc30;
-    }
-  }
-
-  h1, h2, p {
-    margin: 0;
-    margin-top: 9px;
-  }
-
-  h1 {
-    color: #6c6e6d;
-    text-transform: uppercase;
-    font-size: 21px;
-  }
-
-  h2 {
-    font-size: 17px;
-    color: #b4b4b4;
-
-  }
-
+.stars i {
+  color: #ffcc30;
 }
 
 .notify-btn a {
