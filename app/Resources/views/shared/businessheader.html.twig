@@ -18,20 +18,21 @@
         <div class="col-md-8">
 
           <div class="business-info-panel">
-            {% if business.hasLogoAttachment %}
-            <div class="pull-left floated-image">
-              <img src="{{ business.getLogoAttachment.getKey | s3 }}" class="img-circle">
-            </div>
-            {% endif %}
-            <h1>
-              {{business.getName}}
-              <div class="stars">
-                {{ business.getAverageRating | rating }} from Yelp&trade;
+            <div class="inner">
+              {% if business.hasLogoAttachment %}
+              <div class="pull-left floated-image">
+                <img src="{{ business.getLogoAttachment.getKey | s3 }}" class="img-circle">
               </div>
-            </h1>
-            <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{ business.getAddress.getState }}</h2>
-            <p><a href="#">Show on map</a></p>
-
+              {% endif %}
+              <h1>
+                {{business.getName}}
+                <div class="stars">
+                  {{ business.getAverageRating | rating }} from Yelp&trade;
+                </div>
+              </h1>
+              <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{ business.getAddress.getState }}</h2>
+              <p><a href="#">Show on map</a></p>
+            </div>
             <hr>
 
             {% set p = path('business_path', {
@@ -39,23 +40,27 @@
               slug: business.getSlug
             }) %}
 
-            <div class="business-info">
+            <div class="business-info inner">
 
               <ul class="nav nav-list">
                 <li><a href="tel:{{business.getLandline | phone}}" class="phone">
-                  <i class="fa fa-phone"></i>{{business.getLandline | phone}}
+                  <img src="{{ asset('assets/images/icons/phone.png') }}" >
+                  {{business.getLandline | phone}}
                 </a></li>
                 {% if business.getEmail %}
                 <li><a href="mailto:{{business.getEmail}}" class="email-link">
-                  <i class="fa fa-envelope-o"></i>{{business.getEmail}}
+                  <img src="{{ asset('assets/images/icons/email.png') }}" >
+                  {{business.getEmail}}
                 </a></li>
                 {% endif %}
                 {% if business.getWebsite %}
                 <li><a href="{{business.getWebsite}}" target="_blank" class="website-link">
-                  <i class="fa fa-globe"></i>{{business.getWebsite}}
+                  <img src="{{ asset('assets/images/icons/web.png') }}" >
+                  {{business.getWebsite}}
                 </a></li>
                 {% endif %}
                 <li class="payment"><span class="almost-a">
+                  <img src="{{ asset('assets/images/icons/credit.png') }}" >
                   <span>We Accept</span>
                   {% if business.getAcceptsCredit %}
                   <img src="{{ asset('assets/images/accepts-credit.png') }}">
@@ -71,6 +76,20 @@
         </div> <!-- /.col-md-8 -->
 
         <div class="col-md-4">
+
+          <nav class="business-nav">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">
+                Overview
+              </a>
+              <a href="#" class="list-group-item">
+                Services
+              </a>
+              <a href="#" class="list-group-item">
+                Reviews
+              </a>
+            </div>
+          </nav>
 
         </div> <!-- /.col-md-4 -->
 
