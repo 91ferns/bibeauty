@@ -334,7 +334,7 @@ class User implements AdvancedUserInterface, \Serializable {
     }
 
     public function getGravatar($s = 60, $d = 'mm', $r = 'g') {
-        $format = 'http://www.gravatar.com/avatar/%s?s=%s&d=%s&r=%s';
+        $format = 'https://www.gravatar.com/avatar/%s?s=%s&d=%s&r=%s';
         $emailHash = md5( strtolower( trim( $this->getEmail() ) ) );
         return sprintf($format, $emailHash, $s, $d, $r);;
     }

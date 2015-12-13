@@ -37,7 +37,7 @@ class AppExtension extends \Twig_Extension
     public function s3Filter( $key )
     {
 
-        return sprintf('http://%s.%s/%s', $this->bucket, self::AWS_HOST, $key);
+        return sprintf('https://%s.%s/%s', $this->bucket, self::AWS_HOST, $key);
 
     }
 
