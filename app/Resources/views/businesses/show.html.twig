@@ -23,7 +23,7 @@
             <div class="panel-group" id="service-accordion" role="tablist" aria-multiselectable="false">
 
               {% for treatmentGroup in business.getTreatmentHierarchy %}
-              <div class="panel panel-default">
+              <div class="card service-card">
                 <div class="panel-heading" role="tab"
                   id="service-{{ treatmentGroup.slug }}">
                   <h4 class="panel-title">
@@ -33,14 +33,13 @@
                       data-parent="#service-accordion"
                       href="#service-content-{{ treatmentGroup.slug }}"
                       aria-expanded="true">
-                        <img src="{{ asset('assets/images/discount-tag.png')}}">
-                        <big>{{ treatmentGroup.label }}</big>
+                        {{ treatmentGroup.label }}
                         {% if treatmentGroup.treatments | length > 0 %}
                         <small>See all {{ treatmentGroup.treatments | length }} offers <i class="fa fa-chevron-down"></i></small>
                         {% endif %}
                         <span class="pull-right">
-                          from
-                          <strong>${{ treatmentGroup.lowestPrice | number_format(2) }}</strong>
+                          from&nbsp;&nbsp;
+                          <button class="btn btn-primary">${{ treatmentGroup.lowestPrice | number_format(2) }}</button>
                         </strong>
                     </a>
                   </h4>
