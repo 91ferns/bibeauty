@@ -1,5 +1,4 @@
 
-$admin-nav-height: 110px;
 $card-radius: 10px;
 
 .btn-navigation {
@@ -40,42 +39,6 @@ $card-radius: 10px;
 
   }
 
-  .almost-a {
-
-  }
-
-  .navbar-right {
-    position: absolute;
-    right: 0px;
-
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-
-      padding-top: 20px;
-
-      > li {
-        display: inline-block;
-
-        a, .almost-a {
-          color: $brand-primary;
-          font-size: 16px;
-          display: inline-block;
-          padding: 8px 15px;
-          border-left: 1px solid #646464;
-        }
-
-        &:first-child {
-          a, .almost-a {
-            border-left: 0px;
-          }
-        }
-
-      }
-    }
-  }
-
   .business-panel-header {
     padding-bottom: 15px;
   }
@@ -111,6 +74,8 @@ $card-radius: 10px;
     margin-bottom: 15px;
 
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.55);
+
+    padding: 0px;
 
     .thumbnail {
       margin: 0;
@@ -197,227 +162,6 @@ $card-radius: 10px;
 
     }
   }
-
-  .brand-wrapper {
-    text-align: center;
-    padding: 16px 0;
-    height: $admin-nav-height;
-  }
-  .navbar-brand {
-    padding: 0px;
-    float: none;
-    margin: 0 !important;
-    color: $brand-primary;
-    > img {
-      display: inline;
-    }
-  }
-
-  .navbar-toggle {
-    left: 15px;
-    position: absolute;
-    border: 0px;
-    background: none !important;
-    margin-top: 21px;
-    .icon-bar {
-      color: $brand-primary;
-      border-color: $brand-primary;
-      background: $brand-primary;
-    }
-  }
-
-  .navmenu-default, .navbar-default .navbar-offcanvas {
-    background: white;
-  }
-
-  .navmenu {
-    z-index: 1;
-    padding-top: $navbar-height + 20px;
-  }
-
-  .canvas {
-    position: relative;
-    left: 0;
-    z-index: 2;
-    min-height: 100%;
-    padding: 80px 0 0 0;
-    background: #f0f0f0;
-  }
-
-  @media (min-width: 0) {
-    .navbar-toggle {
-      display: block; /* force showing the toggle */
-    }
-  }
-
-  .navbar {
-    background: #464646;
-    border: none;
-  }
-
-  @media (min-width: $screen-md-min) {
-    padding: 0;
-    .navbar {
-      height: $admin-nav-height;
-      position: absolute;
-    }
-    .canvas {
-      padding: 0;
-      padding-top: $admin-nav-height + 20px;
-    }
-  }
-
-  /*
-  background: #f5f4f0;
-
-  #primary-nav {
-    background: white;
-    height: $admin-nav-height;
-    min-height: $admin-nav-height;
-    padding-left: 15px;
-    padding-right: 15px;
-    z-index: 3;
-    @media (min-width: $screen-md-min) {
-      padding-top: 21px;
-    }
-
-    .navbar-nav > li > a {
-      margin-left: 15px;
-      padding: 0px;
-      font-size: 15px;
-      padding-left: 15px;
-      padding-right: 15px;
-      color: black;
-      background-color: #f1f0ec;
-      border-radius: 4px;
-      border: 0px;
-      height: 42px;
-      line-height: 42px;
-    }
-
-  }
-
-  &.menu-closed {
-    #admin-main {
-      padding-left: 0px;
-    }
-    #secondary {
-      display: none;
-    }
-  }
-
-  a.hide-menu {
-    font-size: 20px;
-    text-decoration: none;
-    color: $gray;
-    border: none;
-  }
-  a.hide_menu:hover {
-    background-color: white;
-    text-decoration: none;
-  }
-
-
-  main {
-    padding-top: $admin-nav-height;
-  }
-
-  #secondary {
-    //height: calc(100vh - #{$admin-nav-height});
-    top: 0;
-    left: 0;
-    height: 100vh;
-    padding-top: $admin-nav-height;
-    position: fixed;
-    z-index: 2;
-    width: $admin-side-width;
-    background: white;
-    //border-right: 1px solid #f1f0ec;
-
-    .nav {
-
-      li {
-        margin-top: 0px;
-      }
-      li > a {
-        font-size: 15px;
-        padding-top: 13px;
-        padding-bottom: 13px;
-        color: #888888;
-      }
-
-      .active > a {
-        color: white;
-      }
-      li.header {
-        background-color: #f1f0ec;
-      }
-      li.header > a {
-        height: 50px;
-        color: black;
-      }
-      .fa-cutlery {
-        padding-right: 10px;
-      }
-      .fa-pencil {
-        float: right;
-        padding-top: 5px;
-      }
-      .fa-book {
-        padding-right: 10px;
-      }
-      .fa-home {
-        padding-right: 10px;
-      }
-      .fa-glass {
-        padding-right: 10px;
-      }
-      .fa-user {
-        padding-right: 15px;
-      }
-      .fa-line-chart {
-        padding-right: 10px;
-      }
-      .fa-cogs {
-        padding-right: 10px;
-      }
-    }
-  }
-
-  #admin-main {
-
-    padding-left: $admin-side-width;
-    padding-top: 0px;
-
-    > .alert {
-      color: white;
-      min-height: 50px;
-      background-color: #757575;
-    }
-  }
-
-  @media (min-width: $screen-md-min) {
-    .admin-main-inner {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-  }
-
-  @media (max-width: $screen-sm-max) {
-    #primary-nav .navbar-collapse {
-      background-color: white;
-    }
-  }
-
-  @media (max-width: $screen-sm-max) {
-    #admin-main {
-      padding-left: 0px;
-    }
-    #secondary {
-      display: none;
-    }
-  }
-  */
 
 }
 // index (default) page
@@ -654,33 +398,6 @@ $card-radius: 10px;
   border-radius: 7px;
 }
 
-.business-panel-header {
-  .btn-group .btn {
-    font-size: 16px;
-    padding: 20px 12px;
-    color: #b4b4b4;
-    box-shadow: none !important;
-    border: 0px;
-    border-left: 1px solid #f0f0f0;
-    border-color: #f0f0f0 !important;
-
-  }
-
-  .btn-group .btn-group:first-child .btn {
-    border-radius: 6px 0 0 6px;
-  }
-
-  .btn-group:last-child .btn {
-    border-radius: 0 6px 6px 0;
-  }
-
-  .btn-group > .active {
-    color: white;
-    background-color: $brand-primary;
-    box-shadow: none;
-    border: 0px;
-  }
-}
 
 @mixin rounded-icon($size) {
   width: $size;
