@@ -86,74 +86,104 @@
     </div>
   </nav>
 
+  <div class="navmenu navmenu-default navmenu-fixed-left">
 
-  <main>
-  {% block body %}{% endblock %}
-  </main>
+    <ul class="nav navmenu-nav">
+      {% if app.user %}
+        <li>
+          <a href="{{ path('admin_businesses_path') }}">
+            Welcome {{ app.user.getFirstName }}
+          </a>
+        </li>
+        <li><a href="{{path('logout_path')}}">
+          Logout
+        </a></li>
+      {% else %}
+        <li class="">
+          <a href="{{ path('login_route') }}">
+            Login
+          </a>
+        </li>
+        <li class="">
+          <a href="{{ path('signup_route') }}">
+            Sign Up
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
 
-  <footer id="site-main-footer">
+  <div class="canvas">
 
-    <div class="top-footer">
-        <div class="container">
-            <div class="row">
+    <main>
+    {% block body %}{% endblock %}
+    </main>
 
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">Site Map</div>
+    <footer id="site-main-footer">
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="{{path('about_path')}}">About Us</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{path('contact_path')}}">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div> <!-- /.panel -->
-                </div>
+      <div class="top-footer">
+          <div class="container">
+              <div class="row">
 
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">Business Owners</div>
+                  <div class="col-md-4">
+                      <div class="panel panel-default">
+                          <!-- Default panel contents -->
+                          <div class="panel-heading">Site Map</div>
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="{{path('admin_new_businesses_path')}}">Add Business</a>
-                            </li>
-                        </ul>
-                    </div> <!-- /.panel -->
-                </div>
+                          <!-- List group -->
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <a href="{{path('about_path')}}">About Us</a>
+                              </li>
+                              <li class="list-group-item">
+                                  <a href="{{path('contact_path')}}">Contact Us</a>
+                              </li>
+                          </ul>
+                      </div> <!-- /.panel -->
+                  </div>
 
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">Support &amp; Information</div>
+                  <div class="col-md-4">
+                      <div class="panel panel-default">
+                          <!-- Default panel contents -->
+                          <div class="panel-heading">Business Owners</div>
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="{{ path('privacy_path') }}">Privacy Policy</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{ path('terms_path') }}">Terms and Conditions</a>
-                            </li>
-                        </ul>
-                    </div> <!-- /.panel -->
-                </div>
+                          <!-- List group -->
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <a href="{{path('admin_new_businesses_path')}}">Add Business</a>
+                              </li>
+                          </ul>
+                      </div> <!-- /.panel -->
+                  </div>
 
-            </div>
-        </div>
-    </div>
+                  <div class="col-md-4">
+                      <div class="panel panel-default">
+                          <!-- Default panel contents -->
+                          <div class="panel-heading">Support &amp; Information</div>
 
-    <div class="bottom-footer">
-        <img src="{{ asset('assets/images/ft_logo.png')}}" alt="BiBeauty">
-    </div>
+                          <!-- List group -->
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <a href="{{ path('privacy_path') }}">Privacy Policy</a>
+                              </li>
+                              <li class="list-group-item">
+                                  <a href="{{ path('terms_path') }}">Terms and Conditions</a>
+                              </li>
+                          </ul>
+                      </div> <!-- /.panel -->
+                  </div>
 
-  </footer> <!-- footer -->
+              </div>
+          </div>
+      </div>
+
+      <div class="bottom-footer">
+          <img src="{{ asset('assets/images/ft_logo.png')}}" alt="BiBeauty">
+      </div>
+
+    </footer> <!-- footer -->
+
+  </div>
 
 {% javascripts
     '@vendor_assets'
