@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../public/js/app.js"],"names":[],"mappings":"AAAA,YAAY,CAAC;;AAEb,IAAI,KAAK,GAAG,OAAO,CAAC,OAAO,CAAC,CAAC;;AAE7B,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC","file":"*.js","sourcesContent":["'use strict';\n\nvar react = require('react');\n\nconsole.log(react);\n"]}

@@ -46,7 +46,7 @@
 
                         "copier": {
                             "module": "construx-copier",
-                            "files": "/templates/**/*"
+                            "files": "/{templates,fonts}/**/*"
                         }
                     }
                 ]

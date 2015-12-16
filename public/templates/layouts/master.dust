@@ -8,34 +8,25 @@
 
     <title>{+title /}</title>
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,600,300" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="base">
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <img src="/images/logo.png" alt="BiBeauty">
-        </a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navagation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a href="{{path('contact_path')}}" class="btn btn-default" id="need-help">
-                      <i class="fa fa-question-circle hidden-xs"></i> Need Help
-                    </a>
-                </li>
-                <li class="">
-                    <a href="#" class="btn btn-default" id="blue-button">
-                      Notify Me
-                    </a>
-                </li>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
+    <div class="container-fluid">
+      <div class="brand-wrapper">
+        <div class="navbar-brand">
+          <div class="container" style="position:relative;">
+
+            <button type="button" class="navbar-toggle visible-sm visible-xs" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <div class="navbar-right visible-md visible-lg">
+              <ul>
                 <li>
                   <a href="https://www.facebook.com/MyBiBeauty?fref=ts" target="_blank">
                     <i class="fa fa-facebook hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Facebook</span>
@@ -46,14 +37,80 @@
                     <i class="fa fa-twitter hidden-xs"></i><span class="hidden-lg hidden-md hidden-sm">Twitter</span>
                   </a>
                 </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+              </ul>
+            </div>
 
-<main>
-    {+body /}
-</main>
+            <div class="navbar-left visible-md visible-lg">
+              <ul>
+                {?user}
+                  <li>
+                    <a href="{{ path('admin_businesses_path') }}">
+                      Welcome {{ app.user.getFirstName }}
+                    </a>
+                  </li>
+                  <li class="nav-separator"></li>
+                  <li><a href="{{path('logout_path')}}">
+                    Logout
+                  </a></li>
+                {:else}
+                  <li class="">
+                    <a href="{{ path('login_route') }}">
+                      Login
+                    </a>
+                  </li>
+                  <li class="nav-separator"></li>
+                  <li class="">
+                    <a href="{{ path('signup_route') }}">
+                      Sign Up
+                    </a>
+                  </li>
+                {/user}
+              </ul>
+            </div> <!-- /.navbar-right -->
+
+            <span class="sr-only">BiBeauty Admin</span>
+            <a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty"></a>
+          </div> <!-- /.container -->
+        </div> <!-- .navbar-brand -->
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="navmenu navmenu-default navmenu-fixed-left">
+
+    <ul class="nav navmenu-nav">
+      {?user}
+        <li>
+          <a href="{{ path('admin_businesses_path') }}">
+            Welcome {{ app.user.getFirstName }}
+          </a>
+        </li>
+        <li><a href="{{path('logout_path')}}">
+          Logout
+        </a></li>
+      {:else}
+        <li class="">
+          <a href="{{ path('login_route') }}">
+            Login
+          </a>
+        </li>
+        <li class="">
+          <a href="{{ path('signup_route') }}">
+            Sign Up
+          </a>
+        </li>
+      {/user}
+    </ul>
+  </div>
+
+  <div class="canvas">
+
+    <main>
+        {+body /}
+    </main>
+
+  </div>
 
 <footer id="site-main-footer">
 
