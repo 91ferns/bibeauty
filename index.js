@@ -2,7 +2,7 @@
 
 var express = require('express');
 var kraken = require('kraken-js');
-
+var mongoose = require('mongoose');
 
 var options, app;
 
@@ -16,6 +16,10 @@ options = {
          * Add any additional config setup or overrides here. `config` is an initialized
          * `confit` (https://github.com/krakenjs/confit/) configuration object.
          */
+
+        mongoose.connect(config.get('mongodb:uri', 'mongodb://localhost/my_database'));
+
+        mongoose.Promise = require('bluebird');
         next(null, config);
     }
 };

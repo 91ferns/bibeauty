@@ -124,10 +124,7 @@ var BusinessSchema = new Schema({
   rand: { type: Number, default: generateRand },
   slug: { type: String, required: 'Slug is required', trim: true, lowercase: true },
   websiteUrl: { type: String },
-  email: { type: String, validate: {
-    validator: emailValidator.validate,
-    message: '{VALUE} is not a valid email address'
-  }, required: true, trim: true },
+  email: { type: String, required: true, trim: true },
   active: { type: Boolean, default: false },
   paymentsAccepted: {
     cash: { type: Boolean, default: true },
@@ -138,9 +135,7 @@ var BusinessSchema = new Schema({
     line2: { type: String, default: '' },
     city: { type: String, default: 'Los Angeles' },
     state: { type: String, maxlength: 2, default: 'CA' },
-    zip: { type: String, validate: {
-      message: '{VALUE} is an invalid zip code'
-    }, required: true },
+    zip: { type: String, required: '{PATH} is required' },
     country: { type: String, default: 'US' },
     coordinates: {
       latitude: { type: Number, default: null },
@@ -169,6 +164,18 @@ var BusinessSchema = new Schema({
   createdAt: { type: Date, default: Date.now }
 
 });
+
+BusinessSchema
+  .path('email')
+  .validate(function(v) {
+    return emailValidator.validate(v);
+  }, '{VALUE} is an invalid email');
+
+BusinessSchema
+  .path('address.zip')
+  .validate(function(v) {
+    return true;
+  }, '{VALUE} is an invalid zip code');
 
 BusinessSchema.virtual('reviews.average')
   .get(function() {
