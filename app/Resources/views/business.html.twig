@@ -12,115 +12,107 @@
 
     <div class="container">
 
+          <!-- businesscontent -->
       <div class="row">
 
-        <div class="col-md-10">
+        <div class="col-md-7">
 
-          <!-- businesscontent -->
-          <div class="row">
+          <div class="business-info-panel">
+            <div class="inner">
+              {% if business.hasLogoAttachment %}
+              <div class="pull-left floated-image img-circle"
+                style="background-image: url('{{ business.getLogoAttachment.getKey | s3 }}')">
+              </div>
+              {% endif %}
+              <h1>
+                {{business.getName}}
+                <div class="stars">
+                  {{ business.getAverageRating | rating }} from Yelp&trade;
+                </div>
+              </h1>
+              <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{ business.getAddress.getState }}</h2>
+              <p><a href="#">Show on map</a></p>
+            </div>
+            <hr>
 
-            <div class="col-md-8">
+            {% set p = path('business_path', {
+              id: business.getId,
+              slug: business.getSlug
+            }) %}
 
-              <div class="business-info-panel">
-                <div class="inner">
-                  {% if business.hasLogoAttachment %}
-                  <div class="pull-left floated-image img-circle"
-                    style="background-image: url('{{ business.getLogoAttachment.getKey | s3 }}')">
-                  </div>
+            <div class="business-info inner">
+
+              <ul class="nav nav-list">
+                <li><a href="tel:{{business.getLandline | phone}}" class="phone">
+                  <img src="{{ asset('assets/images/icons/phone.png') }}" >
+                  {{business.getLandline | phone}}
+                </a></li>
+                {% if business.getEmail %}
+                <li><a href="mailto:{{business.getEmail}}" class="email-link">
+                  <img src="{{ asset('assets/images/icons/email.png') }}" >
+                  {{business.getEmail}}
+                </a></li>
+                {% endif %}
+                <li>
+                  {% if business.getWebsite %}
+                  <a href="{{business.getWebsite}}" target="_blank" class="website-link">
+                    <img src="{{ asset('assets/images/icons/web.png') }}" >
+                    {{business.getWebsite}}
+                  </a>
+                  {% else %}
+                  <a href="{{business.getYelpLink}}" target="_blank" class="website-link">
+                    <img src="{{ asset('assets/images/icons/web.png') }}" >
+                    {{business.getYelpLink | excerptify(30) }}
+                  </a>
                   {% endif %}
-                  <h1>
-                    {{business.getName}}
-                    <div class="stars">
-                      {{ business.getAverageRating | rating }} from Yelp&trade;
-                    </div>
-                  </h1>
-                  <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{ business.getAddress.getState }}</h2>
-                  <p><a href="#">Show on map</a></p>
-                </div>
-                <hr>
+                </li>
+                <li class="payment"><span class="almost-a">
+                  <img src="{{ asset('assets/images/icons/credit.png') }}" >
+                  <span>We Accept</span>
+                  {% if business.getAcceptsCredit %}
+                  <img src="{{ asset('assets/images/accepts-credit.png') }}">
+                  {% else %}
+                  Cash
+                  {% endif %}
+                </span></li>
+              </ul>
+            </div> <!-- /.business-info -->
 
-                {% set p = path('business_path', {
-                  id: business.getId,
-                  slug: business.getSlug
-                }) %}
+            {% block subbusiness %}
+            <div class="sub-business">
 
-                <div class="business-info inner">
+            </div>
+            {% endblock %}
 
-                  <ul class="nav nav-list">
-                    <li><a href="tel:{{business.getLandline | phone}}" class="phone">
-                      <img src="{{ asset('assets/images/icons/phone.png') }}" >
-                      {{business.getLandline | phone}}
-                    </a></li>
-                    {% if business.getEmail %}
-                    <li><a href="mailto:{{business.getEmail}}" class="email-link">
-                      <img src="{{ asset('assets/images/icons/email.png') }}" >
-                      {{business.getEmail}}
-                    </a></li>
-                    {% endif %}
-                    <li>
-                      {% if business.getWebsite %}
-                      <a href="{{business.getWebsite}}" target="_blank" class="website-link">
-                        <img src="{{ asset('assets/images/icons/web.png') }}" >
-                        {{business.getWebsite}}
-                      </a>
-                      {% else %}
-                      <a href="{{business.getYelpLink}}" target="_blank" class="website-link">
-                        <img src="{{ asset('assets/images/icons/web.png') }}" >
-                        {{business.getYelpLink | excerptify(30) }}
-                      </a>
-                      {% endif %}
-                    </li>
-                    <li class="payment"><span class="almost-a">
-                      <img src="{{ asset('assets/images/icons/credit.png') }}" >
-                      <span>We Accept</span>
-                      {% if business.getAcceptsCredit %}
-                      <img src="{{ asset('assets/images/accepts-credit.png') }}">
-                      {% else %}
-                      Cash
-                      {% endif %}
-                    </span></li>
-                  </ul>
-                </div> <!-- /.business-info -->
+          </div> <!-- /.business-info-panel -->
 
-                {% block subbusiness %}
-                <div class="sub-business">
+        </div> <!-- /.col-md-7 -->
 
-                </div>
-                {% endblock %}
+        <div class="col-md-4">
 
-              </div> <!-- /.business-info-panel -->
+          {% block biztoolbar %}
 
-            </div> <!-- /.col-md-8 -->
+          <nav class="business-nav">
+            <div class="list-group">
+              <a href="#" class="list-group-item active">
+                Overview
+              </a>
+              <a href="#" class="list-group-item">
+                Services
+              </a>
+              <a href="#" class="list-group-item">
+                Reviews
+              </a>
+            </div>
+          </nav>
 
-            <div class="col-md-4">
+          {% endblock %}
 
-              {% block biztoolbar %}
-
-              <nav class="business-nav">
-                <div class="list-group">
-                  <a href="#" class="list-group-item active">
-                    Overview
-                  </a>
-                  <a href="#" class="list-group-item">
-                    Services
-                  </a>
-                  <a href="#" class="list-group-item">
-                    Reviews
-                  </a>
-                </div>
-              </nav>
-
-              {% endblock %}
-
-            </div> <!-- /.col-md-4 -->
-
-          </div> <!-- /.row -->
-
-          <!-- /businesscontent -->
-
-        </div> <!-- /.col-md-10 -->
+        </div> <!-- /.col-md-4 -->
 
       </div> <!-- /.row -->
+
+      <!-- /businesscontent -->
 
     </div> <!-- /.container -->
 

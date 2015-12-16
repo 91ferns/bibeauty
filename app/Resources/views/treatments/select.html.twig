@@ -1,106 +1,133 @@
 {% extends 'business.html.twig' %}
 
 {% block subbusiness %}
-<div class="business-description">
-  <div class="row">
-    <div class="col-md-8">
-        <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
-        <p class="business-description">{{business.getDescription}}</p>
-        <hr>
-    </div> <!-- /.business-description -->
+<hr>
 
-  </div> <!-- /.row -->
+<div class="business-description inner">
+  <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
+  <p class="business-description">{{business.getDescription}}</p>
+  <a class="back-to-business" href="{{ path('business_path',{id:business.getId,slug:business.getSlug})}}">See all salon offers</a>
+  <p>&nbsp;</p>
 </div>  <!-- /.business-description -->
 {% endblock %}
 
 {% block biztoolbar %}
 <form method="POST" action="{{ path('availabilities_redirect_path') }}">
-  <div class="business-services">
-    <h4>Select the Start Time for your visit</h4>
-    <div class="panel-group">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="btn-group" >
-            <p class="btn btn-default">{{ "now"|date("m/d/Y") }}</p>
-            <p class="btn btn-default">{{ "now"|date_modify("+1 day")|date("m/d/Y") }}</p>
-          </div>
-        </div>
-      </div> <!-- /.row -->
-      <div class="row">
-        <div class="col-md-4">
-          <div class="btn-group " role="tablist">
-            <a href="#today" aria-controls="home" role="tab" data-toggle="tab" class="btn btn-default">Today</a>
-            <a href="#tomorrow" aria-controls="home" role="tab" data-toggle="tab" class="btn btn-default">Tomorrow</a>
-          </div>
+  <div class="card biz-aside">
+    <div style="display:none;">
+      <a href="#today" aria-controls="home" role="tab" data-toggle="tab" class="btn btn-default">Today</a>
+      <a href="#tomorrow" aria-controls="home" role="tab" data-toggle="tab" class="btn btn-default">Tomorrow</a>
+    </div>
+    <div class="business-services">
+      <div class="inner" style="padding-bottom: 0px;">
+        <h4>Select the Start Time for your visit</h4>
+        <p><strong>{{treatment.name}}</strong> | {{treatment.duration}} minutes</p>
+        <p class="text-muted">
+          {{treatment.getDescription}}
+        </p>
+      </div>
+      <div class="panel-group">
+        <div class="panel-head inner" style="padding-top: 0px;">
+          <div class="btn-group search-form-sidebar" role="tablist">
+            <div class="row">
 
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="today">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="sr-only" for="JumboDate">Today?</label>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" class="ghetto-checkbox" value="today" checked="checked">
+                      Today
+                    </label>
+                  </div>
+                </div> <!-- /.form-group -->
+              </div>
 
-              {% if today | length > 0 %}
-              <ul class="list-group">
-                {% for availability in today %}
-                  {% include 'shared/availability-subitem.html.twig' %}
-                {% endfor %}
-              </ul>
-              {% else %}
-                <p>There are no availability bookings for today.</p>
-              {% endif %}
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="sr-only" for="JumboDate">Tomorrow?</label>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" class="ghetto-checkbox" value="tomorrow">
+                      Tomorrow
+                    </label>
+                  </div>
+                </div> <!-- /.form-group -->
+              </div>
 
             </div>
-            <div role="tabpanel" class="tab-pane" id="tomorrow">
-              {% if tomorrow | length > 0 %}
-              <ul class="list-group">
-                {% for availability in tomorrow %}
-                  {% include 'shared/availability-subitem.html.twig' %}
-                {% endfor %}
-              </ul>
-              {% else %}
-                <p>There are no availability bookings for tomorrow.</p>
-              {% endif %}
-            </div>
-          </div> <!-- /.tab-content -->
-
-        </div> <!-- /.col -->
-        <div class="col-md-8">
-          <strong>{{treatment.name}}</strong>
-          {{treatment.duration}}
-          <div class="reserve-booking">
-            <strong>Total:</strong> <span class="total"></span>
-            <button type="submit" class="btn btn-primary">Continue to Reserve</button>
 
           </div>
         </div>
 
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="today">
 
-      </div> <!-- /.row -->
+            {% if today | length > 0 %}
+            <ul class="list-group">
+              {% for availability in today %}
+                {% include 'shared/availability-subitem.html.twig' %}
+              {% endfor %}
+            </ul>
+            {% else %}
+              <p>There are no availability bookings for today.</p>
+            {% endif %}
 
-    </div> <!-- /.panel-group -->
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tomorrow">
+            {% if tomorrow | length > 0 %}
+            <ul class="list-group">
+              {% for availability in tomorrow %}
+                {% include 'shared/availability-subitem.html.twig' %}
+              {% endfor %}
+            </ul>
+            {% else %}
+              <p>There are no availability bookings for tomorrow.</p>
+            {% endif %}
+          </div>
+        </div> <!-- /.tab-content -->
 
-  </div> <!-- /.business-services -->
+      </div> <!-- /.panel-group -->
+
+    </div> <!-- /.business-services -->
+  </div> <!-- /.card -->
+
+  <div class="row">
+
+    <div class="col-sm-6">
+      <strong>Total:</strong> <span class="total"></span>
+    </div>
+
+    <div class="col-sm-5">
+      <button type="submit" class="btn btn-primary btn-lg" style="text-transform: none; font-size: 15px;">Make Reservation</button>
+    </div>
+
+  </div>
+
 </form>
 {% endblock %}
 
 {% block bizbody %}
 
-    <div class="business-main-content">
-      <div class="container">
-
-        <a class="back-to-business" href="{{ path('business_path',{id:business.getId,slug:business.getSlug})}}">See all salon offers</a>
-
-      </div>
-    </div>
-
 {% endblock %}
 
 {% block javascripts %}
+
+
   <script>
     jQuery(document).ready(function(){
       jQuery('input[name="Availability"]').on('change',function(){
         var row   = jQuery(this).parents('li');
-        var price = row.find('strong big').text();
+        var price = row.find('strong').text();
         jQuery('span.total').text(price);
-      })
+      });
+      jQuery('.checkbox input').on('click', function() {
+        var val = $(this).val();
+        $('a[href="#'+val+'"]').tab('show')
+        $('.checkbox input').not($(this)).attr('checked', false); //.not();
+      });
     });
   </script>
+  <
 {% endblock %}

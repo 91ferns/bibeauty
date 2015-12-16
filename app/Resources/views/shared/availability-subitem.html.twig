@@ -2,22 +2,25 @@
   {% set offer = availability.getAvailabilitySet.getOffer %}
   <div class="row gutterless">
 
-    <div class="col-xs-4">
+    <div class="col-xs-1">
+      <input name="Availability" value="{{availability.id}}" type="radio">
+    </div>
+
+    <div class="col-xs-3">
       <label class="control-label">
-        <input name="Availability" value="{{availability.id}}" type="radio">
         {{availability.getDate | date('g:i A') }}
       </label>
+    </div>
+
+    <div class="col-xs-5">
+      <span style="text-decoration: line-through;">${{ treatment.getOriginalPrice | localizedcurrency }}</span>
+      <strong>${{ offer.getCurrentPrice | localizedcurrency }}</strong>
     </div>
 
     <div class="col-xs-3">
       <select class="form-control" disabled name="Quantity">
         <option value="1">1</option>
       </select>
-    </div>
-
-    <div class="col-xs-5">
-      <span class="small">${{ treatment.getOriginalPrice | localizedcurrency }}</span>
-      <strong><big>${{ offer.getCurrentPrice | localizedcurrency }}</big></strong>
     </div>
 
   </div>

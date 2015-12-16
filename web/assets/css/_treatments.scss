@@ -20,8 +20,38 @@
   }
 }
 
-.booking-info {
-  padding-top: 0px;
+.biz-aside {
+  margin-top: -80px;
+  padding: 0px;
+  .inner {
+    padding: 23px 23px 14px;
+  }
+
+  .tab-pane {
+    border-radius: 0 0 6px 6px;
+  }
+
+  select {
+    border-radius: 0px;
+    background: white;
+    height: 30px;
+  }
+
+  .list-group-item {
+    border: 0px;
+    background-color: #f5f5f5;
+    padding-top: 11px;
+    padding-bottom: 5px;
+
+    label {
+      margin-bottom: 0px;
+    }
+
+    &:nth-child(even) {
+      background: white;
+    }
+  }
+
 }
 .tab-pane#today,
 .tab-pane#tomorrow{
