@@ -71,6 +71,10 @@
     padding: 0;
     padding-top: $nav-height + 20px;
   }
+
+  .base .canvas {
+    padding-top: 0px;
+  }
 }
 
 li.nav-separator {
