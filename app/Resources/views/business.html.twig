@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  <section id="business-information" class="nav-pad">
+
+    {% if business.hasHeaderAttachment %}
+      <div class="business-header-image" style="background-image: url('{{ business.getHeaderAttachment.getKey | s3 }}')"></div>
+    {% else %}
+      <div class="business-header-image" style="background-image: url('{{ asset('assets/images/placeholder-image1.png') }}');"></div>
+    {% endif %}
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-md-10">
+
+          <!-- businesscontent -->
+          <div class="row">
+
+            <div class="col-md-8">
+
+              <div class="business-info-panel">
+                <div class="inner">
+                  {% if business.hasLogoAttachment %}
+                  <div class="pull-left floated-image img-circle"
+                    style="background-image: url('{{ business.getLogoAttachment.getKey | s3 }}')">
+                  </div>
+                  {% endif %}
+                  <h1>
+                    {{business.getName}}
+                    <div class="stars">
+                      {{ business.getAverageRating | rating }} from Yelp&trade;
+                    </div>
+                  </h1>
+                  <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{ business.getAddress.getState }}</h2>
+                  <p><a href="#">Show on map</a></p>
+                </div>
+                <hr>
+
+                {% set p = path('business_path', {
+                  id: business.getId,
+                  slug: business.getSlug
+                }) %}
+
+                <div class="business-info inner">
+
+                  <ul class="nav nav-list">
+                    <li><a href="tel:{{business.getLandline | phone}}" class="phone">
+                      <img src="{{ asset('assets/images/icons/phone.png') }}" >
+                      {{business.getLandline | phone}}
+                    </a></li>
+                    {% if business.getEmail %}
+                    <li><a href="mailto:{{business.getEmail}}" class="email-link">
+                      <img src="{{ asset('assets/images/icons/email.png') }}" >
+                      {{business.getEmail}}
+                    </a></li>
+                    {% endif %}
+                    <li>
+                      {% if business.getWebsite %}
+                      <a href="{{business.getWebsite}}" target="_blank" class="website-link">
+                        <img src="{{ asset('assets/images/icons/web.png') }}" >
+                        {{business.getWebsite}}
+                      </a>
+                      {% else %}
+                      <a href="{{business.getYelpLink}}" target="_blank" class="website-link">
+                        <img src="{{ asset('assets/images/icons/web.png') }}" >
+                        {{business.getYelpLink | excerptify(30) }}
+                      </a>
+                      {% endif %}
+                    </li>
+                    <li class="payment"><span class="almost-a">
+                      <img src="{{ asset('assets/images/icons/credit.png') }}" >
+                      <span>We Accept</span>
+                      {% if business.getAcceptsCredit %}
+                      <img src="{{ asset('assets/images/accepts-credit.png') }}">
+                      {% else %}
+                      Cash
+                      {% endif %}
+                    </span></li>
+                  </ul>
+                </div> <!-- /.business-info -->
+
+                {% block subbusiness %}
+                <div class="sub-business">
+
+                </div>
+                {% endblock %}
+
+              </div> <!-- /.business-info-panel -->
+
+            </div> <!-- /.col-md-8 -->
+
+            <div class="col-md-4">
+
+              {% block biztoolbar %}
+
+              <nav class="business-nav">
+                <div class="list-group">
+                  <a href="#" class="list-group-item active">
+                    Overview
+                  </a>
+                  <a href="#" class="list-group-item">
+                    Services
+                  </a>
+                  <a href="#" class="list-group-item">
+                    Reviews
+                  </a>
+                </div>
+              </nav>
+
+              {% endblock %}
+
+            </div> <!-- /.col-md-4 -->
+
+          </div> <!-- /.row -->
+
+          <!-- /businesscontent -->
+
+        </div> <!-- /.col-md-10 -->
+
+      </div> <!-- /.row -->
+
+    </div> <!-- /.container -->
+
+    {% block bizbody %}{% endblock %}
+
+  </section>
+
+
+{% endblock %}

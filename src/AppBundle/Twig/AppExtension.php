@@ -24,7 +24,8 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('nicehour', array($this, 'formatHourFilter')),
             new \Twig_SimpleFilter('duration', array($this, 'formatMinutesFilter')),
             new \Twig_SimpleFilter('today', array($this, 'formatTodayFilter')),
-            new \Twig_SimpleFilter('flashify', array($this, 'doBootstrapFlashify'), array('is_safe' => array('html')))
+            new \Twig_SimpleFilter('flashify', array($this, 'doBootstrapFlashify'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFilter('excerptify', array($this, 'doExcerptify'))
         );
     }
 
@@ -32,6 +33,16 @@ class AppExtension extends \Twig_Extension
 
     public function __construct($aws) {
         $this->bucket = (string) $aws['bucket'];
+    }
+
+    public function doExcerptify( $value, $len = 20 ) {
+        $str = $value;
+
+        if (strlen($value) > $len) {
+            $str = substr($value, 0, $len) . '...';
+        }
+
+        return $str;
     }
 
     public function s3Filter( $key )
