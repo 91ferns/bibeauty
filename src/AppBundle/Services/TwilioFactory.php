@@ -54,6 +54,7 @@ class TwilioFactory
         $treatment = $booking->getAvailability()->getTreatment();
         $offer = $booking->getAvailability()->getAvailabilitySet()->getOffer();
         $business = $offer->getBusiness();
+        $availability = $booking->getAvailability();
 
         // Build message
         $message = "New booking request;\n";
