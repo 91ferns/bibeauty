@@ -5,6 +5,7 @@
   "author": "Stephen Parente",
   "main": "index.js",
   "scripts": {
+    "postinstall": "bower install && grunt build",
     "test": "grunt test",
     "build": "grunt build",
     "all": "npm run build && npm run test"
