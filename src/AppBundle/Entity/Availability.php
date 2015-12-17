@@ -216,6 +216,6 @@ class Availability {
 
     public function getTimeText() {
         $date = $this->getDate();
-        return $date->format('H:i O');
+        return $date->format('H:iA');
     }
 }

@@ -55,34 +55,33 @@ class TwilioFactory
         $offer = $booking->getAvailability()->getAvailabilitySet()->getOffer();
         $business = $offer->getBusiness();
 
-        $date = $booking->getAvailability()->getDate();
-        $dateFormatted = $date->format('D, d M Y H:i O');
-
         // Build message
-        $message = "The booking details are:\n";
-        $message .= "\n";
+        $message = "New booking request;\n";
+        $message .= sprintf("%s\n", $availability->getDayText());
+        $message .= sprintf("%s\n", $availability->getTimeText());
+        $message .= sprintf("%s\n", $treatment->getName());
+        $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
+        $message .= sprintf("You must ACCEPT or DECLINE the booking to confirm. Go to %s\n");
         $message .= sprintf("%s\n", $booking->getName());
-        $message .= sprintf("%s. %s\n", $treatment->getName(), $treatment->getDuration());
-        $message .= sprintf("$%.2f (Discounted from $%.2f)\n", $offer->getCurrentPrice(), $treatment->getOriginalPrice());
+        $message .= $booking->getPhone();
         $message .= "\n";
-        $message .= "Big Love,";
-        $message .= "The BiBeauty Team";
+        $message .= "BiBeauty";
 
         if ($phone = $business->getMobile()) {
             $one = $this->sendMessage($phone, $message);
         }
 
         // Build message
-        $message = sprintf("Hi, %s:\n", $booking->getName());
-        $message .= "\n";
-        $message .= sprintf("Your booking request is now with %s for:\n", $business->getName());
-        $message .= sprintf("%s. %s\n", $treatment->getName(), $treatment->getDuration());
-        $message .= sprintf("$%.2f (Discounted from $%.2f)\n", $offer->getCurrentPrice(), $treatment->getOriginalPrice());
-        $message .= sprintf("%s\n", $dateFormatted);
-        $message .= sprintf("%s\n", $business->getAddress()->getAddressString());
-        $message .= "\n";
-        $message .= "Big Love,";
-        $message .= "The BiBeauty Team";
+        $message = "Booking request sent. Await confirmation SMS if Accepted or Declined.\n";
+        // Hi, %s:\n", $booking->getName());
+        $message .= sprintf("%s\n", $availability->getDayText());
+        $message .= sprintf("%s\n", $availability->getTimeText());
+        $message .= sprintf("%s\n", $treatment->getName());
+        $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
+        $message .= sprintf("%s\n", $business->getName());
+        $message .= sprintf("Location: %s\n", $business->getAddress()->getGoogleMapsUrl());
+        $message .= sprintf("%s\n", $business->getLandline());
+        $message .= "BiBeauty";
 
         if ($phone = $booking->getPhone()) {
             $two = $this->sendMessage($phone, $message);
@@ -101,42 +100,32 @@ class TwilioFactory
         $business = $offer->getBusiness();
         $availability = $booking->getAvailability();
 
-        $date = $booking->getAvailability()->getDate();
-        $dateFormatted = $date->format('D, d M Y H:i O');
-
         // Build message
         $message = "Booking CONFIRMED.\n";
-        $message .= "\n";
-        $message .= sprintf("%s at %s", $availability->getDayText(), $availability->getTimeText() );
-        $message .= sprintf("%s.\n", $treatment->getName());
+        $message .= sprintf("%s\n", $availability->getDayText());
+        $message .= sprintf("%s\n", $availability->getTimeText());
+        $message .= sprintf("%s\n", $treatment->getName());
         $message .= sprintf("Special: $%.2f\n", $offer->getCurrentPrice());
         $message .= sprintf("%s\n", $booking->getName());
         $message .= sprintf("%s\n", $booking->getPhone());
         $message .= "\n";
-        $message .= "Big Love,";
-        $message .= "The BiBeauty Team";
+        $message .= "BiBeauty";
 
         if ($phone = $business->getMobile()) {
             $one = $this->sendMessage($phone, $message);
         }
 
         // Build message
-        $message = sprintf("Hi, %s:\n", $booking->getName());
-        $message .= "\n";
-        $message .= sprintf("Your booking request with %s has been APPROVED. Your treatment details are:\n", $business->getName());
-        $message .= sprintf("%s. %s\n", $treatment->getName(), $treatment->getDuration());
-        $message .= sprintf("$%.2f (Discounted from $%.2f)\n", $offer->getCurrentPrice(), $treatment->getOriginalPrice());
-        $message .= sprintf("%s\n", $dateFormatted);
-        $message .= "\n";
-        $message .= sprintf("%s\n", $business->getAddress()->getAddressString());
+        $message = "Booking request sent. Await confirmation SMS if Accepted or Declined.\n";
+        // Hi, %s:\n", $booking->getName());
+        $message .= sprintf("%s\n", $availability->getDayText());
+        $message .= sprintf("%s\n", $availability->getTimeText());
+        $message .= sprintf("%s\n", $treatment->getName());
+        $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
+        $message .= sprintf("%s\n", $business->getName());
+        $message .= sprintf("Salon on BiBeauty: http://www.bibeauty.com/businesses/%s/%s\n", $business->getId(), $business->getSlug());
         $message .= sprintf("%s\n", $business->getLandline());
-        $message .= sprintf("%s\n", $business->getEmail());
-        $message .= "\n";
-        $message .= sprintf("If you have questions about the treatment or wish to cancel your appointment, please get in touch with %s directly.\n", $business->getName());
-        $message .= "\n";
-        $message .= "Enjoy ☺\n";
-        $message .= "Big Love,\n";
-        $message .= "The BiBeauty Team";
+        $message .= "BiBeauty";
 
         if ($phone = $booking->getPhone()) {
             $this->sendMessage($phone, $message);
@@ -150,35 +139,32 @@ class TwilioFactory
         $business = $offer->getBusiness();
         $availability = $booking->getAvailability();
 
-        $date = $booking->getAvailability()->getDate();
-        $dateFormatted = $date->format('D, d M Y H:i O');
-
         // Build message
-        $message = "Booking DECLINED.\n";
-        $message .= "\n";
-        $message .= sprintf("%s at %s", $availability->getDayText(), $availability->getTimeText() );
+        $message = "Your Booking has unfortunately been DECLINED.\n";
+        $message .= sprintf("%s\n", $availability->getDayText());
+        $message .= sprintf("%s\n", $availability->getTimeText());
         $message .= sprintf("%s.\n", $treatment->getName());
         $message .= sprintf("Special: $%.2f\n", $offer->getCurrentPrice());
         $message .= sprintf("%s\n", $booking->getName());
         $message .= sprintf("%s\n", $booking->getPhone());
         $message .= "\n";
-        $message .= "Big Love,";
-        $message .= "The BiBeauty Team";
+        $message .= "BiBeauty";
 
         if ($phone = $business->getMobile()) {
             $one = $this->sendMessage($phone, $message);
         }
 
         // Build message
-        $message = sprintf("Hi, %s:\n", $booking->getName());
-        $message .= "\n";
-        $message .= sprintf("Your booking request with %s has been CANCELLED. Your treatment details are:\n", $business->getName());
-        $message .= sprintf("%s. %s mins.\n", $treatment->getName(), $treatment->getDuration());
-        $message .= sprintf("$%.2f (Discounted from $%.2f)\n", $offer->getCurrentPrice(), $treatment->getOriginalPrice());
-        $message .= sprintf("%s\n", $dateFormatted);
-        $message .= "\n";
-        $message .= "Big Love,\n";
-        $message .= "The BiBeauty Team";
+        $message = "Your Booking has unfortunately been DECLINED.\n";
+        // Hi, %s:\n", $booking->getName());
+        $message .= sprintf("%s\n", $availability->getDayText());
+        $message .= sprintf("%s\n", $availability->getTimeText());
+        $message .= sprintf("%s\n", $treatment->getName());
+        $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
+        $message .= sprintf("%s\n", $business->getName());
+        $message .= sprintf("Search again: %s\n", 'https://www.bibeauty.com/businesses/search');
+        $message .= sprintf("%s\n", $business->getLandline());
+        $message .= "BiBeauty";
 
         if ($phone = $booking->getPhone()) {
             $this->sendMessage($phone, $message);
