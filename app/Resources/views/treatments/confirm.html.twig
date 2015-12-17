@@ -1,113 +1,63 @@
-{% extends 'base.html.twig' %}
+{% extends 'business.html.twig' %}
 
-{% block body %}
+{% block biztoolbar %}
+<aside class="business-aside biz-card card confirm biz-aside">
 
-<section id="business-information" class="nav-pad" style="padding-bottom: 20px;">
+  <h4>YOUR BOOKING IS COMPLETE</h4>
 
-  <div class="jumbotron no-margin">
-      <div class="container">
-
-          <div class="row">
-            <div class="col-md-8">
-              <h2 class="pull-right">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</h2>
-              <h1>{{business.getName}}</h1>
-              <div class="stars">
-                {{ business.getAverageRating | rating }}
-                from Yelp&trade;
-              </div> <!-- /.stars -->
-              <p></p>
-            </div>
-          </div> <!-- /.row -->
-          <div class="row">
-            <div class="col-md-8">
-              <div class="confirmation header-attachment-wrapper" style="">
-                <h2>THANK YOU FOR YOUR BOOKING</h2>
-                <p><strong>Here is your order summary </strong></p>
-                <hr>
-
-                <ul class="checked">
-                  <li>Your appointment has been scheduled</li>
-                  <li>Please give us a little time to review your booking and send you your final appointment confirmation to <a href="#">your@emailaddress.com</a></li>
-                </ul>
-              </div> <!-- /.header-attachment-wrapper -->
-            </div> <!-- /.col -->
-
-            <div class="col-md-4">
-
-                <aside class="business-aside confirm">
-
-                  <h4>YOUR BOOKING IS COMPLETE</h4>
-
-                  <p><strong>What happens now?</strong></p>
-
-                  <p>You’ll receive a confirmation that the booking
-                  has been made and unless something changes,
-                  all you have to do is turn on the right day and
-                  time of your appointment. All the details are
-                  with the salon so you don’t need to print
-                  out anything </p>
-
-                  <p><strong>More information or contacting the salon</strong></p>
-
-                  <p>If you need further information about your
-                  appointment or want to reschedule or cancel
-                  your booking, please contact the salon directly. </p>
-
-                </div>
-              </aside>
-
-            </div>
-          </div> <!-- /.row -->
-
-      </div>
-  </div> <!-- /.jumbotron -->
-
-</section>
-
-<section class="no-account booking-info">
-
-  <div class="container">
-
-    <h3>Appointment Details</h3>
-    <div class="col-md-3 card">
-      <div class="row">
-        <div class="col-md-8 appt-time">
-          {{availability.getDate|date("h:i A")}}
-        </div>
-        <div class="col-md-4 appt-date">
-          {{availability.getDate|date("d M")}}<br>
-          {{availability.getDate|date("l")}}
-        </div>
-      </div>
-      <div class="row business-name">
-        <strong>{{business.name}}</strong>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-md-6 duration">
-          {{availability.getTreatment.getDuration}} minutes
-        </div>
-        <div class="col-md-6 pull-right price">
-        <strong>${{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency}}</strong>
-        </div>
-      </div>
-
+  <div class="row">
+    <div class="col-sm-5">
+      <p class="time">
+        {{availability.getDate | date('g:i A') }}
+      </p>
     </div>
-    <div class="col-md-5 card card-second">
-      <p><strong>Address</strong></p>
-      <ul class="col-md-7 address list-unstyled">
-        <li>{{business.getAddress.getCity}},{{business.getAddress.getState}} </li>
-        <li>{{business.getAddress.getCountry}}</li>
-        <li>Phone Number: {{business.getLandline}}</li>
-        <li>Email: {{business.getEmail}}</li>
-      </ul>
-      <div class="col-md-5">
-        <img class="map" src="http://maps.googleapis.com/maps/api/staticmap?center={{business.getAddress.getLatitude}},{{business.getAddress.getLongitude}}&zoom=13&scale=false&size=180x180&maptype=roadmap&format=png&visual_refresh=true" >
-      </div>
+    <div class="col-sm-4">
+      <p class="booked-date">
+        {{ availability.getDate | date('d M') }}<br>
+        {{ availability.getDate | date('D') }}
+      </p>
     </div>
+    <div class="col-sm-3">
+      <p class="date">
+        {{ availability.getDate | today }}
+      </p>
     </div>
-  </div>
+  </div> <!-- /.row -->
 
-</section>
+  <hr>
+
+  <p><strong>What happens now?</strong></p>
+
+  <p>You’ll receive a confirmation that the booking
+  has been made and unless something changes,
+  all you have to do is turn on the right day and
+  time of your appointment. All the details are
+  with the salon so you don’t need to print
+  out anything </p>
+
+  <p><strong>More information or contacting the salon</strong></p>
+
+  <p>If you need further information about your
+  appointment or want to reschedule or cancel
+  your booking, please contact the salon directly. </p>
+
+</aside>
+{% endblock %}
+
+{% block subbusiness %}
+
+<hr>
+
+<div class="business-description inner">
+
+  <h2>THANK YOU FOR YOUR BOOKING</h2>
+  <p><strong>Here is your order summary </strong></p>
+
+  <ul class="checked">
+    <li>Your appointment has been scheduled</li>
+    <li>Please give us a little time to review your booking and send you your final appointment confirmation to <a href="#">your@emailaddress.com</a></li>
+  </ul>
+
+</div>
 
 {% endblock %}

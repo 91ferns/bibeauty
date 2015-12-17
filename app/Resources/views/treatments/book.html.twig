@@ -1,93 +1,67 @@
-{% extends 'base.html.twig' %}
+{% extends 'business.html.twig' %}
 
-{% block body %}
+{% block subbusiness %}
+<hr>
 
-<section id="business-information" class="nav-pad" style="padding-bottom: 20px;">
+<div class="business-description inner">
+  <h2 class="business-name business-welcome">Welcome to {{business.getName}}</h2>
+  <p class="business-description">{{business.getDescription}}</p>
+  <a class="back-to-business" href="{{ path('business_path',{id:business.getId,slug:business.getSlug})}}">See all salon offers</a>
+  <p>&nbsp;</p>
+</div>  <!-- /.business-description -->
+{% endblock %}
 
-  <div class="jumbotron no-margin">
-      <div class="container">
+{% block biztoolbar %}
+<aside class="business-aside biz-aside card">
+  <div class="row">
+    <div class="col-sm-5">
+      <p class="time">
+        {{availability.getDate | date('g:i A') }}
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <p class="booked-date">
+        {{ availability.getDate | date('d M') }}<br>
+        {{ availability.getDate | date('D') }}
+      </p>
+    </div>
+    <div class="col-sm-3">
+      <p class="date">
+        {{ availability.getDate | today }}
+      </p>
+    </div>
+  </div> <!-- /.row -->
+  <div class='row'>
+    <hr class="top">
+    <span class="title">
+      {{ availability.getBusiness.getName }}
+    </span>
+    <hr class="bottom">
+  </div>
+  <div class="row bottom-area">
+    <p class="treatment">
+      {{ availability.getTreatment.getLabel }}
+    </p>
+    <p class="price">
+      ${{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency}}
+    </p>
+    <p class="old-price">
+      ${{ availability.getTreatment.getOriginalPrice | localizedcurrency}}
+    </p>
+    <p class="duration">
+      {{ availability.getTreatment.getDuration | duration }}
+    </p>
+    <p class="footer">
+      All payments are made directly with the salon upon your visit. BiBeauty does not accept payments for bookings.
+    </p>
+  </div> <!-- /.row -->
+</aside>
+{% endblock %}
 
-          <div class="row">
-            <div class="col-md-8">
-              <h2 class="pull-right">{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}</h2>
-              <h1>{{business.getName}}</h1>
-              <div class="stars">
-                {{ business.getAverageRating | rating }}
-                from Yelp&trade;
-              </div> <!-- /.stars -->
-              <p></p>
-            </div>
-          </div> <!-- /.row -->
-          <div class="row">
-            <div class="col-md-8">
-              {% if business.hasHeaderAttachment %}
-                <div class="header-attachment-wrapper" style="background-image: url({{ business.getHeaderAttachment.getKey | s3 }})">
-              {% else %}
-                <div class="header-attachment-wrapper" style="">
-              {% endif %}
-              </div> <!-- /.header-attachment-wrapper -->
-            </div> <!-- /.col -->
+{% block bizbody %}
 
-            <div class="col-md-4">
-
-                <aside class="business-aside">
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <p class="time">
-                        {{availability.getDate | date('g:i A') }}
-                      </p>
-                    </div>
-                    <div class="col-sm-4">
-                      <p class="booked-date">
-                        {{ availability.getDate | date('d M') }}<br>
-                        {{ availability.getDate | date('D') }}
-                      </p>
-                    </div>
-                    <div class="col-sm-3">
-                      <p class="date">
-                        {{ availability.getDate | today }}
-                      </p>
-                    </div>
-                  </div>
-                  <div class='row'>
-                    <hr class="top">
-                    <span class="title">
-                      {{ availability.getBusiness.getName }}
-                    </span>
-                    <hr class="bottom">
-                  </div>
-                  <div class="row bottom-area">
-                    <p class="treatment">
-                      {{ availability.getTreatment.getLabel }}
-                    </p>
-                    <p class="price">
-                      ${{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency}}
-                    </p>
-                    <p class="old-price">
-                      ${{ availability.getTreatment.getOriginalPrice | localizedcurrency}}
-                    </p>
-                    <p class="duration">
-                      {{ availability.getTreatment.getDuration | duration }}
-                    </p>
-                    <p class="footer">
-                      All payments are made directly with the salon upon your visit. BiBeauty does not accept payments for bookings.
-                    </p>
-                  </div>
-                </div>
-              </aside>
-
-            </div>
-          </div> <!-- /.row -->
-
-      </div>
-  </div> <!-- /.jumbotron -->
-
-  {% include 'shared/quicklogin.html.twig' %}
-
-</section>
-
-<section class="no-account booking-info">
-
+<section class="no-account booking-info" style="padding-top: 20px;">
+  {# include 'shared/quicklogin.html.twig' #}
   <div class="container">
     <hr class="fullwidth">
     <p class="text-muted">Don’t have an account with us ? Simply just fill out the below to reserve your appointment</p>

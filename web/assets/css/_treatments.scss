@@ -21,7 +21,10 @@
 }
 
 .biz-aside {
-  margin-top: -80px;
+
+  @media (min-width: $screen-md-min) {
+    margin-top: -80px;
+  }
   padding: 0px;
   .inner {
     padding: 23px 23px 14px;
