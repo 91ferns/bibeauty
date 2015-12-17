@@ -48,10 +48,10 @@ class BookingsController extends Controller implements AdminAwareController
 
       $twilio = $this->get('twilio.factory');
 
-      if ($status === 3) {
+      if ($status == 3) {
           // Cancelled
           $twilio->bookingCancelledNotification($booking);
-      } elseif ($status === 2) {
+      } elseif ($status == 2) {
           // Booking confirmed
           $twilio->bookingConfirmedNotification($booking);
       }

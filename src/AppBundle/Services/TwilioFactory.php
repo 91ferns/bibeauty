@@ -95,12 +95,30 @@ class TwilioFactory
 
     public function bookingConfirmedNotification(Booking $booking) {
 
+
         $treatment = $booking->getAvailability()->getTreatment();
         $offer = $booking->getAvailability()->getAvailabilitySet()->getOffer();
         $business = $offer->getBusiness();
+        $availability = $booking->getAvailability();
 
         $date = $booking->getAvailability()->getDate();
         $dateFormatted = $date->format('D, d M Y H:i O');
+
+        // Build message
+        $message = "Booking CONFIRMED.\n";
+        $message .= "\n";
+        $message .= sprintf("%s at %s", $availability->getDayText(), $availability->getTimeText() );
+        $message .= sprintf("%s.\n", $treatment->getName());
+        $message .= sprintf("Special: $%.2f\n", $offer->getCurrentPrice());
+        $message .= sprintf("%s\n", $booking->getName());
+        $message .= sprintf("%s\n", $booking->getPhone());
+        $message .= "\n";
+        $message .= "Big Love,";
+        $message .= "The BiBeauty Team";
+
+        if ($phone = $business->getMobile()) {
+            $one = $this->sendMessage($phone, $message);
+        }
 
         // Build message
         $message = sprintf("Hi, %s:\n", $booking->getName());
@@ -120,7 +138,7 @@ class TwilioFactory
         $message .= "Big Love,\n";
         $message .= "The BiBeauty Team";
 
-        if ($phone = $booking->getMobile()) {
+        if ($phone = $booking->getPhone()) {
             $this->sendMessage($phone, $message);
         }
 
@@ -130,9 +148,26 @@ class TwilioFactory
         $treatment = $booking->getAvailability()->getTreatment();
         $offer = $booking->getAvailability()->getAvailabilitySet()->getOffer();
         $business = $offer->getBusiness();
+        $availability = $booking->getAvailability();
 
         $date = $booking->getAvailability()->getDate();
         $dateFormatted = $date->format('D, d M Y H:i O');
+
+        // Build message
+        $message = "Booking DECLINED.\n";
+        $message .= "\n";
+        $message .= sprintf("%s at %s", $availability->getDayText(), $availability->getTimeText() );
+        $message .= sprintf("%s.\n", $treatment->getName());
+        $message .= sprintf("Special: $%.2f\n", $offer->getCurrentPrice());
+        $message .= sprintf("%s\n", $booking->getName());
+        $message .= sprintf("%s\n", $booking->getPhone());
+        $message .= "\n";
+        $message .= "Big Love,";
+        $message .= "The BiBeauty Team";
+
+        if ($phone = $business->getMobile()) {
+            $one = $this->sendMessage($phone, $message);
+        }
 
         // Build message
         $message = sprintf("Hi, %s:\n", $booking->getName());
@@ -145,7 +180,7 @@ class TwilioFactory
         $message .= "Big Love,\n";
         $message .= "The BiBeauty Team";
 
-        if ($phone = $booking->getMobile()) {
+        if ($phone = $booking->getPhone()) {
             $this->sendMessage($phone, $message);
         }
 

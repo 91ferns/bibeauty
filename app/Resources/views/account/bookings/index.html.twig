@@ -49,7 +49,7 @@
               <td title="Price">{{ availability.getAvailabilitySet.getOffer.getCurrentPrice | localizedcurrency('USD') }}</td>
               <td title="Therapist">
                 {% if business.getTherapists | length > 0 %}
-                <select>
+                <select class="form-control" style="height: 34px;">
                   {% for therapist in business.getTherapists %}
                   <option value="{{therapist.id}}">{{therapist.getName}}</option>
                   {% endfor %}
@@ -60,7 +60,7 @@
               </td>
               <td title="Status">
                 <form class="bookingstatus" method="post" action="{{ path('admin_business_bookings_status',{'id':app.request.get('id'),'slug':app.request.get('slug')}) }}" >
-                  <select name="bookingstatus" id="status{{booking.getId}}">
+                  <select name="bookingstatus" class="form-control" style="height: 34px;" id="status{{booking.getId}}">
                     {% for id,status in statuses %}
                       <option value="{{id}}" {{ id == booking.getStatus ? 'selected' }}>{{status}}</option>
                     {% endfor %}

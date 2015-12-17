@@ -187,4 +187,35 @@ class Availability {
     {
         return $this->active;
     }
+
+    public function isToday() {
+        $date = $this->getDate()->format('d M Y');
+        $today = new \DateTime('today');
+        $today = $today->format('d M Y');
+
+        return $date == $today;
+    }
+
+    public function isTomorrow() {
+        $date = $this->getDate()->format('d M Y');
+        $tomorrow = new \DateTime('tomorrow');
+        $tomorrow = $tomorrow->format('d M Y');
+
+        return $date == $tomorrow;
+    }
+
+    public function getDayText() {
+        if ($this->isToday()) {
+            return 'today';
+        } elseif ($this->isTomorrow()) {
+            return 'tomorrow';
+        } else {
+            return $this->getDate();
+        }
+    }
+
+    public function getTimeText() {
+        $date = $this->getDate();
+        return $date->format('H:i O');
+    }
 }
