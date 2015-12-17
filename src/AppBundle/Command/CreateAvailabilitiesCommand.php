@@ -26,7 +26,9 @@ class CreateAvailabilitiesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $this->getContainer()->get('profiler')->disable();
+        if ($this->getContainer()->has('profiler')) {
+            $this->getContainer()->get('profiler')->disable();
+        }
         $availabilitySetId = $input->getArgument('id');
 
         $logger = $this->getContainer()->get('logger');
