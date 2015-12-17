@@ -25,6 +25,28 @@
               </div>
             </div> <!-- .btn-group -->
 
+            <div class="visible-xs visible-sm">
+              <div class="dropdown dropdown-navigation">
+                <button class="btn btn-navigation dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  {% if sort == 'low' %}
+                    Price Low-High
+                  {% elseif sort == 'high' %}
+                    Price High-Low
+                  {% else %}
+                    Rating
+                  {% endif %}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu multi-level">
+
+                  <li><a class="btn btn-default sort-link {% if sort == 'low' %}active{% endif %}" href="#low">Price Low-High</a></li>
+                  <li><a class="btn btn-default sort-link {% if sort == 'high' %}active{% endif %}" href="#high">Price High-Low</a></li>
+                  <li><a class="btn btn-default sort-link {% if sort == 'rating' %}active{% endif %}" href="#rating">Rating</a></li>
+
+                </ul>
+              </div> <!-- /.dropdown -->
+            </div>
+
           </nav>
 
         </div> <!-- /.col-md-6 -->
@@ -123,6 +145,7 @@
           </div> <!-- /.search-form-sidebar -->
 
           <button class="btn btn-lg btn-primary">Update</button>
+          <p>&nbsp;</p>
 
           {# <hr class="fullwidth">
 

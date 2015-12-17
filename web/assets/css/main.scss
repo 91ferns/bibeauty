@@ -700,11 +700,15 @@ main section {
 $drk:#1d93b1;
 $lgt:#52c8e6;
 .business-services .btn-group {
-  height:44px;
   width:100%;
+  @media (min-width: $screen-md-min) {
+    height:44px;
+  }
   &[role='tablist']{
     margin-bottom:10px;
-    height:50px;
+    @media (min-width: $screen-md-min) {
+      height:50px;
+    }
   }
   >p.btn{cursor:auto;}
   > a, p{

@@ -61,8 +61,10 @@
 }
 .tab-pane#today,
 .tab-pane#tomorrow{
-  max-height:320px;
-  overflow-y:auto;
+  @media (min-width: $screen-md-min) {
+    max-height:320px;
+    overflow-y:auto;
+  }
   ul.list-group{
     margin-bottom:0;
   }
