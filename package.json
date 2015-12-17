@@ -5,7 +5,6 @@
   "author": "Stephen Parente",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install && grunt build",
     "test": "grunt test",
     "build": "grunt build",
     "all": "npm run build && npm run test"
@@ -45,13 +44,11 @@
     "babel-plugin-transform-react-jsx": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
-    "bower": "1.7.1",
     "construx": "^1.0.0",
     "construx-browserify": "^1.0.2",
     "construx-copier": "^1.0.0",
     "construx-dustjs": "^1.1.0",
     "construx-sass": "^1.0.0",
-    "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.3",
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^4.0.1",
