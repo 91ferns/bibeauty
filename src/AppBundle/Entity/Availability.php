@@ -210,7 +210,7 @@ class Availability {
         } elseif ($this->isTomorrow()) {
             return 'tomorrow';
         } else {
-            return $this->getDate();
+            return $this->getDate()->format('d/M/Y');
         }
     }
 
