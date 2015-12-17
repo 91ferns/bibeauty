@@ -29,7 +29,7 @@ class BookingsController extends Controller implements AdminAwareController
         return $this->render('account/bookings/index.html.twig', array(
             'business' => $business,
             'bookings' => $bookings,
-            'statuses' => [1=>'unconfirmed',2=>'confirmed',3=>'canceled'],
+            'statuses' => [1=>'Unconfirmed',2=>'Confirmed',3=>'Declined'],
         ));
     }
 
@@ -47,7 +47,7 @@ class BookingsController extends Controller implements AdminAwareController
       $booking->setStatus($status);
 
       $twilio = $this->get('twilio.factory');
-
+      
       if ($status == 3) {
           // Cancelled
           $twilio->bookingCancelledNotification($booking);
