@@ -79,6 +79,8 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
 
+        $sort = $request->query->get('sort', 'rating');
+
         $page = $request->query->get('page', 1);
         $page = intval($page);
 
@@ -92,7 +94,7 @@ class BusinessesController extends Controller
         $params = $form->getData();
 
         $data = $repo->strongParams($params);
-    	$result = $repo->findByMulti($data, $page);
+    	$result = $repo->findByMulti($data, $page, 20, $sort);
 
         $total = $result->count;
         $records = $result->results;
@@ -129,6 +131,7 @@ class BusinessesController extends Controller
         $totalPages = ceil($total / $pageSize);
 
         return $this->render('businesses/search.html.twig', array(
+            'sort' => $sort,
             'results' => $results,
             'params' => $params,
             'form' => $form->createView(),

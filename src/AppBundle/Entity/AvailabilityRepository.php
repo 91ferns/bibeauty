@@ -17,7 +17,7 @@ class AvailabilityRepository extends EntityRepository
         $today = new \DateTime('today');
         $tomorrow = new \DateTime('tomorrow');
 
-        $tomorrow->setTime(11, 59, 59);
+        $tomorrow->setTime(23, 59, 59);
 
         $qb = $this->createQueryBuilder('a');
         $qb

@@ -15,13 +15,13 @@
 
             <div class="btn-group btn-group-justified hidden-xs hidden-sm" role="group">
               <div class="btn-group" role="group">
-                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_bookings' %}active{% endif %}" href="#">Price Low-High</a>
+                <a class="btn btn-default sort-link {% if sort == 'low' %}active{% endif %}" href="#low">Price Low-High</a>
               </div>
               <div class="btn-group" role="group">
-                <a class="btn btn-default {% if app.request.attributes.get('_route') starts with 'admin_business_treatments' %}active{% endif %}" href="#">Price High-Low</a>
+                <a class="btn btn-default sort-link {% if sort == 'high' %}active{% endif %}" href="#high">Price High-Low</a>
               </div>
               <div class="btn-group" role="group">
-                <a class="btn btn-default active {% if app.request.attributes.get('_route') starts with 'admin_business_offers' %}active{% endif %}" href="#">Rating</a>
+                <a class="btn btn-default sort-link {% if sort == 'rating' %}active{% endif %}" href="#rating">Rating</a>
               </div>
             </div> <!-- .btn-group -->
 
@@ -31,11 +31,13 @@
       </div>
 
       <div class="row">
-        {{form_start(form)}}
+        {{ form_start(form, { 'attr': { 'class': 'search-form' } }) }}
         <div class="col-md-4">
           <div class="search-form-sidebar card">
 
             <h4>Search</h4>
+
+            <input type="hidden" name="sort" value="{{ sort }}">
 
             <div class="row">
 
@@ -147,9 +149,9 @@
                   </div>
                   {% endif %}
                   <h1>
-                    {{business.getName}}
+                    <a href="{{ path('business_path', { 'id': business.getId, 'slug': business.getSlug })}}">{{business.getName}}</a>
                     <div class="stars">
-                      {{ business.getAverageRating | rating }} from Yelp&trade;
+                      {{ business.getAverageRating | rating }} from <a href="{{ business.getYelpLink }}">Yelp&trade;</a>
                     </div>
                   </h1>
                   <h2>{{business.getAddress.getStreet}}, {{business.getAddress.getCity}}, {{ business.getAddress.getState }}</h2>

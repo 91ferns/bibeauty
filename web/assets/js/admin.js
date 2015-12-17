@@ -13,6 +13,17 @@ jQuery(function($) {
 
   }
 
+  $('.sort-link').click(function(e) {
+    e.preventDefault();
+    var newVal = $(this).attr('href');
+    newVal = newVal.substring(1, newVal.length);
+
+    var $form = $('.search-form');
+    $form.find('[name="sort"]').val(newVal);
+
+    $form.submit();
+  });
+
   function createBrick(key, val) {
     var el = $(brickTemplate({key: key, val: val}));
 

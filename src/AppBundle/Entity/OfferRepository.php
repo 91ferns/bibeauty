@@ -29,7 +29,7 @@ class OfferRepository extends EntityRepository
             return $results;
     }
 
-    public function findByMulti($search, $currentPage = 1, $pageSize = 20){
+    public function findByMulti($search, $currentPage = 1, $pageSize = 20, $sort = 'rating'){
       $qb    = $this->createQueryBuilder('o');
       $query = $qb
                 ->leftJoin('o.availabilitySet', 'oas')
@@ -68,7 +68,13 @@ class OfferRepository extends EntityRepository
           $this->filterOffersByPrice($query, $qb, $min, $max);
       }
 
-      $query->addOrderBy('o.currentPrice', 'ASC');
+      if ($sort == 'high') {
+        $query->addOrderBy('o.currentPrice', 'DESC');
+      } elseif ($sort == 'rating') {
+        $query->addOrderBy('b.averageRating', 'DESC');
+      } else {
+        $query->addOrderBy('o.currentPrice', 'ASC');
+      }
 
       // die($query->getDQL());
 
