@@ -117,7 +117,7 @@ class TwilioFactory
         }
 
         // Build message
-        $message = "Booking request sent. Await confirmation SMS if Accepted or Declined.\n";
+        $message = "Your Booking is CONFIRMED.\n";
         // Hi, %s:\n", $booking->getName());
         $message .= sprintf("%s\n", $availability->getDayText());
         $message .= sprintf("%s\n", $availability->getTimeText());
@@ -141,7 +141,7 @@ class TwilioFactory
         $availability = $booking->getAvailability();
 
         // Build message
-        $message = "Your Booking has unfortunately been DECLINED.\n";
+        $message = "Booking DECLINED.\n";
         $message .= sprintf("%s\n", $availability->getDayText());
         $message .= sprintf("%s\n", $availability->getTimeText());
         $message .= sprintf("%s.\n", $treatment->getName());
