@@ -1,17 +1,27 @@
 {
 
-
     "express": {
         "view cache": false,
         "view engine": "js",
         "views": "path:./.build/templates"
     },
 
+    "languages": [
+      "en-US",
+      "it-IT"
+    ],
+
     "mongodb": {
       "uri": "mongodb://localhost/my_database"
     },
 
+    "redis": {
+      "url": "redis://localhost"
+    },
 
+    "session": {
+      "secret": "FatCats"
+    },
 
     "view engines": {
         "js": {
@@ -28,18 +38,16 @@
     "dust": {
         "helpers": [
 
-            "dust-makara-helpers"
+            "dust-makara-helpers",
+            "./config/dust"
 
         ]
     },
-
-
 
     "i18n": {
         "contentPath": "path:./locales",
         "fallback": "en-US"
     },
-
 
     "specialization": {
     },
@@ -82,7 +90,6 @@
                 ]
             }
         },
-
 
         "static": {
             "module": {

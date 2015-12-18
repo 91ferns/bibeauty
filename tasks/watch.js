@@ -21,7 +21,9 @@ module.exports = function watch(grunt) {
 			files: [
 				'controllers/**/*.js',
 				'models/**/*.js',
-				'config/**/*.json'
+				'services/**/*.js',
+				'config/**/*.json',
+				'config/**/*.js',
 			],
 			tasks: ['express:dev', 'wait'],
 			options: {

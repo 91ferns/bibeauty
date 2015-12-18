@@ -1,0 +1,5 @@
+<div class="alert alert-warning">
+  {#flash}
+    {@message type="content" key=message/}
+  {/flash}
+</div>

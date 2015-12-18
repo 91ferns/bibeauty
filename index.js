@@ -3,6 +3,11 @@
 var express = require('express');
 var kraken = require('kraken-js');
 var mongoose = require('mongoose');
+var configure = require('./config');
+
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+var passport = require('passport');
 
 var options, app;
 
@@ -17,14 +22,26 @@ options = {
          * `confit` (https://github.com/krakenjs/confit/) configuration object.
          */
 
-        mongoose.connect(config.get('mongodb:uri', 'mongodb://localhost/my_database'));
+        //
+        configure(config);
+        app.use(session({
+          store: new RedisStore(config.get('redis')),
+          secret: config.get('session:secret')
+        }));
+        app.use(require('flash')());
+        app.use(passport.initialize());
+        app.use(passport.session());
+        app.use(function(req, res, next) {
+          res.locals.user = req.user || false; //console.log(req.user);
+          next();
+        });
 
-        mongoose.Promise = require('bluebird');
         next(null, config);
     }
 };
 
 app = module.exports = express();
+
 app.use(kraken(options));
 app.on('start', function () {
     console.log('Application ready to serve requests.');

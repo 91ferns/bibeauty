@@ -1,0 +1,74 @@
+{>"layouts/master" /}
+
+{<body}
+
+<section id="signup" class="nav-pad">
+
+  <div class="container">
+
+    <div class="jumbotron signup-area">
+      <h1 class="login-title"><strong>{@message key="title" type="content" /}</strong></h1>
+      <h2>{@message key="subtitle" type="content" /}</h2>
+
+      {?flash}
+        {>"shared/errors" /}
+      {/flash}
+
+      <form action="{@path src="do_signup"/}" method="post">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="sr-only">{@message key="fields.email" type="content" /}</label>
+              <input type="email" name="email" class="input-lg form-control" placeholder="{@message key="fields.email" type="content" /}">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="sr-only">{@message key="fields.firstName" type="content" /}</label>
+              <input type="text" name="firstName" class="input-lg form-control" placeholder="{@message key="fields.firstName" type="content" /}">
+            </div>
+          </div> <!-- /.col -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="sr-only">{@message key="fields.lastName" type="content" /}</label>
+              <input type="text" name="lastName" class="input-lg form-control" placeholder="{@message key="fields.lastName" type="content" /}">
+            </div>
+          </div> <!-- /.col -->
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label class="sr-only">{@message key="fields.password" type="content" /}</label>
+                  <input type="password" name="password" class="input-lg form-control" placeholder="{@message key="fields.password" type="content" /}">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label class="sr-only">{@message key="fields.passwordConfirm" type="content" /}</label>
+                  <input type="password" name="passwordConfirm" class="input-lg form-control" placeholder="{@message key="fields.passwordConfirm" type="content" /}">
+              </div>
+            </div>
+        </div> <!-- /.row -->
+
+        <input type="hidden" name="_csrf" value="{_csrf}" />
+
+        <input type="submit" value="{@message key="signup" type="content" /}"
+             class="btn btn-primary btn-lg" />
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+{/body}

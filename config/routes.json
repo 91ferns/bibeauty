@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "signup": "/signup",
+    "login": "/login",
+    "home": "/"
+
+
+  }
+}

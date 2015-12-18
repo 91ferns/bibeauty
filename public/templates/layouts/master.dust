@@ -44,24 +44,24 @@
               <ul>
                 {?user}
                   <li>
-                    <a href="{{ path('admin_businesses_path') }}">
-                      Welcome {{ app.user.getFirstName }}
+                    <a href="{@path name="admin" /}">
+                      {@pre type="content" key="nav.welcome"/}
                     </a>
                   </li>
                   <li class="nav-separator"></li>
-                  <li><a href="{{path('logout_path')}}">
-                    Logout
+                  <li><a href="{@path name="logout" /}">
+                    {@pre type="content" key="nav.logout"/}
                   </a></li>
                 {:else}
                   <li class="">
-                    <a href="{{ path('login_route') }}">
-                      Login
+                    <a href="{@path name="login" /}">
+                      {@pre type="content" key="nav.login"/}
                     </a>
                   </li>
                   <li class="nav-separator"></li>
                   <li class="">
-                    <a href="{{ path('signup_route') }}">
-                      Sign Up
+                    <a href="{@path name="signup" /}">
+                      {@pre type="content" key="nav.signup"/}
                     </a>
                   </li>
                 {/user}
@@ -69,7 +69,7 @@
             </div> <!-- /.navbar-right -->
 
             <span class="sr-only">BiBeauty Admin</span>
-            <a href="/"><img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty"></a>
+            <a href="/"><img src="{@asset src="images/logo.png"/}" alt="BiBeauty" /></a>
           </div> <!-- /.container -->
         </div> <!-- .navbar-brand -->
       </div>
@@ -82,22 +82,22 @@
     <ul class="nav navmenu-nav">
       {?user}
         <li>
-          <a href="{{ path('admin_businesses_path') }}">
-            Welcome {{ app.user.getFirstName }}
+          <a href="{@path name="admin_businesses" /}">
+            {@pre type="content" key="nav.welcome"/}
           </a>
         </li>
-        <li><a href="{{path('logout_path')}}">
-          Logout
+        <li><a href="{@path name="logout" /}">
+          {@pre type="content" key="nav.logout"/}
         </a></li>
       {:else}
         <li class="">
-          <a href="{{ path('login_route') }}">
-            Login
+          <a href="{@path name="login" /}">
+            {@pre type="content" key="nav.login"/}
           </a>
         </li>
         <li class="">
-          <a href="{{ path('signup_route') }}">
-            Sign Up
+          <a href="{@path name="signup" /}">
+            {@pre type="content" key="nav.signup"/}
           </a>
         </li>
       {/user}
@@ -110,71 +110,72 @@
         {+body /}
     </main>
 
-  </div>
+  <footer id="site-main-footer">
 
-<footer id="site-main-footer">
+      <div class="top-footer">
+          <div class="container">
+              <div class="row">
 
-    <div class="top-footer">
-        <div class="container">
-            <div class="row">
+                  <div class="col-md-4">
+                      <div class="panel panel-default">
+                          <!-- Default panel contents -->
+                          <div class="panel-heading">{@pre type="content" key="footer.links.title"/}</div>
 
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">Site Map</div>
+                          <!-- List group -->
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <a href="{@path name="about" /}">{@pre type="content" key="footer.links.about"/}</a>
+                              </li>
+                              <li class="list-group-item">
+                                  <a href="{@path name="contact" /}">{@pre type="content" key="footer.links.contact"/}</a>
+                              </li>
+                          </ul>
+                      </div> <!-- /.panel -->
+                  </div>
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="{{path('about_path')}}">About Us</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{path('contact_path')}}">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div> <!-- /.panel -->
-                </div>
+                  <div class="col-md-4">
+                      <div class="panel panel-default">
+                          <!-- Default panel contents -->
+                          <div class="panel-heading">{@pre type="content" key="footer.business.title"/}</div>
 
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">Business Owners</div>
+                          <!-- List group -->
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <a href="{@path name="admin_new_business" /}">{@pre type="content" key="footer.business.add"/}</a>
+                              </li>
+                          </ul>
+                      </div> <!-- /.panel -->
+                  </div>
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="{{path('admin_new_businesses_path')}}">Add Business</a>
-                            </li>
-                        </ul>
-                    </div> <!-- /.panel -->
-                </div>
+                  <div class="col-md-4">
+                      <div class="panel panel-default">
+                          <!-- Default panel contents -->
+                          <div class="panel-heading">{@pre type="content" key="footer.support.title"/}</div>
 
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">Support &amp; Information</div>
+                          <!-- List group -->
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <a href="{@path name="privacy" /}">{@pre type="content" key="footer.support.privacy"/}</a>
+                              </li>
+                              <li class="list-group-item">
+                                  <a href="{@path name="terms" /}">{@pre type="content" key="footer.support.terms"/}</a>
+                              </li>
+                          </ul>
+                      </div> <!-- /.panel -->
+                  </div>
 
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <a href="{{ path('privacy_path') }}">Privacy Policy</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{ path('terms_path') }}">Terms and Conditions</a>
-                            </li>
-                        </ul>
-                    </div> <!-- /.panel -->
-                </div>
+              </div>
+          </div>
+      </div>
 
-            </div>
-        </div>
-    </div>
+      <div class="bottom-footer">
+          <img src="{@asset src="images/ft_logo.png" /}" alt="BiBeauty">
+      </div>
 
-    <div class="bottom-footer">
-        <img src="/images/ft_logo.png" alt="BiBeauty">
-    </div>
+  </footer>
 
-</footer>
+</div>
+
 <!-- footer -->
 <script src="/js/app.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?sensor=true&callback=initMap"></script>
