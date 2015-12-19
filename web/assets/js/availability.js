@@ -14,8 +14,7 @@ jQuery(function($) {
     });
 
     $('.select2').select2({
-      closeOnSelect: false,
-      theme: "classic",
+      closeOnSelect: false
     });
   }
 });

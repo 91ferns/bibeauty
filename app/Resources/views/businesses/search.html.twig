@@ -117,7 +117,7 @@
               <div class="form-group">
 
                 <div class="input-group TreatmentTypesGroup">
-                  <select data-minimumResultsForSearch="1" class="form-control" data-placeholder="Select a Treatment" name="treatment">
+                  <select data-minimumResultsForSearch="1" class="form-control" data-placeholder="Select a Treatment" id="TreatmentSelect" name="treatment">
                     <option style="color: #999;">Select a Treatment</option>
                     {% for category in categories %}
                     <option value="{{category.getId}}" {% if params['treatment'] == category.getId %}selected="selected"{% endif %}>{{category.getLabel}}</option>
@@ -252,8 +252,8 @@
 {% endblock body %}
 {% block javascripts %}
 <script>
-  jQuery(function($){
-    $('select[name="treatment"]').select2();
+  jQuery(document).ready(function(){
+    // jQuery('select[name="treatment"]').select2();
   });
 </script>
 {% endblock %}
