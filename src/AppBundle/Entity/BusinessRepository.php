@@ -18,9 +18,18 @@ class BusinessRepository extends EntityRepository
        //->from('AppBundle:Business', 'b')
        ->leftjoin('AppBundle:Address','a')
        ->where('a.zip = :zip')
+       ->andWhere('b.active = true')
        ->setParameter('zip',$zip);
     $result=$query->getQuery()
                   ->getResult();
+    return $result;
+  }
+
+  public function findAll() {
+    $qb    = $this->createQueryBuilder('b');
+    $query = $qb->andWhere('b.active = true');
+
+    $result = $query->getQuery()->getResult();
     return $result;
   }
 
@@ -32,6 +41,7 @@ class BusinessRepository extends EntityRepository
        ->leftJoin('AppBundle:ServiceType','st')
        ->leftjoin('AppBundle:ServiceCategory','sc')
        ->where('st.serviceTypeId = :serviceTypeId')
+       ->andWhere('b.active = true')
        ->setParameter('serviceTypeId',$serviceTypeId);
     if($serviceCategoryId !== null){
       $query->where('sc.serviceCategoryId = :ServiceCategoryId')

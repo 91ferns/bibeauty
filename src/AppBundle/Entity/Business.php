@@ -28,6 +28,11 @@ class Business {
     protected $slug;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $active;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
@@ -159,6 +164,15 @@ class Business {
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getActive() {
+        return $this->active;
+    }
+
+    public function setActive($active) {
+        $this->active = $active;
+        return $this;
     }
 
     /**

@@ -21,6 +21,7 @@ class OfferRepository extends EntityRepository
                 ->innerJoin('o.business','b')
                 ->leftJoin('b.address', 'ba')
                 ->innerJoin('o.treatment', 't')
+                ->andWhere('b.active = true')
                 ->setMaxResults(3);
 
             $query = $qb->getQuery();
@@ -38,6 +39,7 @@ class OfferRepository extends EntityRepository
                 ->leftJoin('b.address', 'ba')
                 ->addSelect('ba')
                 ->leftJoin('o.treatment', 't')
+                ->andWhere('b.active = true')
                 ->andWhere('o.isOpen = true');
 
       if ($this->isAvailabilitySearch($search)){
