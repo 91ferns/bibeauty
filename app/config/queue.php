@@ -26,7 +26,7 @@ if ($rabbitConsumer) {
 $rabbitProducer = parse_url(getenv('RABBITMQ_BIGWIG_TX_URL'));  # Producers
 
 if ($rabbitProducer) {
-	$container->setParameter('rabbit_producer_dsn', getenv('RABBITMQ_BIGWIG_RX_URL'));
+	$container->setParameter('rabbit_producer_dsn', getenv('RABBITMQ_BIGWIG_TX_URL'));
 
 	$container->setParameter('rabbit_producer_user', $rabbitProducer['user']);
 	$container->setParameter('rabbit_producer_password', $rabbitProducer['pass']);

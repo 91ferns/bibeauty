@@ -181,14 +181,6 @@ old_sound_rabbit_mq:
     consumers:
         create_availabilities:
             connection:       consumer
-            exchange_options: {name: 'create-availabilities', type: direct}
-            queue_options:    {name: 'create-availabilities'}
+            exchange_options: {name: 'create_availabilities', type: direct}
+            queue_options:    {name: 'create_availabilities'}
             callback:         create_availabilities_service
-    multiple_consumers:
-        worker:
-            connection:       consumer
-            exchange_options: {name: 'work', type: direct}
-            queues:
-                create_availabilities:
-                    name:             create_availabilities
-                    callback:         create_availabilities_service

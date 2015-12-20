@@ -107,7 +107,7 @@ class CreateAvailabilities implements ConsumerInterface
             /* end your code */
             // $this->logger->addInfo('End executing');
         } catch(\Exception $e) {
-            echo 'Failed: ';
+            echo 'Failed';
             $logger->addError($e->getMessage());
 
             return true;
