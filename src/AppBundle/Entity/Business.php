@@ -30,7 +30,7 @@ class Business {
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $active;
+    protected $active = true;
 
     /**
      * @ORM\Column(type="string", length=255)
