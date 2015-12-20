@@ -22,7 +22,6 @@ snc_redis:
             user: %redis_user%
             port: %redis_port%
             password: %redis_password%
-            database: %redis_database%
     session:
         client: default
         prefix: session
