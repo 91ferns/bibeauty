@@ -110,7 +110,7 @@ class CreateAvailabilities implements ConsumerInterface
             echo 'Failed: ';
             $logger->addError($e->getMessage());
 
-            return (boolean) $e->getCode();
+            return true;
         }
 
         return true;
