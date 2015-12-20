@@ -13,20 +13,29 @@ twig:
 #    serializer:
 #        cache: serializer.mapping.cache.apc
 
-#snc_redis:
-#    clients:
-#        default:
-#            type: predis
-#            alias: default
-#            dsn: "%redis_dsn%"
-#        doctrine:
-#            type: predis
-#            alias: doctrine
-#            dsn: "%redis_dsn%"
-#    doctrine:
-#        metadata_cache:
-#            client: doctrine
-#            entity_manager: default
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: "%redis_dsn%"
+    session:
+        client: default
+        prefix: session
+    doctrine:
+        metadata_cache:
+            client: default
+            entity_manager: default
+            document_manager: default
+        result_cache:
+            client: default
+            entity_manager: default
+        query_cache:
+            client: default
+            entity_managet: default
+    monolog:
+        client: monolog
+        key: monolog
 #            document_manager: default
 #        result_cache:
 #            client: doctrine
