@@ -68,6 +68,7 @@
         ],
         "compile": [
             "app/console cache:clear",
+            "app/console cache:warmup --env=prod --no-debug",
             "app/console assetic:dump"
         ]
     },
