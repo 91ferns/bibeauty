@@ -67,7 +67,7 @@
               {% endif %}
             </span></td>
             <td title="Enabled">
-              <a href="{{ path('admin_offer_queue_path', { offerId: offer.getId, slug: business.getSlug, id: business.getId }) }}">Requeue Offers</a>
+              <a href="{{ path('admin_business_offer_queue_path', { offerId: offer.getId, slug: business.getSlug, id: business.getId }) }}">Requeue Offers</a>
               <form id="offerStatus{{offer.getId}}"
               class="delete-form"
               action="{{path('admin_treatment_toggle_is_open',{'id':app.request.get('id'),'slug':app.request.get('slug')})}}" method="post">
