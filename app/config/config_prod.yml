@@ -18,7 +18,7 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: "%redis_dsn%"
+            dsn: redis://h:p568n3rtob08g09ukeotj121j5t@ec2-54-83-33-255.compute-1.amazonaws.com:14149
     session:
         client: default
         prefix: session
