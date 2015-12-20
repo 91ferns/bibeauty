@@ -63,14 +63,14 @@ class OffersController extends Controller implements AdminAwareController
     }
 
     /**
-     * @Route("/account/offers/requeue/{id}/{slug}/{offerId}", name="admin_offer_queue_path ")
+     * @Route("/account/offers/{id}/{slug}/requeue/{offerId}", name="admin_offer_queue_path")
      * @Method("GET")
      */
     public function doQueueAction($id, $slug, $offerId, Request $request)
     {
 
         $repo = $this->getRepo('Offer');
-        $offer = $repo->findById($offerId);
+        $offer = $repo->findOneById($offerId);
 
         $success = $this->doAvailabilities($offer->getAvailabilitySet()->getId());
 
