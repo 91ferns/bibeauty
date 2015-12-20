@@ -32,7 +32,7 @@ snc_redis:
             entity_manager: default
         query_cache:
             client: default
-            entity_managet: default
+            entity_manager: default
     monolog:
         client: monolog
         key: monolog
