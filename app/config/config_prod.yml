@@ -12,33 +12,6 @@ twig:
 #        cache: validator.mapping.cache.apc
 #    serializer:
 #        cache: serializer.mapping.cache.apc
-
-snc_redis:
-    clients:
-        default:
-            type: predis
-            alias: default
-            host: %redis_host%
-            user: %redis_user%
-            port: %redis_port%
-            password: %redis_password%
-    session:
-        client: default
-        prefix: session
-    doctrine:
-        metadata_cache:
-            client: default
-            entity_manager: default
-            document_manager: default
-        result_cache:
-            client: default
-            entity_manager: default
-        query_cache:
-            client: default
-            entity_manager: default
-    monolog:
-        client: monolog
-        key: monolog
 #            document_manager: default
 #        result_cache:
 #            client: doctrine
