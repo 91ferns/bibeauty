@@ -145,11 +145,11 @@ doctrine_migrations:
 old_sound_rabbit_mq:
     connections:
         consumer:
-            host:     "%rabbit_consumer_host%"
-            port:     "%rabbit_consumer_port%"
-            user:     '%rabbit_consumer_user%'
-            password: '%rabbit_consumer_password%'
-            vhost:    '%rabbit_consumer_vhost%'
+            host:     'happy-threarah-57.bigwig.lshift.net'
+            port:     10227
+            user:     'Hh_XmnbZ'
+            password: '-xogakJ4vdjvLJodFG6dVMCjPdRBDGY9'
+            vhost:    'C-XgJlnTbbal'
             lazy:     true
             connection_timeout: 3
             read_write_timeout: 3
@@ -160,11 +160,11 @@ old_sound_rabbit_mq:
             # requires php-amqplib v2.4.1+
             heartbeat: 0
         producer:
-            host:     "%rabbit_producer_host%"
-            port:     "%rabbit_producer_port%"
-            user:     '%rabbit_producer_user%'
-            password: '%rabbit_producer_password%'
-            vhost:    '%rabbit_producer_vhost%'
+            host:     'happy-threarah-57.bigwig.lshift.net'
+            port:     10226
+            user:     'Hh_XmnbZ'
+            password: '-xogakJ4vdjvLJodFG6dVMCjPdRBDGY9'
+            vhost:    'C-XgJlnTbbal'
             lazy:     true
             connection_timeout: 3
             read_write_timeout: 3
