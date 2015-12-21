@@ -2,8 +2,9 @@
   "routes": {
     "signup": "/signup",
     "login": "/login",
-    "home": "/"
+    "home": "/",
 
+    "admin": "/admin"
 
   }
 }

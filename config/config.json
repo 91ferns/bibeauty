@@ -39,6 +39,7 @@
         "helpers": [
 
             "dust-makara-helpers",
+            "dustjs-helpers",
             "./config/dust"
 
         ]

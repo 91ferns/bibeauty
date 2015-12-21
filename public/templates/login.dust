@@ -11,7 +11,7 @@
         <h1 class="login-title"><strong>{@pre type="content" key="login"/}</strong></h1>
 
         {?flash}
-          {>"shared/errors" /}
+          {+"shared/errors" /}
         {/flash}
 
         <form action="{@path src="do_login"/}" method="post">

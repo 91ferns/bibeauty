@@ -8,6 +8,8 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var emailValidator = require('email-validator');
 
+var Business = require('./business');
+
 var User;
 
 var UserSchema = new Schema({
@@ -126,6 +128,11 @@ UserSchema.methods = {
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
   },
+
+  getBusinesses: function() {
+    return Business.find({});
+  },
+
 };
 
 UserSchema.statics = {

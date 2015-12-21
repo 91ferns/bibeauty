@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {>"shared/favicon" /}
+
+    <title>{+title /}</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="admin">
+
+  <nav class="navbar navbar-default navbar-fixed-top" id="primary-nav" role="navigation">
+      <div class="container-fluid">
+        <div class="brand-wrapper">
+          <div class="navbar-brand">
+            <div class="container" style="position:relative;">
+
+              <button type="button" class="navbar-toggle visible-sm visible-xs" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <div class="navbar-right visible-md visible-lg">
+                <ul>
+                  <li>
+                    <a href="{@path name="admin" /}">
+                      {@pre type="content" key="nav.welcome"/}
+                    </a>
+                  </li>
+                  <li class="nav-separator"></li>
+                  <li><a href="{@path name="logout" /}">
+                    {@pre type="content" key="nav.logout"/}
+                  </a></li>
+                </ul>
+              </div> <!-- /.navbar-right -->
+
+              <span class="sr-only">BiBeauty Admin</span>
+              <a href="/"><img src="{@asset src="images/logo.png"/}" alt="BiBeauty" /></a>
+            </div> <!-- /.container -->
+          </div> <!-- .navbar-brand -->
+        </div>
+
+      </div>
+    </nav>
+
+    <div class="navmenu navmenu-default navmenu-fixed-left">
+
+      <ul class="nav navmenu-nav">
+        {?businesses}
+          {#businesses}
+          <li>
+            <a href="{@path name="admin_business" id=_id slug=slug /}" data-id="{_id}">
+              {name}
+            </a>
+          </li>
+          {/businesses}
+        {/businesses}
+      </ul>
+    </div>
+
+    <div class="canvas">
+
+      <div class="container">
+        <section id="admin-main">
+
+          {?flash}
+            {+"shared/errors" /}
+          {/flash}
+
+          <header class="business-panel-header">
+
+            {?business}
+            <div class="btn-group btn-group-justified hidden-xs hidden-sm" role="group">
+              <div class="btn-group" role="group">
+                <a class="btn btn-default" href="{@path name="admin_businesses" /}">{@message type="content" key="nav.home"/}</a>
+              </div>
+              <div class="btn-group" role="group">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="visible-md visible-lg">
+                      {business.name}...
+                    </span>
+                    <span class="visible-xs visible-sm">
+                      {business.name}
+                    </span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    {?businesses}
+                      {#businesses}
+                        <li><a data-id="{_id}" href="{@path name="admin_business_bookings" slug=slug id=_id/}">
+                          {name}
+                        </a></li>
+                      {/businesses}
+                    {/businesses}
+                  </ul>
+                </div>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default" href="{@path name="admin_business_bookings" id=business._id slug=business.slug/}">My Bookings</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default" href="{@path name="admin_business_treatments" id=business._id slug=business.slug/}">All Treatments</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default" href="{@path name="admin_business_offers" id=business._id slug=business.slug/}">My Offers</a>
+              </div>
+            </div> <!-- .btn-group -->
+
+            <div class="visible-xs visible-sm">
+              <div class="dropdown dropdown-navigation">
+                <button class="btn btn-navigation dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  {@select key=route}
+                    {@none}Home{/none}
+                    {@eq value="admin_business_bookings"}My Bookings{/eq}
+                    {@eq value="admin_business_treatments"}My Treatments{/eq}
+                    {@eq value="admin_business_offers"}My Offers{/eq}
+                  {/select}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu multi-level">
+
+                  <li>
+                    <a class="btn btn-default" href="{@path name="admin_businesses"/}">Home</a>
+                  </li>
+
+                  <li class="dropdown-submenu">
+
+                    <!-- sub dropdown -->
+                    <a href="javascript: void(0);" tabindex="-1">
+                      {business.name}
+                    </a>
+                    <ul class="dropdown-menu">
+                      {?businesses}
+                        {#businesses}
+                          <li><a data-id="{_id}" href="{@path name="admin_business_bookings" slug=slug id=_id/}">{name}</a></li>
+                        {/businesses}
+                      {/businesses}
+                    </ul>
+                    <!-- end -->
+
+                  </li>
+                  <li>
+                    <a class=" active" href="{@path name="admin_business_bookings" slug=business.slug id=business._id/}">My Bookings</a>
+                  </li>
+                  <li>
+                    <a class="" href="{@path name="admin_business_treatments" slug=business.slug id=business._id/}">My Treatments</a>
+                  </li>
+                  <li>
+                    <a class="" href="{@path name="admin_business_offers" slug=business.slug id=business._id/}">My Offers</a>
+                  </li>
+
+                </ul>
+              </div> <!-- /.dropdown -->
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 col-md-push-8 align-center align-md-right">
+                <div class="toolbar-block">
+                  {+toolbar/}
+                </div>
+              </div> <!-- /col -->
+            </div> <!-- /row -->
+
+            <div class="col-md-4 col-md-offset-4 col-md-pull-4">
+              <h4 class="business-title">
+                {business.name}
+              </h4>
+            </div> <!-- /.col -->
+
+            {:else}
+
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-md-pull-4">
+
+                <div class="dropdown dropdown-navigation">
+                  <button class="btn btn-navigation dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    {@select key=route}
+                      {@none}Home{/none}
+                      {@eq value="admin_business_bookings"}My Bookings{/eq}
+                      {@eq value="admin_business_treatments"}My Treatments{/eq}
+                      {@eq value="admin_business_offers"}My Offers{/eq}
+                    {/select}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu multi-level">
+
+                    {?businesses}
+                      {#businesses}
+                      <li>
+                        <a class="" href="{@path name="admin_business_bookings_path" slug=slug id=_id/}">
+                          {name}
+                        </a>
+                      </li>
+                      {/businesses}
+                    {/businesses}
+
+                  </ul>
+                </div> <!-- /.dropdown -->
+
+              </div><!-- /.col -->
+
+            </div> <!-- /.row -->
+
+            {/business}
+
+          </header> <!-- /header -->
+
+          <div class="admin-main-inner">
+            {+body /}
+          </div>
+        </section>
+      </div>
+
+    </div> <!-- /.canvas -->
+
+</body>
+
+</html>
