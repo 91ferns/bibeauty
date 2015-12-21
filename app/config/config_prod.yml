@@ -1,8 +1,8 @@
 imports:
-    - { resource: database.php }
-    - { resource: email.php }
     - { resource: queue.php }
     - { resource: config.yml }
+    - { resource: database.php }
+    - { resource: email.php }
 
 twig:
 #    cache: true
