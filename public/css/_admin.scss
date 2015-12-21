@@ -222,14 +222,6 @@ $card-radius: 10px;
         border: 0px;
         border-radius: 7px;
 
-        &:before {
-          content: "Upload";
-        }
-
-        &.has-attachment:before {
-          content: "Attached";
-        }
-
         input[type=file] {
           position: absolute;
           top: 0;

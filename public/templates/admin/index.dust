@@ -3,7 +3,7 @@
 {<toolbar}
   <div class="admin-buttons align-center align-md-right">
     <a href="{@path name="admin_new_business" /}" class="admin-btn">
-      <img src="{@asset src="/images/add-button-toolbar.png" /}" alt="Add">
+      <img src="{@asset src="images/add-button-toolbar.png" /}" alt="Add">
       Add Business
     </a>
   </div>

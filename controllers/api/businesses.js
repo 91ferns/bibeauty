@@ -1,6 +1,6 @@
 'use strict';
 
-var Business = require('../../../models/business');
+var Business = require('../../models/business');
 
 module.exports = function (router) {
 
@@ -11,7 +11,7 @@ module.exports = function (router) {
       })
       .catch(function(err) {
         res.json(err);
-      })
+      });
   });
 
 };
