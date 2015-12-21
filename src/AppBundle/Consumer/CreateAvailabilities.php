@@ -31,8 +31,6 @@ class CreateAvailabilities implements ConsumerInterface
             // $this->logger->addInfo('Start executing');
             $ID = $msg->body;
 
-            echo 'WORKER: Creating availabilities for ' . $ID;
-
             //Process picture upload.
             //$msg will be an instance of `PhpAmqpLib\Message\AMQPMessage` with the $msg->body being the data sent over RabbitMQ.
 
@@ -41,6 +39,8 @@ class CreateAvailabilities implements ConsumerInterface
             }
 
             $availabilitySetId = $ID;
+
+            $logger->info('Executing creation of availability set ' . $availabilitySetId);
 
             $em = $this->em;
             $em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -53,8 +53,6 @@ class CreateAvailabilities implements ConsumerInterface
                 $msg = 'Could not find that availability set. Parameters: ' . $availabilitySetId;
                 throw new \Exception($msg, 0);
             }
-
-            $logger->info('Executing creation of availability set ' . $availabilitySetId);
 
             // Start it going
             $business = $availabilitySet->getTreatment()->getBusiness();
@@ -107,7 +105,6 @@ class CreateAvailabilities implements ConsumerInterface
             /* end your code */
             // $this->logger->addInfo('End executing');
         } catch(\Exception $e) {
-            echo 'Failed';
             $logger->addError($e->getMessage());
 
             return true;
