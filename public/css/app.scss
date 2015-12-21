@@ -38,9 +38,14 @@ $nav-height: 110px;
 @import 'nav';
 // Our stuff
 
+html {
+   height: 100%;
+}
+
 body {
   background-color: #f0f0f0;
   font-family: 'BPreplay', helvetica, sans-serif;
+  min-height: 100%;
 }
 
 .btn.btn-fullwidth {

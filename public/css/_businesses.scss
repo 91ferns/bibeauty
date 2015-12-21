@@ -13,6 +13,13 @@
 }
 
 .business-info-panel, .business.card {
+
+  margin-bottom: 30px;
+
+  @media (min-width: $screen-md-min) {
+    // margin-bottom: 0px;
+  }
+
   .floated-image {
     margin-right: 20px;
     margin-bottom: 20px;
@@ -48,6 +55,10 @@
     color: #6c6e6d;
     text-transform: uppercase;
     font-size: 21px;
+  }
+
+  h1 a {
+    color: #6c6e6d;
   }
 
   h2 {

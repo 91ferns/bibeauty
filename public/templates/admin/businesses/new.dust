@@ -1,0 +1,71 @@
+{>"layouts/admin" /}
+
+{<toolbar}
+  <div class="admin-buttons align-center align-md-right">
+    <a href="{@path name="admin_new_business" /}" class="admin-btn">
+      <img src="{@asset src="/images/add-button-toolbar.png" /}" alt="Add">
+      Add Business
+    </a>
+  </div>
+{/toolbar}
+
+{<body}
+
+<div class="panel panel-default new-panel">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-7">
+
+        <form action="{@path name="admin_businesses" /}" novalidate="true" method="POST">
+
+          <div class="row">
+            <div class="col-md-4 col-xs-6">
+                {{ form_label(form.headerAttachment ) }}
+                {{ form_widget(form.headerAttachment) }}
+            </div>
+            <div class="col-md-4 col-xs-6 bordered-file">
+              {{ form_label(form.logoAttachment ) }}
+              {{ form_widget(form.logoAttachment) }}
+            </div>
+          </div>
+
+          <p>&nbsp;</p>
+
+          {{ form_row(form.name) }}
+          {{ form_row(form.address) }}
+
+          <hr>
+
+          {{ form_row(form.landline) }}
+          {{ form_row(form.mobile) }}
+
+          <hr>
+
+          {{ form_row(form.description) }}
+          {{ form_row(form.yelpLink) }}
+          {{ form_row(form.email) }}
+          {{ form_row(form.website) }}
+
+          <hr>
+
+          <div class="checkboxes clearfix">
+              {{ form_widget(form.acceptsCash) }}
+              {{ form_widget(form.acceptsCredit) }}
+          </div>
+
+          {{ form_widget(form) }}
+
+            <input type="submit" value="Create"
+                 class="btn btn-primary btn-lg" />
+
+            <input type="hidden" name="_csrf" value="{_csrf}" />
+
+        </form>
+
+
+      </div> <!-- /.col-md-7 -->
+    </div>
+  </div>
+</div>
+
+{/body}

@@ -203,6 +203,12 @@
 
               </div><!-- /.col -->
 
+              <div class="col-md-4 align-center align-md-right">
+                <div class="toolbar-block">
+                  {+toolbar/}
+                </div>
+              </div> <!-- /col -->
+
             </div> <!-- /.row -->
 
             {/business}

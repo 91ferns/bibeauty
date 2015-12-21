@@ -4,7 +4,9 @@
     "login": "/login",
     "home": "/",
 
-    "admin": "/admin"
+    "admin": "/admin",
+    "admin_new_business": "/admin/businesses/new",
+    "admin_businesses": "/admin/businesses"
 
   }
 }
