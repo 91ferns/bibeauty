@@ -150,7 +150,7 @@ old_sound_rabbit_mq:
             user:     '%rabbit_consumer_user%'
             password: '%rabbit_consumer_password%'
             vhost:    '%rabbit_consumer_vhost%'
-            lazy:     false
+            lazy:     true
             connection_timeout: 3
             read_write_timeout: 3
 
@@ -165,7 +165,7 @@ old_sound_rabbit_mq:
             user:     '%rabbit_producer_user%'
             password: '%rabbit_producer_password%'
             vhost:    '%rabbit_producer_vhost%'
-            lazy:     false
+            lazy:     true
             connection_timeout: 3
             read_write_timeout: 3
 

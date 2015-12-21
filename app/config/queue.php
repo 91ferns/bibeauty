@@ -15,7 +15,7 @@ if ($rabbitConsumer) {
 
 	if (isset($rabbitConsumer['path'])) {
 		// remove starting /
-		$path = $rabbitConsumer['path']; // preg_replace("#^[/]#", "", $rabbitConsumer['path']);
+		$path = preg_replace("#^[/]#", "", $rabbitConsumer['path']);
 	} else {
 		$path = '/';
 	}
@@ -37,7 +37,7 @@ if ($rabbitProducer) {
 	}
 
 	if (isset($rabbitProducer['path'])) {
-		$path = $rabbitProducer['path']; // preg_replace("#^[/]#", "", $rabbitProducer['path']);
+		$path = preg_replace("#^[/]#", "", $rabbitProducer['path']);
 	} else {
 		$path = '/';
 	}
