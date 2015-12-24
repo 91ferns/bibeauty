@@ -62,7 +62,7 @@ class TwilioFactory
         $message .= sprintf("%s\n", $availability->getTimeText());
         $message .= sprintf("%s\n", $treatment->getName());
         $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
-        $message .= sprintf("You must ACCEPT or DECLINE the booking to confirm. Go to %s\n");
+        $message .= sprintf("You must ACCEPT or DECLINE the booking to confirm. Go to %s\n", 'https://www.bibeauty.com/account');
         $message .= sprintf("%s\n", $booking->getName());
         $message .= $booking->getPhone();
         $message .= "\n";
