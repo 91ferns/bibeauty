@@ -167,7 +167,7 @@ class BusinessesController extends Controller implements AdminAwareController
         $business = $this->businessBySlugAndId($slug, $id);
 
         $em = $this->getDoctrine()->getManager();
-        $em->setActive(false);
+        $business->setActive(false);
 
         $em->flush();
 

@@ -252,8 +252,8 @@
 {% endblock body %}
 {% block javascripts %}
 <script>
-  jQuery(document).ready(function(){
-    // jQuery('select[name="treatment"]').select2();
+  jQuery(function($) {
+    $('select[name="treatment"]').select2();
   });
 </script>
 {% endblock %}

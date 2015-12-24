@@ -56,9 +56,15 @@
                     </a>
                   </div>
 
-                  <div class="buttons-caption full">
+                  <div class="buttons-caption half">
                     <a href="{{ path('admin_business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
                       <i class="fa fa-pencil fa-small"></i> Edit
+                    </a>
+                  </div>
+
+                  <div class="buttons-caption half bordered" style="border-bottom: 0px;">
+                    <a href="{{ path('business_path', { 'slug': business.getSlug, 'id': business.getId}  ) }}">
+                      View Profile
                     </a>
                   </div>
 
