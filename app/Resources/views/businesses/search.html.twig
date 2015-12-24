@@ -117,17 +117,15 @@
               <div class="form-group">
 
                 <div class="input-group TreatmentTypesGroup">
-                  <select data-minimumResultsForSearch="1" class="form-control" data-placeholder="Select a Treatment" id="TreatmentSelect" name="treatment">
+                  <select data-minimumResultsForSearch="1" class="form-control" data-placeholder="Select a Treatment" id="TreatmentSelect" name="treatment" {% if params['treatment'] is defined %}data-selected="{{params['treatment']}}"{% endif %}>
                     <option style="color: #999;">Select a Treatment</option>
                     {% for category in categories %}
-                    <option value="{{category.getId}}" {% if params['treatment'] == category.getId %}selected="selected"{% endif %}>{{category.getLabel}}</option>
+                    <option value="{{category.getId}}">{{category.getLabel}}</option>
                     {% for subcategory in category.getChildren %}
-                      <option value="{{subcategory.id }}" {% if params['treatment'] == subcategory.id %}selected="selected"{% endif %}>- {{subcategory.getLabel}}</i>
+                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</i>
                     {% endfor %}
                     {% endfor %}
                   </select>
-                  </ul>
-                  <input type="hidden" name="TreatmentTypeId" />
                 </div>
               </div> <!-- /.form-group -->
 
@@ -249,11 +247,11 @@
   </section> <!-- /#below-map -->
 </div>
 
-{% endblock body %}
+{% endblock %}
 {% block javascripts %}
 <script>
-  jQuery(function($) {
-    $('select[name="treatment"]').select2();
+  jQuery(document).ready(function(){
+      jQuery('select[name="treatment"]').select2();
   });
 </script>
 {% endblock %}
