@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cf2b6d7c5662d37caf8e1ced86953b88",
+    "hash": "3557450c09d3ae131e1fbe67aac428fc",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.11.7",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "cbad6eab2e212a6931b587135204f12aef2e1a47"
+                "reference": "6d7c51c5eccf5a71f9f001884cccc55a671ff506"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/cbad6eab2e212a6931b587135204f12aef2e1a47",
-                "reference": "cbad6eab2e212a6931b587135204f12aef2e1a47",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6d7c51c5eccf5a71f9f001884cccc55a671ff506",
+                "reference": "6d7c51c5eccf5a71f9f001884cccc55a671ff506",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2015-12-18 00:05:04"
+            "time": "2015-12-21 22:54:08"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -462,16 +462,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "v2.6.0",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "3cb33d19beb3c62f76c55e7e9683fff12e242bc8"
+                "reference": "a579557bc689580c19fee4e27487a67fe60defc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/3cb33d19beb3c62f76c55e7e9683fff12e242bc8",
-                "reference": "3cb33d19beb3c62f76c55e7e9683fff12e242bc8",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/a579557bc689580c19fee4e27487a67fe60defc0",
+                "reference": "a579557bc689580c19fee4e27487a67fe60defc0",
                 "shasum": ""
             },
             "require": {
@@ -531,7 +531,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-12-04 13:06:46"
+            "time": "2015-12-25 13:18:31"
         },
         {
             "name": "doctrine/data-fixtures",
@@ -1056,16 +1056,16 @@
         },
         {
             "name": "doctrine/migrations",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "57e50714fcb34235cf055edc409e169b8d7af690"
+                "reference": "bffd726e2193c04f88a23154deb1c618a966996d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/57e50714fcb34235cf055edc409e169b8d7af690",
-                "reference": "57e50714fcb34235cf055edc409e169b8d7af690",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/bffd726e2193c04f88a23154deb1c618a966996d",
+                "reference": "bffd726e2193c04f88a23154deb1c618a966996d",
                 "shasum": ""
             },
             "require": {
@@ -1120,7 +1120,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2015-12-15 21:46:29"
+            "time": "2015-12-23 17:08:58"
         },
         {
             "name": "doctrine/orm",
@@ -1525,20 +1525,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/ImageBundle.git",
-                "reference": "0a015237bca21c2adba3e8290acb18bbfd1d0ca1"
+                "reference": "18a7736cf481724062ec5f42c40c0d2d2b108ff6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/ImageBundle/zipball/0a015237bca21c2adba3e8290acb18bbfd1d0ca1",
-                "reference": "0a015237bca21c2adba3e8290acb18bbfd1d0ca1",
+                "url": "https://api.github.com/repos/Gregwar/ImageBundle/zipball/18a7736cf481724062ec5f42c40c0d2d2b108ff6",
+                "reference": "18a7736cf481724062ec5f42c40c0d2d2b108ff6",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "gregwar/image": "2.*",
                 "php": ">=5.3.3",
-                "symfony/framework-bundle": "~2.3",
+                "symfony/framework-bundle": "^2.3 || ^3.0",
                 "twig/twig": "~1.12"
+            },
+            "require-dev": {
+                "sllh/php-cs-fixer-styleci-bridge": "~1.1"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -1560,10 +1563,10 @@
             "description": "Image handling bundle",
             "homepage": "https://github.com/Gregwar/ImageBundle",
             "keywords": [
-                "Symfony2",
-                "image"
+                "image",
+                "symfony"
             ],
-            "time": "2015-10-19 10:35:07"
+            "time": "2015-12-22 13:33:35"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3331,16 +3334,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.7.7",
+            "version": "v2.7.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "cc69dbd24b4b2e6de60b2414ef95da2794f459a2"
+                "reference": "ad264021e44a5aaa132f16aef69f92e56795683e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/cc69dbd24b4b2e6de60b2414ef95da2794f459a2",
-                "reference": "cc69dbd24b4b2e6de60b2414ef95da2794f459a2",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/ad264021e44a5aaa132f16aef69f92e56795683e",
+                "reference": "ad264021e44a5aaa132f16aef69f92e56795683e",
                 "shasum": ""
             },
             "require": {
@@ -3451,7 +3454,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-11-23 11:58:08"
+            "time": "2015-12-26 15:02:06"
         },
         {
             "name": "twig/extensions",
@@ -3732,16 +3735,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "9d760c8db53d2fb2cfc4a33d0bfbef4fae4ed797"
+                "reference": "4b0e6b9122b9df484a3b2e15e4fd88aa7d8861ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/9d760c8db53d2fb2cfc4a33d0bfbef4fae4ed797",
-                "reference": "9d760c8db53d2fb2cfc4a33d0bfbef4fae4ed797",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/4b0e6b9122b9df484a3b2e15e4fd88aa7d8861ad",
+                "reference": "4b0e6b9122b9df484a3b2e15e4fd88aa7d8861ad",
                 "shasum": ""
             },
             "require": {
@@ -3778,7 +3781,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2015-12-16 16:29:46"
+            "time": "2015-12-22 22:44:06"
         }
     ],
     "packages-dev": [
