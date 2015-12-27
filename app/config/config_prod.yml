@@ -28,17 +28,17 @@ doctrine:
 old_sound_rabbit_mq:
     connections:
         consumer:
-            host:     'white-fiver-55.bigwig.lshift.net'
+            host:     white-fiver-55.bigwig.lshift.net
             port:     10933
-            user:     'oZJd1mEq'
-            password: 'PO0sAsw1j7vmtQgEAtwVsioEihJmuHA_'
-            vhost:    '1x8jvZOh1gYC'
+            user:     oZJd1mEq
+            password: PO0sAsw1j7vmtQgEAtwVsioEihJmuHA_
+            vhost:    1x8jvZOh1gYC
         producer:
-            host:     'white-fiver-55.bigwig.lshift.net'
+            host:     white-fiver-55.bigwig.lshift.net
             port:     10932
-            user:     'oZJd1mEq'
-            password: 'PO0sAsw1j7vmtQgEAtwVsioEihJmuHA_'
-            vhost:    '1x8jvZOh1gYC'
+            user:     oZJd1mEq
+            password: PO0sAsw1j7vmtQgEAtwVsioEihJmuHA_
+            vhost:    1x8jvZOh1gYC
 
 monolog:
     handlers:

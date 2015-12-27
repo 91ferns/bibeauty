@@ -243,7 +243,7 @@ class OffersController extends Controller implements AdminAwareController
         if (!property_exists($data, 'recurrenceDates')) {
             $recurrenceDOWs = array();
         } else {
-            $recurrenceDOWs = $data->recurrenceDOWs;
+            $recurrenceDOWs = $data->recurrenceDOWs ? $data->recurrenceDOWs : array();
         }
 
         $recurrenceDOWs = array_unique($recurrenceDOWs);

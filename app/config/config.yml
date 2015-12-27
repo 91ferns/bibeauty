@@ -177,10 +177,10 @@ old_sound_rabbit_mq:
     producers:
         create_availabilities:
             connection:       producer
-            exchange_options: {name: 'create-availabilities', type: direct}
+            exchange_options: {name: 'availabilities', type: direct}
     consumers:
         create_availabilities:
             connection:       consumer
-            exchange_options: {name: 'create-availabilities', type: direct}
-            queue_options:    {name: 'create-availabilities'}
+            exchange_options: {name: 'availabilities', type: direct}
+            queue_options:    {name: 'availabilities'}
             callback:         create_availabilities_service
