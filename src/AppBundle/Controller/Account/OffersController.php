@@ -74,9 +74,6 @@ class OffersController extends Controller implements AdminAwareController
 
         $success = $this->doAvailabilities($offer->getAvailabilitySet()->getId());
 
-        var_dump($success);
-        die($success);
-
         // replace this example code with whatever you need
         return $this->redirectToRoute('admin_business_offers_path',["slug"=>$slug,"id"=>$id]);
 
