@@ -25,20 +25,22 @@ doctrine:
 #        query_cache_driver: redis
 #       result_cache_driver: redis
 
+# amqp://:@:/
+
 old_sound_rabbit_mq:
     connections:
         consumer:
-            host:     white-fiver-55.bigwig.lshift.net
-            port:     10933
-            user:     oZJd1mEq
-            password: PO0sAsw1j7vmtQgEAtwVsioEihJmuHA_
-            vhost:    1x8jvZOh1gYC
+            host:     trapped-scabious-18.bigwig.lshift.net
+            port:     10107
+            user:     DDEZ0jmd
+            password: PLcITWMS8eHh0SfDEfYkcIWb6l3qHElr
+            vhost:    VF2y3yEBBeeU
         producer:
-            host:     white-fiver-55.bigwig.lshift.net
-            port:     10932
-            user:     oZJd1mEq
-            password: PO0sAsw1j7vmtQgEAtwVsioEihJmuHA_
-            vhost:    1x8jvZOh1gYC
+            host:     trapped-scabious-18.bigwig.lshift.net
+            port:     10106
+            user:     DDEZ0jmd
+            password: PLcITWMS8eHh0SfDEfYkcIWb6l3qHElr
+            vhost:    VF2y3yEBBeeU
 
 monolog:
     handlers:
