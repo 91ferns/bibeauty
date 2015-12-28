@@ -69,10 +69,14 @@ class OffersController extends Controller implements AdminAwareController
     public function doQueueAction($id, $slug, $offerId, Request $request)
     {
 
-        $repo = $this->getRepo('Offer');
-        $offer = $repo->findOneById($offerId);
+        $repo = $this->getRepo('OfferAvailabilitySet');
+        $avSet = $repo->findOneByOffer($offerId);
 
-        $success = $this->doAvailabilities($offer->getAvailabilitySet()->getId());
+        if ($avSet) {
+
+            $success = $this->doAvailabilities($avSet->getId());
+
+        }
 
         // replace this example code with whatever you need
         return $this->redirectToRoute('admin_business_offers_path',["slug"=>$slug,"id"=>$id]);
