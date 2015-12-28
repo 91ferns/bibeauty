@@ -54,6 +54,7 @@
 
       <div class="row">
         {{ form_start(form, { 'attr': { 'class': 'search-form' } }) }}
+
         <div class="col-md-4">
           <div class="search-form-sidebar card">
 
@@ -117,12 +118,12 @@
               <div class="form-group">
 
                 <div class="input-group TreatmentTypesGroup">
-                  <select data-minimumResultsForSearch="1" class="form-control" data-placeholder="Select a Treatment" id="TreatmentSelect" name="treatment" {% if params['treatment'] is defined %}data-selected="{{params['treatment']}}"{% endif %}>
-                    <option style="color: #999;">Select a Treatment</option>
+                  <select class="form-control" id="TreatmentSelect" name="treatment"
+                  {% if params['treatment'] is defined %} data-value="{{params['treatment']}}"{% endif %} data-placeholder="Select a Treatment">
                     {% for category in categories %}
                     <option value="{{category.getId}}">{{category.getLabel}}</option>
                     {% for subcategory in category.getChildren %}
-                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</i>
+                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</option>
                     {% endfor %}
                     {% endfor %}
                   </select>
@@ -130,11 +131,11 @@
               </div> <!-- /.form-group -->
 
               <div class="form-group">
-                <label for="">Price Range</label>
+                <label>Price Range</label>
                 <div class="range">
 
-      	           <input type="text" id="amount_left" name="min" readonly styles="" value="{{params['min']}}" />
-                   <input type="text" id="amount_right" name="max" readonly styles="" value="{{params['max']}}" />
+      	           <input type="text" id="amount_left" name="min" readonly value="{{params['min']}}" />
+                   <input type="text" id="amount_right" name="max" readonly value="{{params['max']}}" />
                    <div id="slider-range" data-min="{{params['min']}}" data-max="{{params['max']}}"></div>
                 </div>
                 <!--input type="range" id="weight" min="10" value="10" max="2000" step="100"-->
@@ -152,9 +153,9 @@
           <a class="btn btn-lg btn-primary" href="#">Notify</a> #}
           {{ form_widget(form._token) }}
 
-        {{ form_end(form, {'render_rest': false}) }}
-
         </div> <!-- /.col-md-4 -->
+
+        {{ form_end(form, {'render_rest': false}) }}
 
         <div class="col-md-8">
 
@@ -251,7 +252,7 @@
 {% block javascripts %}
 <script>
   jQuery(document).ready(function(){
-      jQuery('select[name="treatment"]').select2();
+    $('#TreatmentSelect').select2();
   });
 </script>
 {% endblock %}

@@ -25,8 +25,6 @@ doctrine:
 #        query_cache_driver: redis
 #       result_cache_driver: redis
 
-# amqp://:@:/
-
 old_sound_rabbit_mq:
     connections:
         consumer:
