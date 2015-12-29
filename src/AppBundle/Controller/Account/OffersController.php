@@ -77,12 +77,19 @@ class OffersController extends Controller implements AdminAwareController
         if ($avSet) {
 
             $logger->info('Queueing up for availability ' . $avSet->getId());
+
             $success = $this->doAvailabilities($avSet->getId());
 
             // we now need to create the availability set
 
             if (!$success) {
                 return new Response('Unable to queue your availabilities. Please report this to us on the contact us page.');
+            } else {
+                $numAvailabilities = count($avSet->datesThatMatchRecurrence());
+                $this->addFlash(
+                    'error',
+                    'Queued creation of ' . $numAvailabilities . ' availabilities'
+                );
             }
         } else {
             return new Response('Unable to queue availabilities because we could not find the set.');
