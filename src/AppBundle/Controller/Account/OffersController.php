@@ -185,14 +185,6 @@ class OffersController extends Controller implements AdminAwareController
     }
 
     public function createOffer($business, $data, &$error) {
-        // this is absolutely something that would be offloaded to the worker
-
-        //treatmentCategory
-        //startDate
-        //times
-        //discountPrice
-        //RecurrenceType
-        // RecurrenceDates
 
         $slug = $business->getSlug();
         $id = $business->getId();
@@ -244,7 +236,7 @@ class OffersController extends Controller implements AdminAwareController
         if (!property_exists($data, 'recurrenceDates')) {
             $recurrenceDOWs = array();
         } else {
-            $recurrenceDOWs = $data->recurrenceDOWs ? $data->recurrenceDOWs : array();
+            $recurrenceDOWs = $data->recurrenceDates;
         }
 
         $recurrenceDOWs = array_unique($recurrenceDOWs);
