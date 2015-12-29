@@ -40,6 +40,7 @@ class CreateAvailabilities implements ConsumerInterface
 
             $availabilitySetId = $ID;
 
+            echo 'Executing creation of availability set ' . $availabilitySetId;
             $logger->info('Executing creation of availability set ' . $availabilitySetId);
 
             $em = $this->em;
@@ -99,12 +100,14 @@ class CreateAvailabilities implements ConsumerInterface
             // End it
 
             $text = 'Created ' . count($matchingDates) . ' availabilities.';
+            echo $text;
             $logger->info($text);
 
             //$this->container->get('api_mailer')->sendPrivatePathInvites($pathInvite);
             /* end your code */
             // $this->logger->addInfo('End executing');
         } catch(\Exception $e) {
+            echo $e->getMessage();
             $logger->addError($e->getMessage());
 
             return true;

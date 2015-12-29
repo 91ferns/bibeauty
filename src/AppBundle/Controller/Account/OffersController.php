@@ -362,10 +362,10 @@ class OffersController extends Controller implements AdminAwareController
      * @Route("/account/offers/{id}/{slug}/remove", name="admin_delete_offer")
      * @Method("POST")
      */
-    public function deleteOffer($id,$slug,Request $request)
+    public function deleteOffer($id, $slug, Request $request)
     {
       $req    = $request->request;
-      $offerIds = $req->get('offers',false);
+      $offerIds = $req->get('offers', false);
       $em = $this->getDoctrine()->getManager();
 
       $offers = $em->getRepository("AppBundle:Offer")->findById($offerIds);

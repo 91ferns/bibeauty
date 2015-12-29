@@ -92,7 +92,7 @@ class Treatment {
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="Offer", cascade={"persist"}, mappedBy="treatment")
+     * @ORM\OneToMany(targetEntity="Offer", mappedBy="treatment")
      */
     protected $offers;
 
