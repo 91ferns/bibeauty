@@ -118,8 +118,8 @@
               <div class="form-group">
 
                 <div class="input-group TreatmentTypesGroup">
-                  <select class="form-control" id="TreatmentSelect" name="treatment"
-                  {% if params['treatment'] is defined %} data-value="{{params['treatment']}}"{% endif %} data-placeholder="Select a Treatment">
+                  <select class="form-control" id="TreatmentSelect" name="treatment" data-placeholder="Select a Treatment">
+                    <option></option>
                     {% for category in categories %}
                     <option value="{{category.getId}}">{{category.getLabel}}</option>
                     {% for subcategory in category.getChildren %}
@@ -252,7 +252,19 @@
 {% block javascripts %}
 <script>
   jQuery(document).ready(function(){
-    $('#TreatmentSelect').select2();
+    var treatment;
+    {% if params['treatment'] %}
+    treatment = {{params['treatment']}};
+    {% endif %}
+
+    var selectBox = $('#TreatmentSelect');
+    selectBox.select2({
+      placeholder: 'Select a Treatment'
+    });
+
+    if (treatment)
+      selectBox.val(treatment).trigger('change');
+
   });
 </script>
 {% endblock %}
