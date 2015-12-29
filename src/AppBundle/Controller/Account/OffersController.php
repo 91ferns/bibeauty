@@ -69,13 +69,23 @@ class OffersController extends Controller implements AdminAwareController
     public function doQueueAction($id, $slug, $offerId, Request $request)
     {
 
+        $logger = $this->get('logger');
+
         $repo = $this->getRepo('OfferAvailabilitySet');
         $avSet = $repo->findOneByOffer($offerId);
 
         if ($avSet) {
 
+            $logger->info('Queueing up for availability ' . $avSet->getId());
             $success = $this->doAvailabilities($avSet->getId());
 
+            // we now need to create the availability set
+
+            if (!$success) {
+                return new Response('Unable to queue your availabilities. Please report this to us on the contact us page.');
+            }
+        } else {
+            return new Response('Unable to queue availabilities because we could not find the set.');
         }
 
         // replace this example code with whatever you need
