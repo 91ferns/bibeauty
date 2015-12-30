@@ -91,7 +91,7 @@ class OffersController extends Controller implements AdminAwareController
     }
 
     /**
-     * @Route("/account/offers/requeue/all", name="admin_offer_requeue_all_path")
+     * @Route("/account/offers/requeue-all", name="admin_offer_requeue_all_path")
      * @Method("GET")
      */
     public function requeueAllAction(Request $request)
