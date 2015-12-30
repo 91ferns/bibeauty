@@ -66,10 +66,38 @@ class OffersController extends Controller implements AdminAwareController
      * @Route("/account/offers/requeue", name="admin_offer_requeue_path")
      * @Method("GET")
      */
-    public function requeueAllAction(Request $request)
+    public function requeueUnprocessedAction(Request $request)
     {
         $repo = $this->getRepo('OfferAvailabilitySet');
         $avSets = $repo->findByProcessed(false);
+
+        $numAvailabilities = count($avSets);
+
+        if ($numAvailabilities > 0) {
+
+            foreach ($avSets as $avSet) {
+                $this->doAvailabilities($avSet->getId());
+            }
+
+            $this->addFlash(
+                'error',
+                'Queued creation of ' . $numAvailabilities . ' availabilities'
+            );
+
+        }
+
+        return $this->redirectToRoute('admin_businesses_path');
+
+    }
+
+    /**
+     * @Route("/account/offers/requeue/all", name="admin_offer_requeue_all_path")
+     * @Method("GET")
+     */
+    public function requeueAllAction(Request $request)
+    {
+        $repo = $this->getRepo('OfferAvailabilitySet');
+        $avSets = $repo->findAll();
 
         $numAvailabilities = count($avSets);
 
