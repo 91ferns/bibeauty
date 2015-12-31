@@ -4218,12 +4218,12 @@ S2.define('select2/dropdown/attachBody',[
       newDirection = 'below';
     }
 
+    newDirection = 'above';
+
     if (newDirection == 'above' ||
       (isCurrentlyAbove && newDirection !== 'below')) {
       css.top = container.top - dropdown.height;
     }
-
-    newDirection = 'below';
 
     if (newDirection != null) {
       this.$dropdown
