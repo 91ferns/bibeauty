@@ -11,6 +11,9 @@
               <div class="col-md-10 col-md-offset-1">
                 <div class="form-transparent-wrapper">
                   <form action="{{path('listings_search_path')}}" class="form-inline">
+
+                    <input type="hidden" name="sort" value="rating">
+
                     <div class="form-group">
                       <label class="sr-only" for="JumboLocation">Name</label>
                       <input type="text" name="location" class="form-control input-lg" id="JumboLocation" placeholder="Location" value="Los Angeles" disabled>
