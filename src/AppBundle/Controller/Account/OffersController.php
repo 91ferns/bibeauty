@@ -34,7 +34,7 @@ class OffersController extends Controller implements AdminAwareController
         $offers   = $this->getRepo('Offer');
         $business = $this->businessBySlugAndId($slug, $id);
 
-        $offers   = $offers->findByBusiness($business);
+        $offers   = $offers->byOwned($business);
 
         //print_r($offers);
 
@@ -436,12 +436,10 @@ class OffersController extends Controller implements AdminAwareController
       $offers = $em->getRepository("AppBundle:Offer")->findById($offerIds);
 
       if (count($offers) > 0) {
-
           foreach ($offers as $offer){
-            $em->remove($offer);
+            $offer->setDeletedAt(new \DateTime());
           }
           $em->flush();
-
       }
 
       return new Response('Removed ' . count($offers) . ' offers.');

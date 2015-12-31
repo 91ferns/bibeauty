@@ -7,6 +7,8 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 use Doctrine\ORM\Query\Expr\Join;
 
+use AppBundle\Entity\Business;
+
 /**
  * BookingRepository
  *
@@ -15,6 +17,20 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class OfferRepository extends EntityRepository
 {
+
+    public function byOwned(Business $business) {
+        $qb = $this->createQueryBuilder('o');
+        $qb
+            ->where('o.business = :b')
+            ->setParameter('b', $business)
+            ->andWhere('o.deletedAt IS NULL');
+
+        $query = $qb->getQuery();
+        $results = $query->getResult();
+
+        return $results;
+    }
+
     public function recentDeals($limit = 3) {
             $qb = $this->createQueryBuilder('o');
             $qb

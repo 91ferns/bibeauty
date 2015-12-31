@@ -56,6 +56,11 @@ class Offer {
     protected $createdAt;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $deletedAt;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $updated;
@@ -206,6 +211,29 @@ class Offer {
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Treatment
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 
     /**
