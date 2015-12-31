@@ -4223,6 +4223,8 @@ S2.define('select2/dropdown/attachBody',[
       css.top = container.top - dropdown.height;
     }
 
+    newDirection = 'below';
+
     if (newDirection != null) {
       this.$dropdown
         .removeClass('select2-dropdown--below select2-dropdown--above')
@@ -5894,8 +5896,8 @@ S2.define('select2/dropdown/attachContainer',[
     var $dropdownContainer = $container.find('.dropdown-wrapper');
     $dropdownContainer.append($dropdown);
 
-    $dropdown.addClass('select2-dropdown--below');
-    $container.addClass('select2-container--below');
+    $dropdown.addClass('select2-dropdown--above');
+    $container.addClass('select2-container--above');
   };
 
   return AttachContainer;

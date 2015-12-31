@@ -62,7 +62,7 @@ assetic:
                 - 'assets/components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
                 - 'assets/components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js'
                 - 'assets/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
-                - 'assets/components/select2/dist/js/select2.min.js'
+                - 'assets/components/select2/dist/js/select2.full.js'
     #java: /usr/bin/java
     filters:
         sass: ~
