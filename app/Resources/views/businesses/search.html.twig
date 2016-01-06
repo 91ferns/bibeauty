@@ -229,9 +229,25 @@
             {% if totalPages > 1 %}
             <nav>
               <ul class="pagination">
-                {% for i in 1..totalPages %}
-                  <li><a href="{{ path('listings_search_path', app.request.query| merge({'page': i})) }}">{{i}}</a></li>
+                <li>
+                  <a href="{{ path('listings_search_path', app.request.query | merge({'page': 1})) }}">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {# We do not want all of the pages #}
+                {% for i in processedPages %}
+                  <li
+                  {% if i == currentPage %}
+                  class="active"
+                  {% endif %}
+                  ><a href="{{ path('listings_search_path', app.request.query | merge({'page': i})) }}">{{i}}</a></li>
                 {% endfor %}
+                <li>
+                  <a href="{{ path('listings_search_path', app.request.query | merge({'page': totalPages})) }}">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+
               </ul>
             </nav>
             {% endif %}

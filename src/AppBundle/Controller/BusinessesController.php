@@ -130,6 +130,27 @@ class BusinessesController extends Controller
 
         $totalPages = ceil($total / $pageSize);
 
+        // Processed pages
+        $processedPages = array();
+
+        $showNumPages = 4;
+
+        if ($totalPages > $showNumPages * 2) {
+            for ($i = $page - 1; ($i >= 1 && $i > $page - $showNumPages); $i--) {
+                $processedPages[] = $i;
+            }
+            // reverse the array for these ones
+            $processedPages[] = $page;
+            for ($i = $page + 1; ($i <= $totalPages && $i < $page + $showNumPages); $i++) {
+                $processedPages[] = $i;
+            }
+            sort($processedPages);
+        } else {
+            for ($i = 1; $i <= $totalPages; $i++) {
+                $processedPages[] = $i;
+            }
+        }
+
         return $this->render('businesses/search.html.twig', array(
             'sort' => $sort,
             'results' => $results,
@@ -138,7 +159,9 @@ class BusinessesController extends Controller
             'categories' => $heirarchy,
             'total' => $total,
             'pageSize' => $pageSize,
-            'totalPages' => $totalPages
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'processedPages' => $processedPages
             //'services' => Service::getServicesByCategory($services->findAll())//$services->findAll()
         ));
     }
