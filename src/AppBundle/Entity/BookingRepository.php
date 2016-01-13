@@ -20,7 +20,7 @@ class BookingRepository extends EntityRepository
             ->andWhere('a.business = :business')
             ->setParameter('business', $business);
 
-      $result = $query->getQuery()->getSQL();
+      $result = $query->getQuery()->getResult();
       return $result;
     }
     public function findByTreatment(\AppBundle\Entity\Treatment $treatment){
