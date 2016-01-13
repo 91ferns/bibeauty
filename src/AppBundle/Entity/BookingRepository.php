@@ -13,15 +13,14 @@ use Doctrine\ORM\EntityRepository;
 class BookingRepository extends EntityRepository
 {
     public function findByBusiness(\AppBundle\Entity\Business $business){
-      $qb    = $this->createQueryBuilder('Booking');
+      $qb    = $this->createQueryBuilder('bk');
 
       $query = $qb
-            ->from('AppBundle:Booking', 'bk')
-            ->innerJoin('bk.availability','a')
-            ->innerJoin('a.business', 'b')
-            ->where('b = :business')
+            ->leftJoin('bk.availability', 'a')
+            ->andWhere('a.business = :business')
             ->setParameter('business', $business);
-      $result = $query->getQuery()->getResult();
+
+      $result = $query->getQuery()->getSQL();
       return $result;
     }
     public function findByTreatment(\AppBundle\Entity\Treatment $treatment){

@@ -22,7 +22,7 @@ class BookingsController extends Controller implements AdminAwareController
         //$this->createBooking();
         $business = $this->businessBySlugAndId($slug, $id);;
         $em = $this->getDoctrine()->getManager();
-    	  $repo = $em->getRepository("AppBundle:Booking");
+    	$repo = $em->getRepository("AppBundle:Booking");
 
         $bookings = $repo->findByBusiness($business);
 
@@ -47,7 +47,7 @@ class BookingsController extends Controller implements AdminAwareController
       $booking->setStatus($status);
 
       $twilio = $this->get('twilio.factory');
-      
+
       if ($status == 3) {
           // Cancelled
           $twilio->bookingCancelledNotification($booking);
