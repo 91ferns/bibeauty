@@ -24,13 +24,11 @@ class BookingRepository extends EntityRepository
       return $result;
     }
     public function findByTreatment(\AppBundle\Entity\Treatment $treatment){
-      $qb    = $this->createQueryBuilder('Booking');
+      $qb    = $this->createQueryBuilder('bk');
 
       $query = $qb
-            ->from('AppBundle:Booking', 'bk')
             ->innerJoin('bk.availability','a')
-            ->innerJoin('a.treatment', 't')
-            ->where('t = :treatment')
+            ->where('a.t = :treatment')
             ->setParameter('treatment', $treatment);
       $result = $query->getQuery()->getResult();
       return $result;
