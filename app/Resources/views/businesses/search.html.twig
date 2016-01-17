@@ -121,10 +121,13 @@
                   <select class="form-control" id="TreatmentSelect" name="treatment" data-placeholder="Select a Treatment">
                     <option></option>
                     {% for category in categories %}
-                    <option value="{{category.getId}}">{{category.getLabel}}</option>
-                    {% for subcategory in category.getChildren %}
-                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</option>
-                    {% endfor %}
+                      <option value="{{category.id }}">{{category.getLabel}}</option>
+                      {% for subcategory in category.getChildren %}
+                        <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</option>
+                          {% for subsubcategory in subcategory.getChildren %}
+                          <option value="{{subsubcategory.id}}">-- {{subsubcategory.getLabel}}</option>
+                          {% endfor %}
+                      {% endfor %}
                     {% endfor %}
                   </select>
                 </div>
