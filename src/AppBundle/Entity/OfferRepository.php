@@ -126,7 +126,7 @@ class OfferRepository extends EntityRepository
     public function filterOffersByTreatmentCategory(&$query, $qb, $treatmentCategory){
       $query
         ->innerJoin('t.treatmentCategory', 'tc')
-            ->andWhere('tc = :treatmentCategory OR tc.parent = :treatmentCategory')
+            ->andWhere('tc = :treatmentCategory OR tc.parent = :treatmentCategory OR tc.parent.parent = :treatmentCategory')
             ->setParameter('treatmentCategory', $treatmentCategory);
 
             return $query;

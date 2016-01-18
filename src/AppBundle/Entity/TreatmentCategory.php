@@ -33,6 +33,17 @@ class TreatmentCategory {
     protected $parent;
 
     /**
+     * @ORM\OneToMany(targetEntity="TreatmentCategory", mappedBy="alias")
+     */
+    protected $aliases;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TreatmentCategory", inversedBy="aliases")
+     * @ORM\JoinColumn(name="alias_category_id", referencedColumnName="id", nullable=true)
+     */
+    protected $alias;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Length(min = 3)
      * @ORM\Column(type="string", length=255)
@@ -190,6 +201,61 @@ class TreatmentCategory {
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \AppBundle\Entity\TreatmentCategory $treatmentCategory
+     * @return ServiceType
+     */
+    public function setAlias(\AppBundle\Entity\TreatmentCategory $alias = null)
+    {
+        $this->alias = $alias;
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \AppBundle\Entity\TreatmentCategory
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * Add serviceCategories
+     *
+     * @param \AppBundle\Entity\TreatmentCategory $children
+     * @return ServiceType
+     */
+    public function addAlias(\AppBundle\Entity\TreatmentCategory $alias)
+    {
+        $this->aliases[] = $alias;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \AppBundle\Entity\TreatmentCategory $treatmentCategory
+     */
+    public function removeAlias(\AppBundle\Entity\TreatmentCategory $alias)
+    {
+        $this->aliases->removeElement($alias);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 
     /**
