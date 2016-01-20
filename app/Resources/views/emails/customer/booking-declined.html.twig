@@ -1,0 +1,23 @@
+Hi {{ booking.getName }},
+
+Unfortunately, your booking request with {{ business.getName }} has been declined. This may because a therapist was no longer available, earlier appointments overran or other reasons that simply mean the time and treatment has become suddenly unavailable.
+
+Your requested treatment details were;
+
+{{ treatment.getName }} + {{ treatment.getDuration }}
+{{ offer.getCurrentPrice }}<Treatment price and discount>
+{{ availability.getDayText }} {{ availability.getTimeText }}
+
+{{ business.getAddress.getAddressString }}
+{{ business.getMobile }}
+{{ business.getEmail }}
+
+If you have questions about the treatment or appointment, please get in touch with <Business name> directly.
+
+Not to worry – there may be other discounted treatments available in your area available for you to book.
+
+< See more deals>
+
+Big love,
+
+The BiBeauty Team

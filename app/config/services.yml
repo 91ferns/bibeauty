@@ -31,6 +31,9 @@ services:
     aws.factory:
         class: AppBundle\Services\AWSFactory
         arguments: ["%aws%", @logger]
+    mailer.factory:
+        class: AppBundle\Services\Mailer
+        arguments: [@mailer, @templating, @logger]
     braintree.factory:
         class: AppBundle\Services\BraintreeFactory
         arguments: ["%braintree%", @logger]
