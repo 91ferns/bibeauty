@@ -1,20 +1,18 @@
-Subject line: Your booking request has been sent
+Hi {{ booking.getName }},
 
-Hi <Customer name>,
+Your booking request is now with {{ business.getName }} for;
 
-Your booking request is now with <Business name> for;
+{{ treatment.getName }}
+{{ offer.getCurrentPrice }}
+{{ availability.getDayText }} {{ availability.getTimeText }}
+{{ treatment.getDuration }}
 
-<Treatment name>
-<Treatment price>
-<Booking time>
-<Treatment duration>
+{{ business.getName }} is reviewing your booking request. You’ll receive a confirmation email and SMS if this Booking request is Confirmed or Declined. If you wish to get in touch with the <Business name> with questions or to cancel your appointment you can reach them at the following;
 
-<Business name> is reviewing your booking request. You’ll receive a confirmation email and SMS if this Booking request is Confirmed or Declined. If you wish to get in touch with the <Business name> with questions or to cancel your appointment you can reach them at the following;
-
-<Business location>
-<Business phone number>
-<Business email>
+{{ business.getAddress.getAddressString }}
+{{ business.getMobile }}
+{{ business.getEmail }}
 
 Big love,
 
-The BiBeauty Team 
+The BiBeauty Team

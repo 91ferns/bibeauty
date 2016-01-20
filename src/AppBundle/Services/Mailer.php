@@ -37,48 +37,56 @@ class Mailer
 
     public function bookingNotification(Booking $booking) {
 
-        $one = false;
-        $two = false;
-
         $treatment = $booking->getAvailability()->getTreatment();
         $offer = $booking->getAvailability()->getAvailabilitySet()->getOffer();
         $business = $offer->getBusiness();
         $availability = $booking->getAvailability();
 
-        // Build message
-        $message = "New booking request;\n";
-        $message .= sprintf("%s\n", $availability->getDayText());
-        $message .= sprintf("%s\n", $availability->getTimeText());
-        $message .= sprintf("%s\n", $treatment->getName());
-        $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
-        $message .= sprintf("You must ACCEPT or DECLINE the booking to confirm. Go to %s\n", 'https://www.bibeauty.com/account');
-        $message .= sprintf("%s\n", $booking->getName());
-        $message .= $booking->getPhone();
-        $message .= "\n";
-        $message .= "BiBeauty";
+        $email = \Swift_Message::newInstance()
+          ->setFrom('bookings@bibeauty.com')
+          ->setSubject('You’ve received a new booking')
+          ->setBody(
+              $this->renderView(
+                'emails/business/booking-new.html.twig',
+                array(
+                    'booking' => $booking,
+                    'availability' => $availability,
+                    'business' => $business,
+                    'offer' => $offer,
+                    'treatment' => $treatment,
+                )
+              ),
+              'text/html'
+          );
 
-        if ($phone = $business->getMobile()) {
-            $one = $this->sendMessage($phone, $message);
+        if ($address = $business->getEmail()) {
+            $email->setTo($address);
+            $one = $this->sendMessage($email);
         }
 
-        // Build message
-        $message = "Booking request sent. Await confirmation SMS if Accepted or Declined.\n";
-        // Hi, %s:\n", $booking->getName());
-        $message .= sprintf("%s\n", $availability->getDayText());
-        $message .= sprintf("%s\n", $availability->getTimeText());
-        $message .= sprintf("%s\n", $treatment->getName());
-        $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
-        $message .= sprintf("%s\n", $business->getName());
-        $message .= sprintf("Location: %s\n", $business->getAddress()->getGoogleMapsUrl());
-        $message .= sprintf("%s\n", $business->getLandline());
-        $message .= "BiBeauty";
+        $email = \Swift_Message::newInstance()
+          ->setFrom('bookings@bibeauty.com')
+          ->setSubject('Your booking request has been sent')
+          ->setBody(
+              $this->renderView(
+                'emails/business/booking-new.html.twig',
+                array(
+                    'booking' => $booking,
+                    'availability' => $availability,
+                    'business' => $business,
+                    'offer' => $offer,
+                    'treatment' => $treatment,
+                )
+              ),
+              'text/html'
+          );
 
-        if ($phone = $booking->getPhone()) {
-            $two = $this->sendMessage($phone, $message);
+        if ($address = $booking->getEmail()) {
+            $email->setTo($address);
+            $two = $this->sendMessage($email);
         }
 
-        return $one && $two;
-
+        return true;
 
     }
 
@@ -90,41 +98,31 @@ class Mailer
         $business = $offer->getBusiness();
         $availability = $booking->getAvailability();
 
-        // Build message
-        $message = "Booking CONFIRMED.\n";
-        $message .= sprintf("%s\n", $availability->getDayText());
-        $message .= sprintf("%s\n", $availability->getTimeText());
-        $message .= sprintf("%s\n", $treatment->getName());
-        $message .= sprintf("Special: $%.2f\n", $offer->getCurrentPrice());
-        $message .= sprintf("%s\n", $booking->getName());
-        $message .= sprintf("%s\n", $booking->getPhone());
-        $message .= "\n";
-        $message .= "BiBeauty";
+        $email = \Swift_Message::newInstance()
+          ->setFrom('bookings@bibeauty.com')
+          ->setSubject('You booking request is APPROVED')
+          ->setBody(
+              $this->renderView(
+                'emails/business/booking-confirmed.html.twig',
+                array(
+                    'booking' => $booking,
+                    'availability' => $availability,
+                    'business' => $business,
+                    'offer' => $offer,
+                    'treatment' => $treatment,
+                )
+              ),
+              'text/html'
+          );
 
-        if ($phone = $business->getMobile()) {
-            $one = $this->sendMessage($phone, $message);
-        }
-
-        // Build message
-        $message = "Your Booking is CONFIRMED.\n";
-        // Hi, %s:\n", $booking->getName());
-        $message .= sprintf("%s\n", $availability->getDayText());
-        $message .= sprintf("%s\n", $availability->getTimeText());
-        $message .= sprintf("%s\n", $treatment->getName());
-        $message .= sprintf("Special Price: $%.2f\n", $offer->getCurrentPrice());
-        $message .= sprintf("%s\n", $business->getName());
-        $message .= sprintf("Salon on BiBeauty: http://www.bibeauty.com/businesses/%s/%s\n", $business->getId(), $business->getSlug());
-        $message .= sprintf("%s\n", $business->getLandline());
-        $message .= "BiBeauty";
-
-        if ($phone = $booking->getPhone()) {
-            $this->sendMessage($phone, $message);
+        if ($address = $booking->getEmail()) {
+            $email->setTo($address);
+            $this->sendMessage($email);
         }
 
     }
 
     public function bookingCancelledNotification(Booking $booking) {
-
 
         $treatment = $booking->getAvailability()->getTreatment();
         $offer = $booking->getAvailability()->getAvailabilitySet()->getOffer();

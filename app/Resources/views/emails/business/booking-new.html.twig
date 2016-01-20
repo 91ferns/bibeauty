@@ -1,15 +1,13 @@
-Subject line: You’ve received a new booking
-
 The booking details are;
 
-<Customer name>
-<Treatment> + <Treatment duration>
-<Treatment price and discount>
-<Time of booking>
+{{ booking.getName }}
+{{ treatment.getName }} + {{ treatment.getDuration }}
+{{ offer.getCurrentPrice }}
+{{ availability.getDayText }} {{ availability.getTimeText }}
 
 You must Confirm (or Decline) this booking to notify the Client.
 
-< View details >
+<a href="">View Details</a>
 
 Big love,
 
