@@ -105,7 +105,7 @@ class Mailer
           ->setSubject('You booking request is APPROVED')
           ->setBody(
               $this->renderView(
-                'emails/business/booking-confirmed.html.twig',
+                'emails/customer/booking-confirmed.html.twig',
                 array(
                     'booking' => $booking,
                     'availability' => $availability,
