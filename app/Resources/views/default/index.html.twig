@@ -184,8 +184,22 @@
 {% endblock %}
 {% block javascripts %}
 <script>
-  jQuery(document).ready(function(){
-      jQuery('select[name="treatment"]').select2();
+  jQuery(function($) {
+    $('select[name="treatment"]').select2({
+      sorter: function(results, container) {
+        var query = $('.select2-search__field').val().toLowerCase();
+        var element = $('.select2-container');
+
+        if (query) {
+          element.addClass('select2-has-query');
+        } else {
+          element.removeClass('select2-has-query');
+        }
+
+        return results;
+      }
+    });
+
   });
 </script>
 {% endblock %}
