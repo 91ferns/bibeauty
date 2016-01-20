@@ -26,9 +26,6 @@ class BookingsController extends Controller implements AdminAwareController
 
         $bookings = $repo->findByBusiness($business);
 
-        $mailer = $this->get('mailer.factory');
-        $mailer->bookingCancelledNotification($bookings[0]);
-
         return $this->render('account/bookings/index.html.twig', array(
             'business' => $business,
             'bookings' => $bookings,
@@ -59,9 +56,8 @@ class BookingsController extends Controller implements AdminAwareController
       } elseif ($status == 2) {
           // Booking confirmed
           $twilio->bookingConfirmedNotification($booking);
+          $mailer->bookingConfirmedNotification($booking);
       }
-
-      $this->get('mailer')->send($email);
 
       $em->flush();
       return $this->redirectToRoute('admin_business_bookings_path',['id'=>$id,'slug'=>$slug]);

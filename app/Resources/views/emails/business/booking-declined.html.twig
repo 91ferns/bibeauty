@@ -1,12 +1,12 @@
-You have Declined the following booking;
+<p>You have Declined the following booking:</p>
 
-<Customer name>
-<Treatment> + <Treatment duration>
-<Treatment price and discount>
-<Time of booking>
+<p>{{ booking.getName }}<br>
+{{ treatment.getName }} + {{ treatment.getDuration }}<br>
+{{ offer.getCurrentPrice }}<br>
+{{ availability.getDayText }} {{ availability.getTimeText }}</p>
 
-< View details>
+<p><a href="http://www.bibeauty.com/account">View Details</a></p>
 
-Big love,
+<p>Big love,</p>
 
-The BiBeauty Team
+<p><strong>The BiBeauty Team</strong></p>

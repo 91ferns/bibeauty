@@ -4,8 +4,10 @@
 namespace AppBundle\Services;
 
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use AppBundle\Entity\Booking;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+
+use AppBundle\Entity\Booking;
+use AppBundle\Entity\Business;
 
 class Mailer
 {
@@ -119,6 +121,25 @@ class Mailer
             $email->setTo($address);
             $this->sendMessage($email);
         }
+
+    }
+
+    public function businessDeletedNotification(Business $business) {
+        $email = \Swift_Message::newInstance()
+          ->setFrom('bookings@bibeauty.com')
+          ->setTo($business->getEmail())
+          ->setSubject('You’ve successfully been removed from BiBeauty')
+          ->setBody(
+              $this->renderView(
+                'emails/business/deleted.html.twig',
+                array(
+                    'business' => $business,
+                )
+              ),
+              'text/html'
+          );
+
+          return $this->sendMessage($email);
 
     }
 

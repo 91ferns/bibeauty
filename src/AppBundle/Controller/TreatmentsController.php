@@ -150,7 +150,9 @@ class TreatmentsController extends Controller
             $em->flush();
 
             $twilio = $this->get('twilio.factory');
+            $mailer = $this->get('mailer.factory');
             $twilio->bookingNotification($booking);
+            $mailer->bookingNotification($booking);
 
             return $this->redirectToRoute('do_book_confirm_path', array(
                 'id' => $id,

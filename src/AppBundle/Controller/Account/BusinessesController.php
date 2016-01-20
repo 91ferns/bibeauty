@@ -168,6 +168,9 @@ class BusinessesController extends Controller implements AdminAwareController
 
         $em = $this->getDoctrine()->getManager();
         $business->setActive(false);
+        $mailer = $this->get('mailer.factory');
+
+        $mailer->businessDeletedNotification($business);
 
         $em->flush();
 

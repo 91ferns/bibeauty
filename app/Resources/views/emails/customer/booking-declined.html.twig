@@ -1,23 +1,23 @@
-Hi {{ booking.getName }},
+<p>Hi {{ booking.getName }},</p>
 
-Unfortunately, your booking request with {{ business.getName }} has been declined. This may because a therapist was no longer available, earlier appointments overran or other reasons that simply mean the time and treatment has become suddenly unavailable.
+<p>Unfortunately, your booking request with {{ business.getName }} has been declined. This may because a therapist was no longer available, earlier appointments overran or other reasons that simply mean the time and treatment has become suddenly unavailable.</p>
 
-Your requested treatment details were;
+<p>Your requested treatment details were:</p>
 
-{{ treatment.getName }} + {{ treatment.getDuration }}
-{{ offer.getCurrentPrice }}<Treatment price and discount>
-{{ availability.getDayText }} {{ availability.getTimeText }}
+<p>{{ treatment.getName }} + {{ treatment.getDuration }}<br>
+{{ offer.getCurrentPrice }}<br>
+{{ availability.getDayText }} {{ availability.getTimeText }}</p>
 
-{{ business.getAddress.getAddressString }}
-{{ business.getMobile }}
-{{ business.getEmail }}
+<p>{{ business.getAddress.getAddressString }}<br>
+{{ business.getMobile }}<br>
+{{ business.getEmail }}</p>
 
-If you have questions about the treatment or appointment, please get in touch with <Business name> directly.
+<p>If you have questions about the treatment or appointment, please get in touch with {{ business.getName }} directly.</p>
 
-Not to worry – there may be other discounted treatments available in your area available for you to book.
+<p>Not to worry – there may be other discounted treatments available in your area available for you to book.</p>
 
 <a href="{{ link }}">See more deals</a>
 
-Big love,
+<p>Big love,</p>
 
-The BiBeauty Team
+<p><strong>The BiBeauty Team</strong></p>

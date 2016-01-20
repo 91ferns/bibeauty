@@ -1,18 +1,18 @@
-Hi {{ booking.getName }},
+<p>Hi {{ booking.getName }},</p>
 
-Your booking request is now with {{ business.getName }} for;
+<p>Your booking request is now with {{ business.getName }} for:</p>
 
-{{ treatment.getName }}
-{{ offer.getCurrentPrice }}
-{{ availability.getDayText }} {{ availability.getTimeText }}
-{{ treatment.getDuration }}
+<p>{{ treatment.getName }}<br>
+{{ offer.getCurrentPrice }}<br>
+{{ availability.getDayText }} {{ availability.getTimeText }}<br>
+{{ treatment.getDuration }}</p>
 
-{{ business.getName }} is reviewing your booking request. You’ll receive a confirmation email and SMS if this Booking request is Confirmed or Declined. If you wish to get in touch with the <Business name> with questions or to cancel your appointment you can reach them at the following;
+<p>{{ business.getName }} is reviewing your booking request. You’ll receive a confirmation email and SMS if this Booking request is Confirmed or Declined. If you wish to get in touch with {{business.getName}} with questions or to cancel your appointment you can reach them at the following;</p>
 
-{{ business.getAddress.getAddressString }}
-{{ business.getMobile }}
-{{ business.getEmail }}
+<p>{{ business.getAddress.getAddressString }}<br>
+{{ business.getMobile }}<br>
+{{ business.getEmail }}</p>
 
-Big love,
+<p>Big love,</p>
 
-The BiBeauty Team
+<p><strong>The BiBeauty Team</strong></p>
