@@ -49,7 +49,7 @@ class Mailer
           ->setSubject('You’ve received a new booking')
           ->setBody(
               $this->renderView(
-                'emails/business/booking-new.html.twig',
+                'emails/customer/booking-new.html.twig',
                 array(
                     'booking' => $booking,
                     'availability' => $availability,
