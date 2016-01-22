@@ -24,11 +24,11 @@
                       <select data-minimumResultsForSearch="1" data-placeholder="Treatment" class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
                         <option style="color: #999;" value="">Treatment</option>
                         {% for category in categories %}
-                          <option value="{{category.id }}">{{category.getLabel}}</option>
+                          <option value="{{category.id }}" class="top-level">{{category.getLabel}}</option>
                           {% for subcategory in category.getChildren %}
-                            <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</option>
+                            <option class="bottom-level" value="{{subcategory.id }}">- {{subcategory.getLabel}}</option>
                               {% for subsubcategory in subcategory.getChildren %}
-                              <option value="{{subsubcategory.id}}">-- {{subsubcategory.getLabel}}</option>
+                              <option class="bottom-level" value="{{subsubcategory.id}}">-- {{subsubcategory.getLabel}}</option>
                               {% endfor %}
                           {% endfor %}
                         {% endfor %}
@@ -180,12 +180,37 @@
   border: 0px;
   border-radius: 0;
 }
+
+.select2-container .bottom-level {
+  display: none;
+}
+
+.select2-container .top-level {
+  background-color: #e5e5e5;
+  font-weight: bold;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+.select2-container .top-level:first-child {
+  margin-top: 0px;
+}
+
+.select2-container.select2-has-query .bottom-level {
+  display: list-item;
+}
 </style>
 {% endblock %}
 {% block javascripts %}
 <script>
   jQuery(function($) {
     $('select[name="treatment"]').select2({
+      templateResult: function (data, container) {
+        if (data.element) {
+          $(container).addClass($(data.element).attr("class"));
+        }
+        return data.text;
+      },
       sorter: function(results, container) {
         var query = $('.select2-search__field').val().toLowerCase();
         var element = $('.select2-container');
