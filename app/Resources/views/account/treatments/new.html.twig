@@ -24,6 +24,12 @@
                 {{ subtreatment.getLabel | slice(0,30) }}
                 <a href="#" data-add-id="{{subtreatment.getId}}" data-add-label="{{ subtreatment.getLabel }}" class="add-button-autoadd button-treatment pull-right icon-rounded"><i class="fa fa-plus"></i></a>
               </li>
+              {% for subsubtreatment in subtreatment.getChildren %}
+              <li class="list-group-item" data-parent="{{treatment.getLabel}}">
+                {{ subsubtreatment.getLabel | slice(0,30) }}
+                <a href="#" data-add-id="{{subsubtreatment.getId}}" data-add-label="{{ subsubtreatment.getLabel }}" class="add-button-autoadd button-treatment pull-right icon-rounded"><i class="fa fa-plus"></i></a>
+              </li>
+              {% endfor %}
             {% endfor %}
           {% endfor %}
         </ul>
