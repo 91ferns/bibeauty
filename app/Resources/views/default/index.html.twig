@@ -20,7 +20,7 @@
                     </div> <!-- /.form-group -->
 
                     <div class="form-group" id="TreatmentSelect-Wrapper">
-                      <label class="sr-only" for="JumboTreatment">Treatment</label>
+                      <label class="sr-only" for="JumboTreatment">Enter Treatment</label>
                       <select data-minimumResultsForSearch="1" data-placeholder="Treatment" class="form-control input-lg" name="treatment" aria-describedby="JumboTreatment">
                         <option style="color: #999;" value="">Treatment</option>
                         {% for category in categories %}
@@ -224,6 +224,10 @@
         return results;
       }
     });
+    $('.select2-container').on('click', function() {
+      var query = $('.select2-search__field');
+      query.focus();
+    })
 
   });
 </script>
