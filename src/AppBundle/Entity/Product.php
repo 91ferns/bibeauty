@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="app_products")
  */
 class Product {
@@ -49,7 +50,7 @@ class Product {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -72,7 +73,7 @@ class Product {
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -95,7 +96,7 @@ class Product {
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -118,7 +119,7 @@ class Product {
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -141,7 +142,7 @@ class Product {
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -164,10 +165,33 @@ class Product {
     /**
      * Get thumbnail
      *
-     * @return \AppBundle\Entity\Attachment 
+     * @return \AppBundle\Entity\Attachment
      */
     public function getThumbnail()
     {
         return $this->thumbnail;
+    }
+
+    public function hasThumbnail() {
+        if ($this->thumbnail) return true;
+        return false;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setAutomaticFields() {
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdated() {
+        // will NOT be saved in the database
+        $this->updated->modify("now");
     }
 }

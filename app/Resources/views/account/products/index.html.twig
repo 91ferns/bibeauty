@@ -11,6 +11,69 @@
 
 {% block body %}
 
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="table-responsive-old">
+      <table class="table businesses-table table-striped">
 
+        <thead>
+          <tr>
+            <th class="select-col">All</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% if products | length > 0 %}
+
+            {% for product in products %}
+            <tr>
+              <td class="select-col">
+                <input type="checkbox" name="products[]" value="{{ product.getId }}">
+              </td>
+              <td>
+                {% if product.hasThumbnail %}
+                  <img src="{{ product.getThumbnail.key | s3 }}" width="50" alt="">
+                {% else %}
+                  <strong>N/A</strong>
+                {% endif %}
+              </td>
+              <td><strong>{{ product.getName }}</strong></td>
+              <td><a href="{{ product.getUrl }}" target="_blank">{{ product.getUrl }}</a></td>
+              <td>
+                <a href="{{path('admin_product_path', {id: product.getId }) }}">Update</a>
+              </td>
+              <td>
+                <form method="post" class="delete-product-form" action="{{path('admin_delete_product_path', {id: product.getId }) }}">
+                  <button type="submit" class="btn btn-default">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+
+          {% else %}
+
+          <tr>
+            <td colspan="6">
+              No products have been entered in.
+            </td>
+          </tr>
+
+          {% endif %}
+
+        </tbody>
+
+      </table>
+
+    </div> <!-- table -->
+
+  </div> <!-- /.panel-body -->
+
+</div> <!-- /.panel -->
 
 {% endblock %}

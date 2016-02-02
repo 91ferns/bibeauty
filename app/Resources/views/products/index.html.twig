@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<section id="latest-deals" style="min-height: 90vh;">
+    <div class="container">
+
+        <div class="section-header">
+            <h2>Beauty Box Products</h2>
+        </div>
+
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="thumbnail card">
+                  {% if product.hasThumbnail %}
+                    <img src="{{ product.getThumbnail.getKey | s3 }}" class="img-responsive" alt="{{ product.getName }}">
+                  {% endif %}
+                  <div class="caption">
+                    <div class="deals-title" style="text-align: center;">
+                      <strong class="">{{ product.getName }}</strong>
+                      <p><a href="{{ product.getUrl }}" target="_blank"
+                        class="btn btn-primary center-block" role="button">
+                        More Info
+                      </a></p>
+                    </div> <!-- /.subcaption -->
+                  </div> <!-- /.caption -->
+                </div> <!-- /.thumbnail -->
+            </div> <!-- /.col -->
+            {% endfor %}
+
+        </div> <!-- /.row -->
+
+    </div>
+
+</section> <!-- #/latest-deals -->
+
+{% endblock %}

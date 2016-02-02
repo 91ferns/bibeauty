@@ -124,7 +124,7 @@
             {% for offer in deals %}
             {% set business = offer.getBusiness %}
             <div class="col-lg-offset-0 col-lg-4 col-md-offset-0 col-md-4 col-sm-offset-0 col-sm-4 col-xs-offset-3 col-xs-6 col-xs-offset-3">
-                <div class="thumbnail" id="deals-border">
+                <div class="thumbnail">
                     <img src="{{ asset('assets/images/category-thumbnails/') }}{{ offer.getTopicalCategory | lower | slugify }}.png" class="img-responsive" alt="...">
                     <div class="caption">
                       <div class="subcaption">

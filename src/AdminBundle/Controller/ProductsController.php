@@ -21,9 +21,12 @@ class ProductsController extends Controller
     public function indexAction(Request $request)
     {
 
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Product");
+
         // replace this example code with whatever you need
         return $this->render('account/products/index.html.twig', array(
-            'products' => array(),
+            'products' => $repository->findAll(),
         ));
 
     }
@@ -60,7 +63,7 @@ class ProductsController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $thumbnail = $product->getHeaderAttachment();
+            $thumbnail = $product->getThumbnail();
 
             try {
 
@@ -86,15 +89,14 @@ class ProductsController extends Controller
 
             }
 
-            $em->persist($business);
+            $em->persist($product);
             $em->flush();
 
-            $this->redirectToRoute('admin_product_path', ['id' => $business->getId()]);
+            $this->redirectToRoute('admin_product_path', ['id' => $product->getId()]);
 
         } else {
 
-            return $this->render('products/index.html.twig', array(
-                'products' => array(),
+            return $this->render('account/products/show.html.twig', array(
                 'form' => $form->createView()
             ));
 
@@ -117,14 +119,14 @@ class ProductsController extends Controller
         $product = $repository->findOneById($id);
 
         if (!$product) {
-            exit;
+            return $this->redirectToRoute('admin_products_path');
         }
 
         $form = $this->createForm(new ProductType(), $product);
 
         // replace this example code with whatever you need
-        return $this->render('products/show.html.twig', array(
-            'form' => $form,
+        return $this->render('account/products/show.html.twig', array(
+            'form' => $form->createView(),
         ));
 
     }
@@ -141,12 +143,23 @@ class ProductsController extends Controller
     }
 
     /**
-     * @Route("/account/products/{id}", name="admin_delete_product_path")
-     * @Method({"DELETE"})
+     * @Route("/account/products/{id}/delete", name="admin_delete_product_path")
+     * @Method({"POST"})
      */
     public function deleteAction($id, Request $request) {
 
-        // replace this example code with whatever you need
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("AppBundle:Product");
+
+        $product = $repository->findOneById($id);
+
+        if (!$product) {
+            return $this->redirectToRoute('admin_products_path');
+        }
+
+        $em->remove($product);
+        $em->flush();
+
         return $this->redirectToRoute('admin_products_path');
 
     }
