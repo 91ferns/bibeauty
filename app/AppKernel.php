@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new Gregwar\ImageBundle\GregwarImageBundle(),
+            new AdminBundle\AdminBundle(),
             new AppBundle\AppBundle(),
         );
 
