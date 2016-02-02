@@ -2,14 +2,14 @@
 
 {% block body %}
 
-<section id="latest-deals" style="min-height: 90vh;">
+<section id="products" style="min-height: 90vh;">
     <div class="container">
 
         <div class="section-header clearfix">
             <h2>Beauty Box Products</h2>
             <form method="GET">
               <div class="row">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-4 col-md-offset-4 item">
                   <div class="input-group">
                     <input class="form-control input-lg" name="term" placeholder="Search...">
                     <span class="input-group-btn">
@@ -21,7 +21,7 @@
             </form>
         </div>
         {% if products | length > 0 %}
-        <div class="row">
+        <div class="row row-grid">
             {% for product in products %}
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="thumbnail card">
@@ -50,4 +50,15 @@
 
 </section> <!-- #/latest-deals -->
 
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
+<script>
+  jQuery(function($) {
+    $('.row-grid').masonry({
+      itemSelector: 'item'
+    });
+  });
+</script>
 {% endblock %}
