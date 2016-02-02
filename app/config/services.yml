@@ -43,6 +43,12 @@ services:
     create_availabilities_service:
         class: AppBundle\Consumer\CreateAvailabilities
         arguments: ['@service_container']
+    queue.crunch_attachments:
+        class: AppBundle\Consumer\CrunchAttachments
+        arguments: ['@service_container']
+    queue.scrape_prices:
+        class: AppBundle\Consumer\ScrapePrices
+        arguments: ['@service_container']
     twilio.factory:
         class: AppBundle\Services\TwilioFactory
         arguments: ["%twilio%", @logger]
