@@ -7,13 +7,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use AppBundle\ApplicationController as Controller;
+use AppBundle\Controller\ApplicationController as Controller;
 
 use AppBundle\Entity\Product;
 use AppBundle\Form\ProductType;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class ProductsController extends Controller
 {
@@ -25,7 +22,7 @@ class ProductsController extends Controller
     {
 
         // replace this example code with whatever you need
-        return $this->render('products/index.html.twig', array(
+        return $this->render('account/products/index.html.twig', array(
             'products' => array(),
         ));
 
@@ -42,7 +39,7 @@ class ProductsController extends Controller
         // replace this example code with whatever you need
 
         // replace this example code with whatever you need
-        return $this->render('products/index.html.twig', array(
+        return $this->render('account/products/show.html.twig', array(
             'form' => $form->createView()
         ));
 
@@ -85,10 +82,14 @@ class ProductsController extends Controller
 
                 }
 
-                $em->persist($business);
-                $em->flush();
+            } catch (\Exception $e) {
 
-                $this->redirectToRoute('admin_product_path', ['id' => $business->getId()]);
+            }
+
+            $em->persist($business);
+            $em->flush();
+
+            $this->redirectToRoute('admin_product_path', ['id' => $business->getId()]);
 
         } else {
 
