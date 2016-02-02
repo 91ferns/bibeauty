@@ -19,12 +19,14 @@ class ProductsController extends ApplicationController
     public function indexAction(Request $request)
     {
 
+        $queryTerm = $request->query->get('term', '');
+
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("AppBundle:Product");
 
         // replace this example code with whatever you need
         return $this->render('products/index.html.twig', array(
-            'products' => $repository->findAll(),
+            'products' => $repository->bySearchTerm( $queryTerm ),
         ));
 
     }

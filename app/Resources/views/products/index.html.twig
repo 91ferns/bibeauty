@@ -5,10 +5,22 @@
 <section id="latest-deals" style="min-height: 90vh;">
     <div class="container">
 
-        <div class="section-header">
+        <div class="section-header clearfix">
             <h2>Beauty Box Products</h2>
+            <form method="GET">
+              <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                  <div class="input-group">
+                    <input class="form-control input-lg" name="term" placeholder="Search...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default btn-lg btn-normal" type="submit">Search</button>
+                    </span>
+                  </div> <!-- /.input-group -->
+                </div>
+              </div> <!-- /.row -->
+            </form>
         </div>
-
+        {% if products | length > 0 %}
         <div class="row">
             {% for product in products %}
             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -30,6 +42,9 @@
             {% endfor %}
 
         </div> <!-- /.row -->
+        {% else %}
+          <p>No products found.</p>
+        {% endif %}
 
     </div>
 

@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="app_products")
  */
