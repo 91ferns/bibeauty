@@ -22,8 +22,9 @@
         </div>
         {% if products | length > 0 %}
         <div class="row row-grid">
-            {% for product in products %}
-            <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-3 col-sm-6 col-xs-12 grid-sizer"></div>
+          {% for product in products %}
+            <div class="col-md-3 col-sm-6 col-xs-12 item">
                 <div class="thumbnail card">
                   {% if product.hasThumbnail %}
                     <img src="{{ product.getThumbnail.getKey | s3 }}" class="img-responsive" alt="{{ product.getName }}">
@@ -39,7 +40,7 @@
                   </div> <!-- /.caption -->
                 </div> <!-- /.thumbnail -->
             </div> <!-- /.col -->
-            {% endfor %}
+          {% endfor %}
 
         </div> <!-- /.row -->
         {% else %}
@@ -56,8 +57,13 @@
 <script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
 <script>
   jQuery(function($) {
-    $('.row-grid').masonry({
-      itemSelector: 'item'
+    var $grid = $('.row-grid').masonry({
+      columnWidth: '.grid-sizer',
+      itemSelector: '.item',
+      percentPosition: true
+    });
+    $grid.imagesLoaded().progress( function() {
+      $grid.masonry('layout');
     });
   });
 </script>
