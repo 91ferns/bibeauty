@@ -178,9 +178,25 @@ old_sound_rabbit_mq:
         create_availabilities:
             connection:       producer
             exchange_options: {name: 'availabilities', type: direct}
+        scrape_prices:
+            connection:       producer
+            exchange_options: {name: 'scrape_prices', type: direct}
+        crunch_attachments:
+            connection:       producer
+            exchange_options: {name: 'crunch_attachments', type: direct}
     consumers:
         create_availabilities:
             connection:       consumer
             exchange_options: {name: 'availabilities', type: direct}
             queue_options:    {name: 'availabilities'}
             callback:         create_availabilities_service
+        scrape_prices:
+            connection:       consumer
+            exchange_options: {name: 'scrape_prices', type: direct}
+            queue_options:    {name: 'scrape_prices'}
+            callback:         queue.scrape_prices
+        crunch_attachments:
+            connection:       consumer
+            exchange_options: {name: 'crunch_attachments', type: direct}
+            queue_options:    {name: 'crunch_attachments'}
+            callback:         queue.crunch_attachments
