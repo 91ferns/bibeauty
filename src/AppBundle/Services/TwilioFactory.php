@@ -66,7 +66,8 @@ class TwilioFactory
         $message .= sprintf("%s\n", $booking->getName());
         $message .= $booking->getPhone();
         $message .= "\n";
-        $message .= "BiBeauty";
+        $message .= "BiBeauty\n";
+        $message .= "Do not reply.";
 
         if ($phone = $business->getMobile()) {
             $one = $this->sendMessage($phone, $message);
@@ -82,7 +83,8 @@ class TwilioFactory
         $message .= sprintf("%s\n", $business->getName());
         $message .= sprintf("Location: %s\n", $business->getAddress()->getGoogleMapsUrl());
         $message .= sprintf("%s\n", $business->getLandline());
-        $message .= "BiBeauty";
+        $message .= "BiBeauty\n";
+        $message .= "Do not reply.";
 
         if ($phone = $booking->getPhone()) {
             $two = $this->sendMessage($phone, $message);
@@ -110,7 +112,8 @@ class TwilioFactory
         $message .= sprintf("%s\n", $booking->getName());
         $message .= sprintf("%s\n", $booking->getPhone());
         $message .= "\n";
-        $message .= "BiBeauty";
+        $message .= "BiBeauty\n";
+        $message .= "Do not reply.";
 
         if ($phone = $business->getMobile()) {
             $one = $this->sendMessage($phone, $message);
@@ -126,7 +129,8 @@ class TwilioFactory
         $message .= sprintf("%s\n", $business->getName());
         $message .= sprintf("Salon on BiBeauty: http://www.bibeauty.com/businesses/%s/%s\n", $business->getId(), $business->getSlug());
         $message .= sprintf("%s\n", $business->getLandline());
-        $message .= "BiBeauty";
+        $message .= "BiBeauty\n";
+        $message .= "Do not reply.";
 
         if ($phone = $booking->getPhone()) {
             $this->sendMessage($phone, $message);
@@ -149,7 +153,8 @@ class TwilioFactory
         $message .= sprintf("%s\n", $booking->getName());
         $message .= sprintf("%s\n", $booking->getPhone());
         $message .= "\n";
-        $message .= "BiBeauty";
+        $message .= "BiBeauty\n";
+        $message .= "Do not reply.";
 
         if ($phone = $business->getMobile()) {
             $one = $this->sendMessage($phone, $message);
@@ -165,7 +170,8 @@ class TwilioFactory
         $message .= sprintf("%s\n", $business->getName());
         $message .= sprintf("Search again: %s\n", 'https://www.bibeauty.com/businesses/search');
         $message .= sprintf("%s\n", $business->getLandline());
-        $message .= "BiBeauty";
+        $message .= "BiBeauty\n";
+        $message .= "Do not reply.";
 
         if ($phone = $booking->getPhone()) {
             $this->sendMessage($phone, $message);
