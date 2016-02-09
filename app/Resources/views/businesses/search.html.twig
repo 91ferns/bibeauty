@@ -62,6 +62,24 @@
 
             <input type="hidden" name="sort" value="{{ sort }}">
 
+            <div class="form-group">
+
+              <div class="input-group TreatmentTypesGroup">
+                <select class="form-control" id="TreatmentSelect" name="treatment" data-placeholder="Select a Treatment">
+                  <option></option>
+                  {% for category in categories %}
+                    <option value="{{category.id }}">{{category.getLabel}}</option>
+                    {% for subcategory in category.getChildren %}
+                      <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</option>
+                        {% for subsubcategory in subcategory.getChildren %}
+                        <option value="{{subsubcategory.id}}">-- {{subsubcategory.getLabel}}</option>
+                        {% endfor %}
+                    {% endfor %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div> <!-- /.form-group -->
+
             <div class="row">
 
               <select class="sr-only" name="date" aria-describedby="JumboDate" id="DateSelect">
@@ -113,24 +131,6 @@
               <div class="form-group">
                 {{ form_widget(form.location, { placeholder: 'Enter Zip code', id: 'LocationField' })}}
                 {{ form_errors(form.location) }}
-              </div> <!-- /.form-group -->
-
-              <div class="form-group">
-
-                <div class="input-group TreatmentTypesGroup">
-                  <select class="form-control" id="TreatmentSelect" name="treatment" data-placeholder="Select a Treatment">
-                    <option></option>
-                    {% for category in categories %}
-                      <option value="{{category.id }}">{{category.getLabel}}</option>
-                      {% for subcategory in category.getChildren %}
-                        <option value="{{subcategory.id }}">- {{subcategory.getLabel}}</option>
-                          {% for subsubcategory in subcategory.getChildren %}
-                          <option value="{{subsubcategory.id}}">-- {{subsubcategory.getLabel}}</option>
-                          {% endfor %}
-                      {% endfor %}
-                    {% endfor %}
-                  </select>
-                </div>
               </div> <!-- /.form-group -->
 
               <div class="form-group">

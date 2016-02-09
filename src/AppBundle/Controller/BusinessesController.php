@@ -79,7 +79,7 @@ class BusinessesController extends Controller
     public function searchAction(Request $request)
     {
 
-        $sort = $request->query->get('sort', 'rating');
+        $sort = $request->query->get('sort', 'low');
 
         $page = $request->query->get('page', 1);
         $page = intval($page);
