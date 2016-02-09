@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Gregwar\ImageBundle\GregwarImageBundle(),
             new AppBundle\AppBundle(),
             new AdminBundle\AdminBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
         );
 
         if (!in_array($this->getEnvironment(), array('dev'))) {
