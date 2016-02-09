@@ -29,7 +29,7 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
-        handler_id: snc_redis.session.handler
+        handler_id:  ~
     fragments:       ~
     http_method_override: true
 
@@ -200,12 +200,3 @@ old_sound_rabbit_mq:
             exchange_options: {name: 'crunch_attachments', type: direct}
             queue_options:    {name: 'crunch_attachments'}
             callback:         queue.crunch_attachments
-snc_redis:
-    clients:
-        default:
-            type: predis
-            alias: default
-            dsn: redis://p568n3rtob08g09ukeotj121j5t@ec2-54-83-33-255.compute-1.amazonaws.com:14149
-    session:
-        client: default
-        prefix: bb
