@@ -9,7 +9,7 @@ framework:
         handler_id:  snc_redis.session.handler
 
 twig:
-    cache: "%kernel.cache_dir%/twig"
+#     cache: "%kernel.cache_dir%/twig"
 
 #framework:
 #    validation:
@@ -39,19 +39,20 @@ snc_redis:
     session:
         client: default
         prefix: bb
-    doctrine:
-        metadata_cache:
-            client: default
-            entity_manager: default
-            document_manager: default
-        result_cache:
-            client: default
-            entity_manager: [default, read]
-            document_manager: [default, slave1, slave2]
-            namespace: "dcrc:"
-        query_cache:
-            client: default
-            entity_manager: default
+#    doctrine:
+#        metadata_cache:
+#            client: default
+#            entity_manager: default
+#            document_manager: default
+#        result_cache:
+#            client: default
+#            entity_manager: [default, read]
+#            document_manager: [default, slave1, slave2]
+#            namespace: "dcrc:"
+#        query_cache:
+#            client: default
+#            entity_manager: default
+
 monolog:
     handlers:
         main:
