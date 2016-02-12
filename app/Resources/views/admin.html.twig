@@ -269,10 +269,7 @@
 
 {% javascripts
     '@vendor_assets'
-    '@react_components'
     'assets/js/*'
-    filter='reactjsx'
-    filter='?uglifyjs2'
     output='js/client.js' %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}

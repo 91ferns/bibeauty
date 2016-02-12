@@ -392,7 +392,7 @@ class Offer {
     }
 
     public function getPercentageSaved() {
-        $divided = ($this->getOriginalPrice() - $this->getCurrentPrice()) / $this->getOriginalPrice();
+        $divided = ($this->getTreatment()->getOriginalPrice() - $this->getCurrentPrice()) / $this->getTreatment()->getOriginalPrice();
         $divided = $divided * 100;
 
         return number_format($divided, 0);
@@ -431,5 +431,15 @@ class Offer {
 
     public function getTopicalCategory() {
         return $this->getTreatment()->getTreatmentCategory()->getCategoryName();
+    }
+
+    public function toJSON() {
+        return array(
+            'isOpen' => $this->getIsOpen(),
+            'discountPercentage' => $this->getDiscountPercentage(),
+            'percentageSaved' => $this->getPercentageSaved(),
+            'currentPrice' => $this->getCurrentPrice(),
+            'treatment' => $this->getTopicalCategory()
+        );
     }
 }

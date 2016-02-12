@@ -187,14 +187,11 @@
 
 {% javascripts
     '@vendor_assets'
-    '@react_components'
     'assets/js/*'
-    filter='reactjsx'
-    filter='?uglifyjs2'
     output='js/client.js' %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
-<script src="https://maps.googleapis.com/maps/api/js?sensor=true&callback=initMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
 
 {% block javascripts %}{% endblock %}
 <script>

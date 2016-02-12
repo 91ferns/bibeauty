@@ -3,7 +3,7 @@
 namespace AppBundle\Controller\API;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Controller\ApplicationController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -66,16 +66,68 @@ class BusinessesController extends Controller
 
     /**
      * @Route("/api/businesses/search")
-     * @Method("POST")
+     * @Method("GET")
      */
      //ENDPOINT FOR BUSINESS/SEARCH
      public function searchAction(Request $request)
      {
-        $data    = $this->checkGetPost($request->request);
-        $results = $em->getRepository("AppBundle:Bookings")->findByMulti($data);
+
+        $sort = $request->query->get('sort', 'low');
+
+        $page = $request->query->get('page', 1);
+        $page = intval($page);
+
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository("AppBundle:Offer");
+
+        $form = $this->getSearchForm($request);
+        $params = $form->getData();
+
+        $data = $repo->strongParams($params);
+        $result = $repo->findByMulti($data, $page, 20, $sort);
+
+        $total = $result->count;
+        $records = $result->results;
+        $pageSize = $result->pageSize;
+
+        $results = array();
+        if ($records) {
+            // We got the stupid things. Now the weird part is they need to be sorted by business, which acts as the owner
+            foreach($records as $record) {
+               if (is_array($record)) {
+                   // Location was included
+                   $offer = $record[0];
+                   $distance = $record['distance'];
+               } else {
+                   $offer = $record;
+                   $distance = false;
+               }
+
+               $b = $offer->getBusiness();
+               $b->setDistanceFrom($distance);
+               $id = $b->getId();
+
+               if (array_key_exists($id, $results)) {
+
+               } else {
+                   $results[$id] = $b;
+               }
+
+               $results[$id]->addOffer($offer);
+
+            }
+
+        }
+
+        $businesses = array();
+
+        foreach ($results as $business) {
+            $businesses[] = $business->toJSON(true);
+        }
+
         return new JSONResponse(array(
                  'status' => 'ok',
-                 'data' => json_encode($results),
+                 'data' => $businesses,
              ), Response::HTTP_OK);
      }
 

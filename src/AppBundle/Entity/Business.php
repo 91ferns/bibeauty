@@ -396,8 +396,8 @@ class Business {
         return $this->slug;
     }
 
-    public function toJSON() {
-        return array(
+    public function toJSON($showOffers = false) {
+        $arr = array(
             'address' => array(
                 'street' => $this->address->getStreet(),
                 'line2' => $this->address->getLine2(),
@@ -415,6 +415,34 @@ class Business {
             'slug' => $this->getSlug(),
             'id' => $this->getID()
         );
+
+        if ($showOffers && $this->getOffers()) {
+            $hierarchy = $this->getOffersTreatmentHierarchy();
+
+            $offers = array();
+
+            foreach($hierarchy as $treatment) {
+                $label = $treatment->getLabel();
+                $name = $treatment->getName();
+                $subOffers = $treatment->getOffers();
+
+                $subOffersArray = array();
+
+                foreach($subOffers as $subOffer) {
+                    $subOffersArray[] = $subOffer->toJSON();
+                }
+
+                $offers[] = array(
+                    'label' => $label,
+                    'name' => $name,
+                    'offers' => $subOffers
+                );
+            }
+
+            $arr['offers'] = $offers;
+        }
+
+        return $arr;
     }
 
     /**
