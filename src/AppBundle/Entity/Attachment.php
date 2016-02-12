@@ -74,6 +74,13 @@ class Attachment {
         $this->setActive(true);
     }
 
+    public function toJSON() {
+        return array(
+            'key' => $this->getKey(),
+            'mime' => $this->getMime()
+        );
+    }
+
 
     /**
      * Get id

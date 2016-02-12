@@ -15,12 +15,16 @@ function initMap() {
         MapTypeId: google.maps.MapTypeId.ROADMAP,
       };
 
+      this.templates = {
+        infoWindow: Handlebars.compile($("#info-window-template").html())
+      };
+
       this.getSearchFormFields = function() {
         return {};
       };
 
       this.search = function(cb) {
-        $.getJSON('/api/businessess/search', this.getSearchFormFields(), function(response) {
+        $.getJSON('/api/businesses/search', this.getSearchFormFields(), function(response) {
           if (response.status !== 'ok') {
             cb('Something went wrong with our system. Try refreshing');
           }
@@ -34,7 +38,7 @@ function initMap() {
         var loc = new google.maps.Marker({
           position: pos,
           title: marker.name,
-          map: this.state.map,
+          map: this.map,
           animation: google.maps.Animation.DROP,
           icon: '/assets/images/map/pin.png',
         });
@@ -45,10 +49,17 @@ function initMap() {
         this.makeInfoWindow(marker, loc);
       };
 
+      this.updateResults = function(markers) {
+        console.log(markers);
+        for (var x in markers) {
+          var marker = markers[x];
+          console.log(marker);
+          this.addMarker(marker);
+        }
+      };
+
       this.map = new google.maps.Map(this.$, this.options);
       // this.requestLocation();
-
-      // this.updateResults(this.state.mapResults);
 
     }
 
@@ -77,9 +88,9 @@ function initMap() {
     };
 
     BusinessMap.prototype.makeInfoWindow = function(data, marker){
-      var link = '/businesses/' + data.id + '/' + data.slug;
+
       var iw = new google.maps.InfoWindow({
-          content: '<div class="loc-info"><a href="' + link +'">'+data.name+'</a></div>',
+          content: this.templates.infoWindow(data),
           maxWidth: 200
       });
       marker.addListener('click', function() {
@@ -120,6 +131,9 @@ function initMap() {
   	if (wrapper) {
 
       var map = new BusinessMap(wrapper);
+      map.search(function(err, data) {
+        this.updateResults(data);
+      }.bind(map));
 
       $('.map-link').attr('href', '#').click(function() {
         var businessId = $(this).data('business-id');

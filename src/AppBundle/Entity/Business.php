@@ -398,6 +398,7 @@ class Business {
 
     public function toJSON($showOffers = false) {
         $arr = array(
+            'thumbnail' => $this->hasLogoAttachment() ? $this->getLogoAttachment()->toJSON() : false,
             'address' => array(
                 'street' => $this->address->getStreet(),
                 'line2' => $this->address->getLine2(),

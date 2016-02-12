@@ -275,6 +275,16 @@
 
 {% endblock %}
 {% block javascripts %}
+{% verbatim %}
+<script id="info-window-template" type="text/x-handlebars-template">
+  <div class="loc-info">
+    {{#if thumbnail}}
+    <img src="https://bibeauty-dev.s3.amazonaws.com/{{ thumbnail.key }}"
+    {{/if}}
+    <a href="/businesses/{{id}}/{{slug}}">{{name}}</a></div>
+  </div>
+</script>
+{% endverbatim %}
 <script>
   jQuery(document).ready(function(){
     var treatment;
