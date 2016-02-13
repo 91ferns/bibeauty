@@ -74,9 +74,6 @@ class BusinessesController extends Controller
 
         $sort = $request->query->get('sort', 'low');
 
-        $page = $request->query->get('page', 1);
-        $page = intval($page);
-
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository("AppBundle:Offer");
 
@@ -84,11 +81,9 @@ class BusinessesController extends Controller
         $params = $form->getData();
 
         $data = $repo->strongParams($params);
-        $result = $repo->findByMulti($data, $page, 20, $sort);
+        $result = $repo->findByMulti($data, 1, -1, $sort);
 
-        $total = $result->count;
         $records = $result->results;
-        $pageSize = $result->pageSize;
 
         $results = array();
         if ($records) {

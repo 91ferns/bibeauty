@@ -101,16 +101,21 @@ class OfferRepository extends EntityRepository
 
       $paginator = new Paginator($query, $fetchJoin = true);
       $result = $paginator
-        ->getQuery()
-        ->setFirstResult($pageSize * ($currentPage-1)) // set the offset
-        ->setMaxResults($pageSize); // set the limit
+        ->getQuery();
 
+        if ($pageSize === -1) {
+            // return $result = $query->getQuery();
+        } else {
+            $result = $result
+                ->setFirstResult($pageSize * ($currentPage-1)) // set the offset
+                ->setMaxResults($pageSize); // set the limit
+        }
 
-      return (object) array(
-          'results' => $result->getResult(),
-          'count' => $paginator->count(),
-          'pageSize' => $pageSize
-      );
+    return (object) array(
+        'results' => $result->getResult(),
+        'count' => $paginator->count(),
+        'pageSize' => $pageSize
+    );
 
     }
 
