@@ -73,7 +73,7 @@ class OfferRepository extends EntityRepository
 
       }
 
-      if($this->isLocationSearch($search)){
+      if ($this->isLocationSearch($search) || $sort == 'location'){
          $this->filterBookingsByLocation($query, $search['latitude'], $search['longitude']);
       }
 
@@ -90,6 +90,9 @@ class OfferRepository extends EntityRepository
         $query->addOrderBy('o.currentPrice', 'DESC');
       } elseif ($sort == 'rating') {
         $query->addOrderBy('b.averageRating', 'DESC');
+      } elseif ($sort == 'location') {
+          // This one is done
+          $query->addOrderBy('distance', 'asc');
       } else {
         $query->addOrderBy('o.currentPrice', 'ASC');
       }
@@ -141,8 +144,7 @@ class OfferRepository extends EntityRepository
             ->setParameter('longitude', $longitude)
             ->setParameter('unit', $miles)
             //
-            ->addSelect("( :unit * ACOS( COS( radians(:latitude) ) * COS( radians( ba.latitude ) ) * COS( radians( ba.longitude ) - radians(:longitude) ) + SIN( radians(ba.latitude) ) * SIN(radians(:latitude)) ) ) as distance")
-            ->orderBy('distance', 'asc');
+            ->addSelect("( :unit * ACOS( COS( radians(:latitude) ) * COS( radians( ba.latitude ) ) * COS( radians( ba.longitude ) - radians(:longitude) ) + SIN( radians(ba.latitude) ) * SIN(radians(:latitude)) ) ) as distance");
     }
 
     public function filterOffersByAvailability($query, $qb, $search, $mainquery) {
