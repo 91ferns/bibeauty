@@ -41,6 +41,8 @@
                     Price Low-High
                   {% elseif sort == 'high' %}
                     Price High-Low
+                  {% elseif sort == 'location' %}
+                    Near Me
                   {% else %}
                     Rating
                   {% endif %}
@@ -48,6 +50,7 @@
                 </button>
                 <ul class="dropdown-menu multi-level">
 
+                  <li><a class="btn btn-default sort-link {% if sort == 'location' %}active{% endif %}" href="#location">Near Me</a></li>
                   <li><a class="btn btn-default sort-link {% if sort == 'low' %}active{% endif %}" href="#low">Price Low-High</a></li>
                   <li><a class="btn btn-default sort-link {% if sort == 'high' %}active{% endif %}" href="#high">Price High-Low</a></li>
                   <li><a class="btn btn-default sort-link {% if sort == 'rating' %}active{% endif %}" href="#rating">Rating</a></li>
