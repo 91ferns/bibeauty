@@ -195,7 +195,8 @@
                   <p><a class="map-icon map-link"
                      target="_blank"
                      data-business-id="{{ business.getId }}"
-                     href="{{ business.getAddress.getGoogleMapsUrl }}">Show on map
+                     data-maps-href="{{ business.getAddress.getGoogleMapsUrl }}"
+                     href="#">Show on map
                     {% if business.getDistanceFrom %}
                     <span class="badge">{{business.getDistanceFrom | round(1, 'floor')}} miles </span>
                     {% endif %}

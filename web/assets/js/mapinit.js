@@ -178,6 +178,8 @@ function initMap() {
         return false;
       }
 
+      this.map.setCenter(theMarker.position);
+
       google.maps.event.trigger( theMarker, 'click' );
 
       return theMarker;
@@ -194,7 +196,7 @@ function initMap() {
 
       $('.map-link').attr('href', '#').click(function() {
         var businessId = $(this).data('business-id');
-        var exists = result.focusBusiness(businessId);
+        var exists = map.focusBusiness(businessId);
         if (!exists) {
           alert('Could not find the map window');
         }
