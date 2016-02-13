@@ -91,6 +91,7 @@ function initMap() {
           });
 
           this.map.setCenter(pos);
+          this.addCenterIcon(pos);
           this.geocoder.geocode({'location': pos}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
               if (results[0]) {
@@ -104,7 +105,6 @@ function initMap() {
                 });
                 var zipcode = postalObject[0].long_name;
                 $('#LocationField').val(zipcode);
-
                 $('.search-form').submit();
 
               }
@@ -118,11 +118,23 @@ function initMap() {
         this.geocoder.geocode( { 'address': searchFields.location}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             //Got result, center the map and put it out there
-            console.log(results[0]);
             this.map.setCenter(results[0].geometry.location);
+            this.addCenterIcon(results[0].geometry.location);
           }
         }.bind(this));
       }
+    };
+
+    BusinessMap.prototype.addCenterIcon = function(pos) {
+      var marker = new google.maps.Marker({
+        position: pos,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 4
+        },
+        draggable: false,
+        map: this.map
+      });
     };
 
     BusinessMap.prototype.getCurrentCenter = function(){
