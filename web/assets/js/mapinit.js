@@ -14,13 +14,29 @@ function initMap() {
         center: new google.maps.LatLng(34.0500,-118.2500),
         MapTypeId: google.maps.MapTypeId.ROADMAP,
       };
+      this.iw = new google.maps.InfoWindow({
+          maxWidth: 450
+      });
+      this.geocoder = new google.maps.Geocoder();
 
       this.templates = {
         infoWindow: Handlebars.compile($("#info-window-template").html())
       };
 
       this.getSearchFormFields = function() {
-        return {};
+        var pairs = window.location.search.substring(1).split("&"),
+          obj = {},
+          pair,
+          i;
+
+        for ( i in pairs ) {
+          if ( pairs[i] === "" ) continue;
+
+          pair = pairs[i].split("=");
+          obj[ decodeURIComponent( pair[0] ) ] = decodeURIComponent( pair[1] );
+        }
+
+        return obj;
       };
 
       this.search = function(cb) {
@@ -46,25 +62,25 @@ function initMap() {
 
         this.markers.push(loc);
 
-        this.makeInfoWindow(marker, loc);
+        this.bindEvents(marker, loc);
       };
 
       this.updateResults = function(markers) {
-        console.log(markers);
         for (var x in markers) {
           var marker = markers[x];
-          console.log(marker);
           this.addMarker(marker);
         }
       };
 
       this.map = new google.maps.Map(this.$, this.options);
-      // this.requestLocation();
+      this.requestLocation();
 
     }
 
     BusinessMap.prototype.requestLocation = function() {
-      if (navigator.geolocation) {
+      var searchFields = this.getSearchFormFields();
+
+      if (!searchFields.location && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           var lat = position.coords.latitude;
           var long = position.coords.longitude;
@@ -74,7 +90,38 @@ function initMap() {
             center: pos
           });
 
+          this.map.setCenter(pos);
+          this.geocoder.geocode({'location': pos}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+              if (results[0]) {
+                var address = results[0].address_components;
+                var postalObject = $.grep(address, function(n, i) {
+                    if (n.types[0] == "postal_code") {
+                      return n;
+                    } else {
+                      return null;
+                    }
+                });
+                var zipcode = postalObject[0].long_name;
+                $('#LocationField').val(zipcode);
+
+                $('.search-form').submit();
+
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+
         }.bind(this)); //.bind(this);
+      } else if (searchFields.location) {
+        this.geocoder.geocode( { 'address': searchFields.location}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            //Got result, center the map and put it out there
+            console.log(results[0]);
+            this.map.setCenter(results[0].geometry.location);
+          }
+        }.bind(this));
       }
     };
 
@@ -87,15 +134,13 @@ function initMap() {
         return bounds.getCenter();
     };
 
-    BusinessMap.prototype.makeInfoWindow = function(data, marker){
+    BusinessMap.prototype.bindEvents = function(data, marker){
 
-      var iw = new google.maps.InfoWindow({
-          content: this.templates.infoWindow(data),
-          maxWidth: 200
-      });
       marker.addListener('click', function() {
-          iw.open(this.map, marker);
+        this.iw.setContent(this.templates.infoWindow(data));
+        this.iw.open(this.map, marker);
       }.bind(this));
+
     };
 
     BusinessMap.prototype.resetCenter = function(newpos){
@@ -132,8 +177,8 @@ function initMap() {
 
       var map = new BusinessMap(wrapper);
       map.search(function(err, data) {
-        this.updateResults(data);
-      }.bind(map));
+        map.updateResults(data);
+      });
 
       $('.map-link').attr('href', '#').click(function() {
         var businessId = $(this).data('business-id');

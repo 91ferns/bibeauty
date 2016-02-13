@@ -29,6 +29,9 @@
               <div class="btn-group" role="group">
                 <a class="btn btn-default sort-link {% if sort == 'rating' %}active{% endif %}" href="#rating">Rating</a>
               </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default sort-link {% if sort == 'location' %}active{% endif %}" href="#location">Near Me</a>
+              </div>
             </div> <!-- .btn-group -->
 
             <div class="visible-xs visible-sm">
@@ -278,12 +281,54 @@
 {% verbatim %}
 <script id="info-window-template" type="text/x-handlebars-template">
   <div class="loc-info">
-    {{#if thumbnail}}
-    <img src="https://bibeauty-dev.s3.amazonaws.com/{{ thumbnail.key }}"
-    {{/if}}
-    <a href="/businesses/{{id}}/{{slug}}">{{name}}</a></div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="info-biz">
+          <a href="/businesses/{{id}}/{{slug}}" class="thumbnail">
+            {{#if thumbnail}}
+            <img src="https://bibeauty-dev.s3.amazonaws.com/{{ thumbnail.key }}" class="img-responsive" alt="{{name}}" >
+            {{else}}
+            <span class="caption">
+              {{name}}
+            </span>
+            {{/if}}
+          </a>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="info-list">
+          {{#if offers}}
+          <ul class="list-group">
+            {{#each offers as |offer|}}
+            <li class="list-group-item clearfix">
+              <span class="service-name">
+                {{ offer.name }}
+              </span>
+            </li>
+            {{/each}}
+            <li class="list-group-item">
+              <a href="/businesses/{{id}}/{{slug}}">
+                See All</big> <i class="fa fa-chevron-right"></i>
+              </a>
+            </li> <!-- .list-item-group -->
+          </ul>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
   </div>
 </script>
+<!--
+<div class="pull-right">
+  <span class="almost-side-btn">
+    Save <span class="blue">{{ discountPercentage }}%</span>
+  </span>
+  <a class="btn btn-primary" data-treatment-id="{{ id }}" href="{{ link }}">
+    ${{ discount }}
+  </a>
+</div>
+-->
 {% endverbatim %}
 <script>
   jQuery(document).ready(function(){

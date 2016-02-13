@@ -130,13 +130,13 @@ class ApplicationController extends Controller
         $defaultData = array(
             'day' => $date, //new \DateTime()
             'time' => $time, //new \DateTime()
-            'location' => $request->query->get('location', null),
+            'location' => $request->query->get('location', 'Los Angeles'),
             'treatment' => $treatment,
             'min' => $min,
             'max' => $max
         );
 
-        $form = $this->createFormBuilder($defaultData)
+        $form = $this->get('form.factory')->createNamedBuilder('', 'form', $defaultData)
           ->setMethod('GET')
           ->add('day', 'choice', array(
               'choices' => $allowedDays
@@ -144,10 +144,7 @@ class ApplicationController extends Controller
           ->add('time', 'choice', array(
               'choices' => $allowedTimes
           ))
-          ->add('location', 'text', array(
-              'disabled' => true,
-              'data' => 'Los Angeles'
-          ))
+          ->add('location', 'text')
           ->add('treatment', 'integer')
           ->add('min', 'integer')
           ->add('max', 'integer')
