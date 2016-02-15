@@ -437,7 +437,7 @@ main section {
   .image-wrapper {
     overflow: hidden;
     position: relative;
-    border: 5px solid white;
+    border: 5px solid transparent;
 
     #image-zoom  {
       z-index: -1;
