@@ -1,0 +1,71 @@
+{% extends 'admin.html.twig' %}
+
+{% block toolbar %}
+<div class="admin-buttons align-center align-md-right">
+  <a href="{{path('admin_new_product_brands_path')}}" class="admin-btn">
+    <img src="{{ asset('assets/images/add-button-toolbar.png') }}" alt="Add">
+    Add Brand
+  </a>
+</div>
+{% endblock %}
+
+{% block body %}
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="table-responsive-old">
+      <table class="table businesses-table table-striped">
+
+        <thead>
+          <tr>
+            <th class="select-col">All</th>
+            <th>Label</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% if productbrands | length > 0 %}
+
+            {% for brand in productbrands %}
+            <tr>
+              <td class="select-col">
+                <input type="checkbox" name="products[]" value="{{ brand.getId }}">
+              </td>
+              <td>
+                {{ brand.getLabel }}
+              </td>
+              <td>
+                <a href="{{path('admin_product_brand_path', {id: brand.getId }) }}">Update</a>
+              </td>
+              <td>
+                <form method="post" class="delete-product-form" action="{{path('admin_delete_product_brand_path', {id: brand.getId }) }}">
+                  <button type="submit" class="btn btn-default">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+
+          {% else %}
+
+          <tr>
+            <td colspan="6">
+              No brands have been entered in.
+            </td>
+          </tr>
+
+          {% endif %}
+
+        </tbody>
+
+      </table>
+
+    </div> <!-- table -->
+
+  </div> <!-- /.panel-body -->
+
+</div> <!-- /.panel -->
+
+{% endblock %}
