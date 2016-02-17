@@ -71,12 +71,19 @@ snc_redis:
         client: default
         prefix: bb
     doctrine:
+        metadata_cache:
+            client: default
+            entity_manager: default
+            document_manager: default
         result_cache:
             client: default
             entity_manager: [default, read]
             document_manager: [default, slave1, slave2]
             namespace: "dcrc:"
         query_cache:
+            client: default
+            entity_manager: default
+        second_level_cache:
             client: default
             entity_manager: default
 monolog:
