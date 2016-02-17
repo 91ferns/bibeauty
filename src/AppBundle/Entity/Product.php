@@ -38,6 +38,12 @@ class Product {
     protected $thumbnail;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ProductBrand", cascade={"remove"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
+     */
+    protected $brand;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
@@ -170,6 +176,29 @@ class Product {
     public function getThumbnail()
     {
         return $this->thumbnail;
+    }
+
+    /**
+     * Set brand
+     *
+     * @param \AppBundle\Entity\Brand $brand
+     * @return Brand
+     */
+    public function setBrand(\AppBundle\Entity\Brand $brand = null)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
+     * Get thumbnail
+     *
+     * @return \AppBundle\Entity\Brand
+     */
+    public function getBrand()
+    {
+        return $this->brand;
     }
 
     public function hasThumbnail() {
