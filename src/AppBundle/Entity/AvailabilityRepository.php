@@ -51,7 +51,7 @@ class AvailabilityRepository extends EntityRepository
         var_dump($query->getQueryCacheDriver());
 
         $query = $qb->getQuery()
-            ->useResultCache(true, $this->getCacheLifetime() * 1.5, 'my_custom_id')
+            ->useResultCache(true, $this->getCacheLifetime() * 1.5)
             ;
 
         $results = $query->getResult();

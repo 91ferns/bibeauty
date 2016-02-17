@@ -18,6 +18,10 @@ use AppBundle\Entity\Business;
 class OfferRepository extends EntityRepository
 {
 
+    protected function getCacheLifetime() {
+        return 3600;
+    }
+
     public function byOwned(Business $business) {
         $qb = $this->createQueryBuilder('o');
         $qb
@@ -97,11 +101,15 @@ class OfferRepository extends EntityRepository
         $query->addOrderBy('o.currentPrice', 'ASC');
       }
 
+      $query->useResultCache(true, $this->getCacheLifetime() * 1.5);
+
+      var_dump($query->getQueryCacheDriver());
+
       // die($query->getDQL());
 
       $paginator = new Paginator($query, $fetchJoin = true);
       $result = $paginator
-        ->getQuery();
+        ->getQuery()
 
         if ($pageSize === -1) {
             // return $result = $query->getQuery();
