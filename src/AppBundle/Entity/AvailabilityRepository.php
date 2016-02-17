@@ -2,9 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Snc\RedisBundle\Doctrine\Cache\RedisCache;
-use Predis\Client;
-
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -18,14 +15,6 @@ class AvailabilityRepository extends EntityRepository
 
     protected function getCacheLifetime() {
         return 3600;;
-    }
-
-    protected function getCacheDriver() {
-        # init predis client
-        $predis = new RedisCache();
-        $predis->setRedis(new Client());
-
-        return $predis;
     }
 
     public function findTodayAndTomorrowForTreatment($treatment) {
@@ -60,8 +49,7 @@ class AvailabilityRepository extends EntityRepository
             ;
 
         $query = $qb->getQuery()
-            ->setResultCacheDriver($this->getCacheDriver())
-            ->setResultCacheLifetime($this->getCacheLifetime())
+            ->useResultCache(true, $this->getCacheLifetime() * 1.5)
             ;
 
         $results = $query->getResult();
