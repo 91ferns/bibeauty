@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Snc\RedisBundle\Doctrine\Cache\RedisCache;
+use Predis\Client;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,6 +15,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class AvailabilityRepository extends EntityRepository
 {
+
+    protected function getCacheLifetime() {
+        return 3600;;
+    }
+
+    protected function getCacheDriver() {
+        # init predis client
+        $predis = new RedisCache();
+        $predis->setRedis(new Client());
+
+        return $predis;
+    }
+
     public function findTodayAndTomorrowForTreatment($treatment) {
 
         $today = new \DateTime('today');
@@ -43,7 +59,11 @@ class AvailabilityRepository extends EntityRepository
             ->addOrderBy('o.currentPrice',  'ASC')
             ;
 
-        $query = $qb->getQuery();
+        $query = $qb->getQuery()
+            ->setResultCacheDriver($this->getCacheDriver())
+            ->setResultCacheLifetime($this->getCacheLifetime())
+            ;
+
         $results = $query->getResult();
 
         // Sort through today and tomororw
