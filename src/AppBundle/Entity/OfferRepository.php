@@ -101,15 +101,13 @@ class OfferRepository extends EntityRepository
         $query->addOrderBy('o.currentPrice', 'ASC');
       }
 
-      $query->useResultCache(true, $this->getCacheLifetime() * 1.5);
-
-      var_dump($query->getQueryCacheDriver());
-
       // die($query->getDQL());
 
       $paginator = new Paginator($query, $fetchJoin = true);
       $result = $paginator
-        ->getQuery();
+        ->getQuery()
+        ->useResultCache(true, $this->getCacheLifetime() * 1.5)
+        ;
 
         if ($pageSize === -1) {
             // return $result = $query->getQuery();
