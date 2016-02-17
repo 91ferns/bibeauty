@@ -109,7 +109,7 @@ class OfferRepository extends EntityRepository
 
       $paginator = new Paginator($query, $fetchJoin = true);
       $result = $paginator
-        ->getQuery()
+        ->getQuery();
 
         if ($pageSize === -1) {
             // return $result = $query->getQuery();
