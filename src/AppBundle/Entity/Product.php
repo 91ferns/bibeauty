@@ -181,10 +181,10 @@ class Product {
     /**
      * Set brand
      *
-     * @param \AppBundle\Entity\Brand $brand
+     * @param \AppBundle\Entity\ProductBrand $brand
      * @return Brand
      */
-    public function setBrand(\AppBundle\Entity\Brand $brand = null)
+    public function setBrand(\AppBundle\Entity\ProductBrand $brand = null)
     {
         $this->brand = $brand;
 
@@ -194,7 +194,7 @@ class Product {
     /**
      * Get thumbnail
      *
-     * @return \AppBundle\Entity\Brand
+     * @return \AppBundle\Entity\ProductBrand
      */
     public function getBrand()
     {
