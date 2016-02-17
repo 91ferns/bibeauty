@@ -48,6 +48,8 @@ class AvailabilityRepository extends EntityRepository
             ->addOrderBy('o.currentPrice',  'ASC')
             ;
 
+        var_dump($query->getQueryCacheDriver());
+
         $query = $qb->getQuery()
             ->useResultCache(true, $this->getCacheLifetime() * 1.5, 'my_custom_id')
             ;
