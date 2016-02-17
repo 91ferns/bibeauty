@@ -72,12 +72,12 @@ snc_redis:
         prefix: bb
     doctrine:
         result_cache:
-            client: cache
+            client: default
             entity_manager: [default, read]
             document_manager: [default, slave1, slave2]
             namespace: "dcrc:"
         query_cache:
-            client: cache
+            client: default
             entity_manager: default
 monolog:
     handlers:
