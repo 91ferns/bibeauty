@@ -4,3 +4,9 @@ app:
 admin:
     resource: "@AdminBundle/Controller/"
     type:     annotation
+survey:
+    path: /survey
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: https://www.surveymonkey.com/r/BiBeauty
+        permanent: true
