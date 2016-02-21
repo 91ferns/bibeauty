@@ -5,47 +5,107 @@
 <section id="products" style="min-height: 90vh;">
     <div class="container">
 
+      <p>&nbsp;</p>
+
         <div class="section-header clearfix">
-            <h2>Beauty Box Products</h2>
-            <form method="GET">
-              <div class="row">
-                <div class="col-md-4 col-md-offset-4 item">
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <h2>Beauty Box Products</h2>
+              </div>
+              <div class="col-md-3 col-md-offset-1">
+                <form method="GET">
                   <div class="input-group">
                     <input class="form-control input-lg" name="term" placeholder="Search...">
                     <span class="input-group-btn">
-                      <button class="btn btn-default btn-lg btn-normal" type="submit">Search</button>
+                      <button class="btn btn-default btn-lg btn-normal" type="submit"><i class="fa fa-search"></i></button>
                     </span>
                   </div> <!-- /.input-group -->
-                </div>
-              </div> <!-- /.row -->
-            </form>
+                </form>
+              </div>
+            </div> <!-- /.row -->
         </div>
-        {% if products | length > 0 %}
-        <div class="row row-grid">
-          <div class="col-md-3 col-sm-6 col-xs-12 grid-sizer"></div>
-          {% for product in products %}
-            <div class="col-md-3 col-sm-6 col-xs-12 item">
-                <div class="thumbnail card">
-                  {% if product.hasThumbnail %}
-                    <img src="{{ product.getThumbnail.getKey | s3 }}" class="img-responsive" alt="{{ product.getName }}">
+
+        <div class="row">
+          <div class="col-md-3">
+            <aside>
+              <p><strong>Receive Samples, Offers, Promotions &amp; more from the brands you love.</strong></p>
+              <p>Simply select the brands you want to hear from below and click submit.</p>
+
+              <form action="" method="GET">
+                <div class="card">
+
+                  {% if brands | length > 0 %}
+
+                    <div class="brands">
+
+                      {% for brand in brands %}
+                      <div class="">
+                        <input type="checkbox" name="brands[]" value="{{ brand.getId }}"
+                          {% if brand.getId in bterms %}checked="checked"{% endif %}> <label>{{ brand.getLabel }}</label>
+                      </div>
+                      {% endfor %}
+
+                    </div> <!-- /.brands -->
+
+                    <hr>
+
+                    <div class="fields">
+
+
+
+                    </div>
+
+
                   {% endif %}
-                  <div class="caption">
-                    <div class="deals-title" style="text-align: center;">
-                      <strong class="">{{ product.getName }}</strong>
-                      <p><a href="{{ product.getUrl }}" target="_blank"
-                        class="btn btn-primary center-block" role="button">
-                        More Info
-                      </a></p>
-                    </div> <!-- /.subcaption -->
-                  </div> <!-- /.caption -->
-                </div> <!-- /.thumbnail -->
-            </div> <!-- /.col -->
-          {% endfor %}
+
+                </div> <!-- /.card -->
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+
+              </form>
+            </aside>
+
+            <hr>
+
+            <aside>
+              <p><strong>ALREADY RECEIVED A PROFESSIONAL BEAUTY BOX?</strong>
+              <p>Tell us what you love &amp; get more FREE!.</p>
+              <a class="btn btn-primary">Tell us what you love <i class="fa fa-caret-right"></i></a>
+            </aside>
+          </div>
+
+          <div class="col-md-9">
+
+            {% if products | length > 0 %}
+            <div class="row row-grid">
+              <div class="col-md-3 col-sm-6 col-xs-12 grid-sizer"></div>
+              {% for product in products %}
+                <div class="col-md-3 col-sm-6 col-xs-12 item">
+                    <div class="thumbnail card">
+                      {% if product.hasThumbnail %}
+                        <img src="{{ product.getThumbnail.getKey | s3 }}" class="img-responsive" alt="{{ product.getName }}">
+                      {% endif %}
+                      <div class="caption">
+                        <div class="deals-title" style="text-align: center;">
+                          <strong class="">{{ product.getName }}</strong>
+                          <p><a href="{{ product.getUrl }}" target="_blank"
+                            class="btn btn-primary center-block" role="button">
+                            More Info
+                          </a></p>
+                        </div> <!-- /.subcaption -->
+                      </div> <!-- /.caption -->
+                    </div> <!-- /.thumbnail -->
+                </div> <!-- /.col -->
+              {% endfor %}
+
+            </div> <!-- /.row -->
+            {% else %}
+              <p>No products found.</p>
+            {% endif %}
+
+          </div>
 
         </div> <!-- /.row -->
-        {% else %}
-          <p>No products found.</p>
-        {% endif %}
 
     </div>
 

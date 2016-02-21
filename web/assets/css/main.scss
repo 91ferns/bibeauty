@@ -1275,6 +1275,18 @@ $greydrk:#7f8d9a;
   border: 1px solid #ccc;
 }
 
+#products {
+
+  .section-header h2 {
+    font-size: 32px;
+  }
+
+  .btn-primary {
+    border-radius: 4px;
+  }
+
+}
+
 #bibeauty-box {
   background-image: url('../images/bibeauty-box-bg.png');
   background-size: cover;

@@ -12,18 +12,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
-    public function bySearchTerm($term = '') {
+    public function bySearchTerm($term = '', $brands = array()) {
         /* This needs a ton of optimizaton */
         // @todo
 
-        if (empty($term)) {
+        if (empty($term) && count($brands) < 1) {
             return $this->findAll();
         }
 
         $qb = $this->createQueryBuilder('p');
-        $qb
-            ->andWhere('p.name LIKE :term')
-            ->setParameter('term', '%' . $term . '%');
+
+        if (!empty($term)) {
+
+            $qb
+                ->andWhere('p.name LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+                ;
+
+        }
+
+        if (count($brands) > 0) {
+            $qb->andWhere('p.brand = :brands')
+            ->setParameter('brands', $brands);
+        }
 
         $query = $qb->getQuery();
         return $results = $query->getResult();
