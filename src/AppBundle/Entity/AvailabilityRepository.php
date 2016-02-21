@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 
 /**
  * AvailabilityRepository
@@ -14,7 +16,31 @@ class AvailabilityRepository extends EntityRepository
 {
 
     protected function getCacheLifetime() {
-        return 3600;;
+        return 3600;
+    }
+
+    public function deleteUnecessary() {
+        $starts = new \DateTime('today');
+        $ends = new \DateTime('+20 days');
+
+        $ends->setTime(23, 59, 59);
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->delete('AppBundle:Availability', 'a')
+            ->andWhere('a.date NOT BETWEEN :todaystart AND :tomorrowend')
+            ->setParameters(array(
+                'todaystart' => $starts,
+                'tomorrowend' => $ends
+            ))
+            ->andWhere('a.active = true')
+            ;
+
+        $query = $qb->getQuery();
+
+        return $query;
+
+
     }
 
     public function findTodayAndTomorrowForTreatment($treatment) {

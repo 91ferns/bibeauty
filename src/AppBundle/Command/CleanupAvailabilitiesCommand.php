@@ -24,15 +24,21 @@ class CleanupAvailabilitiesCommand extends ContainerAwareCommand
         if ($this->getContainer()->has('profiler')) {
             $this->getContainer()->get('profiler')->disable();
         }
-        $availabilitySetId = $input->getArgument('id');
 
         $logger = $this->getContainer()->get('logger');
         $em = $this->getContainer()->get('doctrine')->getManager();
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
+        // Counters
+        $batchSize = 20;
+        $i = 0;
+
         try {
             // $this->logger->addInfo('Start executing');
-
+            $repo = $em->getRepository('AppBundle:Availability');
+            $items = $repo->deleteUnecessary();
+            $items->getResult();
+            $em->flush();
 
         } catch(\Exception $e) {
             $logger->addError($e->getMessage());
