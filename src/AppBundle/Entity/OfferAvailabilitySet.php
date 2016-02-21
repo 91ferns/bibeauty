@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class OfferAvailabilitySet {
 
-   const MAX_TIME_FORWARD = 31536000; // 60 * 60 * 24 * 365;
+   const MAX_TIME_FORWARD = 259200; // 60 * 60 * 24 * 365;
    const DAY_IN_SECONDS = 86400; // 60 * 60 * 24
 
    /**

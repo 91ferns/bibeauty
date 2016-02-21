@@ -45,6 +45,20 @@ class CleanupAvailabilitiesCommand extends ContainerAwareCommand
             return $e->getCode();
         }
 
+        // now create the ones that need to be created. That is, all of them.
+
+        try {
+            // $this->logger->addInfo('Start executing');
+            $repo = $em->getRepository('AppBundle:Availability');
+            $items = $repo->deleteUnecessary();
+            $items->getResult();
+            $em->flush();
+
+        } catch(\Exception $e) {
+            $logger->addError($e->getMessage());
+            return $e->getCode();
+        }
+
         return 0;
 
     }
