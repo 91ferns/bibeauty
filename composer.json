@@ -41,7 +41,8 @@
         "gregwar/image-bundle": "dev-master",
         "oldsound/rabbitmq-bundle": "~1.6",
 				"masterminds/html5": "2.*",
-        "symfony-cmf/seo-bundle": "~1.1"
+        "symfony-cmf/seo-bundle": "~1.1",
+        "symfony-cmf/routing-bundle": "~1.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

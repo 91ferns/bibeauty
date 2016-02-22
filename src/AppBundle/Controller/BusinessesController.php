@@ -29,7 +29,7 @@ class BusinessesController extends Controller
     public function showAction($id, $slug, Request $request)
     {
 
-        $business = $this->businessBySlugAndId($slug, $id);
+        $business = $this->businessBySlugAndId($slug, $id); // implicitly sets SEO
 
         try {
 
@@ -78,6 +78,8 @@ class BusinessesController extends Controller
      */
     public function searchAction(Request $request)
     {
+
+        $this->setTitle('Search - BiBeauty');
 
         $sort = $request->query->get('sort', 'low');
 

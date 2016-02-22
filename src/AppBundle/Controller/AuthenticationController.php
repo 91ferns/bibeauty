@@ -2,7 +2,7 @@
 // src/AppBundle/Controller/AuthenticationController.php
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Controller\ApplicationController as Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +20,8 @@ class AuthenticationController extends Controller {
      * @Method({"GET"})
      */
     public function loginAction(Request $request) {
+
+        $this->setTitle('Login - BiBeauty');
 
         $authenticationUtils = $this->get('security.authentication_utils');
 
@@ -63,6 +65,8 @@ class AuthenticationController extends Controller {
     * @Method({"GET"})
     */
    public function signupAction() {
+
+       $this->setTitle('Signup - BiBeauty');
       // this controller will not be executed,
       // as the route is handled by the Security system
       $user = new User();
@@ -84,6 +88,8 @@ class AuthenticationController extends Controller {
    public function signupCheckAction(Request $request) {
       // this controller will not be executed,
       // as the route is handled by the Security system
+
+      $this->setTitle('Signup - BiBeauty');
 
       $user = new User();
       $factory = $this->get('security.encoder_factory');
@@ -124,6 +130,9 @@ class AuthenticationController extends Controller {
     * @Method({"GET"})
     */
    function forgotPassword(Request $request){
+
+       $this->setTitle('Forgot Password - BiBeauty');
+
         return $this->render(
             'authentication/forgotpassword.html.twig'
         );
@@ -134,6 +143,9 @@ class AuthenticationController extends Controller {
     * @Method({"GET","POST"})
     */
     function forgotPasswordToken(Request $request,$token =null){
+
+        $this->setTitle('Forgot Password - BiBeauty');
+
         $em = $this->getDoctrine()->getManager();
         //var_dump($user); exit;
         $form = $this->createForm(new PasswordResetType(),null,['token'=>$token]);//,$user
@@ -174,6 +186,9 @@ class AuthenticationController extends Controller {
     * @Method({"POST"})
     */
     function forgotPasswordEmail(Request $request){
+
+        $this->setTitle('Forgot Password - BiBeauty');
+
         $email = $request->request->get('email');
         $token = sha1(uniqid($email, true));
 

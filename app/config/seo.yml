@@ -1,0 +1,7 @@
+sonata_seo:
+    page:
+        title: BiBeauty
+        metas:
+            name:
+                description: Awesome BiBeauty
+                keywords: default, sonata, seo

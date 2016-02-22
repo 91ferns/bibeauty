@@ -6,7 +6,8 @@
 
     {% include 'shared/favicon.html.twig' %}
 
-    <title>{% block title %}BiBeauty Admin{% endblock %}</title>
+    {{ sonata_seo_title() }}
+    {{ sonata_seo_metadatas() }}
 
     {% stylesheets
       '@vendor_css'

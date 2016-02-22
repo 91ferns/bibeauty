@@ -14,6 +14,9 @@ use AppBundle\Entity\User;
  */
 class Attachment {
 
+    const AWS_HOST = 's3.amazonaws.com';
+    const AWS_BUCKET = 'bibeauty-dev';
+
    /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -113,6 +116,10 @@ class Attachment {
     public function getKey()
     {
         return $this->key;
+    }
+
+    public function getLink() {
+        return sprintf('https://%s.%s/%s', self::AWS_BUCKET, self::AWS_HOST, $this->getKey());
     }
 
     /**

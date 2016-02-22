@@ -8,13 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\TitleReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\DescriptionReadInterface;
+use Symfony\Cmf\Bundle\SeoBundle\Extractor\ExtrasReadInterface;
 
 /**
  * @ORM\Entity(repositoryClass="BusinessRepository")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="app_businesses")
  */
-class Business {
+class Business implements TitleReadInterface, DescriptionReadInterface, ExtrasReadInterface {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -916,5 +919,26 @@ class Business {
         }
 
         return $this;
+    }
+
+    public function getSeoDescription()
+    {
+        return $this->getDescription();
+    }
+
+
+    public function getSeoTitle()
+    {
+        return $this->getName() . ' - BiBeauty';
+    }
+
+    public function getSeoExtras()
+    {
+        return array(
+            'property' => array(
+                'og:title'       => $this->getName(),
+                'og:description' => $this->getLogoAttachment()->getLink(),
+            ),
+        );
     }
 }

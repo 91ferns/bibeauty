@@ -26,6 +26,9 @@ class ApplicationController extends Controller
             throw $this->createNotFoundException('We couldn\'t find that business');
         }
 
+        $seo = $this->get('cmf_seo.presentation');
+        $seo->updateSeoPage($business);
+
         return $business;
     }
 
@@ -76,6 +79,11 @@ class ApplicationController extends Controller
         }
 
         return $service;
+    }
+
+    protected function setTitle($title) {
+        $seo = $this->get('sonata.seo.page');
+        $seo->setTitle($title);
     }
 
     protected function getRepo($name){
