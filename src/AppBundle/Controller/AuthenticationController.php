@@ -196,7 +196,7 @@ class AuthenticationController extends Controller {
 
             $message = \Swift_Message::newInstance()
                     ->setSubject('Bibeauty Password Reset')
-                    ->setFrom('infofo@bibeauty.com')
+                    ->setFrom('info@bibeauty.com')
                     ->setTo($email)
                     ->setBody(
                         $this->renderView(

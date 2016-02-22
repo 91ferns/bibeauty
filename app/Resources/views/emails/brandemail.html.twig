@@ -1,0 +1,18 @@
+<h3>Brand Request From {{email}}</h3>
+
+<p>Hi there:</p>
+
+<p>{{email}} has requested to be notified about the below brands.</p>
+
+<p>
+  <strong>Email:</strong> {{ email }}<br>
+  <strong>Works in</strong>: {{workIn}}
+</p>
+
+{% if brands | length > 0 %}
+<ul>
+  {% for brand in brands %}
+  <li>{{brand.getLabel}}</li>
+  {% endfor %}
+</ul>
+{% endif %}
