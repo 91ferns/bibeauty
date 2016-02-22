@@ -36,7 +36,7 @@ class ProductsController extends ApplicationController
 
         // replace this example code with whatever you need
         return $this->render('products/index.html.twig', [
-            'products' => $repository->bySearchTerm( $queryTerm ),
+            'products' => $repository->bySearchTerm( $queryTerm, $brandTerm ),
             'brands' => $prods->findAll(),
             'term' => $queryTerm,
             'bterms' => $brandTerm
