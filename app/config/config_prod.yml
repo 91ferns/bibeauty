@@ -66,7 +66,7 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: redis://p568n3rtob08g09ukeotj121j5t@ec2-54-83-33-255.compute-1.amazonaws.com:14149
+            dsn: redis://p568n3rtob08g09ukeotj121j5t@ec2-54-83-207-61.compute-1.amazonaws.com:6629
     session:
         client: default
         prefix: bb
