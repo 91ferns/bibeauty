@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Controller\ApplicationController as Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -11,13 +13,15 @@ use AppBundle\Entity\Treatment;
 use AppBundle\Entity\Review;
 
 
-class ProductsController extends ApplicationController
+class ProductsController extends Controller
 {
     /**
      * @Route("/products", name="products_path")
      */
     public function indexAction(Request $request)
     {
+
+        $this->setTitle('Beauty Box Products - BiBeauty');
 
         $queryTerm = $request->query->get('term', '');
         $brandTerm = $request->query->get('brands', array());
