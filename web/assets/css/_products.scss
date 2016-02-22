@@ -1,0 +1,91 @@
+#products {
+
+  .section-header h2 {
+    font-size: 32px;
+  }
+
+  .btn-primary {
+    border-radius: 4px;
+    text-transform: none;
+  }
+
+  .brands ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .brand {
+
+    list-style-type: none;
+    padding: 0px;
+
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    .fake-checkbox {
+      height: 32px;
+      width: 32px;
+      float: left;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      margin-right: 12px;
+      line-height: 32px;
+    }
+
+    .fake-checkbox {
+      background-image: url('../images/add-button-toolbar.png');
+    }
+
+    &.checked .fake-checkbox {
+      background-image: url('../images/lock.png');
+    }
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    label {
+      color: #b4b4b4;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 32px;
+    }
+
+  }
+
+}
+
+#products .input-group.search {
+  margin-top: 20px;
+}
+
+.input-group.search {
+
+
+
+  @extend .card;
+  padding: 5px 3px;
+
+  .form-control, .input-group-btn .btn {
+    height: 32px;
+    line-height: 32px;
+  }
+
+  .form-control {
+    border: 0px;
+    text-transform: uppercase;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .input-group-btn .btn {
+    font-size: 16px;
+    color: #6ed1ea;
+    border-color: #6ed1ea;
+    border-radius: 50%;
+    padding: 1px 8px;
+  }
+
+} // .input-group
