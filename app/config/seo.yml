@@ -4,4 +4,8 @@ sonata_seo:
         metas:
             name:
                 description: Awesome BiBeauty
-                keywords: default, sonata, seo
+                keywords: beauty culture, appointments, bookings, bibeauty, last minute, los angeles
+            property:
+                'og:site_name': BiBeauty
+                'og:description': Awesome BiBeauty
+                'og:image': 'https://www.bibeauty.com/assets/images/feature_banner.jpg'

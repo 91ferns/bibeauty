@@ -934,11 +934,17 @@ class Business implements TitleReadInterface, DescriptionReadInterface, ExtrasRe
 
     public function getSeoExtras()
     {
-        return array(
+        $arr = array(
             'property' => array(
-                'og:title'       => $this->getName(),
-                'og:description' => $this->getLogoAttachment()->getLink(),
+                'og:title'       => $this->getSeoTitle(),
+                'og:description' => $this->getSeoDescription(),
             ),
         );
+
+        if ($this->hasLogoAttachment()) {
+            $arr['property']['og:image'] = $this->getLogoAttachment()->getLink();
+        }
+
+        return $arr;
     }
 }
