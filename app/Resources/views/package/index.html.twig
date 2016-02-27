@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<section id="package-intro">
+  <div class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <p class="lead">We’ve teamed up with some of the best local skincare Therapists and amazing boutique Brands to bring you the Skincare Beauty Package.</p> <!-- /.lead -->
+
+          <div class="row">
+            <div class="col-md-5">
+              <p class="package-head">
+                Pamper yourself with a Facial from your selected skincare Therapist
+              </p>
+            </div>
+            <div class="col-md-2 hidden-xs hidden-sm">
+              <p class="plus">
+                +
+              </p>
+            </div>
+
+            <div class="col-md-5">
+              <p class="package-head">
+                We’ve searched far and wide to find the most amazing boutique brands around, and we deliver this right to your door
+              </p>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-6">
+
+              <figure class="thumbnail">
+
+                <div class="img-wrapper">
+                  <img class="img-responsive" src="{{ asset('assets/images/bibeauty-package-2.jpg') }}" alt="">
+                </div>
+
+                <div class="caption">
+                  1. Select the skincare treatment and the professional you want.
+                </div>
+
+              </figure>
+
+            </div> <!-- /.col -->
+
+            <div class="col-md-6">
+
+              <figure class="thumbnail">
+
+                <div class="img-wrapper">
+                  <img class="img-responsive" src="{{ asset('assets/images/bibeauty-package-2.jpg') }}" alt="">
+                </div>
+
+                <div class="caption">
+                  2. With a few details, instantly get your voucher, book your Treatment and check the mail for your Beauty Box
+                </div>
+
+              </figure>
+
+            </div> <!-- /.col -->
+
+          </div> <!-- /.row -->
+
+          <div class="" style="text-align: center;">
+
+            <a href="{{ path('package_therapist_path') }}" class="btn btn-primary btn-lg">
+              Select Your Treatment
+            </a>
+
+          </div>
+
+
+        </div> <!-- /.col -->
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+  </div>
+</section>
+
+
+{% endblock %}

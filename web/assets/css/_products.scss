@@ -89,3 +89,51 @@
   }
 
 } // .input-group
+
+#package-intro {
+
+  &, .jumbotron {
+    background-color: white;
+  }
+
+  .lead {
+    font-size: 30px;
+    line-height: 36px;
+    text-align: center;
+    @media (min-width: $screen-md-min) {
+      padding: 45px 50px 20px;
+    }
+  }
+
+  .thumbnail {
+
+  }
+
+  .package-head {
+
+  }
+
+  .plus {
+    text-align: center;
+  }
+
+  .package-head, .plus {
+    text-align: center;
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+  .btn-lg {
+    border-radius: 0px;
+    padding: 20px 50px 6px;
+    height: 60px;
+  }
+
+  .caption {
+    font-size: 20px;
+    line-height: 23px;
+    font-weight: normal;
+    text-align: center;
+    padding: 30px 10px;
+  }
+}
