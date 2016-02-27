@@ -1,5 +1,72 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-asd
+
+<section id="package-intro" style="padding-bottom: 0;">
+  <div class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+          <p class="lead">Choose Your Skincare<br>Professional &amp; Treatment</p> <!-- /.lead -->
+
+          <p class="muted" style="text-align: center; ">Treatment valid for 3 months from purchase</p>
+
+        </div> <!-- /.col -->
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+  </div>
+</section>
+
+<section id="therapists-section">
+
+  <div class="therapists zebra">
+
+    {% for therapist in therapists %}
+    <div class="therapist">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+
+
+            <div class="row">
+
+              <div class="col-md-4">
+                <img src="" class="thumbnail img-responsive img-circle" alt="{{therapist.name}}">
+              </div>
+
+              <div class="col-md-7">
+
+                <div class="stars-wrapper">
+                  {% for i in 1..therapist.stars %}
+                    <img src="{{ asset('assets/images/review-square-star.png') }}">
+                  {% endfor %}
+                </div>
+
+                <h4>{{ therapist.name }} <small>{{therapist.duration}}</small></h4>
+                <h5>{{ therapist.location }}</h5>
+                <p class="lead">{{therapist.business}}</p>
+                <p>{{therapist.description}}</p>
+
+                <p>{{therapist.addressl1}}<br>{{therapist.addressl2}}</p>
+
+                <div class="btn-group">
+                  <a class="btn btn-primary btn-lg" href="{{ therapist.link }}">I'll Take It</a>
+                  <a class="btn btn-transparent btn-lg" href="{{ therapist.reviews }}">More Reviews</a>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div> <!-- /.col -->
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+    </div> <!-- /.therapist -->
+    {% endfor %}
+
+  </div>
+
+</section>
+
 {% endblock %}

@@ -25,7 +25,9 @@ class PackageController extends ApplicationController
      */
     public function therapistAction(Request $request)
     {
-        return $this->render('package/therapist.html.twig', array());
+        return $this->render('package/therapist.html.twig', array(
+            'therapists' => $this->getTherapists()
+        ));
 
     }
 
@@ -50,7 +52,23 @@ class PackageController extends ApplicationController
     }
 
 
+    private function getTherapists() {
+        return array(
+            (object) array(
+                'stars' => 5,
+                'name' => 'FULL CUSTOM FACIAL',
+                'location' => 'Beverly Hills, LA',
+                'business' => 'Ultimate Skincare By Nadia',
+                'duration' => '45 minutes',
+                'description' => 'Place their description here Place their description here Place their description here Place their description here Place their description here.',
+                'addressl1' => '1106 N La Cienega',
+                'addressl2' => 'Beverly Hills, Los Angeles 90291',
+                'link' => 'http://google.com',
+                'reviews' => 'http://google.com'
 
+            )
+        );
+    }
 
 
 
