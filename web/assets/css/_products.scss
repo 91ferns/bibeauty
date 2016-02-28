@@ -142,3 +142,63 @@
     font-size: 18px;
   }
 }
+
+#therapists-section {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.therapists {
+
+  &.zebra {
+
+    .therapist:nth-child(even) {
+      background-color: white;
+    }
+
+  }
+
+  .therapist {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .therapist {
+    .thumbnail {
+      background: none;
+    }
+
+    h4 {
+      margin-bottom: 4px;
+    }
+
+    h5 {
+      margin-top: 4px;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    small {
+      color: #46c6e4;
+      font-size: 60%;
+    }
+
+    .lead {
+      color: #46c6e4;
+      margin-bottom: .3em;
+    }
+
+    .btn-group > .btn-lg {
+      border-bottom-right-radius: 7px !important;
+      border-top-right-radius: 7px !important;
+    }
+
+  }
+
+}
+
+.btn-transparent {
+  box-shadow: none !important;
+  color: #505050;
+  text-decoration: underline;
+}

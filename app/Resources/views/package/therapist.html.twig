@@ -3,7 +3,7 @@
 {% block body %}
 
 <section id="package-intro" style="padding-bottom: 0;">
-  <div class="jumbotron">
+  <div class="jumbotron" style="margin-bottom: 0;">
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -43,7 +43,7 @@
                   {% endfor %}
                 </div>
 
-                <h4>{{ therapist.name }} <small>{{therapist.duration}}</small></h4>
+                <h4>{{ therapist.name }} <small>({{therapist.duration}})</small></h4>
                 <h5>{{ therapist.location }}</h5>
                 <p class="lead">{{therapist.business}}</p>
                 <p>{{therapist.description}}</p>
@@ -51,8 +51,9 @@
                 <p>{{therapist.addressl1}}<br>{{therapist.addressl2}}</p>
 
                 <div class="btn-group">
-                  <a class="btn btn-primary btn-lg" href="{{ therapist.link }}">I'll Take It</a>
-                  <a class="btn btn-transparent btn-lg" href="{{ therapist.reviews }}">More Reviews</a>
+                  {# therapist.link #}
+                  <a class="btn btn-primary btn-lg" href="{{ path('package_therapist_summary_path') }}">I'll Take It</a>
+                  <a class="btn btn-transparent btn-lg" href="{{ therapist.reviews }}">See Reviews</a>
                 </div>
 
               </div>
