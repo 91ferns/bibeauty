@@ -70,24 +70,127 @@ class PackageController extends ApplicationController
 
 
     private function getTherapists($id = null) {
-        $v = (object) array(
-            'stars' => 5,
-            'name' => 'FULL CUSTOM FACIAL',
-            'location' => 'Beverly Hills, LA',
-            'business' => 'Ultimate Skincare By Nadia',
-            'duration' => '45 minutes',
-            'description' => 'Place their description here Place their description here Place their description here Place their description here Place their description here.',
-            'addressl1' => '1106 N La Cienega',
-            'addressl2' => 'Beverly Hills, Los Angeles 90291',
-            'link' => 'http://google.com',
-            'reviews' => 'http://google.com',
-            'paypal' => 'http://google.com',
-            'image' => 'http://google.com',
-            'phone' => '123-456-1123'
 
+        $devin = (object) array(
+            'therapist' => 'Devin',
+            'business' => 'MetroMD',
+            'location' => 'Hollywood',
+            'addressl1' => '7080 Hollywood Blvd',
+            'addressl2' => 'Los Angeles, CA 90028',
+            'name' => 'Stem Cell Facial & Microdermabrasion',
+            'description' => 'MetroMD is world premier anti-aging clinic. The stem cell facial helps rejuvenate  skin and promote a more youthful look. During this facial the client will receive a microdermabrasion to remove dead skin and damaged surface skin. From here a series of serums including a stem cell serum is applied to hydrate the skin and promote rejuvenation. After the treatment the patient will be glowing and ready for any event.',
+            'duration' => '45 mins',
+            'stars' => 5,
+            'reviews' => 'http://www.yelp.com/biz/metromd-los-angeles-4',
+            'paypal' => '',
+            'image' => 'MetroMD.jpg',
+            'phone' => ''
         );
+
+        $abanara = (object) array(
+            'therapist' => 'Aban Patel',
+            'business' => 'Abanara Skin Esthetics',
+            'location' => 'Inglewood',
+            'addressl1' => '8923 Reading Ave.',
+            'addressl2' => 'Los Angeles, CA 90045',
+            'name' => 'Aromatherapy Galvanic Infusion Facial',
+            'description' => 'Deep pore cleansing, Galvanic infusion therapy according to skin type, pressure point and lymphatic facial and delicate massage with a special mask with a deep penetration treatment. Lastly, moisturizer is applied with a blast of pure oxygen.',
+            'duration' => '45 mins',
+            'stars' => 5,
+            'reviews' => 'http://www.yelp.com/biz/abanara-skin-esthetics-los-angeles',
+            'paypal' => '',
+            'image' => 'Abanara.jpg',
+            'phone' => ''
+        );
+
+        $vibrations = (object) array(
+            'therapist' => 'Ingrid Thompson',
+            'business' => 'High Vibration Skincare',
+            'location' => 'Universal City',
+            'addressl1' => '3401 Barham Blvd.',
+            'addressl2' => 'Universal City, CA 90068',
+            'name' => 'Beauty Flash',
+            'description' => 'Your 45 minute treatment will begin with a gentle cleanse followed by RED & BLUE LED Light Therapy to improve cellular function, tone and brightness.  Next, galvanic currents and sound waves deliver a powerful cocktail of lactic acid, vitamins A, C & E and peptides deep into the skin to help refine skin texture, enhance natural exfoliation, brighten skin tone, prevent & correct environmental damage, stimulate collagen and elastin. 3 powerful technologies and advanced ingredients are combined to deliver instant results while effectively and gently restore youthfulness to your skin and get you ready for that big event!',
+            'duration' => '45 mins',
+            'stars' => 5,
+            'reviews' => 'http://www.yelp.com/biz/high-vibration-skincare-los-angeles',
+            'paypal' => '',
+            'image' => 'Vibrations.jpg',
+            'phone' => ''
+        );
+
+        $amanda = (object) array(
+            'therapist' => 'Amanda',
+            'business' => 'Salon On Main',
+            'location' => 'Downtown',
+            'addressl1' => '12777 W. Jefferson Blvd. Bldg. D, Third Floor',
+            'addressl2' => 'Los Angeles, CA 90066',
+            'name' => 'Customized Cleansing Aromatherapy & Muscle Stimulation Facial',
+            'description' => 'We start off with some aromatherapy steam to relax you, and to open and prep your pores for cleansing. Next we follow with 2 gentle cleansings to remove all dirt, oil, & makeup. Then we follow up by scrubbing to remove dead skin cells. Finally, we finish with toner to seal the cuticle, moisturize, and facial massage to stimulate the facial muscles and slow down the aging process. We use only the finest Ayur-Medic Products with ingredients found in nature with latest technological advances in skincare. The results leave you feeling soft, clean, and rejuvenated!',
+            'duration' => '45 mins',
+            'stars' => 5,
+            'reviews' => 'http://www.yelp.com/biz/salon-on-main-los-angeles',
+            'paypal' => '',
+            'image' => 'Amanda.jpg',
+            'phone' => ''
+        );
+
+        $vanity = (object) array(
+            'therapist' => 'Daniela Rivera',
+            'business' => 'Me Myself & Vanity',
+            'location' => 'Marina Del Rey',
+            'addressl1' => '13455 Maxella Ave. Ste. 103',
+            'addressl2' => 'Marina Del Rey, CA 90292',
+            'name' => 'Custom Tailored Aromatherapy Facial',
+            'description' => 'Relax and enjoy a tailored aromatherapy facial, that includes cleanse, extractions, masque, and a shoulder massage. Your skin will feel fresh and renewed asking for more! We proudly use Farmhouse Fresh and Young Living Essential oils in our facials. You will love our organic ingredients, and each service is customized for your skin’s needs.  Oprah calls our line a favorite, and a must have! Come see for yourself what awaits you in this cozy little studio.',
+            'duration' => '45 mins',
+            'stars' => 5,
+            'reviews' => 'http://www.yelp.com/biz/me-myself-and-vanity-marina-del-rey-2',
+            'paypal' => '',
+            'image' => 'Vanity.jpg',
+            'phone' => ''
+        );
+
+        $seti = (object) array(
+            'therapist' => 'Seti Mayaet',
+            'business' => 'Enliven Your Skin',
+            'location' => 'Playa Vista',
+            'addressl1' => '12777 W. Jefferson Blvd. Bldg. D, Third Floor',
+            'addressl2' => 'Los Angeles, CA 90066',
+            'name' => 'Enliven Just You Custom Facial',
+            'description' => 'This customized treatment is designed to leave you looking and feeling recharged and refreshed. It\'s the perfect balancing remedy for those who haven\'t had a facial in a while, or need to look their best for a special occasion. Your facial includes: a power peel that won\'t leave you shedding, extractions, specialty masque, light therapy, serum cocktail, and finishing soufflé.',
+            'duration' => '45 mins',
+            'stars' => 5,
+            'reviews' => 'http://www.yelp.com/biz/enliven-your-skin-los-angeles',
+            'paypal' => '',
+            'image' => 'Seti.jpg',
+            'phone' => ''
+        );
+
+        $adrienne = (object) array(
+            'therapist' => 'Adrienne K Goncz',
+            'business' => 'Adrienne Skin Care',
+            'location' => 'Sherman Oaks',
+            'addressl1' => '15450 Ventura Blvd, Ste 104',
+            'addressl2' => 'Sherman Oaks, CA 91403',
+            'name' => 'Rejuvenating Facial',
+            'description' => 'Custom tailored facial for both women and men.  This unique treatment will relax your mind, and dramatically improve the texture and tone of your skin. The facial includes an enzyme exfoliation, custom formulated mask, a face and décolleté massage, serum, toner, and moisturizer which leaves your skin toned, glowing, and moisturized.',
+            'duration' => '45 mins',
+            'stars' => 4,
+            'reviews' => 'http://www.yelp.com/biz/adrienne-skin-care-sherman-oaks',
+            'paypal' => '',
+            'image' => 'Adrienne.jpg',
+            'phone' => ''
+        );
+
         $arr = array(
-            $v, $v, $v
+            $devin,
+            $abanara,
+            $vibrations,
+            $amanda,
+            $vanity,
+            $seti,
+            $adrienne
         );
 
         if ($id !== null) {
