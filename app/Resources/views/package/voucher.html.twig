@@ -1,5 +1,93 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-asd
+
+<section id="voucher-info" style="background-color: white;">
+  <div class="jumbotron" style="background-color: transparent;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+          <p>&nbsp;</p>
+
+          <div class="row">
+
+            <div class="col-md-3">
+
+              <div class="thumbnail">
+                <img src="{{therapist.image}}" class="img-responsive img-circle img-round" alt="{{therapist.name}}">
+              </div>
+
+              <a href="javascript:window.print();" class="btn btn-lg btn-primary" style="border-radius: 0; width: 100%;">Print</a>
+
+            </div>
+
+            <div class="col-md-7">
+              <h2>Your Voucher</h2>
+              <p class="muted small">
+                Present this voucher upon arrival for your appointment
+              </p>
+              <p>&nbsp;</p>
+
+              <h4 style="font-size: 22px; color: #46c6e4;">{{therapist.business}}</h4>
+              <p>Contact your therapist to schedule your:<br>
+              {{ therapist.name }} <small>({{therapist.duration}})</small></p>
+              <br>
+              <p>{{therapist.phone}}</p>
+              <br>
+              <p><strong>{{therapist.business}}</strong><br>
+              {{therapist.addressl1}}<br>
+              {{therapist.addressl2}}</p>
+              <br>
+              <p>When booking, ensure you let the Professional know youhave  booked with BiBeauty and present this voucher upon arrival for your appointment.
+                <br>
+              Valid until 02.15.16</p>
+            </div>
+
+            <div class="col-md-2">
+              <img src="{{ asset('assets/images/logo.png') }}" alt="BiBeauty">
+            </div>
+
+
+          </div> <!-- /.row -->
+
+        </div> <!-- /.col -->
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+  </div>
+</section>
+
+<section id="shipping-info">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+
+        <div class="row">
+
+
+          <div class="col-md-3">
+
+            <img class="img-responsive" src="{{ asset('assets/images/small-bibeauty-box.png') }}" alt="">
+
+          </div> <!-- /.col -->
+
+          <div class="col-md-7">
+
+            <h2>Shipping Details:</h2>
+
+            <p>
+              Shipping takes between 5 - 7 business days<br>
+              Questions? Contact BiBeauty at <a href="mailto:hello@bibeauty.com">hello@bibeauty.com</a><br>
+              or by phone at <a href="tel:+11234561234">123-245-6789</a>.
+            </p>
+
+          </div> <!-- /.col -->
+
+        </div> <!-- /.row -->
+
+      </div> <!-- /.col -->
+    </div> <!-- /.row -->
+  </div> <!-- /.container -->
+</section>
+
 {% endblock %}

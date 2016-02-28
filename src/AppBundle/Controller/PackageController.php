@@ -51,12 +51,20 @@ class PackageController extends ApplicationController
     }
 
     /**
-     * @Route("/voucher", name="package_voucher_path")
+     * @Route("/voucher/{id}", name="package_voucher_path")
      * @Method("GET")
      */
-    public function voucherAction(Request $request)
+    public function voucherAction(Request $request, $id)
     {
-        return $this->render('package/voucher.html.twig', array());
+        $therapist = $this->getTherapists($id);
+
+        if (!$therapist) {
+            throw $this->createNotFoundException('This therapist does not exist');
+        }
+
+        return $this->render('package/voucher.html.twig', array(
+            'therapist' => $therapist
+        ));
 
     }
 
@@ -73,7 +81,9 @@ class PackageController extends ApplicationController
             'addressl2' => 'Beverly Hills, Los Angeles 90291',
             'link' => 'http://google.com',
             'reviews' => 'http://google.com',
-            'paypal' => 'http://google.com'
+            'paypal' => 'http://google.com',
+            'image' => 'http://google.com',
+            'phone' => '123-456-1123'
 
         );
         $arr = array(
