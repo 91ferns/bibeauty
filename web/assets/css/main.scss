@@ -1331,3 +1331,22 @@ $greydrk:#7f8d9a;
 .border-between > [class*='col-']:first-child:before {
  display: none;
 }
+
+#get-involved {
+  h4 {
+    color: #46c6e4;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: .6em;
+  }
+
+  p {
+    text-align: center;
+    margin-bottom: 1.45em;
+    font-size: 16px;
+  }
+
+  .btn {
+    text-transform: uppercase;
+  }
+}

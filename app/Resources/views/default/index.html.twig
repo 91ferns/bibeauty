@@ -2,6 +2,14 @@
 
 {% block body %}
 
+<section id="header" style="background-color: white; padding-bottom: 0px;">
+  <div class="container">
+    <a href="#">
+      <img src="{{ asset('assets/images/bibeauty-new-header.jpg') }}" alt="">
+    </a>
+  </div>
+</section>
+
 <section id="bibeauty-box">
 
   <div class="overlay">
@@ -128,12 +136,49 @@
     <div class="container">
 
         <div class="section-header">
-            <h2>Popular Categories</h2>
-            <h4>SEARCH AND BOOK GREAT DEALS FOR THESE AND MORE</h4>
+            <h2>Want to Get Involved?</h2>
+            <br>
         </div>
 
         <div class="row">
-            
+
+          <div class="col-md-10 col-md-offset-1">
+
+            <div class="row border-between">
+
+              <div class="col-md-5 col-md-offset-1">
+
+                <h4>Local Hands</h4>
+
+                <p>Are you a Therapist and want to create your free profile and begin receiving bookings?</p>
+
+                <p><a class="btn btn-primary" href="{{ path('admin_new_businesses_path') }}">
+                  Add Your Business
+                </a></p>
+
+                <p>Interested in offering a Treatment with one of our Skincare Packages?</p>
+
+                <p><a class="btn btn-primary" href="{{ path('contact_path') }}">
+                  Contact Us
+                </a></p>
+
+              </div>
+
+              <div class="col-md-5">
+
+                <h4>Boutique Brands</h4>
+
+                <p>Have a boutique brand and want to participate in one of our Skincare packages?</p>
+
+                <p><a class="btn btn-primary" href="{{ path('contact_path') }}">
+                  Contact Us
+                </a></p>
+
+              </div>
+
+            </div> <!-- /.row -->
+
+          </div>
 
         </div>
 
