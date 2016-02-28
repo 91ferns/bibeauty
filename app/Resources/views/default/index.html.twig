@@ -1,11 +1,59 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+<section id="bibeauty-box">
+
+  <div class="overlay">
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-md-offset-2 col-md-8">
+
+          <div class="section-header">
+            <h2>NEW BiBeauty Box for Professionals</h2>
+          </div>
+
+          <div class="row border-between">
+
+            <div class="col-md-7">
+              <p>We’re a Health &amp; Beauty marketplace for Professionals. We often send our registered Professionals free products, samples, offers and more. Simply let us know the products &amp; brands you’re interested in and we’ll get you what you want! And remember - it’s FREE. Create a Professional Profile with us and receive even more!</p>
+
+              <p><a class="btn btn-primary" href="{{ path('signup_route') }}">
+                Get your NEW BiBeauty Box <i class="glyphicon glyphicon-triangle-right"></i>
+              </a></p>
+
+            </div>
+
+            <div class="col-md-5">
+
+              <p><strong>ALREADY RECEIVED YOUR PROFESSIONAL BEAUTY BOX?</strong></p>
+              <p>Tell us what you love &amp; get more FREE!</p>
+
+              <p><a class="btn btn-primary" href="{{ path('signup_route') }}">
+                Tell us what you love <i class="glyphicon glyphicon-triangle-right"></i>
+              </a></p>
+
+            </div>
+
+          </div> <!-- /.row -->
+
+        </div> <!-- /.col -->
+
+      </div> <!-- /.row -->
+
+    </div>
+
+  </div>
+
+</section>
+
 <section id="top-slider">
     <div class="jumbotron">
         <div class="container">
-            <h1>Search and Book Local Beauty Treatments</h1>
-            <p class="lead">Last Minute</p>
+            <h1>Search and Book Local Beauty<br>Treatments Last Minute</h1>
 
             <div class="row">
               <div class="col-md-10 col-md-offset-1">
@@ -75,55 +123,7 @@
     </div>
 </section>
 
-<section id="bibeauty-box">
-
-  <div class="overlay">
-
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-md-offset-2 col-md-8">
-
-          <div class="section-header">
-            <h2>NEW BiBeauty Box for Professionals</h2>
-          </div>
-
-          <div class="row border-between">
-
-            <div class="col-md-7">
-              <p>We’re a Health &amp; Beauty marketplace for Professionals. We often send our registered Professionals free products, samples, offers and more. Simply let us know the products &amp; brands you’re interested in and we’ll get you what you want! And remember - it’s FREE. Create a Professional Profile with us and receive even more!</p>
-
-              <p><a class="btn btn-primary" href="{{ path('signup_route') }}">
-                Get your NEW BiBeauty Box <i class="glyphicon glyphicon-triangle-right"></i>
-              </a></p>
-
-            </div>
-
-            <div class="col-md-5">
-
-              <p><strong>ALREADY RECEIVED YOUR PROFESSIONAL BEAUTY BOX?</strong></p>
-              <p>Tell us what you love &amp; get more FREE!</p>
-
-              <p><a class="btn btn-primary" href="{{ path('signup_route') }}">
-                Tell us what you love <i class="glyphicon glyphicon-triangle-right"></i>
-              </a></p>
-
-            </div>
-
-          </div> <!-- /.row -->
-
-        </div> <!-- /.col -->
-
-      </div> <!-- /.row -->
-
-    </div>
-
-  </div>
-
-</section>
-
-<section id="popular-categories">
+<section id="get-involved">
 
     <div class="container">
 
@@ -133,96 +133,14 @@
         </div>
 
         <div class="row">
-            {% for category in categories | slice(0, 6) %}
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 image-wrapper">
-                <a href="{{path('listings_search_path')}}?treatment={{ category.getId }}" class="thumbnail" id="image-zoom">
-                  <img src="{{ asset('assets/images/category-thumbnails/') }}{{ category.getLabel | lower | slugify }}.png" class="img-responsive" alt="{{category.getLabel}}">
-                </a>
-            </div>
-            {% endfor %}
+            
 
         </div>
 
     </div>
 
 </section>
-<hr>
-<section id="how-it-works">
-    <div class="container">
 
-        <div class="section-header">
-            <h2>How it Works</h2>
-            <h4>SEARCH AND BOOK BEAUTY TREATMENTS FOR TODAY &amp; TOMORROW AT HEAVILY DISCOUNTED RATES</h4>
-        </div>
-
-        <img src="{{ asset('assets/images/feature.png') }}" class="img-responsive" alt="">
-
-    </div>
-</section> <!-- /#how-it-works -->
-<hr>
-
-{% if deals | length > 0 %}
-<section id="latest-deals">
-    <div class="container">
-
-        <div class="section-header">
-            <h2>Latest Deals</h2>
-        </div>
-        <div class="row">
-            {% for offer in deals %}
-            {% set business = offer.getBusiness %}
-            <div class="col-lg-offset-0 col-lg-4 col-md-offset-0 col-md-4 col-sm-offset-0 col-sm-4 col-xs-offset-3 col-xs-6 col-xs-offset-3">
-                <div class="thumbnail">
-                    <img src="{{ asset('assets/images/category-thumbnails/') }}{{ offer.getTopicalCategory | lower | slugify }}.png" class="img-responsive" alt="...">
-                    <div class="caption">
-                      <div class="subcaption">
-                        <div class="subcaption-inner">
-                          <strong>{{ offer.getDiscountPercentage }}%</strong> OFF {{offer.getTreatment.getName | upper }}
-                        </div>
-                      </div>
-                        <div class="deal-title">
-                            <div class="row">
-                                <div class="col-sm-9">
-                                  <span class="deals-title">{{ business.getName }}</span><br>
-                                  <span class="stars">
-                                    {{ business.getAverageRating | rating }}
-                                  </span>
-                                </div>
-                                <div class="col-sm-3"><strike id="deals-text"><small>${{ offer.getTreatment.getOriginalPrice | number_format(2) }}</small></strike><big class="deal-text-current"> ${{ offer.getCurrentPrice | number_format(2) }} </big></div>
-                            </div>
-                        </div>
-                        <p><a href="{{ path('business_path', {id: business.getId, slug: business.getSlug }) }}" class="btn btn-primary center-block" role="button">View Deal</a></p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-
-        </div> <!-- /.row -->
-
-    </div>
-
-</section> <!-- #/latest-deals -->
-{% endif %}
-
-<section id="get-started">
-
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="well well-lg">
-
-          <h2>Add your business now to fill those<br>last minute appointments</h2>
-
-          <a class="btn btn-primary btn-lg" href="{{ path('signup_route') }}">Get Started</a>
-
-        </div>
-      </div>
-    </div>
-
-  </div> <!-- /.container -->
-
-</section>
 <style type="text/css">
 .select2-dropdown {
   border: 0px;

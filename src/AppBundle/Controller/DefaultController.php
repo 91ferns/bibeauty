@@ -23,20 +23,11 @@ class DefaultController extends ApplicationController
         //$twilio->sendMessage(9149438239, 'Hi Stuart');
         $em = $this->getDoctrine()->getManager();
         $categories = $em->getRepository("AppBundle:TreatmentCategory");
-        $deals = $this->getRecentDeals();
         $heirarchy = $categories->getHeirarchy();
-
-        if (false && count($deals) > 0) {
-            foreach($deals as $deal) {
-                $business = $deal->getBusiness();
-                $business->loadRatings($this->get('yelp.factory'));
-            }
-        }
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
             'categories' => $heirarchy,
-            'deals' => $deals,
         ));
     }
 
