@@ -22,7 +22,7 @@
 
   <div class="therapists zebra">
 
-    {% for therapist in therapists %}
+    {% for id, therapist in therapists %}
     <div class="therapist">
       <div class="container">
         <div class="row">
@@ -52,7 +52,9 @@
 
                 <div class="btn-group">
                   {# therapist.link #}
-                  <a class="btn btn-primary btn-lg" href="{{ path('package_therapist_summary_path') }}">I'll Take It</a>
+                  <a class="btn btn-primary btn-lg" href="{{ path('package_therapist_summary_path', {
+                    id: id
+                  }) }}">I'll Take It</a>
                   <a class="btn btn-transparent btn-lg" href="{{ therapist.reviews }}">See Reviews</a>
                 </div>
 

@@ -1,5 +1,82 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-asd
+
+<section id="package-intro" style="padding-bottom: 0;">
+  <div class="jumbotron" style="margin-bottom: 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+          <p class="lead">Your Skincare Beauty Bundle</p> <!-- /.lead -->
+
+        </div> <!-- /.col -->
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+  </div>
+</section>
+
+<section id="therapist-summary">
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-md-10 col-md-offset-1">
+
+        <div class="row">
+          <div class="col-md-5 col-md-offset-1">
+
+            <div class="therapists">
+              <div class="therapist">
+
+                <img src="" class="thumbnail img-responsive img-circle" alt="{{therapist.name}}">
+
+                <h4>{{ therapist.name }} <small>({{therapist.duration}})</small></h4>
+                <h5>{{ therapist.location }}</h5>
+                <p class="lead">{{therapist.business}}</p>
+                <p>{{therapist.description}}</p>
+
+              </div>
+            </div>
+
+          </div> <!-- /.col -->
+
+          <div class="col-md-5">
+
+            <img src="{{ asset('assets/images/box-plus.png') }}" class="img-responsive" alt="BiBeauty Box">
+
+          </div>
+
+      </div> <!-- /.col -->
+
+    </div> <!-- /.row -->
+
+  </div>
+
+</section>
+
+<section id="package-breadcrumbs" style="background-color: white; padding: 30px 0;">
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-10 col-md-offset-1">
+
+        <div style="text-align: right;">
+
+          <div class="btn-group">
+            <a href="{{ path('package_therapist_path') }}" class="btn btn-lg btn-transparent">&lt; Back</a>
+            <a href="{{ therapist.paypal }}" class="btn btn-lg btn-primary" style="border-radius: 0px;">Let's Go</a>
+          </div>
+
+        </div>
+
+      </div> <!-- /.col -->
+
+    </div> <!-- /.row -->
+  </div> <!-- /.container -->
+
+</section>
+
 {% endblock %}

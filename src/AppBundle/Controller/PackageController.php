@@ -32,12 +32,21 @@ class PackageController extends ApplicationController
     }
 
     /**
-     * @Route("/package/therapist/summary", name="package_therapist_summary_path")
+     * @Route("/package/therapist/{id}/summary", name="package_therapist_summary_path")
      * @Method("GET")
      */
-    public function therapistSummaryAction(Request $request)
+    public function therapistSummaryAction(Request $request, $id)
     {
-        return $this->render('package/therapist-summary.html.twig', array());
+
+        $therapist = $this->getTherapists($id);
+
+        if (!$therapist) {
+            throw $this->createNotFoundException('This therapist does not exist');
+        }
+
+        return $this->render('package/therapist-summary.html.twig', array(
+            'therapist' => $therapist
+        ));
 
     }
 
@@ -52,7 +61,7 @@ class PackageController extends ApplicationController
     }
 
 
-    private function getTherapists() {
+    private function getTherapists($id = null) {
         $v = (object) array(
             'stars' => 5,
             'name' => 'FULL CUSTOM FACIAL',
@@ -63,12 +72,24 @@ class PackageController extends ApplicationController
             'addressl1' => '1106 N La Cienega',
             'addressl2' => 'Beverly Hills, Los Angeles 90291',
             'link' => 'http://google.com',
-            'reviews' => 'http://google.com'
+            'reviews' => 'http://google.com',
+            'paypal' => 'http://google.com'
 
         );
-        return array(
+        $arr = array(
             $v, $v, $v
         );
+
+        if ($id !== null) {
+
+            if (array_key_exists($id, $arr)) {
+                return $arr[$id];
+            }
+
+            return false;
+        }
+
+        return $arr;
     }
 
 
