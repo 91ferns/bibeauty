@@ -32,6 +32,18 @@ class PackageController extends ApplicationController
     }
 
     /**
+     * @Route("/package/therapist/{id}", name="package_summary_path")
+     * @Method("GET")
+     */
+    public function summaryAction(Request $request, $id)
+    {
+        return $this->render('package/summary.html.twig', array(
+            'id' => $id
+        ));
+
+    }
+
+    /**
      * @Route("/package/therapist/{id}/summary", name="package_therapist_summary_path")
      * @Method("GET")
      */

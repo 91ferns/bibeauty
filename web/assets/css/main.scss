@@ -1394,3 +1394,32 @@ $greydrk:#7f8d9a;
   }
 
 }
+
+#package-intro {
+  background-size: cover;
+  background-position: center;
+  background-image: url('../images/packages/package-bg.png');
+  background-repeat: no-repeat;
+
+  @media (min-width: $screen-md-min) {
+    padding-top: 160px;
+    padding-bottom: 50px;
+  }
+
+  .overlay {
+    background-color: rgba(237, 238, 235, .7);
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .lead {
+    margin: 0;
+    padding-top: 0;
+  }
+}
+
+#summary-text {
+  p {
+    font-size: 18px;
+  }
+}
