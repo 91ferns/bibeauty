@@ -97,7 +97,7 @@ class PackageController extends ApplicationController
             'reviews' => 'http://www.yelp.com/biz/metromd-los-angeles-4',
             'paypal' => 'XG54EPUUANM8Y',
             'image' => 'MetroMD.jpg',
-            'phone' => ''
+            'phone' => '(323) 285-5300'
         );
 
         $abanara = (object) array(
@@ -113,7 +113,7 @@ class PackageController extends ApplicationController
             'reviews' => 'http://www.yelp.com/biz/abanara-skin-esthetics-los-angeles',
             'paypal' => '4CCYY3D6J795Q',
             'image' => 'Abanara.jpg',
-            'phone' => ''
+            'phone' => '(310) 779-9098'
         );
 
         $vibrations = (object) array(
@@ -129,7 +129,7 @@ class PackageController extends ApplicationController
             'reviews' => 'http://www.yelp.com/biz/high-vibration-skincare-los-angeles',
             'paypal' => '7K9S76SE4GQTE',
             'image' => 'Vibrations.jpg',
-            'phone' => ''
+            'phone' => '(323) 842-447'
         );
 
         $amanda = (object) array(
@@ -145,7 +145,7 @@ class PackageController extends ApplicationController
             'reviews' => 'http://www.yelp.com/biz/salon-on-main-los-angeles',
             'paypal' => 'WTG6J6UN25U4Q',
             'image' => 'Amanda.jpg',
-            'phone' => ''
+            'phone' => '(213) 626-2131'
         );
 
         $vanity = (object) array(
@@ -161,7 +161,7 @@ class PackageController extends ApplicationController
             'reviews' => 'http://www.yelp.com/biz/me-myself-and-vanity-marina-del-rey-2',
             'paypal' => 'B76XWQU7WYU5E',
             'image' => 'Vanity.jpg',
-            'phone' => ''
+            'phone' => '(424) 371-9645'
         );
 
         $seti = (object) array(
@@ -177,7 +177,7 @@ class PackageController extends ApplicationController
             'reviews' => 'http://www.yelp.com/biz/enliven-your-skin-los-angeles',
             'paypal' => '2Q6HK5XQ38926',
             'image' => 'Seti.jpg',
-            'phone' => ''
+            'phone' => '(310) 880-2820'
         );
 
         $adrienne = (object) array(
@@ -193,7 +193,7 @@ class PackageController extends ApplicationController
             'reviews' => 'http://www.yelp.com/biz/adrienne-skin-care-sherman-oaks',
             'paypal' => 'UJPWCPT2L6ELJ',
             'image' => 'Adrienne.jpg',
-            'phone' => ''
+            'phone' => '(818) 357-9225'
         );
 
         $arr = array(
