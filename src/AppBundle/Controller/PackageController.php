@@ -82,7 +82,7 @@ class PackageController extends ApplicationController
             'duration' => '45 mins',
             'stars' => 5,
             'reviews' => 'http://www.yelp.com/biz/metromd-los-angeles-4',
-            'paypal' => '',
+            'paypal' => 'XG54EPUUANM8Y',
             'image' => 'MetroMD.jpg',
             'phone' => ''
         );
@@ -98,7 +98,7 @@ class PackageController extends ApplicationController
             'duration' => '45 mins',
             'stars' => 5,
             'reviews' => 'http://www.yelp.com/biz/abanara-skin-esthetics-los-angeles',
-            'paypal' => '',
+            'paypal' => '4CCYY3D6J795Q',
             'image' => 'Abanara.jpg',
             'phone' => ''
         );
@@ -114,7 +114,7 @@ class PackageController extends ApplicationController
             'duration' => '45 mins',
             'stars' => 5,
             'reviews' => 'http://www.yelp.com/biz/high-vibration-skincare-los-angeles',
-            'paypal' => '',
+            'paypal' => '7K9S76SE4GQTE',
             'image' => 'Vibrations.jpg',
             'phone' => ''
         );
@@ -130,7 +130,7 @@ class PackageController extends ApplicationController
             'duration' => '45 mins',
             'stars' => 5,
             'reviews' => 'http://www.yelp.com/biz/salon-on-main-los-angeles',
-            'paypal' => '',
+            'paypal' => 'WTG6J6UN25U4Q',
             'image' => 'Amanda.jpg',
             'phone' => ''
         );
@@ -146,7 +146,7 @@ class PackageController extends ApplicationController
             'duration' => '45 mins',
             'stars' => 5,
             'reviews' => 'http://www.yelp.com/biz/me-myself-and-vanity-marina-del-rey-2',
-            'paypal' => '',
+            'paypal' => 'B76XWQU7WYU5E',
             'image' => 'Vanity.jpg',
             'phone' => ''
         );
@@ -162,7 +162,7 @@ class PackageController extends ApplicationController
             'duration' => '45 mins',
             'stars' => 5,
             'reviews' => 'http://www.yelp.com/biz/enliven-your-skin-los-angeles',
-            'paypal' => '',
+            'paypal' => '2Q6HK5XQ38926',
             'image' => 'Seti.jpg',
             'phone' => ''
         );
@@ -178,7 +178,7 @@ class PackageController extends ApplicationController
             'duration' => '45 mins',
             'stars' => 4,
             'reviews' => 'http://www.yelp.com/biz/adrienne-skin-care-sherman-oaks',
-            'paypal' => '',
+            'paypal' => 'UJPWCPT2L6ELJ',
             'image' => 'Adrienne.jpg',
             'phone' => ''
         );
