@@ -1350,3 +1350,47 @@ $greydrk:#7f8d9a;
     text-transform: uppercase;
   }
 }
+
+#top-header {
+  background-image: url('../images/top-banner-image.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 300px;
+
+  @media (min-width: $screen-md-min) {
+    padding-top: 140px;
+  }
+
+  .overlayed-header {
+    background-color: rgba(234, 231, 235, .85);
+    padding: 40px 0;
+
+    .img-responsive {
+      margin: 0 auto;
+    }
+  }
+
+  .image {
+    max-width: 160px;
+    float: left;
+  }
+
+  .therapist-heads {
+    padding-top: 60px;
+  }
+
+  .location {
+    float: left;
+    width: 220px;
+    font-size: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 160px;
+  }
+
+  .therapist-head {
+    @include clearfix;
+  }
+
+}

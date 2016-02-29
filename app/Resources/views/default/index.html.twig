@@ -2,7 +2,76 @@
 
 {% block body %}
 
-<section id="header" style="background-color: white; padding-bottom: 0px;">
+
+
+<section id="top-header">
+    <div class="container">
+      <div class="overlayed-header">
+        <img src="{{ asset('assets/images/local-hands.png') }}" class="img-responsive" alt="Local Hands &amp; Boutique Brands" >
+      </div>
+
+      <div class="therapist-heads">
+
+        <div class="therapist-head">
+          <div class="image">
+            <img src="{{ asset('assets/images/therapists/Seti.jpg') }}" alt="" class="img-responsive img-circle">
+          </div>
+
+          <div class="location">
+            Beverly Hills, CA
+          </div>
+        </div>
+
+        <div class="therapist-head">
+          <div class="location">
+            Los Angeles, CA
+          </div>
+
+          <div class="image">
+            <img src="{{ asset('assets/images/therapists/Vibrations.jpg') }}" alt="" class="img-responsive img-circle">
+          </div>
+        </div>
+
+        <div class="therapist-head">
+          <div class="image">
+            <img src="{{ asset('assets/images/therapists/Vanity.jpg') }}" alt="" class="img-responsive img-circle">
+          </div>
+
+          <div class="location">
+            Santa Monica, CA
+          </div>
+        </div>
+
+      </div> <!-- /.therapist-heads -->
+
+    </div> <!-- /.container -->
+
+</section>
+
+<section id="header-description" style="background-color: white;">
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-md-8 col-md-offset-2" style="text-align: center;">
+        <p class="lead">We’ve partnered with some of the best local skincare Therapists and incredible Boutique brands to bring you the BiBeauty Skincare Package. </p>
+        <p class="lead">Get a box of amazing boutique products PLUS a Full Facial from a local Therapist.</p>
+        <p><a href="{{ path('package_path') }}" class="btn btn-primary btn-lg" style="border-radius: 0px;">
+          See the Package
+        </a></p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<hr>
+
+<section id="subheader" style="background-color: white; padding-top: 0px; padding-bottom: 0px;">
+
   <div class="container">
     <a href="{{ path('package_path') }}">
       <img src="{{ asset('assets/images/bibeauty-new-header.jpg') }}" alt="" class="img-responsive">
@@ -81,54 +150,6 @@
 
         </div>
     </div>
-</section>
-
-<section id="bibeauty-box">
-
-  <div class="overlay">
-
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-md-offset-2 col-md-8">
-
-          <div class="section-header">
-            <h2>NEW BiBeauty Box for Professionals</h2>
-          </div>
-
-          <div class="row border-between">
-
-            <div class="col-md-7">
-              <p>We’re a Health &amp; Beauty marketplace for Professionals. We often send our registered Professionals free products, samples, offers and more. Simply let us know the products &amp; brands you’re interested in and we’ll get you what you want! And remember - it’s FREE. Create a Professional Profile with us and receive even more!</p>
-
-              <p><a class="btn btn-primary" href="{{ path('signup_route') }}">
-                Get your NEW BiBeauty Box <i class="glyphicon glyphicon-triangle-right"></i>
-              </a></p>
-
-            </div>
-
-            <div class="col-md-5">
-
-              <p><strong>ALREADY RECEIVED YOUR PROFESSIONAL BEAUTY BOX?</strong></p>
-              <p>Tell us what you love &amp; get more FREE!</p>
-
-              <p><a class="btn btn-primary" href="{{ path('signup_route') }}">
-                Tell us what you love <i class="glyphicon glyphicon-triangle-right"></i>
-              </a></p>
-
-            </div>
-
-          </div> <!-- /.row -->
-
-        </div> <!-- /.col -->
-
-      </div> <!-- /.row -->
-
-    </div>
-
-  </div>
-
 </section>
 
 <section id="get-involved">
