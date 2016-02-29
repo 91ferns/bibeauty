@@ -1362,9 +1362,11 @@ $greydrk:#7f8d9a;
     padding-top: 140px;
   }
 
+
   .overlayed-header {
     background-color: rgba(234, 231, 235, .85);
-    padding: 40px 0;
+    padding: 40px 20px;
+    margin-bottom: 20px;
 
     .img-responsive {
       margin: 0 auto;
@@ -1372,17 +1374,29 @@ $greydrk:#7f8d9a;
   }
 
   .image {
-    max-width: 160px;
+
+    width: 100%;
     float: left;
+    @media (min-width: $screen-md-min) {
+      width: auto;
+      max-width: 160px;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 
   .therapist-heads {
-    padding-top: 60px;
+    @media (min-width: $screen-md-min) {
+      padding-top: 40px;
+    }
   }
 
   .location {
-    float: left;
+    display: none;
     @media (min-width: $screen-md-min) {
+      display: block;
+      float: left;
+      text-align: left;
       width: 220px;
       line-height: 160px;
       padding-left: 30px;
@@ -1392,12 +1406,22 @@ $greydrk:#7f8d9a;
   }
 
   .therapist-head {
-    @include clearfix;
+    width: 33%;
+    padding-left: 10px;
+    float: left;
+    padding-right: 10px;
+    @media (min-width: $screen-md-min) {
+      float: none;
+      padding-left: 0;
+      padding-right: 0;
+      width: auto;
+      @include clearfix;
+    }
   }
 
 }
 
-#package-intro {
+#package-summary {
   background-size: cover;
   background-position: center;
   background-image: url('../images/packages/package-bg.png');
