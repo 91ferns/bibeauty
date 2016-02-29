@@ -1382,11 +1382,13 @@ $greydrk:#7f8d9a;
 
   .location {
     float: left;
-    width: 220px;
+    @media (min-width: $screen-md-min) {
+      width: 220px;
+      line-height: 160px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
     font-size: 20px;
-    padding-left: 30px;
-    padding-right: 30px;
-    line-height: 160px;
   }
 
   .therapist-head {
