@@ -63,7 +63,8 @@ class PackageController extends ApplicationController
         }
 
         return $this->render('package/voucher.html.twig', array(
-            'therapist' => $therapist
+            'therapist' => $therapist,
+            'expiry' => new \DateTime('+3 months')
         ));
 
     }

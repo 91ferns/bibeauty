@@ -15,7 +15,7 @@
             <div class="col-md-3">
 
               <div class="thumbnail">
-                <img src="{{therapist.image}}" class="img-responsive img-circle img-round" alt="{{therapist.name}}">
+                <img src="{{ asset('assets/images/therapists/' ~ therapist.image) }}" class="img-responsive img-circle" alt="{{therapist.name}}" style="max-width: 150px;">
               </div>
 
               <a href="javascript:window.print();" class="btn btn-lg btn-primary" style="border-radius: 0; width: 100%;">Print</a>
@@ -41,7 +41,7 @@
               <br>
               <p>When booking, ensure you let the Professional know you have  booked with BiBeauty and present this voucher upon arrival for your appointment.
                 <br>
-              Valid until 02.15.16</p>
+              Valid until {{ expiry | date("m.d.Y")}}</p>
             </div>
 
             <div class="col-md-2">
