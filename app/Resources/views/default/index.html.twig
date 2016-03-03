@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<section id="top-header">
+<section id="top-header" style="background-color: white;">
     <div class="container">
 
 
@@ -11,13 +11,14 @@
         <div class="col-md-10 col-md-offset-1">
 
           <div class="overlayed-header">
-            <img src="{{ asset('assets/images/local-hands.png') }}" class="img-responsive" alt="Local Hands &amp; Boutique Brands" >
+            <img src="{{ asset('assets/images/local-hands.png') }}" class="hidden-sm hidden-xs img-responsive" alt="Local Hands &amp; Boutique Brands" >
+            <img src="{{ asset('assets/images/local-hands-mobile.png') }}" class="visible-xs visible-sm img-responsive" alt="Local Hands &amp; Boutique Brands" >
           </div>
 
-          <div class="below-header">
+          <div class="below-header hidden-xs hidden-sm">
 
-            <a href="{{ path('package_path') }}" class="btn btn-primary btn-lg" style="border-radius: 0px;">Get Started &gt;</a><br>
-            <a href="#how-it-works" class="btn btn-transparent btn-lg">Show Me How It Works</a>
+            <p><a href="{{ path('package_path') }}" class="btn btn-primary btn-lg" style="border-radius: 0px;">Get Started &gt;</a></p>
+            <p><a href="#how-it-works" class="btn btn-transparent btn-lg">Show Me How It Works</a></p>
 
           </div>
 
@@ -36,6 +37,8 @@
     <div class="row">
 
       <div class="col-md-8 col-md-offset-2" style="text-align: center;">
+        <p class="visible-xs visible-sm"><a href="{{ path('package_path') }}" class="btn btn-primary btn-lg btn-fullwidth" style="border-radius: 0px;">Get Started &gt;</a><br><br></p>
+
         <p class="lead">We’ve partnered with some of the best local skincare Therapists and incredible Boutique brands to bring you the BiBeauty Skincare Package. </p>
         <p class="lead">Get a box of amazing boutique products PLUS a Full Facial from a local Therapist.</p>
       </div>
@@ -70,7 +73,7 @@
           <div class="col-md-4">
             <figure class="thumbnail info-thumbnail">
 
-              <img src="{{ asset('assets/images/how-it-works-3.png') }}" class="img-responsive" alt="">
+              <img src="{{ asset('assets/images/how-it-works-2.png') }}" class="img-responsive" alt="">
 
               <div class="caption">
                 <p class="lead blue">Discover Boutique Brands</p>
@@ -84,11 +87,11 @@
           <div class="col-md-4">
             <figure class="thumbnail info-thumbnail">
 
-              <img src="{{ asset('assets/images/how-it-works-2.png') }}" class="img-responsive" alt="">
+              <img src="{{ asset('assets/images/how-it-works-3.png') }}" class="img-responsive" alt="">
 
               <div class="caption">
                 <p class="lead blue">Book &amp; Enjoy</p>
-                <p>Your treatment and don’t forget to check the mail!</p>
+                <p>Your treatment and don’t forget to check the mail.</p>
               </div>
 
             </figure>
@@ -104,8 +107,8 @@
 
       <div class="col-md-10 col-md-offset-1" style="text-align: center;">
 
-        <p>
-          <strong class="lead">$95</strong><br>
+        <h2 style="margin: 5px 0 5px;">$95</h2>
+        <p style="margin-top: 0;">
           <span class="blue">UP TO $200 IN VALUE</span> | ALL TAX &amp; SHIPPING INCL.
         </p>
 

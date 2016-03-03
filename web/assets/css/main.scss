@@ -1471,6 +1471,13 @@ hr.blue {
   color: $brand-primary;
 }
 
+#header-description {
+  padding-top: 40px;
+  @media (min-width: $screen-md-min) {
+    padding-top: 80px;
+  }
+}
+
 .info-thumbnail {
   .caption {
     text-align: center;
