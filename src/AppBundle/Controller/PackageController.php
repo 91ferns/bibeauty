@@ -213,7 +213,7 @@ class PackageController extends ApplicationController
             'paypal' => 'SD6SHQ5A27BXY',
             'image' => 'Meridan.jpg',
             'phone' => '(310) 601-7633'
-        )
+        );
 
         $arr = array(
             $devin,
