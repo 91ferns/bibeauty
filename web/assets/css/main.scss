@@ -1449,3 +1449,46 @@ $greydrk:#7f8d9a;
     font-size: 18px;
   }
 }
+
+.below-header {
+  @media (min-width: $screen-md-min) {
+    text-align: right;
+    .btn {
+      min-width: 250px;
+      margin-bottom: 5px;
+    }
+    padding: 90px 0;
+  }
+}
+
+.blue {
+  color: $brand-primary;
+}
+
+hr.blue {
+  border-color: $brand-primary;
+  background-color: $brand-primary;
+  color: $brand-primary;
+}
+
+.info-thumbnail {
+  .caption {
+    text-align: center;
+    padding-top: 14px;
+    padding-bottom: 20px;
+  }
+
+  .lead {
+    font-size: 15px;
+  }
+
+  p {
+    line-height: 1.2;
+    margin: 0;
+    margin-bottom: 4px;
+  }
+
+  .lead {
+
+  }
+}

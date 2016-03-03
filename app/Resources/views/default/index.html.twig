@@ -4,43 +4,26 @@
 
 <section id="top-header">
     <div class="container">
-      <div class="overlayed-header">
-        <img src="{{ asset('assets/images/local-hands.png') }}" class="img-responsive" alt="Local Hands &amp; Boutique Brands" >
-      </div>
 
-      <div class="therapist-heads">
 
-        <div class="therapist-head">
-          <div class="image">
-            <img src="{{ asset('assets/images/therapists/Seti.jpg') }}" alt="" class="img-responsive img-circle">
+      <div class="row">
+
+        <div class="col-md-10 col-md-offset-1">
+
+          <div class="overlayed-header">
+            <img src="{{ asset('assets/images/local-hands.png') }}" class="img-responsive" alt="Local Hands &amp; Boutique Brands" >
           </div>
 
-          <div class="location">
-            Beverly Hills, CA
-          </div>
-        </div>
+          <div class="below-header">
 
-        <div class="therapist-head">
-          <div class="location">
-            Los Angeles, CA
+            <a href="{{ path('package_path') }}" class="btn btn-primary btn-lg" style="border-radius: 0px;">Get Started &gt;</a><br>
+            <a href="#how-it-works" class="btn btn-transparent btn-lg">Show Me How It Works</a>
+
           </div>
 
-          <div class="image">
-            <img src="{{ asset('assets/images/therapists/Vibrations.jpg') }}" alt="" class="img-responsive img-circle">
-          </div>
-        </div>
+        </div> <!-- /.col -->
 
-        <div class="therapist-head">
-          <div class="image">
-            <img src="{{ asset('assets/images/therapists/Vanity.jpg') }}" alt="" class="img-responsive img-circle">
-          </div>
-
-          <div class="location">
-            Santa Monica, CA
-          </div>
-        </div>
-
-      </div> <!-- /.therapist-heads -->
+      </div> <!-- /.row -->
 
     </div> <!-- /.container -->
 
@@ -55,8 +38,79 @@
       <div class="col-md-8 col-md-offset-2" style="text-align: center;">
         <p class="lead">We’ve partnered with some of the best local skincare Therapists and incredible Boutique brands to bring you the BiBeauty Skincare Package. </p>
         <p class="lead">Get a box of amazing boutique products PLUS a Full Facial from a local Therapist.</p>
+      </div>
+
+      <div class="col-md-10 col-md-offset-1">
+        <hr class="blue">
+
+        <h2 name="how-it-works" id="how-it-works" style="text-align: center;">How It Works</h2>
+      </div>
+
+    </div> <!-- /.row -->
+
+    <div class="row">
+
+      <div class="col-md-10 col-md-offset-1">
+
+        <div class="row">
+
+          <div class="col-md-4">
+            <figure class="thumbnail info-thumbnail">
+
+              <img src="{{ asset('assets/images/how-it-works-1.png') }}" class="img-responsive" alt="">
+
+              <div class="caption">
+                <p class="lead blue">Choose The Perfect Facial</p>
+                <p>from one of our talented Skincare Therapists. </p>
+              </div>
+
+            </figure>
+          </div>
+
+          <div class="col-md-4">
+            <figure class="thumbnail info-thumbnail">
+
+              <img src="{{ asset('assets/images/how-it-works-3.png') }}" class="img-responsive" alt="">
+
+              <div class="caption">
+                <p class="lead blue">Discover Boutique Brands</p>
+                <p>With a box of our hand selected skincare products we deliver to your door.</p>
+              </div>
+
+            </figure>
+
+          </div>
+
+          <div class="col-md-4">
+            <figure class="thumbnail info-thumbnail">
+
+              <img src="{{ asset('assets/images/how-it-works-2.png') }}" class="img-responsive" alt="">
+
+              <div class="caption">
+                <p class="lead blue">Book &amp; Enjoy</p>
+                <p>Your treatment and don’t forget to check the mail!</p>
+              </div>
+
+            </figure>
+          </div>
+
+        </div> <!-- /.row -->
+
+      </div> <!-- /.col -->
+
+    </div> <!-- /.row -->
+
+    <div class="row">
+
+      <div class="col-md-10 col-md-offset-1" style="text-align: center;">
+
+        <p>
+          <strong class="lead">$95</strong><br>
+          <span class="blue">UP TO $200 IN VALUE</span> | ALL TAX &amp; SHIPPING INCL.
+        </p>
+
         <p><a href="{{ path('package_path') }}" class="btn btn-primary btn-lg" style="border-radius: 0px;">
-          See the Package
+          Get Started
         </a></p>
       </div>
 
@@ -64,18 +118,6 @@
 
   </div>
 
-</section>
-
-<hr>
-
-<section id="subheader" style="background-color: white; padding-top: 0px; padding-bottom: 0px;">
-
-  <div class="container" style="padding: 0;">
-    <a href="{{ path('package_path') }}">
-      <img src="{{ asset('assets/images/bibeauty-new-header.jpg') }}" alt="" class="img-responsive hidden-xs hidden-sm">
-      <img src="{{ asset('assets/images/bibeauty-new-header-mobile.jpg') }}" alt="" class="img-responsive hidden-md hidden-lg">
-    </a>
-  </div>
 </section>
 
 <section id="top-slider">
