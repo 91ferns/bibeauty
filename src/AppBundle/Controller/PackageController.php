@@ -211,7 +211,7 @@ class PackageController extends ApplicationController
             'stars' => 5,
             'reviews' => 'https://www.yelp.com/biz/meridian-day-spa-west-hollywood-5',
             'paypal' => 'SD6SHQ5A27BXY',
-            'image' => 'Adrienne.jpg',
+            'image' => 'Meridan.jpg',
             'phone' => '(310) 601-7633'
         )
 
