@@ -15,7 +15,10 @@ class PackageController extends ApplicationController
      */
     public function indexAction(Request $request)
     {
-        return $this->render('package/index.html.twig', array());
+
+        return $this->redirectToRoute('package_therapist_path');
+
+        // return $this->render('package/index.html.twig', array());
 
     }
 
@@ -196,6 +199,22 @@ class PackageController extends ApplicationController
             'phone' => '(818) 357-9225'
         );
 
+        $meridan = (object) array(
+            'therapist' => 'Abraham Sauma',
+            'business' => 'Meridian Day Spa ',
+            'location' => 'West Hollywood',
+            'addressl1' => '808 Hilldale Ave',
+            'addressl2' => 'West Hollywood, CA 90069',
+            'name' => 'Meridian European Facial',
+            'description' => 'This facial is individually tailored to meet your skin care needs. Our customized facial begins with a thorough analysis to address skin goals and concerns. The facial includes a deep cleanse, tone, exfoliation, steam, extractions, massage, mask and finishing cream which will leave your skin healthy and refreshed.',
+            'duration' => '45 mins',
+            'stars' => 5,
+            'reviews' => 'https://www.yelp.com/biz/meridian-day-spa-west-hollywood-5',
+            'paypal' => 'SD6SHQ5A27BXY',
+            'image' => 'Adrienne.jpg',
+            'phone' => '(310) 601-7633'
+        )
+
         $arr = array(
             $devin,
             $abanara,
@@ -203,7 +222,8 @@ class PackageController extends ApplicationController
             $amanda,
             $vanity,
             $seti,
-            $adrienne
+            $adrienne,
+            $meridan
         );
 
         if ($id !== null) {
